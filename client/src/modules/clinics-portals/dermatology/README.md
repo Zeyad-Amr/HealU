@@ -1,3 +1,0 @@
-# HealU
-
-Dermatology Clinic Module
