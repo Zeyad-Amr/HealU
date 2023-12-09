@@ -82,6 +82,19 @@ export const fetchDevices = createAsyncThunk(
             return rejectWithValue("Failed to fetch devices");
         }
     });
+export const AddDevice = createAsyncThunk(
+    'devices/AddDevice',
+    async (data: device, thunkApi) => {
+        const { rejectWithValue } = thunkApi;
+        try {
+            const response = await axios.post('http://localhost:5000/api/devices',data);
+            const devices: device[] = response.data;
+            return devices;
+        } catch (error) {
+            return rejectWithValue("Failed to fetch devices");
+        }
+    }
+);
 
 const scheduleSlice = createSlice({
     name: 'schedules',
