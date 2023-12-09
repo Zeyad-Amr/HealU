@@ -14,7 +14,7 @@ class Invoice(models.Model):
 
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.draft)
     datetime = models.DateTimeField()
-    services = ArrayField(models.IntegerField())
+    services_ids = ArrayField(models.IntegerField())
     def __str__(self):
          return f'{self.id} {self.status} {self.services}'
 
