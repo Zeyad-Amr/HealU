@@ -18,7 +18,7 @@ export interface Drug {
     dosage: string;
     frequency: string;
     duration: string;
-    notes: string;
+    notes?: string;
 }
 export interface Eprescription { 
     id: number;
@@ -35,6 +35,28 @@ export interface device{
     pruchaseDate: string;
     expiryDate: string;
     status: string;
+}
+export interface VitalSingns { 
+    date: string;
+    time: string;
+    temperature: number;
+    bloodPressure?: number;
+    respiratoryRate?: number;
+    oxygenSaturation?: number;
+    Height: number;
+    Weight: number;
+    notes?: string;
+}
+export interface Diagnosis {
+    Diagnoses: string;
+    VitalSingns: VitalSingns;
+    Eprescription?: Eprescription;
+    
+}
+export interface Record { 
+    id: number;
+    patient: patientType;
+    Diagnosis: Diagnosis[];
 }
 export interface ScheduleState { 
     schedules: Schedule[];
