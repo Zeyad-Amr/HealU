@@ -11,16 +11,22 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+import os
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print("BASE ISSSSS", BASE_DIR)
+import environ
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ji^**3f-c1w-61e^m#*yw11%!u_x^8lk93_59#7(+m@pd$odbf'
-
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -77,9 +83,9 @@ WSGI_APPLICATION = 'billing.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "billing",
-        "USER": "postgres",
-        "PASSWORD": "admin",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
         "HOST": "127.0.0.1",
         "PORT": "",
     }
