@@ -4,8 +4,7 @@ from django.contrib.postgres.fields import ArrayField
 
 class Invoice(models.Model):
     id = models.BigAutoField(primary_key=True)
-    insurance_id = models.IntegerField()
-    patient_id = models.IntegerField()
+    appointment_id = models.IntegerField()
     class Status(models.TextChoices):
         draft = 'DR', _('Draft')
         pending = 'PN', _('Pending Payment')
@@ -20,7 +19,7 @@ class Invoice(models.Model):
 
 class Bill(models.Model):
     id = models.BigAutoField(primary_key=True)
-    invoice_id = models.IntegerField(null=True)
+    invoice_id = models.ForeignKey(Invoice,on_delete=models.CASCADE) # deleting an invoice deletes all its bills
     amount = models.IntegerField()
 
     class Payment(models.TextChoices):
