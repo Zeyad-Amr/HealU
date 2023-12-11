@@ -25,4 +25,4 @@ const testDatabaseConnection = async () => {
 
 testDatabaseConnection();
 
-export default {sq: sequelize}
+export default sequelize

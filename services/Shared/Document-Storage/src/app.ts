@@ -5,6 +5,9 @@ import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import hpp from 'hpp';
 
+
+import imageRoutes from './routes/imageRoutes';
+
 const app : express.Application = express();
 
 // serving static files
@@ -44,6 +47,15 @@ app.use(hpp({
     ]
 }))
 
+
+// Parse JSON request bodies
+app.use(express.json());
+
+
+// Use image routes
+app.use(imageRoutes);
+
+
 // handle undefined routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     res.status(404).json({
@@ -51,5 +63,7 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
         message: `Can't find ${req.originalUrl} on this server!`
     });
 });
+
+
 
 export default app;
