@@ -1,4 +1,4 @@
-import ClinicTitle from "../components/title";
+import ClinicTitle from "../components/title/title";
 
 const OrthopedicClinic = () => {
   return (
