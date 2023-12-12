@@ -13,8 +13,6 @@ interface FileAttributes {
     Author: string;
 }
 
-
-
 const File = sequelize.define("File",
   {
    
@@ -51,7 +49,7 @@ const File = sequelize.define("File",
 File
     .sync()
     .then(()=>{
-      console.log("File Table sync")
+      console.log("File table synced")
     })
 
 

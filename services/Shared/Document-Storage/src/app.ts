@@ -35,13 +35,11 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // development logging
-
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
 app.use(cookieParser());
-
 
 app.use(hpp({ 
     whitelist: [
@@ -49,19 +47,13 @@ app.use(hpp({
     ]
 }))
 
-
 // Parse JSON request bodies
 app.use(express.json());
-
 
 // Use body-parser middleware to parse JSON
 app.use(bodyParser.json());
 
-// Use image routes
 app.use("/api/v1/images",imageRouter);
-
-
-// Use file routes
 app.use("/api/v1/files",fileRouter);
 
 // handle undefined routes

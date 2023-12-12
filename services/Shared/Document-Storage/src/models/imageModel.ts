@@ -2,7 +2,6 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../db';
 
-
 // defines the expected shape of the model
 interface ImageAttributes {
     PatientID: number;
@@ -13,8 +12,6 @@ interface ImageAttributes {
     DateUploaded: Date;
     Resolution: string;
 }
-
-
 
 const Image = sequelize.define("Image",
   {
@@ -56,7 +53,7 @@ const Image = sequelize.define("Image",
 Image
     .sync()
     .then(()=>{
-      console.log("Image Table sync")
+      console.log("Image table synced")
     })
 
 
