@@ -4,6 +4,11 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import hpp from 'hpp';
+import bodyParser from 'body-parser';
+
+
+import imageRouter from './routes/imageRouter';
+import fileRouter from './routes/fileRouter';
 
 const app : express.Application = express();
 
@@ -30,19 +35,26 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // development logging
-
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
 app.use(cookieParser());
 
-
 app.use(hpp({ 
     whitelist: [
         // @TODO add whitelist
     ]
 }))
+
+// Parse JSON request bodies
+app.use(express.json());
+
+// Use body-parser middleware to parse JSON
+app.use(bodyParser.json());
+
+app.use("/api/v1/images",imageRouter);
+app.use("/api/v1/files",fileRouter);
 
 // handle undefined routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
@@ -51,5 +63,7 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
         message: `Can't find ${req.originalUrl} on this server!`
     });
 });
+
+
 
 export default app;
