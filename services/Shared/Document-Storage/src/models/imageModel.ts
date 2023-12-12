@@ -2,6 +2,18 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../db';
 
+
+// Enum definition
+export enum ValidImageType {
+  JPG = '.jpg',
+  PNG = '.png',
+  GIF = '.gif',
+  BMP = '.bmp',
+  DICOM = '.dcm' ,
+  // Add more image types as needed
+}
+
+
 // defines the expected shape of the model
 interface ImageAttributes {
     PatientID: number;
@@ -28,6 +40,9 @@ const Image = sequelize.define("Image",
     ImageType: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isIn: [Object.values(ValidImageType)],
+      },
     },
     ImageDescription: {
       type: DataTypes.STRING,

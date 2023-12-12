@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Image from '../models/imageModel';
 import { Op } from 'sequelize';
 import asyncErrorCatching from '../utils.ts/asyncErrorCatching';
-
+import { ValidImageType } from '../models/imageModel';
 
 const createWhereClause = (query: any): any => {
   const whereClause: any = {};
@@ -74,6 +74,12 @@ export const uploadImage = asyncErrorCatching(async (req: Request, res: Response
 
   // Assuming the image details are provided in the request body
   const { PatientID, ImageType, ImageDescription, ImagePath, DateUploaded, Resolution } = req.body;
+  
+  // Check if the provided ImageType is a valid image type
+  if (!Object.values(ValidImageType).includes(ImageType)) {
+    res.status(400).json({ error: 'Invalid ImageType' });
+    return;
+  }
 
   const newImage = await Image.create({
     PatientID,
