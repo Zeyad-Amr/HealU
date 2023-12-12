@@ -1,18 +1,20 @@
 import { Sequelize } from "sequelize";
+import 'dotenv/config';
 
 const sequelize = new Sequelize(
-    process.env.DATABASE_URL!, 
+    process.env.DATABASE_URL || 'postgres://mdima:bQgjMJAbXvICqOCYaTIX09FbARyTj19w@dpg-clpnhn946foc73dchs8g-a.frankfurt-postgres.render.com/docstorage',
     {
         dialect: 'postgres',
         storage: './session.postgres',
         dialectOptions: {
             ssl: {
                 require: true,
-                rejectUnauthorized: false
-            }
-        }
+                rejectUnauthorized: false,
+            },
+        },
     }
 );
+
 
 const testDatabaseConnection = async () => {
     try {

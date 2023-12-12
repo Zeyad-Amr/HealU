@@ -1,51 +1,46 @@
-// imageModel.ts
+// FileModel.ts
 import { DataTypes} from 'sequelize';
 import sequelize from '../db';
 
 
 // defines the expected shape of the model
-interface ImageAttributes {
+interface FileAttributes {
     PatientID: number;
-    ImageID?: number;
-    ImageType: string;
-    ImageDescription?: string;
-    ImagePath: string;
-    DateUploaded: Date;
-    Resolution: string;
+    FileID?: number;
+    FileType: string;
+    FileDescription: string;
+    FilePath: string;
+    Author: string;
 }
 
 
 
-const Image = sequelize.define("Image",
+const File = sequelize.define("File",
   {
    
     PatientID: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    ImageID: {
+    FileID: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    ImageType: {
+    FileType: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ImageDescription: {
+    FileDescription: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
 
-    ImagePath: {
+    FilePath: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    DateUploaded: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    Resolution: {
+    Author: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -53,11 +48,11 @@ const Image = sequelize.define("Image",
 
 )
 
-Image
+File
     .sync()
     .then(()=>{
-      console.log("Image Table sync")
+      console.log("File Table sync")
     })
 
 
-export default Image;
+export default File;

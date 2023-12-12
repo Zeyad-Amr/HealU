@@ -4,9 +4,11 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import hpp from 'hpp';
+import bodyParser from 'body-parser';
 
 
-import imageRoutes from './routes/imageRoutes';
+import imageRouter from './routes/imageRouter';
+import fileRouter from './routes/fileRouter';
 
 const app : express.Application = express();
 
@@ -52,9 +54,15 @@ app.use(hpp({
 app.use(express.json());
 
 
-// Use image routes
-app.use(imageRoutes);
+// Use body-parser middleware to parse JSON
+app.use(bodyParser.json());
 
+// Use image routes
+app.use("/api/v1/images",imageRouter);
+
+
+// Use file routes
+app.use("/api/v1/files",fileRouter);
 
 // handle undefined routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
