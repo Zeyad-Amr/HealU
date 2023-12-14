@@ -21,11 +21,6 @@ mongoose
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.use("/api", slotRoute);
-app.use("/api", appointmentRoute);
+app.use("/api/slots", slotRoute);
+app.use("/api/appointments", appointmentRoute);
