@@ -37,5 +37,3 @@ To set up and run the Clinic project, follow these steps:
    ```
 
    This will start the Clinic project.
-
-Feel free to reach out if you encounter any issues or have further questions.
