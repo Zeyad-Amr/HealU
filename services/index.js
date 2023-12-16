@@ -5,11 +5,13 @@ const slotRoute = require("./routes/slot_routes");
 const appointmentRoute = require("./routes/appointment_routes");
 
 const app = express();
+var cors = require("cors");
 
+app.use(cors()); // Use this after the variable declaration
 // Connect to database
 mongoose
   .connect(
-    "mongodb+srv://Sherif:sherif2001@cluster0.rcyuxj2.mongodb.net/test?retryWrites=true&w=majority"
+    "mongodb+srv://Ahmed-ElSarta:vK7HvFSp4SnlAHep@cluster0.rcyuxj2.mongodb.net"
   )
   .then(() => {
     console.log("Connected to MongoDB");
