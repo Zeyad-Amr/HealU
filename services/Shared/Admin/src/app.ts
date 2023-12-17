@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import hpp from 'hpp';
 import clinicRouter from './routes/clinicRoutes';
 import clinicServiceRouter from './routes/clinicServicesRoutes';
+import databaseTablesSync from "./models";
 
 const app : express.Application = express();
 
@@ -31,7 +32,6 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // development logging
-
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === 'development') {
 // body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 
-app.use(hpp({ 
+app.use(hpp({
     whitelist: [
         // @TODO add whitelist
     ]
@@ -47,6 +47,10 @@ app.use(hpp({
 
 app.use("/api/v1/clinic", clinicRouter);
 app.use("/api/v1/clinicService", clinicServiceRouter);
+
+databaseTablesSync().then(r => {
+    console.log("Database tables synced successfully!");
+});
 
 // handle undefined routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
