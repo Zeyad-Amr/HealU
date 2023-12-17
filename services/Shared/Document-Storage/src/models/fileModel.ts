@@ -2,6 +2,14 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../db';
 
+// Enum definition
+export enum ValidFileType {
+  TXT = ".txt",
+  CSV = ".csv",
+  JSON = ".json",
+  XML = ".xml",
+  PDF =".pdf",
+}
 
 // defines the expected shape of the model
 interface FileAttributes {
@@ -28,6 +36,9 @@ const File = sequelize.define("File",
     FileType: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isIn: [Object.values(ValidFileType)],
+      },
     },
     FileDescription: {
       type: DataTypes.STRING,

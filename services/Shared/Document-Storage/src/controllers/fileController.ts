@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import File from '../models/fileModel';
 import { Op } from 'sequelize';
 import asyncErrorCatching from '../utils.ts/asyncErrorCatching';
-
+import { ValidFileType } from '../models/fileModel';
 
 const createWhereClause = (query: any): any => {
   const whereClause: any = {};
@@ -72,6 +72,17 @@ export const uploadFile = asyncErrorCatching(async (req: Request, res: Response)
 
   // Assuming the file details are provided in the request body
   const { PatientID, FileType, FileDescription, FilePath, Author } = req.body;
+  console.log(Object.values(FileType));
+  // Check if the provided FileType is a valid enum value
+  if (!Object.values(ValidFileType).includes(FileType)) {
+    res
+    .status(400)
+    .json({
+      status: 'fail',
+      error: 'Invalid FileType',
+    });
+    return;
+  }
 
   const newFile = await File.create({
     PatientID,
