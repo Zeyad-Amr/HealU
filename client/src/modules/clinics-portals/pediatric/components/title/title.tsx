@@ -1,9 +1,14 @@
-import React from 'react';
+import React from "react";
+import "./title.css";
 
 const ClinicTitle = () => {
-    return (
-        <h1 className="title">Pediatric Clinic</h1>
-    );
+  return (
+    <>
+      <div className="header">
+        <p className="title">Pediatric Clinic</p>
+      </div>
+    </>
+  );
 };
 
 export default ClinicTitle;

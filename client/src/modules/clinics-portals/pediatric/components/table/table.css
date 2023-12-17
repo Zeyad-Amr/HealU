@@ -1,0 +1,27 @@
+.table{
+    width: 90%;
+    border-radius: 4px;
+}
+.Container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+td {
+    border: 1px solid #080a49f1;
+    border-radius: .5rem;
+    padding: 5px;
+    text-align: center;
+}
+th {
+    border: none;
+    text-align: center;
+    padding: 8px;
+    background-color: #080a49f1;
+    font-size: 30px;
+    width: 180px;
+    color: white;
+    font-family: sans-serif;
+    border-radius: .5rem;
+
+}

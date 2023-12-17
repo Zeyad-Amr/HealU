@@ -1,10 +1,11 @@
 import React from 'react';
+import './table.css';
 
-
-const ScheduleTable = (Props) => { 
+const ScheduleTable = (props:any) => { 
     return (    
         <>
-            <table className="table table-striped table-hover">
+            <div className='Container'>
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -14,7 +15,7 @@ const ScheduleTable = (Props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Props.data.map((item: any) => (
+                    {props.data.map((item: any) => (
                         <tr key={item.id}>
                             <th scope="row">{item.id}</th>
                             <td>{item.name} {item.lastName}</td>
@@ -24,6 +25,8 @@ const ScheduleTable = (Props) => {
                     ))}
                 </tbody>
             </table>
+            </div>
+            
         </>
     );
 }
