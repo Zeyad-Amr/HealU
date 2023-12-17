@@ -1,128 +1,144 @@
-import ClinicService from "../models/clinicServiceModel";
 import { Request, Response } from "express";
+import ClinicService from "../models/clinicServiceModel";
+import asyncErrorCatching from "../utils/asyncErrorCatching";
 
 
-const getAllClinicServices = async (req: Request, res: Response) => {
-  try {
-    const clinicServices = await ClinicService.find();
-    res.status(200).json({
-      status: "success",
-      results: clinicServices.length,
-      data: {
-        clinicServices,
-      },
-    });
-  } catch (err: any) {
-    res.status(404).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
+const createWhereClause = (req: Request) => {
+    const whereClause: any = {};
 
-const getClinicServiceByServiceId = async (req: Request, res: Response) => {
-  try {
-    const clinicService = await ClinicService.findById(req.params.id);
-    res.status(200).json({
-      status: "success",
-      data: {
-        clinicService,
-      },
-    });
-  } catch (err: any) {
-    res.status(404).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
-
-const getClinicServicesByClinicId = async (req: Request, res: Response) => {
-    try {
-        const clinicServices = await ClinicService.find({ clinicID: req.params.id });
-        res.status(200).json({
-        status: "success",
-        results: clinicServices.length,
-        data: {
-            clinicServices,
-        },
-        });
-    } catch (err: any) {
-        res.status(404).json({
-        status: "fail",
-        message: err.message,
-        });
+    if (req.query.clinicId) {
+        whereClause.clinicId = req.query.clinicId;
     }
+
+    return whereClause;
 };
 
-const createClinicService = async (req: Request, res: Response) => {
-  try {
-    const { name, description, price, clinicID, doctors } = req.body;
-    const newClinicService = await ClinicService.create({
-      name,
-      description,
-      price,
-      clinicID,
-      doctors,
-    });
-    res.status(201).json({
-      status: "success",
-      data: {
-        clinicService: newClinicService,
-      },
-    });
-  } catch (err: any) {
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
+const getAllClinicServices = asyncErrorCatching(async (req: Request, res: Response) => {
 
-const updateClinicService = async (req: Request, res: Response) => {
-  try {
-    const clinicService = await ClinicService.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-    res.status(200).json({
-      status: "success",
-      data: {
-        clinicService,
-      },
-    });
-  } catch (err: any) {
-    res.status(404).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
+    const whereClause = createWhereClause(req);
 
-const deleteClinicService = async (req: Request, res: Response) => {
-  try {
-    await ClinicService.findByIdAndDelete(req.params.id);
-    res.status(204).json({
-      status: "success",
-      data: null,
+    const clinicServices = await ClinicService.findAll({
+        where: whereClause,
     });
-  } catch (err: any) {
-    res.status(404).json({
-      status: "fail",
-      message: err.message,
+
+    if (!clinicServices || clinicServices.length === 0) {
+        return res
+            .status(404)
+            .json({
+                status: 'fail',
+                message: 'No clinic services found',
+            });
+    }
+
+    res
+        .status(200)
+        .json({
+            status: 'success',
+            results: clinicServices.length,
+            data: {
+                clinicServices,
+            },
+        });
+});
+
+const getClinicServiceByServiceId = asyncErrorCatching(async (req: Request, res: Response) => {
+    const clinicService = await ClinicService.findByPk(req.params.serviceId);
+
+    if (!clinicService) {
+        return res
+            .status(404)
+            .json({
+                status: 'fail',
+                message: 'No clinic service found with that ID',
+            });
+    }
+
+    res
+        .status(200)
+        .json({
+            status: 'success',
+            data: {
+                clinicService,
+            },
+        });
+});
+
+const createClinicService = asyncErrorCatching(async (req: Request, res: Response) => {
+    let { name, clinicId, description, price } = req.body;
+    console.log(name, clinicId, description, price)
+
+    const clinicService = await ClinicService.create({
+        name,
+        description,
+        price,
+        clinicId,
     });
-  }
-};
+
+    res
+        .status(201)
+        .json({
+            status: 'success',
+            data: {
+                clinicService,
+            },
+        });
+});
+
+const updateClinicService = asyncErrorCatching(async (req: Request, res: Response) => {
+    const clinicService = await ClinicService.update(req.body, {
+        where: {
+            id: req.params.serviceId,
+        },
+    });
+
+    if (!clinicService) {
+        return res
+            .status(404)
+            .json({
+                status: 'fail',
+                message: 'No clinic service found with that ID',
+            });
+    }
+
+    res
+        .status(200)
+        .json({
+            status: 'success',
+            data: {
+                clinicService,
+            },
+        });
+});
+
+const deleteClinicService = asyncErrorCatching(async (req: Request, res: Response) => {
+    const clinicService= await ClinicService.destroy({
+        where: {
+            id: req.params.serviceId,
+        },
+    });
+
+    if (!clinicService) {
+        return res
+            .status(404)
+            .json({
+                status: 'fail',
+                message: 'No clinic service found with that ID',
+            });
+    }
+
+    res
+        .status(204)
+        .json({
+            status: 'success',
+            data: null,
+        });
+});
+
 
 export default {
     getAllClinicServices,
     getClinicServiceByServiceId,
-    getClinicServicesByClinicId,
     createClinicService,
     updateClinicService,
     deleteClinicService,
-    };
+};
