@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'billing_app',
      'django.contrib.postgres',
+     'rest_framework',
 ]
 
 MIDDLEWARE = [

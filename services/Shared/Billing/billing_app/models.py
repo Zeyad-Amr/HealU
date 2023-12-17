@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
 
+
 class Invoice(models.Model):
     id = models.BigAutoField(primary_key=True)
     appointment_id = models.IntegerField()
@@ -15,7 +16,7 @@ class Invoice(models.Model):
     datetime = models.DateTimeField()
     services_ids = ArrayField(models.IntegerField())
     def __str__(self):
-         return f'{self.id} {self.status} {self.services}'
+         return f'{self.id} {self.status} {self.services_ids}'
 
 class Bill(models.Model):
     id = models.BigAutoField(primary_key=True)
