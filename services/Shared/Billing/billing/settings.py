@@ -12,15 +12,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-BASE_DIR = Path(__file__).resolve().parent.parent
-print("BASE ISSSSS", BASE_DIR)
+ENV_BASE_DIR = Path(__file__).resolve().parent.parent
 import environ
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
 )
 # Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+environ.Env.read_env(os.path.join(ENV_BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -57,11 +56,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'billing.urls'
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,"client/build")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

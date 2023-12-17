@@ -2,3 +2,6 @@ node_modules
 __pycache__
 .venv
 .env
+templates
+.vscode 
+ settings.json
