@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 import App from './App';
 import { Provider } from 'react-redux';
-import { store } from './modules/clinics-portals/orthopedic/slices/store';
+import store from './modules/clinics-portals/orthopedic/slices/store';
 
 
 const root = ReactDOM.createRoot(

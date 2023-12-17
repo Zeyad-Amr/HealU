@@ -1,14 +1,34 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { patient } from "./patientSlice";
+import Patient from "./patientSlice";
 
-interface schedule {
+export default interface Schedule {
   scheduleId: number;
-  patient: patient;
+  patient: Patient;
   date: string;
-  status: boolean;
+  doctorName: string;
 }
+interface ScheduleState {
+  schedules: Schedule[];
+}
+
+const initialStateSchedule: ScheduleState={
+  schedules:[]
+}
+
+export const getSchedules = createAsyncThunk(
+  "schedule/getSchedules",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get<Schedule[]>("http://localhost:3003/schedules");
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 const updateSchedule = createAsyncThunk(
   "schedule/updateSchedule",
   (_, thunkAPI) => {
@@ -17,7 +37,7 @@ const updateSchedule = createAsyncThunk(
       .put("", {
         scheduleId: 1,
         patient: { patientId: 1, patientName: "onepatient" },
-        date: "today",
+        date: "21-1",
         status: true,
       })
       .then((res) => res.data)
@@ -25,19 +45,29 @@ const updateSchedule = createAsyncThunk(
   }
 );
 
-const initialStateSchedule: schedule = {
-  scheduleId: NaN,
-  patient: { patientId: 0, patientName: "" },
-  date: "",
-  status: false,
-};
-
 const scheduleSlice = createSlice({
   name: "schedule",
   initialState: initialStateSchedule,
   reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getSchedules.pending, (state, action) => {
+      console.log(state)
+    });
+    builder.addCase(
+      getSchedules.fulfilled,
+      (state, action: PayloadAction<Schedule[] | void>) => {
+        if (action.payload) {
+          console.log(action.payload);
+          return { ...state, schedules: action.payload };
+          
+        } else {
+          console.log("failed");
+          return state;
+        }
+      }
+    );
+  },
 });
 
 export const scheduleReducers = scheduleSlice.reducer;
 export const scheduleActions = scheduleSlice.actions;
-
