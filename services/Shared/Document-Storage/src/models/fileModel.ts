@@ -8,6 +8,7 @@ export enum ValidFileType {
   CSV = ".csv",
   JSON = ".json",
   XML = ".xml",
+  PDF =".pdf",
 }
 
 // defines the expected shape of the model

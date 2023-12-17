@@ -77,7 +77,12 @@ export const uploadImage = asyncErrorCatching(async (req: Request, res: Response
   
   // Check if the provided ImageType is a valid image type
   if (!Object.values(ValidImageType).includes(ImageType)) {
-    res.status(400).json({ error: 'Invalid ImageType' });
+    res
+    .status(400)
+    .json({
+      status: 'fail',
+      error: 'Invalid ImageType',
+    });
     return;
   }
 

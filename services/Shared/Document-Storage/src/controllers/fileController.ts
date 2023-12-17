@@ -75,7 +75,12 @@ export const uploadFile = asyncErrorCatching(async (req: Request, res: Response)
   console.log(Object.values(FileType));
   // Check if the provided FileType is a valid enum value
   if (!Object.values(ValidFileType).includes(FileType)) {
-    res.status(400).json({ error: 'Invalid FileType' });
+    res
+    .status(400)
+    .json({
+      status: 'fail',
+      error: 'Invalid FileType',
+    });
     return;
   }
 
