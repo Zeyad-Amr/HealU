@@ -1,7 +1,8 @@
 // imorts
 const express = require("express");
-const equipmentsRouter =require("./routes/equipmentsRouter");
-const supplyRouter = require ("./routes/supplyRouter")
+const equipmentsRouter =require("../routes/equipmentsRouter");
+const supplyRouter = require ("../routes/supplyRouter")
+// services\orthopedics\routes\equipmentsRouter.js
 
 const app = express();
 const port= process.env.port|| 3000 ;
