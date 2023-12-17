@@ -3,8 +3,7 @@ from . import views
 
 urlpatterns = [
 
-    path('invoices/newinvoice', views.newinvoice, name='newinv'),
-    path('invoices/<int:id>', views.delete, name='deleteinv'),
-    path('invoices/patient_id/<int:patient_id>', views.get_all_patients, name='all_patients_inv'),
-
-    ]
+    path('invoices', views.newinvoice, name='newinv'),
+    path('invoices/<int:id>', views.handleinvoice, name='handle'),
+    path('invoices/patient_id/<int:patient_id>', views.get_all_patient_invoices, name='all_patients_inv'),
+                 ]
