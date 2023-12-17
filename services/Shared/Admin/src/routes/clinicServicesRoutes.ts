@@ -8,13 +8,9 @@ clinicServiceRouter.route("/")
             .get(clinicServiceController.getAllClinicServices)
             .post(clinicServiceController.createClinicService)
 
-clinicServiceRouter.route("/:id")
+clinicServiceRouter.route("/:serviceId")
             .get(clinicServiceController.getClinicServiceByServiceId)
             .patch(clinicServiceController.updateClinicService)
             .delete(clinicServiceController.deleteClinicService)
-
-clinicServiceRouter.route("/clinic/:id")
-            .get(clinicServiceController.getClinicServicesByClinicId)
-
 
 export default clinicServiceRouter;

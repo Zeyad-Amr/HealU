@@ -1,41 +1,25 @@
-import moongose from 'mongoose';
+import sequelize from '../db';
+import {DataTypes} from 'sequelize';
 
-export interface IClinicService extends moongose.Document {
-  name: string;
-  description: string;
-  price: number;
-  clinicID: moongose.Schema.Types.ObjectId;
-  doctors: string[];
-}
-
-
-const clinicServiceSchema = new moongose.Schema({
-  name: {
-    type: String,
-    required: [true, 'A clinic service must have a name'],
-    unique: true,
-    trim: true,
-  },
-  description: {
-    type: String,
-    trim: true,
-    maxlength: [200, 'A clinic service description must have less or equal then 200 characters'],
-  },
-  clinicID: {
-    type: moongose.Schema.Types.ObjectId,
-    ref: 'Clinic',
-    required: [true, 'A clinic service must have a clinic ID'],
-  },
-  price: {
-    type: Number,
-    required: [true, 'A clinic service must have a price'],
-  },
-  doctors: {
-    type: [String],
-    trim: true,
-  },
+const ClinicService = sequelize.define('ClinicService', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    description: {
+        type: DataTypes.STRING,
+    },
+    price: {
+        type: DataTypes.INTEGER,
+    },
+}, {
+    timestamps: false,
 });
-
-const ClinicService = moongose.model<IClinicService>('ClinicService', clinicServiceSchema);
 
 export default ClinicService;
