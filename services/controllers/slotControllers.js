@@ -1,9 +1,10 @@
 const Slot = require("../models/Slot");
 
-const createSlot = async (req, res) => {
+const createSlot = async (req, res, next) => {
   try {
     await Slot.create(req.body);
     res.status(201).json({ message: "Success" });
+    next();
   } catch (error) {
     res.status(500).json({ message: error.message }) && next(error);
   }
@@ -11,10 +12,11 @@ const createSlot = async (req, res) => {
 
 // ================================================================================= //
 
-const getAllSlots = async (req, res) => {
+const getAllSlots = async (req, res, next) => {
   try {
     const slots = await Slot.find({});
     res.status(200).json(slots);
+    next();
   } catch (error) {
     res.status(500).json({ message: "No slots found" }) && next(error);
   }
@@ -22,11 +24,12 @@ const getAllSlots = async (req, res) => {
 
 // ================================================================================= //
 
-const getSlotByDoctorID = async (req, res) => {
+const getSlotByDoctorID = async (req, res, next) => {
   try {
     const { doctorID } = req.params;
     const slot = await Slot.find({ doctor_id: doctorID });
     res.status(200).json(slot);
+    next();
   } catch (error) {
     res
       .status(500)
@@ -37,7 +40,7 @@ const getSlotByDoctorID = async (req, res) => {
 
 // ================================================================================= //
 
-const updateSlot = async (req, res) => {
+const updateSlot = async (req, res, next) => {
   try {
     const { slotID } = req.params;
     const slot = await Slot.findOneAndUpdate({ _id: slotID }, req.body);
@@ -45,6 +48,7 @@ const updateSlot = async (req, res) => {
       return res.status(404).json({ message: `No Slot with ID: ${slotID}` });
     }
     res.status(200).json({ message: "Success" });
+    next();
   } catch (error) {
     res.status(500).json({ message: "No slots found" }) && next(error);
   }
@@ -52,7 +56,7 @@ const updateSlot = async (req, res) => {
 
 // ================================================================================= //
 
-const deleteSlot = async (req, res) => {
+const deleteSlot = async (req, res, next) => {
   try {
     const { slotID } = req.params;
     const slot = await Slot.findOneAndDelete({ _id: slotID }, req.body);
@@ -60,6 +64,7 @@ const deleteSlot = async (req, res) => {
       return res.status(404).json({ message: `No Slot with ID: ${slotID}` });
     }
     res.status(200).json({ message: "Success" });
+    next();
   } catch (error) {
     res.status(500).json({ message: error.message }) && next(error);
   }

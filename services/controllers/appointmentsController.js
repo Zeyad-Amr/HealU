@@ -17,7 +17,6 @@ const getAllAppointments = async (req, res, next) => {
     const appointments = await Appointment.find({});
     res.status(200).json(appointments);
     next();
-    next();
   } catch (error) {
     res.status(500).json({ message: error.message }) && next(error);
   }

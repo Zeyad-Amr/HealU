@@ -7,16 +7,16 @@ router.post("/", AppointmentController.createAppointment);
 router.get("/", AppointmentController.getAllAppointments);
 
 router.get(
-  "/patient/:patientID",
+  "/patient/:patientId",
   AppointmentController.getAppointmentByPatientID
 );
 
-router.get("/doctor/:doctorID", AppointmentController.getAppointmentByDoctorID);
+router.get("/doctor/:doctorId", AppointmentController.getAppointmentByDoctorID);
 
-router.get("/clinic/:clinicID", AppointmentController.getAppointmentByClinicID);
+router.get("/clinic/:clinicId", AppointmentController.getAppointmentByClinicID);
 
-router.put("/:patientID/:slotID", AppointmentController.updateAppointment);
+router.put("/:patientId/:slotId", AppointmentController.updateAppointment);
 
-router.delete("/:patientID/:slotID", AppointmentController.deleteAppointment);
+router.delete("/:patientId/:slotId", AppointmentController.deleteAppointment);
 
 module.exports = router;

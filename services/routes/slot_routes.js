@@ -6,10 +6,10 @@ router.post("/", SlotController.createSlot);
 
 router.get("/", SlotController.getAllSlots);
 
-router.get("/:doctorID", SlotController.getSlotByDoctorID);
+router.get("/:doctorId", SlotController.getSlotByDoctorID);
 
-router.put("/:slotID", SlotController.updateSlot);
+router.put("/:slotId", SlotController.updateSlot);
 
-router.delete("/:slotID", SlotController.deleteSlot);
+router.delete("/:slotId", SlotController.deleteSlot);
 
 module.exports = router;
