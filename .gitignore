@@ -1,3 +1,6 @@
 
 *.pyc
 services/Shared/Billing/.env
+__pycache__
+.venv
+.env
