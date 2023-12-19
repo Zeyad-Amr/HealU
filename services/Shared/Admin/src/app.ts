@@ -2,13 +2,10 @@ import express, {Application, Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import cookieParser from 'cookie-parser';
 import hpp from 'hpp';
-import bodyParser from 'body-parser';
-
-
-import imageRouter from './routes/imageRouter';
-import fileRouter from './routes/fileRouter';
+import clinicRouter from './routes/clinicRoutes';
+import clinicServiceRouter from './routes/clinicServicesRoutes';
+import databaseTablesSync from "./models";
 
 const app : express.Application = express();
 
@@ -39,7 +36,8 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-app.use(cookieParser());
+// body parser, reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
 
 app.use(hpp({
     whitelist: [
@@ -47,15 +45,12 @@ app.use(hpp({
     ]
 }))
 
-// Parse JSON request bodies
-app.use(express.json());
+app.use("/api/v1/clinic", clinicRouter);
+app.use("/api/v1/clinicService", clinicServiceRouter);
 
-// Use body-parser middleware to parse JSON
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use("/api/v1/images",imageRouter);
-app.use("/api/v1/files",fileRouter);
+databaseTablesSync().then(r => {
+    console.log("Database tables synced successfully!");
+});
 
 // handle undefined routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
@@ -64,7 +59,5 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
         message: `Can't find ${req.originalUrl} on this server!`
     });
 });
-
-
 
 export default app;
