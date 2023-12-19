@@ -1,74 +1,70 @@
 // imageModel.ts
-import { DataTypes} from 'sequelize';
+import {DataTypes} from 'sequelize';
 import sequelize from '../db';
 
 
 // Enum definition
 export enum ValidImageType {
-  JPG = '.jpg',
-  PNG = '.png',
-  GIF = '.gif',
-  BMP = '.bmp',
-  DICOM = '.dcm' ,
-  // Add more image types as needed
+    JPEG = '.jpeg',
+    JPG = '.jpg',
+    PNG = '.png',
+    GIF = '.gif',
+    BMP = '.bmp',
+    DICOM = '.dcm',
+    // Add more image types as needed
 }
 
 
 // defines the expected shape of the model
 interface ImageAttributes {
-    PatientID: number;
-    ImageID?: number;
-    ImageType: string;
-    ImageDescription?: string;
-    ImagePath: string;
-    DateUploaded: Date;
-    Resolution: string;
+    patientId: number;
+    imageId?: number;
+    imageType: string;
+    imageDescription?: string;
+    imagePath: string;
+    dateUploaded: Date;
+    resolution: string;
 }
 
 const Image = sequelize.define("Image",
-  {
-   
-    PatientID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    ImageID: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    ImageType: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isIn: [Object.values(ValidImageType)],
-      },
-    },
-    ImageDescription: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
+    {
 
-    ImagePath: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    DateUploaded: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    Resolution: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  }
-
+        patientId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        imageId: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        imageType: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isIn: [Object.values(ValidImageType)],
+            },
+        },
+        imageDescription: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        imagePath: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        resolution: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+    }
 )
 
+
 Image
-    .sync()
-    .then(()=>{
-      console.log("Image table synced")
+    .sync({alter: true})
+    .then(() => {
+        console.log("Image table synced")
     })
 
 
