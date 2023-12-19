@@ -1,0 +1,53 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+model User {
+  UserID      Int      @id @default(autoincrement())
+  Gender      String
+  //DateOfBirth DateTime
+  FirstName   String
+  LastName    String
+  Email       String
+  PhoneNumber String
+  Role        String
+  SSN         String
+  Password    String
+  UserName    String   @unique
+  Patient     Patient?
+  Doctor      Doctor?
+  Admin       Admin?
+}
+
+model Patient {
+  UserID              Int    @id
+  InsurancePersentage Float
+  EmergencyContact    String
+  User                User   @relation(fields: [UserID], references: [UserID])
+
+  @@map("Patient")
+}
+
+model Doctor {
+  UserID         Int    @id
+  Specialization String
+  ClinicID       String
+  User           User   @relation(fields: [UserID], references: [UserID])
+
+  @@map("Doctor")
+}
+
+model Admin {
+  UserID Int  @id
+  User   User @relation(fields: [UserID], references: [UserID])
+
+  @@map("Admin")
+}
