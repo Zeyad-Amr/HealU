@@ -1,4 +1,3 @@
-// controllers/patientController.ts
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';;
 
@@ -58,7 +57,6 @@ export const updatePatient = async (req: Request, res: Response) => {
 
 export const getPatientById = async (req: Request, res: Response) => {
   const { userID } = req.params;
-  console.log("pppppppppppppppp");
   console.log(userID);
   try {
     const patient = await prisma.user.findUnique({
