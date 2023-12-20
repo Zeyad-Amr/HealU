@@ -8,6 +8,8 @@ import DermatologyClinicPortal from "../../modules/clinics-portals/dermatology/p
 import NutritionClinicPortal from "../../modules/clinics-portals/nutrition/pages";
 import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmology/pages";
 import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages";
+import PatientPortal from "../../modules/patient-portal/pages/profile-page";
+import AdminPortal from "../../modules/admin-portal";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -34,6 +36,14 @@ class Router {
     {
       path: AppRoutes.clinicPediatric,
       element: <PediatricClinicPortal />,
+    },
+    {
+      path: AppRoutes.patientPortal,
+      element: <PatientPortal />,
+    },
+    {
+      path: AppRoutes.adminPortal,
+      element: <AdminPortal />,
     },
   ];
 

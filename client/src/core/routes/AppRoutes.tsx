@@ -5,6 +5,9 @@ class AppRoutes {
   static readonly clinicNutrition = "/clinic/nutrition";
   static readonly clinicOphthalmolgy = "/clinic/ophthalmolgy";
   static readonly clinicPediatric = "/clinic/pediatric";
+  static readonly adminPortal = "/admin";
+  static readonly login = "/login";
+  static readonly patientPortal = "/patient";
 }
 
 export default AppRoutes;
