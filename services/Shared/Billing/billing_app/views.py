@@ -12,9 +12,9 @@ from django.views.decorators.http import require_http_methods
 def get_services_data(services_ids):
      ### replace with logic for admin api call
      api_url = 'https://dwl9v.wiremockapi.cloud/services'
-     service_data={"services_ids":services_ids}
+     services_data={"services_ids":services_ids}
      headers={"auth":'9583606feb9659b8dbf44dcddf2ec0dc'}
-     response=requests.get(api_url,data=json.dumps(service_data),headers=headers)
+     response=requests.get(api_url,data=json.dumps(services_data),headers=headers)
      services_response=response.json()
      services_names=services_response["services_names"]
      services_amounts=services_response["services_amounts"]
