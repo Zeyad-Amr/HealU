@@ -6,13 +6,29 @@ export const themeSettings = (): ThemeOptions => {
   return {
     palette: {
       primary: {
-        main: "#050A30",
+        dark: "#01B6B6",
+        main: "#13D2DE",
       },
       secondary: {
-        main: "#f89c3e",
+        dark: "#002426",
+        main: "#006D6D",
       },
       background: {
         default: colors.common.white,
+      },
+      grey: {
+        100: "#F5F5F5",
+        200: "#EEEEEE",
+        300: "#E0E0E0",
+        400: "#BDBDBD",
+        500: "#9E9E9E",
+        600: "#757575",
+        700: "#616161",
+        800: "#424242",
+        900: "#212121",
+      },
+      error: {
+        main: "#B80202",
       },
     },
 
@@ -61,7 +77,7 @@ export const themeSettings = (): ThemeOptions => {
             textTransform: "none",
             fontSize: "0.8rem",
             "&:hover": {
-              backgroundColor: "#f89c3e",
+              backgroundColor: "#13D2DE",
               color: "#fff",
             },
           },
