@@ -1,12 +1,10 @@
+import ClinicTitle from "../components/title/title";
 
-import ClinicTitle from '../components/title/title';
-
-const PediatricClinic = () => {
+const PediatricClinicPortal = () => {
   return (
     <>
       <ClinicTitle />
     </>
-   
   );
-}
-export default PediatricClinic;
+};
+export default PediatricClinicPortal;
