@@ -1,32 +1,32 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export interface patientType{
+export interface patientType {
     id: number;
     name: string;
 }
 
-export interface Schedule{
+export interface Schedule {
     id: number;
     Patient: patientType;
     date: string;
     time: string;
     status: string;
 }
-export interface Drug { 
+export interface Drug {
     name: string;
     dosage: string;
     frequency: string;
     duration: string;
     notes?: string;
 }
-export interface Eprescription { 
+export interface Eprescription {
     id: number;
     patient: patientType;
     drugs: Drug[];
-    
+
 }
-export interface device{
+export interface device {
     id: number;
     name: string;
     deviceType: string;
@@ -36,7 +36,7 @@ export interface device{
     expiryDate: string;
     status: string;
 }
-export interface VitalSingns { 
+export interface VitalSingns {
     date: string;
     time: string;
     temperature: number;
@@ -51,19 +51,19 @@ export interface Diagnosis {
     Diagnoses: string;
     VitalSingns: VitalSingns;
     Eprescription?: Eprescription;
-    
+
 }
-export interface Record { 
+export interface Record {
     id: number;
     patient: patientType;
     Diagnosis: Diagnosis[];
 }
-export interface ScheduleState { 
+export interface ScheduleState {
     schedules: Schedule[];
     loading: boolean;
     error: string;
 }
-export interface deviceState { 
+export interface deviceState {
     devices: device[];
     loading: boolean;
     error: string;
@@ -109,7 +109,7 @@ export const AddDevice = createAsyncThunk(
     async (data: device, thunkApi) => {
         const { rejectWithValue } = thunkApi;
         try {
-            const response = await axios.post('http://localhost:5000/api/devices',data);
+            const response = await axios.post('http://localhost:5000/api/devices', data);
             const devices: device[] = response.data;
             return devices;
         } catch (error) {
@@ -120,7 +120,7 @@ export const AddDevice = createAsyncThunk(
 
 const scheduleSlice = createSlice({
     name: 'schedules',
-    ScheduleInitialState,
+    initialState: ScheduleInitialState,
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchSchedule.pending, (state, action) => {
@@ -139,7 +139,7 @@ const scheduleSlice = createSlice({
 });
 const deviceSlice = createSlice({
     name: 'devices',
-    initialStateDevice,
+    initialState: initialStateDevice,
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchDevices.pending, (state, action) => {
@@ -156,4 +156,3 @@ const deviceSlice = createSlice({
         });
     }
 });
-
