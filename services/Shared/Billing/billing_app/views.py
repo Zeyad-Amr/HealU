@@ -8,12 +8,15 @@ import requests
 from django.http import JsonResponse, Http404
 import json
 from django.views.decorators.http import require_http_methods
+import environ
+
+env=environ.Env()
 
 def get_services_data(services_ids):
      ### replace with logic for admin api call
      api_url = 'https://dwl9v.wiremockapi.cloud/services'
      services_data={"services_ids":services_ids}
-     headers={"auth":'9583606feb9659b8dbf44dcddf2ec0dc'}
+     headers={"auth":env("auth_data")}
      response=requests.get(api_url,data=json.dumps(services_data),headers=headers)
      services_response=response.json()
      services_names=services_response["services_names"]
@@ -23,7 +26,7 @@ def get_services_data(services_ids):
 def get_patient_from_appointment(appointment_id):
      ### appointment api logic
      api_url = f'https://dwl9v.wiremockapi.cloud/appointment/:{appointment_id}'
-     headers={"auth":'9583606feb9659b8dbf44dcddf2ec0dc'}
+     headers={"auth":env("auth_data")}
      response=requests.get(api_url,headers=headers)
      appointment_response=response.json()
      patient_id=appointment_response["patient_id"]
@@ -32,7 +35,7 @@ def get_patient_from_appointment(appointment_id):
 def get_insurance_percentage(patient_id):
      # change appointment to reg api
      api_url = f'https://dwl9v.wiremockapi.cloud/registeration/:{patient_id}'
-     headers={"auth":'9583606feb9659b8dbf44dcddf2ec0dc'}
+     headers={"auth":env("auth_data")}
      response=requests.get(api_url,headers=headers)
      registration_response=response.json()
      insurance=registration_response["insurance"]
