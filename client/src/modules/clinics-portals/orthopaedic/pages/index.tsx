@@ -1,4 +1,4 @@
-const LandingPage = () => {
+const OrthopaedicClinicPortal = () => {
   return (
     <div
       style={{
@@ -8,9 +8,9 @@ const LandingPage = () => {
         height: "90vh",
       }}
     >
-      <h1>Landing Page</h1>
+      <h1>Orthopaedic Clinic Portal</h1>
     </div>
   );
 };
 
-export default LandingPage;
+export default OrthopaedicClinicPortal;

@@ -1,7 +1,7 @@
 import React from "react";
 import ClinicTitle from "../components/ClinicTitle/ClinicTitle"; // Import ClinicTitle component
 
-const OphthalmologyClinic = () => {
+const OphthalmologyClinicPortal = () => {
   return (
     <>
       <ClinicTitle title="Ophthalmology Clinic" />{" "}
@@ -11,4 +11,4 @@ const OphthalmologyClinic = () => {
   );
 };
 
-export default OphthalmologyClinic;
+export default OphthalmologyClinicPortal;
