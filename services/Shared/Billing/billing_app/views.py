@@ -9,7 +9,7 @@ from django.http import JsonResponse, Http404
 import json
 from django.views.decorators.http import require_http_methods
 import environ
-
+from .serializers import invoice_serializer
 env=environ.Env()
 
 def get_services_data(services_ids):
@@ -77,25 +77,26 @@ def handle_invoice(request,id):
         invoice = get_object_or_404(Invoice, id=id)
         services_ids=invoice.servicesIds
         services_names,services_amounts=get_services_data(services_ids)
-        patient_id=get_patient_from_appointment(invoice.appointmentId)
-        insurance_percentage=get_insurance_percentage(patient_id)
+        insurance_percentage=get_insurance_percentage(invoice.patientId)
         amounts_after_insurace=[(1-float(insurance_percentage))* amount for amount in services_amounts]
-        response ={
-            'id': invoice.id,
-            'status':invoice.status,
-            'datetime':invoice.dateTime,
-            'Services_names':services_names,
-            'Services_amounts':services_amounts, # data base schema ?
-            'amounts_total':amounts_after_insurace
+        serializer=invoice_serializer(invoice)
+        invoice_response = serializer.data
+        invoice_details={
+              'Services_names':services_names,
+               'Services_amounts':services_amounts,     
+              'amounts_total': amounts_after_insurace
+
         }
-        return JsonResponse(response,safe=False)
+        invoice_response.update(invoice_details)
+        return JsonResponse(invoice_response,safe=False)
     
 @csrf_exempt
 @require_http_methods(["POST"])
 def new_invoice(request) :
      if request.method == 'POST':
           data=json.loads(request.body.decode("utf-8"))
-          new_invoice=Invoice(appointmentId=data['appointment_id'],status="PN",dateTime=timezone.now().isoformat(),servicesIds=data['services_ids'])
+          patient_id=get_patient_from_appointment(data['appointment_id'])
+          new_invoice=Invoice(appointmentId=data['appointment_id'],patientId=patient_id,status="PN",dateTime=timezone.now().isoformat(),servicesIds=data['services_ids'])
           new_invoice.save()
           response=get_invoice_by_id(new_invoice.id)
           return JsonResponse(response ,safe=False)
@@ -103,15 +104,9 @@ def new_invoice(request) :
 @csrf_exempt
 @require_http_methods(["GET"])
 def get_all_patient_invoices(requests,patient_id):
-     all_invoices = Invoice.objects.all()
-     response=[]
-     for invoice in all_invoices:
-          patient=get_patient_from_appointment(invoice.appointmentId)
-          if (patient == patient_id):
-               invoice=get_invoice_by_id(invoice.id)
-               response.append(invoice)   
-
-     return JsonResponse(response,safe=False)
+     filtered_invoices = Invoice.objects.filter(patientId=patient_id)
+     serializer = invoice_serializer(filtered_invoices,many=True) 
+     return JsonResponse(serializer.data,safe=False)
     
           
 
