@@ -1,0 +1,48 @@
+.AddBtn{
+    background-color: #0fcbd3 !important;
+    color: white !important;
+    width: 25% !important;
+    height: 40px !important;
+    margin-bottom: 10px !important;
+
+}
+.grid{
+    border: none !important; ;
+}
+.Slot{
+    background-color: #0fcbd3 !important;
+    color: white !important;
+    border-radius: .5rem !important;
+    margin-right: 15px !important;
+    margin-bottom: 20px !important;
+}
+.Name{
+    background-color: #e5e5e5 !important;
+    color: black !important;
+    border-radius: .5rem !important;
+    margin-right: 15px !important;
+    margin-bottom: 15px !important;
+}
+.CreateContainer{
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+}
+.css-14wibxr-MuiDataGrid-root .MuiDataGrid-withBorderColor{
+    border: none !important;
+}
+.MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor.css-1iyq7zh-MuiDataGrid-columnHeaders{
+    display: none !important;
+}
+.MuiDataGrid-virtualScrollerRenderZone.css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone{
+    gap: 20px !important;
+}
+.GridContainer{
+    width: 60% !important;
+    margin: 0 auto !important;
+}
+.MuiDataGrid-cell{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
