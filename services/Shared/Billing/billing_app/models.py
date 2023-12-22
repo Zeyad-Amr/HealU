@@ -6,6 +6,7 @@ from django.contrib.postgres.fields import ArrayField
 class Invoice(models.Model):
     id = models.BigAutoField(primary_key=True)
     appointmentId = models.IntegerField()
+    patientId= models.IntegerField()
     class Status(models.TextChoices):
         pending = 'PN', _('Pending Payment')
         paid = 'PD', _('Paid')
