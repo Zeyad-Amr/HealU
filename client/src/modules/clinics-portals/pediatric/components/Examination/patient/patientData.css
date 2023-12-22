@@ -1,6 +1,4 @@
-.patient-section{
-    height:30px; 
-}
+
 .personal{
     font-size: 20px;
     color: white;
@@ -15,10 +13,10 @@
     border-width: 1px;
     background:#0bc6cc;
     border-radius: 15px;
-    width: 150%;
+    width: 100%;
     padding: 10px;
-    /* height: 150%; */
-    margin-left: -300px;
+    height: 95%;
+    margin-left: -40px;
 }
 .mid{
     text-align: center;
@@ -35,12 +33,12 @@
     background:#014142;
     border-radius: 15px;
     padding: 10px;
-    padding-bottom: 30px;
-    width: 200%;
+    padding-bottom: 10px;
+    width: 150%;
     font-size: 20px;
     color: white;
-    /* height: 150%; */
-    margin-left: -100px;
+    height: 250px;
+    margin-left: -30px;
 
 }
 .his1 {
@@ -49,7 +47,7 @@
     border-width: 2px;
     border-radius: 10px;
     padding: 10px;
-    /* height: 30px; */
+    height: 140px;
     margin-left: 10px;  
   }
  
@@ -58,6 +56,18 @@
     font-size: 20px;
     font-weight: bold;
     color: white;
+}
+
+.his3{
+    border-style: solid;
+    border-color: #056f72;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 10px;
+    height: 140px;
+    margin-left: 10px;
+    width: 300px;
+
 }
 /* .ill{
     font-size: 10px;
