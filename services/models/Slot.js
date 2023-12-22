@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 const slotSchema = mongoose.Schema(
   {
-    slotId: {
-      type: Number,
-      required: [true, "Please enter slot id"],
-    },
     doctorId: {
       type: Number,
       required: [true, "Please enter doctor id"],
@@ -18,9 +14,9 @@ const slotSchema = mongoose.Schema(
       type: String,
       required: [true, "Please enter the slot's time"],
     },
-    date: {
-      type: Date,
-      required: [true, "Please enter the slot's date"],
+    weekDay: {
+      type: String,
+      required: [true, "Please enter the slot's week day"],
     },
   },
 );

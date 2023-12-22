@@ -6,7 +6,14 @@ router.post("/", SlotController.createSlot);
 
 router.get("/", SlotController.getAllSlots);
 
-router.get("/:doctorId", SlotController.getSlotByDoctorID);
+router.get("/doctor/:doctorId", SlotController.getSlotsByDoctorID);
+
+router.get("/clinic/:clinicId", SlotController.getSlotsByClinicID);
+
+router.get(
+    "/doctor/:doctorId/date/:date",
+    SlotController.getSlotsByDoctorIDandDate
+);
 
 router.put("/:slotId", SlotController.updateSlot);
 
