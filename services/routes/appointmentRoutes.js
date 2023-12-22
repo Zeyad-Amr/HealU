@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const AppointmentController = require("../controllers/appointmentsController");
 
-router.post("/", AppointmentController.createAppointment);
+router.post("/:slotId/:patientId", AppointmentController.createAppointment);
 
 router.get("/", AppointmentController.getAllAppointments);
 
@@ -11,12 +11,14 @@ router.get(
   AppointmentController.getAppointmentByPatientID
 );
 
+router.get("/:appointmentId", AppointmentController.getAppointmentByID);
+
 router.get("/doctor/:doctorId", AppointmentController.getAppointmentByDoctorID);
 
 router.get("/clinic/:clinicId", AppointmentController.getAppointmentByClinicID);
 
-router.put("/:patientId/:slotId", AppointmentController.updateAppointment);
+router.put("/:appointmentId", AppointmentController.updateAppointment);
 
-router.delete("/:patientId/:slotId", AppointmentController.deleteAppointment);
+router.delete("/:appointmentId", AppointmentController.cancelAppointment);
 
 module.exports = router;

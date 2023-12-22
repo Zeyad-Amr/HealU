@@ -2,20 +2,33 @@ const mongoose = require("mongoose");
 
 const appointmentSchema = mongoose.Schema(
   {
-    slot_id: {
-      type: String,
+    appointmentId: {
+      type: Number,
+      required: [true, "Please enter appointment id"],
     },
-    patient_id: {
-      type: String,
+    patientId: {
+      type: Number,
+      required: [true, "Please enter patient id"],
     },
-    doctor_id: {
-      type: String,
+    doctorId: {
+      type: Number,
+      required: [true, "Please enter doctor id"],
     },
-    clinic_id: {
-      type: String,
+    clinicId: {
+      type: Number,
+      required: [true, "Please enter clinic id"],
     },
     status: {
       type: String,
+      required: [true, "Please enter the appointment's status"],
+    },
+    date: {
+      type: Date,
+      required: [true, "Please enter the appointment's date"],
+    },
+    time: {
+      type: String,
+      required: [true, "Please enter the appointment's time"],
     },
   },
   {
