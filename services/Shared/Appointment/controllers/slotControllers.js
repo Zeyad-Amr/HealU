@@ -184,6 +184,7 @@ const deleteSlot = async (req, res, next) => {
     try {
         const { slotId } = req.params;
         const slot = await Slot.findOneAndDelete({ _id: slotId }, req.body);
+        await Appointment.findOneAndDelete({ slotId: slotId });
 
         if (slot) res.status(200).json({ message: "Success" });
         else
