@@ -39,7 +39,7 @@ const getSlotByDoctorID = async (req, res, next) => {
     const { doctorId } = req.params;
     const slot = await Slot.find({ doctorId: doctorId });
 
-    if(slot)
+    if(slot.length > 0)
       res.status(200).json(slot);
     else
       res.status(404).json({ message: `No slot found with Doctor ID: ${doctorId}` });

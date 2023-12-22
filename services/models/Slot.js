@@ -23,9 +23,6 @@ const slotSchema = mongoose.Schema(
       required: [true, "Please enter the slot's date"],
     },
   },
-  {
-    timestamps: true,
-  }
 );
 
 const Slot = mongoose.model("Slot", slotSchema);
