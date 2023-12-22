@@ -1,0 +1,12 @@
+*{
+    margin: 5px;
+    padding: 5px;
+}
+
+.form{
+    /* padding: 10px; */
+    border: solid 2px black;
+    position: relative;
+    border-radius: 8px;
+}
+
