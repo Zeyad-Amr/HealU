@@ -51,7 +51,6 @@ function EditToolbar(props: EditToolbarProps) {
 
   return (
       <div className="CreateContainer">
-          <DatePicker label="Uncontrolled picker" defaultValue={dayjs('2022-04-17')} />
           <Button
         className="AddBtn"
         color="primary"

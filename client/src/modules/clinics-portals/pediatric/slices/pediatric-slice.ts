@@ -1,14 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export interface patientType{
-    id: number;
-    name: string;
-}
+
 
 export interface Schedule{
     id: number;
-    Patient: patientType;
+   
     date: string;
     time: string;
     status: string;
@@ -22,7 +19,6 @@ export interface Drug {
 }
 export interface Eprescription { 
     id: number;
-    patient: patientType;
     drugs: Drug[];
     
 }
@@ -45,7 +41,6 @@ export interface Diagnosis {
 }
 export interface Record { 
     id: number;
-    patient: patientType;
     Diagnosis: Diagnosis[];
 }
 
@@ -83,7 +78,7 @@ export const fetchDevices = createAsyncThunk(
     async (_data: AllDevices[], thunkApi) => {
         const { rejectWithValue } = thunkApi;
         try {
-            const response = await axios.get('https://5zd4y.wiremockapi.cloud/json/1');
+            const response = await axios.get('https://pediatric-clinic-devices.onrender.com/device');
             const devices: AllDevices[] = response.data;
             return devices;
         } catch (error) {
@@ -92,12 +87,13 @@ export const fetchDevices = createAsyncThunk(
     });
 export const AddDevice = createAsyncThunk(
     'devices/AddDevice',
-    async (data: device, thunkApi) => {
+    async (data :any, thunkApi) => {
         const { rejectWithValue } = thunkApi;
         try {
-            const response = await axios.post('http://localhost:5000/api/devices',data);
+            const response = await axios.post('https://pediatric-clinic-devices.onrender.com/device', data);
             const devices: AllDevices[] = response.data;
             return devices;
+            
         } catch (error) {
             return rejectWithValue("Failed to fetch devices");
         }
@@ -119,6 +115,17 @@ const deviceSlice = createSlice({
             state.error = '';
         });
         builder.addCase(fetchDevices.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload as string;
+        });
+        builder.addCase(AddDevice.pending, (state, action) => {
+            state.loading = true;
+        });
+        builder.addCase(AddDevice.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = '';
+        });
+        builder.addCase(AddDevice.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload as string;
         });
