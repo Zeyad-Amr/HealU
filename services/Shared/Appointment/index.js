@@ -26,5 +26,5 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-app.use("/api/slots", slotRoute);
-app.use("/api/appointments", appointmentRoute);
+app.use("/slots", slotRoute);
+app.use("/appointments", appointmentRoute);
