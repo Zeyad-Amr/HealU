@@ -115,14 +115,17 @@ def get_all_patient_invoices(requests,patient_id):
 
 @csrf_exempt
 def new_bill(request):
+    print("NEW BILLLLL")
     if request.method == 'POST':
+        print("POSTTTTT")
+
         body = json.loads(request.body.decode("utf-8"))
         invoice = get_object_or_404(Invoice, id=body["invoiceId"])
         if body["paymentMethod"]=="card":
             paymentSource = body["paymentSource"]["card"]       
             response = utils.pay_with_card(amount= body["amount"], card_number=paymentSource["number"],expiry=paymentSource["expiry"],cvv=paymentSource["cvv"],name=paymentSource["name"])
             if response.status_code == 201:
-                bill = Bill(invoice = invoice, amount=body["amount"], paymentMethod = "ON", dateTime = timezone.now().isoformat())
+                bill = Bill(invoiceId = invoice, amount=body["amount"], paymentMethod = "ON", dateTime = timezone.now().isoformat())
                 bill.save()
                 response = BillSerializer(bill).data
                 return JsonResponse(response, status=201, safe=False)
@@ -130,7 +133,7 @@ def new_bill(request):
                 return JsonResponse({"message": "payment unsuccessful"}, status=response.status_code, safe=False)
             
         if body["paymentMethod"] == "offline":
-            bill = Bill(invoice = invoice, amount=body["amount"], paymentMethod = "OF", dateTime = timezone.now().isoformat())
+            bill = Bill(invoiceId = invoice, amount=body["amount"], paymentMethod = "OF", dateTime = timezone.now().isoformat())
             bill.save()
             response = BillSerializer(bill).data
             return JsonResponse(response, status = 201, safe=False)
