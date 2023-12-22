@@ -15,7 +15,7 @@ class Invoice(models.Model):
     dateTime = models.DateTimeField()
     servicesIds = ArrayField(models.IntegerField())
     def __str__(self):
-         return f'{self.id} {self.status} {self.services_ids}'
+         return self
 
 class Bill(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -23,7 +23,7 @@ class Bill(models.Model):
     amount = models.IntegerField()
 
     class Payment(models.TextChoices):
-        online = 'ON', _('Online')
+        online = 'ON', _('Card')
         offline = 'OF', _('Offline')
 
     paymentMethod = models.CharField(max_length=2, choices= Payment.choices, default=Payment.offline)
