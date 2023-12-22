@@ -3,7 +3,17 @@ import axios from 'axios';
 
 export interface patientPrsonalInfo {
     name: string;
-    wight: number;
+    weight: number;
     height: number;
     age: number;
 }
+
+export interface history {
+    drugs: string[];
+    illnesses: string[];
+    tests: string[];
+    operation: string[];
+
+    
+}
+

@@ -1,3 +1,34 @@
+/* .container{
+    background-color:gray;
+} */
+
 .container{
-    background-color: red;
+    background-color: rgb(221, 231, 236);
+    /* height: 500px; */
+    border-radius: 5px;
 }
+.diagnosisframe {
+    border-style: solid;
+    border-color: hsl(182, 75%, 50%); /* red */
+    border-width: 1px;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    height: 260px;
+    position: relative;
+    top: 300px;
+    }
+
+.postionofdiagnosis {
+  position: absolute; 
+  left: 280px;
+  top: 14px;
+}  
+
+.postionbutton {
+    position: relative; 
+    left: 780px;
+   top:90px;
+
+}
+

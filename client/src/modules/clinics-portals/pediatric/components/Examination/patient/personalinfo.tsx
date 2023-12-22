@@ -10,6 +10,16 @@ const PresonalInfo = (props: any) => {
             <h1>
                 {props.name}
             </h1>
+            <h1>
+                {props.weight}
+            </h1>
+            <h1>
+                {props.height}
+            </h1>
+            <h1>
+                {props.age}
+            </h1>
+            
         </>
     )
 };
