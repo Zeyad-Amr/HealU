@@ -1,45 +1,101 @@
+const axios = require('axios');
 const connection = require('../DataBase/connection'); // Import the connection module 
+require('dotenv').config();
 //==================================================================================================================
-function createRecord(req, res) {
+async function createRecord(req, res) {   //Create new record
   const {
-    PatientID,RDate,ClinicID,Weight,Length,
+    PatientID, AppointmentID, ClinicID, Weight, Length,
     ServicesDescription, RecommendedActionDescription,
-    Vital,Vaccines,EyeMeasurements,NutritionData,
+    Vital, Vaccines, EyeMeasurements, NutritionData,
   } = req.body;
 
-  insertRecord(PatientID,RDate,Weight,Length,ClinicID,res,(insertedRecordID) => {
-    if (Vital != null && Object.keys(Vital).length !== 0) {      //Check if the patient's vital signs data has been obtained at the clinic.(Not NULL)
-      insertVital(insertedRecordID, Vital, res, () => {});
+  try {      
+    const appointmentsUrl = process.env.APPOINTMENTS_API_URL; 
+    const clinicsUrl = process.env.Clinics_API_URL; 
+
+    const response = await axios.get(`${appointmentsUrl}/appointments/${AppointmentID}`).catch(() => null);
+    const responseClinic = await axios.get(`${clinicsUrl}/api/v1/clinic/${ClinicID}`).catch(() => null);
+
+    if ((!response || !response.data)) {   // Check if  AppointmentID  exist in Appointments List
+      console.log(`AppointmentID ${AppointmentID} is not found in Appointments List`);
+      return res.status(500).json({ error: `AppointmentID ${AppointmentID} is not found in Appointments List` });
     }
-    if (ServicesDescription !== "") {       //Check if patient had a additional service in the clinic (Not NULL)
-      insertServices(insertedRecordID, ServicesDescription, res, () => {});
+    if ((!responseClinic || !responseClinic.data)) {   // Check if  ClinicID  exist in Clinics List
+      console.log(`ClinicID ${ClinicID} is not found in Clinics List`);
+      return res.status(500).json({ error: `ClinicID ${ClinicID} is not found in Clinics List` });
     }
-    if (RecommendedActionDescription !== "") {   //Check if patient had a recommended action in the clinic (Not NULL)
-      insertRecommendedAction( insertedRecordID, RecommendedActionDescription, res, () => {});
+    
+    const responseClinicID = response?.data?.clinicId;  //Get clinicID from appointment service
+    const responsePatientId = response?.data?.patientId;  //Get patientID from appointment service
+    const RDate = response?.data?.date;     //Get appointmentDate from appointment service
+    const responseClinicName = responseClinic?.data?.data?.clinic?.name;    //Get clinicName from clinic service
+
+    if (responsePatientId != PatientID) {   //Check if appointment belongs to same patient
+      console.log(`AppointmentID ${AppointmentID} does not belong to the patient with patientId: ${PatientID}`);
+      return res.status(500).json({ error: `AppointmentID ${AppointmentID} does not belong to the patient with patientId: ${PatientID}` });
     }
-    // Check ClinicID and insert accordingly
-    if (ClinicID === 1) {        // Kids Clinic
-      if (Vaccines.length > 0) { 
-        insertVaccines(insertedRecordID, Vaccines, res, () => {});
+
+    if (responseClinicID != ClinicID) {   //Check if appointment belongs to same clinic
+      console.log(`This Appointment with ID:${AppointmentID} does not belong to the clinic with Id: ${ClinicID}`);
+      return res.status(500).json({ error: `This Appointment with ID:${AppointmentID} does not belong to the clinic with Id: ${ClinicID}` });
+    }
+    // Check if PatientID exists in MedicalHistory table
+    const checkMedicalHistoryQuery = `SELECT * FROM medicalhistory WHERE PatientID = ?`;
+    connection.query(checkMedicalHistoryQuery, [PatientID], async (checkMedicalHistoryErr, MedicalHistoryResult) => { 
+      if (checkMedicalHistoryErr) {
+        console.error("Error checking for existing PatientID:", checkMedicalHistoryErr);
+        return res.status(500).json({ error: "Internal Server Error, Check if PatientID exists in MedicalHistory table" });
       }
-      res.status(201).json({message: " New Record is created successfully with Pediatric Clinic ",});
-    } 
-    else if (ClinicID === 2) {        // Eyes Clinic
-      if (EyeMeasurements != null && Object.keys(EyeMeasurements).length !== 0) {
-        insertEyeMeasurement(insertedRecordID,EyeMeasurements,res,() => {});
+      if (MedicalHistoryResult.length === 0) {   // If PatientID does not exist in the MedicalHistory table, insert it
+        /* "Assuming that the Appointment Service has checked that the PatientID already exists in the Registration Service, 
+        since an appointment has already been scheduled, it is certain that the patient exists, So insert it into my database." */
+        const sql_query_medicalhistory = `INSERT INTO medicalhistory (PatientID) VALUES (?)`;
+        connection.query(sql_query_medicalhistory, [PatientID], (medicalhistoryErr, medicalhistoryResult) => {
+          if (medicalhistoryErr) {
+            console.error("Error creating medicalhistory:", medicalhistoryErr);
+            res.status(500).json({ error: "Internal Server Error, Check if PatientID exists" });
+            return;
+          }
+          console.log("New Patient is created with PatientID:", PatientID);
+        });
       }
-      res.status(201).json({message:" New Record is created successfully with Ophthalmology Clinic ",});
-    } 
-    else if (ClinicID === 3) {        // Nutrition Clinic
-      if (NutritionData != null && Object.keys(NutritionData).length !== 0) {
-        insertNutrition(insertedRecordID, NutritionData, res, () => {});
+
+    insertRecord(PatientID, AppointmentID, ClinicID, RDate, Weight, Length,res,(insertedRecordID) => {
+      if (Vital != null && Object.keys(Vital).length !== 0) {      //Check if the patient's vital signs data has been obtained at the clinic.(Not NULL)
+        insertVital(insertedRecordID, Vital, res, () => {});
       }
-      res.status(201).json({message:" New Record is created successfully with Nutrition Clinic ",});
-    } 
-    else {         // Handle other clinics
-      res.status(201).json({ message: " New Record is created successfully " });
-    }
+      if (ServicesDescription !== "") {       //Check if patient had a additional service in the clinic (Not NULL)
+        insertServices(insertedRecordID, ServicesDescription, res, () => {});
+      }
+      if (RecommendedActionDescription !== "") {   //Check if patient had a recommended action in the clinic (Not NULL)
+        insertRecommendedAction( insertedRecordID, RecommendedActionDescription, res, () => {});
+      }
+      // Check ClinicName and insert accordingly
+      if (responseClinicName ===  process.env.Pediatric_Clinic_ID) {        // Kids Clinic
+        if (Vaccines.length > 0) { 
+          insertVaccines(insertedRecordID, Vaccines, res, () => {});
+        }
+      } 
+      else if (responseClinicName ===  process.env.Ophthalmology_Clinic_ID) {        // Eyes Clinic
+        if (EyeMeasurements != null && Object.keys(EyeMeasurements).length !== 0) {
+          insertEyeMeasurement(insertedRecordID,EyeMeasurements,res,() => {});
+        }
+      } 
+      else if (responseClinicName ===  process.env.Nutrition_Clinic_ID) {        // Nutrition Clinic
+        if (NutritionData != null && Object.keys(NutritionData).length !== 0) {
+          insertNutrition(insertedRecordID, NutritionData, res, () => {});
+        }
+      }    
+      console.log(`New Record is created successfully with ${responseClinicName} Clinic`); 
+      res.status(201).json({message:`New Record is created successfully with ${responseClinicName} Clinic`,});
+
+    });
   });
+    // Rest of your existing code
+  } catch (appointmentsError) {
+    console.error("Error checking for existing AppointmentID:", appointmentsError);
+    res.status(500).json({ error: "Internal Server Error, Check if AppointmentID exists" });
+  }
 }
 //==================================================================================================================
 function getRecord (req, res)  {         //Get All Records
@@ -47,7 +103,7 @@ function getRecord (req, res)  {         //Get All Records
   connection.query(sql_query, (err, result) => {
     if (err) throw err;
     if (result.length === 0) {
-      res.status(404).json({ message: 'This record does not exist.' });
+      res.status(404).json({ message: 'No records found in records list' });
     } else {
       const records = processQueryResult(result);
       res.status(200).json(records);
@@ -55,9 +111,9 @@ function getRecord (req, res)  {         //Get All Records
   });
 }
 //==================================================================================================================
-function getRecordByRecordID(req, res) {
-  const recordID = req.params.recordID;
-  const sql_query = generateRecordQuery('', `AND Record.RecordID = ${recordID}`);
+function getRecordByRecordID(req, res) {  //Get All Record By RecordID
+  const recordID = req.params.recordId;
+  const sql_query = generateRecordQuery('', `AND record.RecordID = ${recordID}`);
 
   connection.query(sql_query, (err, result) => {
     if (err) throw err;
@@ -70,9 +126,9 @@ function getRecordByRecordID(req, res) {
   });
 }
 //==================================================================================================================
-function getRecordByPatientID(req, res) {
-  const patientID = req.params.patientID;
-  const sql_query = generateRecordQuery('', `AND Record.PatientID = ${patientID}`);
+function getRecordByPatientID(req, res) {  //Get All Record By patientID
+  const patientID = req.params.patientId;
+  const sql_query = generateRecordQuery('', `AND record.PatientID = ${patientID}`);
 
   connection.query(sql_query, (err, result) => {
     if (err) throw err;
@@ -84,28 +140,26 @@ function getRecordByPatientID(req, res) {
     }
   });
 }
-
 // ============================================================================================================
 function generateRecordQuery(joinConditions, whereConditions) {   // Function to generate the common SQL query for retrieving records
-
 select_query = `
-  SELECT Record.RecordID, Record.PatientID, Record.RDate, Record.Weight, Record.Length, Record.ClinicID,
-  Services.ServicesID, Services.ServicesDescription,
-  RecommendedAction.RecommendedActionID, RecommendedAction.RecommendedActionDescription,
-  Vital.VitalID, Vital.BloodPressure, Vital.RespirationRate, Vital.HeartRate, Vital.DiabeticTest, Vital.SPO2,
-  Vaccines.VaccinesID, Vaccines.VName, Vaccines.VType, Vaccines.VDate,
-  EyeMeasurement.EyeMeasurementID, EyeMeasurement.LeftEye, EyeMeasurement.RightEye,
-  Nutrition.NutritionID, Nutrition.DietPlan, Nutrition.Inbody
+  SELECT record.RecordID, record.PatientID, record.AppointmentID, record.ClinicID, record.RDate, record.Weight, record.Length, 
+  services.ServicesID, services.ServicesDescription,
+  recommendedaction.RecommendedActionID, recommendedaction.RecommendedActionDescription,
+  vital.VitalID, vital.BloodPressure, vital.RespirationRate, vital.HeartRate, vital.DiabeticTest, vital.SPO2,
+  vaccines.VaccinesID, vaccines.VName, vaccines.VType, vaccines.VDate,
+  eyemeasurement.EyeMeasurementID, eyemeasurement.LeftEye, eyemeasurement.RightEye,
+  nutrition.NutritionID, nutrition.DietPlan, nutrition.Inbody
 
-  FROM Record
-  LEFT JOIN Services ON Record.RecordID = Services.RecordID
-  LEFT JOIN RecommendedAction ON Record.RecordID = RecommendedAction.RecordID
-  LEFT JOIN Vital ON Record.RecordID = Vital.RecordID
-  LEFT JOIN Vaccines ON Record.RecordID = Vaccines.RecordID
-  LEFT JOIN EyeMeasurement ON Record.RecordID = EyeMeasurement.RecordID
-  LEFT JOIN Nutrition ON Record.RecordID = Nutrition.RecordID
+  FROM record
+  LEFT JOIN services ON record.RecordID = services.RecordID
+  LEFT JOIN recommendedaction ON record.RecordID = recommendedaction.RecordID
+  LEFT JOIN vital ON record.RecordID = vital.RecordID
+  LEFT JOIN vaccines ON record.RecordID = vaccines.RecordID
+  LEFT JOIN eyemeasurement ON record.RecordID = eyemeasurement.RecordID
+  LEFT JOIN nutrition ON record.RecordID = nutrition.RecordID
   ${joinConditions}
-  WHERE Record.RecordID IS NOT NULL ${whereConditions}` ;
+  WHERE record.RecordID IS NOT NULL ${whereConditions}` ;
 
   return  select_query;
 }
@@ -120,8 +174,9 @@ function processQueryResult(result) {          //Function to process the query r
       recordMap[RecordID] = {
         RecordID,
         PatientID: row.PatientID,
-        RecordDate: row.RDate,
+        AppointmentID: row.AppointmentID,
         ClinicID: row.ClinicID,
+        RecordDate: row.RDate,
         PatientWeight: row.Weight,
         PatientHeight: row.Length,
         Services: [],
@@ -161,12 +216,12 @@ function processQueryResult(result) {          //Function to process the query r
   return Object.values(recordMap);
 }
 //=====================================================================================================================
-function insertRecord(PatientID, RDate, Weight, Length, ClinicID, res, callback) {
-  const sql_query_Record = "INSERT INTO Record (PatientID, RDate, Weight, Length, ClinicID) VALUES (?, ?, ?, ?, ?)";
-  connection.query(sql_query_Record, [PatientID, RDate, Weight, Length, ClinicID], (RecordErr, RecordResult) => {
+function insertRecord(PatientID, AppointmentID, ClinicID, RDate, Weight, Length, res, callback) {  //insert into record table
+  const sql_query_Record = "INSERT INTO record (PatientID, AppointmentID, ClinicID, RDate, Weight, Length) VALUES (?, ?, ?, ?, ?, ?)";
+  connection.query(sql_query_Record, [PatientID, AppointmentID, ClinicID, RDate, Weight, Length], (RecordErr, RecordResult) => {
     if (RecordErr) {
       console.error("Error creating Record:", RecordErr);
-      res.status(500).json({ error: "Internal Server Error, Check if PatientID exists" });
+      res.status(500).json({ error: "Error creating Record, Check if PatientID exists" });
       return;
     }
     const insertedRecordID = RecordResult.insertId;  // Get the auto-incremented RecordID from the inserted record
@@ -175,12 +230,12 @@ function insertRecord(PatientID, RDate, Weight, Length, ClinicID, res, callback)
   });
 }
 //==============================================================================================================
-function insertServices(RecordID,ServicesDescription,res, callback) {
-  const sql_query_Services = `INSERT INTO Services (RecordID,ServicesDescription) VALUES (?, ?)`;
+function insertServices(RecordID,ServicesDescription,res, callback) {  //insert into Services table
+  const sql_query_Services = `INSERT INTO services (RecordID,ServicesDescription) VALUES (?, ?)`;
   connection.query(sql_query_Services, [RecordID,ServicesDescription], (ServicesErr, ServicesResult) => {
     if (ServicesErr) {
       console.error("Error creating Services:", ServicesErr);
-      res.status(500).json({ error: "Internal Server Error, Check if RecordID exists" });
+      res.status(500).json({ error: "Error creating Services, Check if RecordID exists" });
       return;
     }
     const insertedServiceID = ServicesResult.insertId;  
@@ -190,12 +245,12 @@ function insertServices(RecordID,ServicesDescription,res, callback) {
   );
 }
 //==============================================================================================================
-function insertRecommendedAction(RecordID,RecommendedActionDescription,res, callback) {
-  const sql_query_RecommendedAction = `INSERT INTO RecommendedAction (RecordID,RecommendedActionDescription) VALUES ( ?, ?)`;
+function insertRecommendedAction(RecordID,RecommendedActionDescription,res, callback) {  //insert into RecommendedAction table
+  const sql_query_RecommendedAction = `INSERT INTO recommendedaction (RecordID,RecommendedActionDescription) VALUES ( ?, ?)`;
   connection.query(sql_query_RecommendedAction, [RecordID,RecommendedActionDescription], (RecommendedActionErr, RecommendedActionResult) => {
     if (RecommendedActionErr) {
       console.error("Error creating RecommendedAction:", RecommendedActionErr);
-      res.status(500).json({ error: "Internal Server Error, Check if RecordID exists" });
+      res.status(500).json({ error: "Error creating RecommendedAction, Check if RecordID exists" });
       return;
     }
     const insertedRecommendedActionID = RecommendedActionResult.insertId; 
@@ -205,13 +260,13 @@ function insertRecommendedAction(RecordID,RecommendedActionDescription,res, call
   );
 }
 //==============================================================================================================
-function insertVital(RecordID, Vital, res, callback) {
-  const sql_query_Vital = `INSERT INTO Vital (RecordID, BloodPressure, RespirationRate, HeartRate, DiabeticTest, SPO2) VALUES ( ?, ?, ?, ?, ?, ?)`;
+function insertVital(RecordID, Vital, res, callback) {  //insert into Vital Sign table
+  const sql_query_Vital = `INSERT INTO vital (RecordID, BloodPressure, RespirationRate, HeartRate, DiabeticTest, SPO2) VALUES ( ?, ?, ?, ?, ?, ?)`;
 
   connection.query(sql_query_Vital,[RecordID, Vital.BloodPressure, Vital.RespirationRate, Vital.HeartRate, Vital.DiabeticTest, Vital.SPO2],(vitalErr, vitalResult) => {
     if (vitalErr) {
       console.error('Error creating VitalSign:', vitalErr);
-      res.status(500).json({ error: "Internal Server Error, Check if RecordID exists" });
+      res.status(500).json({ error: "Error creating VitalSign, Check if RecordID exists" });
       return;
     }
     const insertedVitalSignID = vitalResult.insertId; 
@@ -220,15 +275,15 @@ function insertVital(RecordID, Vital, res, callback) {
   });
 }
 //==============================================================================================================
-function insertVaccines(RecordID, Vaccines, res, callback) {
-  const sql_query_Vaccines = `INSERT INTO Vaccines (RecordID, VName, VType, VDate ) VALUES ( ?, ?, ?, ?)`;
+function insertVaccines(RecordID, Vaccines, res, callback) {  //insert into Vaccines table
+  const sql_query_Vaccines = `INSERT INTO vaccines (RecordID, VName, VType, VDate ) VALUES ( ?, ?, ?, ?)`;
   Promise.all(
     Vaccines.map((vaccine) => {
       return new Promise((resolve, reject) => {
         connection.query(sql_query_Vaccines,[RecordID, vaccine.VName, vaccine.VType, vaccine.VDate],(vaccinesErr, vaccinesResult) => {
           if (vaccinesErr) {
             console.error("Error creating Vaccine:", vaccinesErr);
-            res.status(500).json({ error: "Internal Server Error, Check if RecordID exists" });
+            res.status(500).json({ error: "Error creating Vaccine, Check if RecordID exists" });
             reject(vaccinesErr);
           } else {
             const insertedVaccineID = vaccinesResult.insertId; 
@@ -247,13 +302,13 @@ function insertVaccines(RecordID, Vaccines, res, callback) {
     });
 }
 //==============================================================================================================
-function insertEyeMeasurement(RecordID, EyeMeasurements, res, callback) {
-  const sql_query_EyeMeasurement = `INSERT INTO EyeMeasurement (RecordID, LeftEye, RightEye) VALUES ( ?, ?, ?)`;
+function insertEyeMeasurement(RecordID, EyeMeasurements, res, callback) {   //insert into EyeMeasurement table
+  const sql_query_EyeMeasurement = `INSERT INTO eyemeasurement (RecordID, LeftEye, RightEye) VALUES ( ?, ?, ?)`;
 
   connection.query(sql_query_EyeMeasurement,[RecordID, EyeMeasurements.LeftEye, EyeMeasurements.RightEye],(eyeMeasurementErr, eyeMeasurementResult) => {
     if (eyeMeasurementErr) {
       console.error("Error creating EyeMeasurement:", eyeMeasurementErr);
-      res.status(500).json({ error:  "Internal Server Error, Check if RecordID exists" });
+      res.status(500).json({ error:  "Error creating EyeMeasurement, Check if RecordID exists" });
       return;
     } 
     const insertedEyeMeasurementID = eyeMeasurementResult.insertId; 
@@ -261,14 +316,13 @@ function insertEyeMeasurement(RecordID, EyeMeasurements, res, callback) {
     callback();
   });
 }
-
 //==============================================================================================================
-function insertNutrition(RecordID, NutritionData, res,callback) {
-  const sql_query_Nutrition = `INSERT INTO Nutrition (RecordID, DietPlan, Inbody) VALUES ( ?, ?, ?)`;
+function insertNutrition(RecordID, NutritionData, res,callback) {  //insert into Nutrition table
+  const sql_query_Nutrition = `INSERT INTO nutrition (RecordID, DietPlan, Inbody) VALUES ( ?, ?, ?)`;
   connection.query(sql_query_Nutrition,[RecordID, NutritionData.DietPlan, NutritionData.Inbody],(nutritionDataErr, nutritionDataResult) => {
     if (nutritionDataErr) {
       console.error("Error creating Nutrition:", nutritionDataErr);
-      res.status(500).json({ error:  "Internal Server Error, Check if RecordID exists" });
+      res.status(500).json({ error:  "Error creating Nutrition, Check if RecordID exists" });
       return;
     }
     const insertedNutritionID = nutritionDataResult.insertId; 
@@ -276,9 +330,7 @@ function insertNutrition(RecordID, NutritionData, res,callback) {
     callback();
   });
 }
-
 //====================================================================================================================
-
 module.exports = {
   createRecord,
   getRecord,

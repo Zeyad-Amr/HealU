@@ -1,22 +1,25 @@
+const axios = require('axios');
 const connection = require('../DataBase/connection'); // Import the connection module 
- 
+require('dotenv').config();
 // ============================================================================================================
 function generateRecordQuery(joinConditions, whereConditions) {   // Function to generate the common SQL query for retrieving mwdical history
-
   select_query = `
-  SELECT MedicalHistory.PatientID,
-  Illnesses.IllnessID, Illnesses.IllnessDescription,
-  Operations.OperationID, Operations.OperationName, Operations.OperationDate,
-  MedicalTests.TestID, MedicalTests.TestName, MedicalTests.TestResult,
-  Complaints.ComplaintID, Complaints.ComplaintDescription
+  SELECT medicalhistory.PatientID,
+  illnesses.IllnessID, illnesses.IllnessDescription,
+  operations.OperationID, operations.OperationName, operations.OperationDate,
+  medicaltests.TestID, medicaltests.TestDescription,
+  complaints.ComplaintID, complaints.ComplaintDescription,
+  drug.DrugID, drug.DName, drug.DDuration, drug.DDose 
 
-  FROM MedicalHistory
-  LEFT JOIN Illnesses ON MedicalHistory.PatientID = Illnesses.PatientID
-  LEFT JOIN Operations ON MedicalHistory.PatientID = Operations.PatientID
-  LEFT JOIN MedicalTests ON MedicalHistory.PatientID = MedicalTests.PatientID
-  LEFT JOIN Complaints ON MedicalHistory.PatientID = Complaints.PatientID
+  FROM medicalhistory
+  LEFT JOIN illnesses ON medicalhistory.PatientID = illnesses.PatientID
+  LEFT JOIN operations ON medicalhistory.PatientID = operations.PatientID
+  LEFT JOIN medicaltests ON medicalhistory.PatientID = medicaltests.PatientID
+  LEFT JOIN complaints ON medicalhistory.PatientID = complaints.PatientID
+  LEFT JOIN drug ON medicalhistory.PatientID = drug.PatientID
+
   ${joinConditions}
-  WHERE MedicalHistory.PatientID IS NOT NULL ${whereConditions}`;
+  WHERE medicalhistory.PatientID IS NOT NULL ${whereConditions}`;
 
   return  select_query;
 }
@@ -26,7 +29,7 @@ function getMedicalhistory (req, res)  {         //Get All medical histories
   connection.query(sql_query, (err, result) => {
     if (err) throw err;
     if (result.length === 0) {
-      res.status(404).json({ message: 'This Patient is not found in the medical history' });
+      res.status(404).json({ message: 'No Patients found in the medical history list' });
     } else {
       const medicalHistory = processQueryResult(result);
       res.status(200).json(medicalHistory);
@@ -35,8 +38,8 @@ function getMedicalhistory (req, res)  {         //Get All medical histories
 }
 //==================================================================================================================
 function getMedicalhistoryByPatientID(req, res) {     //Get medical history with id
-  const patientID = req.params.patientID;
-  const sql_query = generateRecordQuery('', `AND MedicalHistory.PatientID = ${patientID}`);
+  const patientID = req.params.patientId;
+  const sql_query = generateRecordQuery('', `AND medicalhistory.PatientID = ${patientID}`);
 
   connection.query(sql_query, (err, result) => {
     if (err) throw err;
@@ -56,9 +59,10 @@ function processQueryResult(result) {          //Function to process the query r
   const uniqueOperationIDs = new Set();
   const uniqueTestIDs = new Set();
   const uniqueComplaintIDs = new Set();
+  const uniqueDrugIDs = new Set();
 
   result.forEach((row) => {
-    const { PatientID, IllnessID, OperationID, TestID, ComplaintID } = row;
+    const { PatientID, IllnessID, OperationID, TestID, ComplaintID , DrugID} = row;
 
     if (!patientsMap[PatientID]) {
       patientsMap[PatientID] = {
@@ -67,6 +71,7 @@ function processQueryResult(result) {          //Function to process the query r
         Operations: [],
         MedicalTests: [],
         Complaints: [],
+        Drugs: [],
       };
     }
       // Check if IllnessID is not null and not already in the array
@@ -84,7 +89,7 @@ function processQueryResult(result) {          //Function to process the query r
     // Check if TestID is not null and not already in the array
     if (TestID !== null && !uniqueTestIDs.has(TestID)) {
       uniqueTestIDs.add(TestID);
-      patientsMap[PatientID].MedicalTests.push({ TestName: row.TestName, TestResult: row.TestResult });
+      patientsMap[PatientID].MedicalTests.push({ TestDescription: row.TestDescription });
     }
 
     // Check if ComplaintID is not null and not already in the array
@@ -92,46 +97,113 @@ function processQueryResult(result) {          //Function to process the query r
       uniqueComplaintIDs.add(ComplaintID);
       patientsMap[PatientID].Complaints.push({ ComplaintDescription: row.ComplaintDescription });
     }
+
+    // Check if DrugID is not null and not already in the array
+    if (DrugID !== null && !uniqueDrugIDs.has(DrugID)) {
+      uniqueDrugIDs.add(DrugID);
+      patientsMap[PatientID].Drugs.push({DrugName:row.DName, DrugDuration:row.DDuration, DrugDose:row.DDose});
+    }
   });
   return Object.values(patientsMap);
 }
-// .......................................Create operation (POST)....................................................
-function createMedicalHistory(req, res) {
-  const { PatientID,Illnesses,Operations,MedicalTests, Complaints} = req.body;
+// .==================================== Create operation (POST) ================================================
+async function createMedicalHistory(req, res) {
+  const { PatientID, Illnesses, Operations, MedicalTests, Complaints, Drugs } = req.body;
 
-  // ..................Check for existing PatientID in the MedicalHistory table
-  const checkMedicalHistoryQuery = `SELECT * FROM MedicalHistory WHERE PatientID = ?`;
+  try {
+    // Check if PatientID exists
+    const registerationUrl = process.env.REGISTERATION_API_URL;
+    const response = await axios.get(`${registerationUrl}/user/patient/${PatientID}`).catch(() => null);
 
-  connection.query(checkMedicalHistoryQuery, [PatientID], (checkPatientErr, PatientResult) => {
-    if (checkPatientErr) {
-      console.error("Error checking for existing PatientID:", checkPatientErr);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
+    if (!response || !response.data) {
+      console.log(`PatientID ${PatientID} is not found in Registeration List`);
+      return res.status(500).json({ error: `PatientID ${PatientID} is not found in Registeration List` });
     }
-    if (PatientResult.length === 0) {
-      res.status(404).json({ message: `No patient found with ID ${PatientID}` });
+
+    // Map MedicalTests array to promises checking if TestID exists in the external API (Storage API)
+    const medicalTestPromises = MedicalTests.map(async (medicalTest) => {
+      const { TestID } = medicalTest;
+
+      const testUrl = process.env.MEDICALTEST_API_URL;
+
+      const Imagesresponse = await axios.get(`${testUrl}/api/v1/images/${TestID}`).catch(() => null);
+      const Filesresponse = await axios.get(`${testUrl}/api/v1/files/${TestID}`).catch(() => null);
+
+      if ((!Imagesresponse || !Imagesresponse.data) && (!Filesresponse || !Filesresponse.data)) {
+        console.log(`Tests are not found for TestID ${TestID}`);
+        return { error: `Tests are not found for TestID ${TestID}` };
+      }
+
+      // Check if the PatientID matches the response.patientId
+      const imagePatientId = Imagesresponse?.data?.data?.image?.patientId;
+      const filesPatientId = Filesresponse?.data?.data?.file?.patientId;
+      const responsePatientId = imagePatientId || filesPatientId;
+
+      if (responsePatientId != PatientID) {
+        console.log(`TestID ${TestID} does not belong to the patient with patientId: ${PatientID}`);
+        return { error: `TestID ${TestID} does not belong to the patient with patientId: ${PatientID}` };
+      }
+
+      return null;
+    });
+
+    const medicalTestResults = await Promise.all(medicalTestPromises);      // Wait for all promises to resolve
+
+    const testErrors = medicalTestResults.filter((result) => result && result.error);      // Collect errors from medicalTestResults
+
+    if (testErrors.length > 0) {
+      return res.status(500).json({ errors: testErrors });
     }
-  
-     // If PatientID already exists, handle the error
-    if (PatientResult.length > 0) {
-      console.log("PatientID already exists in the MedicalHistory table");
-  
-    Promise.all([
-      insertDataIntoTable('Illnesses', ['PatientID', 'IllnessDescription'], Illnesses, PatientID),
-      insertDataIntoTable('Operations', ['PatientID', 'OperationName', 'OperationDate'], Operations, PatientID),
-      insertDataIntoTable('MedicalTests', ['PatientID', 'TestName', 'TestResult'], MedicalTests, PatientID),
-      insertDataIntoTable('Complaints', ['PatientID', 'ComplaintDescription'], Complaints, PatientID),
-    ])
-      .then(() => {
-        // Respond with success message
-        res.status(201).json({ message: "Medical History created successfully" });
-      })
-      .catch((error) => {
-        console.error("Error inserting:", error);
-        res.status(500).json({ error: "Internal Server Error" });
-      });
+    // Check if PatientID exists in MedicalHistory table
+    const checkMedicalHistoryQuery = `SELECT * FROM medicalhistory WHERE PatientID = ?`;
+    const [medicalHistoryResult] = await connection.promise().query(checkMedicalHistoryQuery, [PatientID]);
+
+    if (medicalHistoryResult.length === 0) {        // If PatientID does not exist in the MedicalHistory table, insert it
+      const sql_query_medicalhistory = `INSERT INTO medicalhistory (PatientID) VALUES (?)`;
+      await connection.promise().query(sql_query_medicalhistory, [PatientID]);
+      console.log("New Patient is created with PatientID:", PatientID);
     }
- });
+
+    // Check if PatientID has referenced values in other tables ( his medical history already exists) (patient has only one medical history)
+      const referencesQuery = `
+      SELECT PatientID FROM medicaltests WHERE PatientID = ?
+      UNION
+      SELECT PatientID FROM illnesses WHERE PatientID = ?
+      UNION
+      SELECT PatientID FROM operations WHERE PatientID = ?
+      UNION
+      SELECT PatientID FROM complaints WHERE PatientID = ?
+      UNION
+      SELECT PatientID FROM drug WHERE PatientID = ? AND PrescriptionID IS NULL
+    `;
+
+    const [referencesResult] = await connection.promise().query(referencesQuery, [PatientID, PatientID, PatientID, PatientID, PatientID]);
+
+    if (referencesResult.length > 0) {        // If PatientID has referenced values, return an error (patient has already history)
+      const errorMessage = `Sorry, PatientID ${PatientID} has already added his medical history before`;
+      console.log(errorMessage);
+      return res.status(400).json({ error: errorMessage });
+    }
+
+    // Now that all validations passed, proceed with insertions into other tables
+
+    // Insert data into the MedicalTests table
+    await insertDataIntoTable('medicaltests', ['PatientID', 'TestID', 'TestDescription'], MedicalTests, PatientID);
+
+    await Promise.all([       // Insert data into other tables
+      insertDataIntoTable('illnesses', ['PatientID', 'IllnessDescription'], Illnesses, PatientID),
+      insertDataIntoTable('operations', ['PatientID', 'OperationName', 'OperationDate'], Operations, PatientID),
+      insertDataIntoTable('complaints', ['PatientID', 'ComplaintDescription'], Complaints, PatientID),
+      insertDataIntoTable('drug', ['PatientID', 'DName', 'DDuration', 'DDose'], Drugs, PatientID),
+    ]);
+
+    // Respond with succ ess message
+    console.log(`New Medical History is created successfully with PatientID: ${PatientID}`);
+    res.status(201).json({ message:`New Medical History is created successfully with PatientID: ${PatientID}`});
+  } catch (error) {
+    console.error("Error creating medical history:", error);
+    res.status(500).json({ error: "Internal Server Error, Check if patientId exists" });
+  }
 }
 //==============================================================================================================
 function insertDataIntoTable(tableName, columns, data,ID) {
@@ -163,3 +235,7 @@ module.exports = {
   getMedicalhistory,
   getMedicalhistoryByPatientID,
 };  
+
+
+
+
