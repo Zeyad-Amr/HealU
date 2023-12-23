@@ -8,7 +8,7 @@ import "./container.css";
 const ExaminationScreen = () => {
     return (
         <>
-            <Container maxWidth= "lg" className="container">
+            <Container maxWidth= "lg" className="container" >
              <PatientSection />
              <Diagnosis/>
             </Container>

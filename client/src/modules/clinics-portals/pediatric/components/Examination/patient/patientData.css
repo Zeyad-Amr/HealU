@@ -1,3 +1,6 @@
+p{
+    margin: 0px !important;
+}
 .personal{
     font-size: 15px;
     color: white;
@@ -13,9 +16,9 @@
     border-radius: 15px;
     width: 80%;
     padding: 10px;
-    /* height: 150%; */
-    margin-left: -15px;
+    height: 250px;
 }
+   
  .history{
     border-style: solid;
     border-color: #014142; 
@@ -24,20 +27,18 @@
     border-radius: 15px;
     padding: 10px;
     padding-bottom: 15px;
-    /* width: 150%; */
     font-size: 10px;
     color: white;
-    /* height: 135%; */
-    margin-left: -70px;
-
+    height: 250px;
+   
 }
 
 .mid{
     text-align: center;
-    font-size: 15px;
+    font-size: 20px;
     color: white;
     font-weight: bold;
-
+    margin-bottom: 10px;
 }
 
 
@@ -47,30 +48,22 @@
     border-width: 2px;
     border-radius: 10px;
     padding: 10px;
-    /* height: 140px; */
-    margin-left: 10px; 
-    /* width: 95%;  */
+    height: 150px;
+   
   }
  
 .his2{
     text-align: center;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     color: white;
 }
 
-.his3{
-    border-style: solid;
-    border-color: #056f72;
-    border-width: 2px;
-    border-radius: 10px;
-    padding: 10px;
-    /* height: 140px; */
-    margin-left: 10px;
-    width: 300px;
 
+
+.MuiGrid-root.MuiGrid-container.css-106m9ew-MuiGrid-root{
+    justify-content: space-evenly;
 }
-/* .ill{
-    font-size: 10px;
-
-}   */
+.MuiGrid-root.MuiGrid-container.css-11lq3yg-MuiGrid-root{
+    justify-content: space-evenly;
+}

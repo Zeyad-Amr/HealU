@@ -1,34 +1,23 @@
-/* .container{
-    background-color:gray;
-} */
 
 .container{
     background-color: #eeefff;
-    margin-left: 50px;
-    height: 600px;
     border-radius: 5px;
     padding: 20px;
   }
   .diagnosisframe {
+
     border-style: solid;
     border-color: hsl(182, 75%, 50%); /* red */
     border-width: 1px;
     background: white;
     border-radius: 5px;
     padding: 10px;
-    height: 260px;
+    margin-top: 20px;
     position: relative;
-    top: 40px;
     }
-  
-  .postionofdiagnosis {
-  position: absolute; 
-  left: 280px;
-  top: 8px;
-  }  
   
   .postionbutton {
     position: relative; 
-    left: 780px;
-    top : 70px;
+    left: 820px;
+    top : -10px;
 }
