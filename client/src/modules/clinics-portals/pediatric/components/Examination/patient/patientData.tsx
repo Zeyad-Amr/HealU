@@ -21,7 +21,7 @@ const PatientSection = () => {
                                 Personal Data
                             </p>
                         </div>
-                    <Item style={{ fontSize: '10px' }}>
+                    <Item style={{ fontSize: '8px' }}>
                         <PresonalInfo name ="name : Naira " />
                         <PresonalInfo weight ="weight : 56 kg" />
                         <PresonalInfo height ="height : 158cm" />
@@ -47,7 +47,7 @@ const PatientSection = () => {
                                     Drugs
                                 </p>
                             </div>
-                        <Item style={{ fontSize: '10px' }}>
+                        <Item style={{ fontSize: '7px' }}>
                         <HistoryInfo drugs="Pill"/>
 
                         </Item>
@@ -62,16 +62,16 @@ const PatientSection = () => {
                             </p>
                         </div>
                     <div className="ill">
-                      <Item style={{ fontSize: '10px' }}>
+                      <Item style={{ fontSize: '7px' }}>
                         <HistoryInfo illnesses="low blood"/>
 
                         </Item>
                     </div>
                      </div>
                     </Grid>
-                    <Grid item xs={5} style={{ fontSize: '10px' }}>
+                    <Grid item xs={5} style={{ fontSize: '7px' }}>
                         
-                        <div className="his1">
+                        <div className="his3">
                         <Grid container>
                                 <Grid item xs>
                                 <div className="his2">

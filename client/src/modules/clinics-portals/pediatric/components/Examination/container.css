@@ -3,11 +3,13 @@
 } */
 
 .container{
-    background-color: rgb(221, 231, 236);
-    /* height: 500px; */
+    background-color: #eeefff;
+    margin-left: 50px;
+    height: 600px;
     border-radius: 5px;
-}
-.diagnosisframe {
+    padding: 20px;
+  }
+  .diagnosisframe {
     border-style: solid;
     border-color: hsl(182, 75%, 50%); /* red */
     border-width: 1px;
@@ -16,19 +18,17 @@
     padding: 10px;
     height: 260px;
     position: relative;
-    top: 300px;
+    top: 40px;
     }
-
-.postionofdiagnosis {
+  
+  .postionofdiagnosis {
   position: absolute; 
   left: 280px;
-  top: 14px;
-}  
-
-.postionbutton {
+  top: 8px;
+  }  
+  
+  .postionbutton {
     position: relative; 
     left: 780px;
-   top:90px;
-
+    top : 70px;
 }
-

@@ -1,9 +1,7 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
 import "./container.css";
 import { Button } from "@mui/material";
 
@@ -21,20 +19,31 @@ interface FormData {
 }
 
 
-const Diagnosis = () => {
+const Diagnosis : React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    Diagnosis: "",
-    ExtraNotes: "",
+    Diagnosis: "Note",
+    ExtraNotes: "Note",
     PatientWeight: 0,
     PatientHeight: 0,
-    RecommendedActionDescription: "",
-    BloodPressure: "",
-    RespirationRate: "",
-    HeartRate: "",
-    DiabeticTest: "",
-    SPO2: "",
+    RecommendedActionDescription: "Note",
+    BloodPressure: "Enter",
+    RespirationRate: "Enter",
+    HeartRate: "Enter",
+    DiabeticTest: "Enter",
+    SPO2: " Enter",
   });
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: id === "PatientWeight" || id === "PatientHeight" ? parseFloat(value) : value,
+    }));
+  };
+
+  const handleDoneClick = () => {
+    console.log(formData); // You can further process or send this data
+  };
   return (
     <>
     <Box
@@ -48,64 +57,74 @@ const Diagnosis = () => {
       <div className="diagnosisframe">
       
       <TextField
-          id="outlined-multiline-static"
+          id="Diagnosis"
           label="Diagnosis"
           multiline
           rows={5}
-          defaultValue="Note"          
+          placeholder={formData.Diagnosis}
+          onChange={handleInputChange}         
         />
       
       
         <div className="postionofdiagnosis">
         <TextField
-          id="outlined-multiline-static"
+          id="ExtraNotes"
           label="ExtraNotes"         
-          defaultValue="Note"          
+          placeholder={formData.ExtraNotes}
+          onChange={handleInputChange}          
         />
         <TextField
-          id="outlined-multiline-static"
+          id="RecommendedActionDescription"
           label="RecommendedAction"         
-          defaultValue="Note"          
+          placeholder={formData.RecommendedActionDescription}
+          onChange={handleInputChange}          
         />
         <TextField
-          id="outlined-multiline-static"
+          id=" PatientWeight"
           label="Weights"
-          defaultValue="Enter"          
+          placeholder="Enter" 
+          onChange={handleInputChange}          
         />
         <TextField
-          id="outlined-multiline-static"
-          label="Length"          
-          defaultValue="Enter"          
+          id=" PatientHeight"
+          label="Heigth"          
+          placeholder="Enter" 
+          onChange={handleInputChange}          
         />    
               
         <TextField
-          id="outlined-multiline-static"
+          id="BloodPressure"
           label="BloodPressure"         
-          defaultValue="Enter"           
+          placeholder={formData.BloodPressure}
+          onChange={handleInputChange}           
         />
         <TextField
-          id="outlined-multiline-static"
+          id="RespirationRate"
           label="RespirationRate" 
-          defaultValue="Enter"           
+          placeholder={formData.RespirationRate}
+          onChange={handleInputChange}           
         />
         <TextField
-          id="outlined-multiline-static"
+          id="HeartRate"
           label="Heart Rate"           
-          defaultValue="Enter"           
+          placeholder={formData.HeartRate}
+          onChange={handleInputChange}           
         />
         <TextField
-          id="outlined-multiline-static"
+          id="DiabeticTest"
           label="Diabetic Test"         
-          defaultValue="Enter"           
+          placeholder={formData.DiabeticTest}     
+          onChange={handleInputChange}      
         />
         <TextField
-          id="outlined-multiline-static"
+          id="SPO2"
           label="SPO2"
-          defaultValue="Enter"           
+          placeholder={formData.SPO2}  
+          onChange={handleInputChange}          
         />
         </div>
         
-        <div className="postionbutton"><Button variant="contained">Done</Button></div>
+        <div className="postionbutton"><Button variant="contained"  onClick={handleDoneClick}>Done</Button></div>
         
       </div>
       
