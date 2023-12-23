@@ -1,7 +1,20 @@
 import React from "react";
-import { Select, FormControl, InputLabel, MenuItem } from "@mui/material";
+import { Select, FormControl, InputLabel, MenuItem, SelectChangeEvent } from "@mui/material";
 
-const CustomSelect = ({
+
+interface Option {
+  label: string;
+  value: any;
+}
+
+interface CustomSelectProps {
+  label: string;
+  options: Option[];
+  selectedValue?: string[];
+  width?: string;
+}
+
+const CustomSelect: React.FC<CustomSelectProps> = ({
   label,
   options,
   selectedValue,

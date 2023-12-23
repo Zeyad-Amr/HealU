@@ -1,7 +1,22 @@
-import React from "react";
-import { Select, FormControl, InputLabel, MenuItem, Chip } from "@mui/material";
+import React, {ChangeEvent} from "react";
+import { Select, FormControl, InputLabel, MenuItem, Chip, SelectChangeEvent } from "@mui/material";
 
-const CustomMultiSelect = ({
+
+
+interface Option {
+  label: string;
+  value: any;
+}
+
+interface CustomMultiSelectProps {
+  label: string;
+  options: Option[];
+  width?: string;
+  selectedValues: string[];
+  onChange: (event: SelectChangeEvent<string[]>) => void;
+}
+
+const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
   label,
   options,
   width = "232px", // Default width or use the provided width

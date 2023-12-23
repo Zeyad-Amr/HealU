@@ -1,28 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios';
+import axios from "axios";
 
 // interfaces
 export interface Patient {
-  id: number;
-  name: string;
-  gender: string;
-  age: number;
+    id: number;
+    name: string;
+    gender: string;
+    age: number;
 }
 
-export interface Doctor extends Patient{
+export interface Doctor extends Patient {
     specialization: string;
 }
 
 export interface Schedule {
-  scheduleId: number;
-  patient: Patient;
-  doctor: Doctor;
-  date: string;
-  time: string;
-  status: string;
+    scheduleId: number;
+    patient: Patient;
+    doctor: Doctor;
+    date: string;
+    time: string;
+    status: string;
 }
 
-export interface Procedure{
+export interface Procedure {
     procedureId: number;
     name: string;
     doctor: Doctor;
@@ -32,7 +32,7 @@ export interface Procedure{
 }
 
 export interface Diagnoses {
-  diagnoses: string;
+    diagnoses: string;
 }
 
 export interface Drug {
@@ -44,145 +44,151 @@ export interface Drug {
 }
 
 export interface Record {
-  recordId: number;
-  patient: Patient;
-  schedules: Schedule[];
-  procedures: Procedure[];
-  Diagnoses: Diagnoses[];
-  Drugs: Drug[];
+    recordId: number;
+    patient: Patient;
+    schedules: Schedule[];
+    procedures: Procedure[];
+    Diagnoses: Diagnoses[];
+    Drugs: Drug[];
 }
 
-
-
 interface DentalState {
-  patients: Patient[];
-  doctors: Doctor[];
-  schedules: Schedule[];
-  records: Record[];
-  procedures: Procedure[];
-  drugs: Drug[];
-  loading: boolean;
-  error: string | null;
+    patients: Patient[];
+    doctors: Doctor[];
+    schedules: Schedule[];
+    records: Record[];
+    procedures: Procedure[];
+    drugs: Drug[];
+    loading: boolean;
+    error: string | null;
 }
 
 const initialState: DentalState = {
-  patients: [],
-  doctors: [],
-  schedules: [],
-  records: [],
-  procedures: [],
-  drugs: [],
-  loading: false,
-  error: null,
+    patients: [],
+    doctors: [],
+    schedules: [],
+    records: [],
+    procedures: [],
+    drugs: [],
+    loading: false,
+    error: null,
 };
 
 // create Async functions
 export const fetchPatients = createAsyncThunk(
-    'dentalPortal/fetchPatients', 
-    async (_,thunkApi) => {
+    "dentalPortal/fetchPatients",
+    async (_, thunkApi) => {
         const { rejectWithValue } = thunkApi;
         try {
-            const response = await axios.get('http://localhost:5000/dentalPortal');
+            const response = await axios.get(
+                "http://localhost:5000/dentalPortal"
+            );
             const patients: Patient[] = await response.data;
             return patients;
         } catch (error) {
             return rejectWithValue("Failed to fetch Patients'data");
         }
-});
+    }
+);
 
 export const insertPatient = createAsyncThunk(
-    'dentalPortal/insertPatient', 
-    async (data: Patient,thunkApi) => {
+    "dentalPortal/insertPatient",
+    async (data: Patient, thunkApi) => {
         const { rejectWithValue, getState } = thunkApi;
         try {
-            await axios.post('http://localhost:5000/dentalPortal',data);
+            await axios.post("http://localhost:5000/dentalPortal", data);
             return data;
         } catch (error) {
             return rejectWithValue(`Failed to insert Patient ${data.id}`);
         }
-});
+    }
+);
 
 export const deletePatient = createAsyncThunk(
-    'dentalPortal/deletePatient', 
-    async (data: Patient,thunkApi) => {
+    "dentalPortal/deletePatient",
+    async (data: Patient, thunkApi) => {
         const { rejectWithValue, getState } = thunkApi;
         try {
-            await axios.delete('http://localhost:5000/dentalPortal',data.id);
+            await axios.delete("http://localhost:5000/dentalPortal", {
+                data: { id: data.id },
+            });
             // dispatch(fetchPatients());
             return data;
         } catch (error) {
-        return rejectWithValue(`Failed to delete Patient ${data.id}`);
+            return rejectWithValue(`Failed to delete Patient ${data.id}`);
         }
-});
+    }
+);
 
 // create dental portal slice
 export const dentalPortalSlice = createSlice({
-  name: 'dentalPortal',
-  initialState,
-  reducers: {
-    fetchPatients(state,action){
-        state.patients.get(action.payload);
+    name: "dentalPortal",
+    initialState,
+    reducers: {
+        fetchPatients(state, action) {
+            state.patients = action.payload;
+        },
+        insertPatient(state, action) {
+            state.patients.push(action.payload);
+        },
+        deletePatient(state, action) {
+            const index = state.patients.findIndex(
+                (patient) => patient.id === action.payload
+            );
+            if (index !== -1) {
+                state.patients.splice(index, 1);
+            }
+        },
+        setLoading(state, action) {
+            state.loading = action.payload;
+        },
     },
-    insertPatient(state,action){
-        state.patient.push(action.payload);
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchPatients.pending, (state, action) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchPatients.fulfilled, (state, action) => {
+                state.loading = false;
+                state.patients = action.payload;
+                state.error = null;
+            })
+            .addCase(fetchPatients.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || "An error occurred";
+            });
+
+        builder
+            .addCase(insertPatient.pending, (state, action) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(insertPatient.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = null;
+
+                state.patients.push(action.payload);
+            })
+            .addCase(insertPatient.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || "An error occurred";
+            });
+
+        builder
+            .addCase(deletePatient.pending, (state, action) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(deletePatient.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(deletePatient.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || "An error occurred";
+            });
     },
-    deletePatient(state,action){
-        state.patient.delete(action.payload,1);
-    },
-    setLoading(state,action){
-        state.loading = action.payload;
-    }
-
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchPatients.pending, (state,action) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchPatients.fulfilled, (state, action) => {
-        state.loading = false;
-        state.patients = action.payload;
-        state.error = null;
-      })
-      .addCase(fetchPatients.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'An error occurred';
-      });
-
-    builder
-      .addCase(insertPatient.pending, (state,action) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(insertPatient.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        
-        state.patients.push(action.payload);
-      })
-      .addCase(insertPatient.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'An error occurred';
-      });
-
-    builder
-      .addCase(deletePatient.pending, (state,action) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(deletePatient.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-
-      })
-      .addCase(deletePatient.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'An error occurred';
-      });
-
-
-  },
 });
 
 export default dentalPortalSlice.reducer;

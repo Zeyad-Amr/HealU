@@ -1,7 +1,17 @@
 import React from "react";
 import { TextField } from "@mui/material";
 
-const CustomTextArea = ({
+
+interface CustomTextAreaProps {
+  label: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  minRows?: number;
+  width?: string;
+  maxHeight?: string;
+}
+
+const CustomTextArea: React.FC<CustomTextAreaProps> = ({
   label,
   value,
   onChange,

@@ -8,9 +8,9 @@ import CustomMultiSelect from "./elements/CustomMultiSelect";
 
 const AppointmentForm = () => {
   const DiseaseOptions = [
-    { label: "Diabase", value: 1 },
-    { label: "high pressure", value: 2 },
-    { label: "heart disease", value: 3 },
+    { label: "Diabetes", value: 1 },
+    { label: "High Pressure", value: 2 },
+    { label: "Heart Disease", value: 3 },
   ];
 
   const genderOptions = [
@@ -20,7 +20,7 @@ const AppointmentForm = () => {
 
   // function needs for multiple select you need to make this for each multiple select
   const [selectedDisease, setSelectedDisease] = useState([]);
-  const handleDiseaseChange = (event) => {
+  const handleDiseaseChange = (event: any) => {
     setSelectedDisease(event.target.value);
   };
 
@@ -32,7 +32,7 @@ const AppointmentForm = () => {
         </div>
 
         <div>
-          <CustomTextField label="age" />
+          <CustomTextField label="Age" />
         </div>
 
         <div>
