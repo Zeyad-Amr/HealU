@@ -8,14 +8,16 @@ const prisma = new PrismaClient();
 export const createPatient = async (req: Request, res: Response) => {
   const patientData = req.body;
   try {
+    if(patientData.Role=="Patient"){
     const newPatient = await prisma.user.create({
       data: {
         ...patientData,
-        Role: 'Patient',
       },
     });
-
     res.status(201).json({ data: newPatient });
+  }else{
+    res.status(404).json({ error: "unmatched data" }); 
+  }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -34,14 +36,12 @@ export const updatePatient = async (req: Request, res: Response) => {
     const updatedPatient = await prisma.user.update({
       where: {
         UserID: parseInt(userID),
+        Role: 'Patient',
       },
       data: {
         ...patientData,
         Role: 'Patient',
-      },
-      include: {
-        Patient: true,
-      },
+      }
     });
 
     res.status(200).json({ data: updatedPatient });
@@ -63,10 +63,7 @@ export const getPatientById = async (req: Request, res: Response) => {
       where: {
         UserID: parseInt(userID),
         Role: 'Patient',
-      },
-      include: {
-        Patient: true,
-      },
+      }
     });
 
     if (!patient) {
@@ -93,8 +90,6 @@ export const deletePatient = async (req: Request, res: Response) => {
       where: {
         UserID: parseInt(userID),
         Role: 'Patient',
-      },include: {
-        Patient: true,
       },
     });
 
