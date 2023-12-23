@@ -65,7 +65,7 @@ export const getDoctorsByClinicID  = async (req: Request, res: Response) => {
           Role: "Doctor",
         },
       });
-      if ( userMember.ClinicID==null) {
+      if ( (userMember.length === 0)) {
         res.status(404).json({ error: 'Invalid clinic  id' });
       } else {
         res.status(200).json({ data: userMember });
