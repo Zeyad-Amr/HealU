@@ -1,24 +1,26 @@
 // import ListGroup from "./components/ListGroup";
 import { useState } from "react";
 import Table from "./components/Table";
-import "./App.css";
+import "../../../App.css";
 
 const slotsColumn = [
-  { key: "clinic_id", header: "Clinic ID" },
-  { key: "doctor_id", header: "Doctor ID" },
-  { key: "date", header: "Date" },
-  { key: "time", header: "Time" },
+  { key: "clinicId", header: "Clinic ID" },
+  { key: "doctorId", header: "Doctor ID" },
+  { key: "time", header: "time" },
+  { key: "weekDay", header: "Week Day" },
 ];
 
 const apptColumns = [
-  { key: "slot_id", header: "Slot ID" },
-  { key: "patient_id", header: "Patient ID" },
-  { key: "doctor_id", header: "Doctor ID" },
-  { key: "clinic_id", header: "Clinic" },
+  { key: "slotId", header: "Slot ID" },
+  { key: "patientId", header: "Patient ID" },
+  { key: "doctorId", header: "Doctor ID" },
+  { key: "clinicId", header: "Clinic ID" },
+  { key: "date", header: "Date" },
+  { key: "time", header: "Time"},
   { key: "status", header: "Status" },
 ];
 
-function app() {
+function ServiceTable() {
   const [alertVisible, setAlertVisibility] = useState(false);
 
   return (
@@ -26,14 +28,14 @@ function app() {
       <h1>Slots Table</h1>
       <Table
         columns={slotsColumn}
-        apiUrl="http://localhost:3000/api/slots/"
+        apiUrl="https://appointment-service-y30u.onrender.com/slots/"
       ></Table>
       <br />
 
       <h1>Appointments Table</h1>
       <Table
         columns={apptColumns}
-        apiUrl="http://localhost:3000/api/appointments/"
+        apiUrl="https://appointment-service-y30u.onrender.com/appointments/"
       ></Table>
 
       {/* <Button
@@ -46,4 +48,4 @@ function app() {
 }
 // var cors = require("cors");
 
-export default app;
+export default ServiceTable;

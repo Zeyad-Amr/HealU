@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AppointmentForm from './modules/clinics-portals/dental/components/form/AppointmentForm';
+import ServiceTable from './modules/clinics-portals/dental/ServiceTable';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
+    <ServiceTable />
     <AppointmentForm />
   </React.StrictMode>
 );
