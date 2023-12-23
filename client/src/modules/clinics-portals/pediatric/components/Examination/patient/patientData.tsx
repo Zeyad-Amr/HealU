@@ -13,8 +13,8 @@ const PatientSection = () => {
     return (
         <>
         <div className="patient-section">
-        <Grid container spacing={0} columns={16}>
-                <Grid item xs={5}>
+        <Grid container spacing={0} columns={16} rowSpacing={7}>
+                <Grid item xs={4}>
                     <div className="info">
                         <div className="personal">
                             <p>
@@ -30,7 +30,7 @@ const PatientSection = () => {
                     </div>
                     
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={11}>
                     <div className="history">   
                     <div className="mid">
                     <Item>

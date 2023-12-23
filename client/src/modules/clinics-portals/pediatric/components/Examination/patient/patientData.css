@@ -24,10 +24,10 @@
     border-radius: 15px;
     padding: 10px;
     padding-bottom: 15px;
-    width: 150%;
+    /* width: 150%; */
     font-size: 10px;
     color: white;
-    /* height: 150%; */
+    /* height: 135%; */
     margin-left: -70px;
 
 }
@@ -47,7 +47,7 @@
     border-width: 2px;
     border-radius: 10px;
     padding: 10px;
-    height: 140px;
+    /* height: 140px; */
     margin-left: 10px; 
     /* width: 95%;  */
   }
@@ -65,7 +65,7 @@
     border-width: 2px;
     border-radius: 10px;
     padding: 10px;
-    height: 140px;
+    /* height: 140px; */
     margin-left: 10px;
     width: 300px;
 

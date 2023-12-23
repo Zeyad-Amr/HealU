@@ -19,18 +19,18 @@ interface FormData {
 }
 
 
-const Diagnosis : React.FC = () => {
+const Diagnosis = () => {
   const [formData, setFormData] = useState<FormData>({
-    Diagnosis: "Note",
-    ExtraNotes: "Note",
+    Diagnosis: "" ,
+    ExtraNotes: "",
     PatientWeight: 0,
     PatientHeight: 0,
-    RecommendedActionDescription: "Note",
-    BloodPressure: "Enter",
-    RespirationRate: "Enter",
-    HeartRate: "Enter",
-    DiabeticTest: "Enter",
-    SPO2: " Enter",
+    RecommendedActionDescription: "",
+    BloodPressure: "",
+    RespirationRate: "",
+    HeartRate: "",
+    DiabeticTest: "",
+    SPO2: "",
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +42,13 @@ const Diagnosis : React.FC = () => {
   };
 
   const handleDoneClick = () => {
+    const isAnyFieldEmpty = Object.values(formData).some(value => value === "");
+    if (isAnyFieldEmpty) {
+      alert("Please fill in all fields before submitting.");
+      return;
+    }
     console.log(formData); // You can further process or send this data
-  };
+  };  
   return (
     <>
     <Box
@@ -61,7 +66,7 @@ const Diagnosis : React.FC = () => {
           label="Diagnosis"
           multiline
           rows={5}
-          placeholder={formData.Diagnosis}
+          // placeholder={formData.Diagnosis}
           onChange={handleInputChange}         
         />
       
@@ -70,56 +75,56 @@ const Diagnosis : React.FC = () => {
         <TextField
           id="ExtraNotes"
           label="ExtraNotes"         
-          placeholder={formData.ExtraNotes}
+          // placeholder={formData.ExtraNotes}
           onChange={handleInputChange}          
         />
         <TextField
           id="RecommendedActionDescription"
           label="RecommendedAction"         
-          placeholder={formData.RecommendedActionDescription}
+          // placeholder={formData.RecommendedActionDescription}
           onChange={handleInputChange}          
         />
         <TextField
           id=" PatientWeight"
           label="Weights"
-          placeholder="Enter" 
+          // placeholder="Enter" 
           onChange={handleInputChange}          
         />
         <TextField
           id=" PatientHeight"
           label="Heigth"          
-          placeholder="Enter" 
+          // placeholder="Enter" 
           onChange={handleInputChange}          
         />    
               
         <TextField
           id="BloodPressure"
           label="BloodPressure"         
-          placeholder={formData.BloodPressure}
+          // placeholder={formData.BloodPressure}
           onChange={handleInputChange}           
         />
         <TextField
           id="RespirationRate"
           label="RespirationRate" 
-          placeholder={formData.RespirationRate}
+          // placeholder={formData.RespirationRate}
           onChange={handleInputChange}           
         />
         <TextField
           id="HeartRate"
           label="Heart Rate"           
-          placeholder={formData.HeartRate}
+          // placeholder={formData.HeartRate}
           onChange={handleInputChange}           
         />
         <TextField
           id="DiabeticTest"
           label="Diabetic Test"         
-          placeholder={formData.DiabeticTest}     
+          // placeholder={formData.DiabeticTest}     
           onChange={handleInputChange}      
         />
         <TextField
           id="SPO2"
           label="SPO2"
-          placeholder={formData.SPO2}  
+          // placeholder={formData.SPO2}  
           onChange={handleInputChange}          
         />
         </div>
