@@ -117,7 +117,7 @@ async function createMedicalHistory(req, res) {
 
     if (!response || !response.data) {
       console.log(`PatientID ${PatientID} is not found in Registeration List`);
-      return res.status(500).json({ error: `PatientID ${PatientID} is not found in Registeration List` });
+      return res.status(404).json({ message:`PatientID ${PatientID} is not found in Registeration List` });
     }
 
     // Map MedicalTests array to promises checking if TestID exists in the external API (Storage API)
@@ -131,7 +131,7 @@ async function createMedicalHistory(req, res) {
 
       if ((!Imagesresponse || !Imagesresponse.data) && (!Filesresponse || !Filesresponse.data)) {
         console.log(`Tests are not found for TestID ${TestID}`);
-        return { error: `Tests are not found for TestID ${TestID}` };
+        return { message: `Tests are not found for TestID ${TestID}` };
       }
 
       // Check if the PatientID matches the response.patientId
@@ -141,7 +141,7 @@ async function createMedicalHistory(req, res) {
 
       if (responsePatientId != PatientID) {
         console.log(`TestID ${TestID} does not belong to the patient with patientId: ${PatientID}`);
-        return { error: `TestID ${TestID} does not belong to the patient with patientId: ${PatientID}` };
+        return { message: `TestID ${TestID} does not belong to the patient with patientId: ${PatientID}` };
       }
 
       return null;
@@ -149,10 +149,10 @@ async function createMedicalHistory(req, res) {
 
     const medicalTestResults = await Promise.all(medicalTestPromises);      // Wait for all promises to resolve
 
-    const testErrors = medicalTestResults.filter((result) => result && result.error);      // Collect errors from medicalTestResults
+    const testErrors = medicalTestResults.filter((result) => result && result.message);      // Collect errors from medicalTestResults
 
     if (testErrors.length > 0) {
-      return res.status(500).json({ errors: testErrors });
+      return res.status(404).json({ errors: testErrors });
     }
     // Check if PatientID exists in MedicalHistory table
     const checkMedicalHistoryQuery = `SELECT * FROM medicalhistory WHERE PatientID = ?`;
@@ -182,7 +182,7 @@ async function createMedicalHistory(req, res) {
     if (referencesResult.length > 0) {        // If PatientID has referenced values, return an error (patient has already history)
       const errorMessage = `Sorry, PatientID ${PatientID} has already added his medical history before`;
       console.log(errorMessage);
-      return res.status(400).json({ error: errorMessage });
+      return res.status(404).json({ message: errorMessage });
     }
 
     // Now that all validations passed, proceed with insertions into other tables

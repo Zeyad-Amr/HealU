@@ -4,7 +4,6 @@ require('dotenv').config();
 //=========================================================================================
 async function createPrescription(req, res) {  // Create new prescription 
   const {
-    PatientID,
     AppointmentID,
     DoctorName,
     Diagnosis,
@@ -18,44 +17,30 @@ async function createPrescription(req, res) {  // Create new prescription
 
     if ((!response || !response.data)) {
       console.log(`AppointmentID ${AppointmentID} is not found in Appointments List`);
-      return res.status(500).json({ error: `AppointmentID ${AppointmentID} is not found in Appointments List` });
+      return res.status(404).json({ message: `AppointmentID ${AppointmentID} is not found in Appointments List` });
     }
-    const responsePatientId = response?.data?.patientId; 
-
-    if (responsePatientId != PatientID) {
-      console.log(`AppointmentID ${AppointmentID} does not belong to the patient with patientId: ${PatientID}`);
-      return res.status(500).json({ error: `AppointmentID ${AppointmentID} does not belong to the patient with patientId: ${PatientID}` });
-    }
+    const PatientID = response?.data?.patientId; 
 
     // Check if PatientID exists in MedicalHistory table
     const checkMedicalHistoryQuery = `SELECT * FROM medicalhistory WHERE PatientID = ?`;
-    connection.query(checkMedicalHistoryQuery, [PatientID], async (checkMedicalHistoryErr, MedicalHistoryResult) => {
-      if (checkMedicalHistoryErr) {
-        console.error("Error checking for existing PatientID:", checkMedicalHistoryErr);
-        return res.status(500).json({ error: "Internal Server Error, Check if PatientID exists in MedicalHistory table" });
-      }
-      if (MedicalHistoryResult.length === 0) {   // If PatientID does not exist in the MedicalHistory table, insert it
-        /* "Assuming that the Appointment Service has checked that the PatientID already exists in the Registration Service, 
+    const [medicalHistoryResult] = await connection.promise().query(checkMedicalHistoryQuery, [PatientID]);
+
+    if (medicalHistoryResult.length === 0) {        // If PatientID does not exist in the MedicalHistory table, insert it
+      /* "Assuming that the Appointment Service has checked that the PatientID already exists in the Registration Service, 
         since an appointment has already been scheduled, it is certain that the patient exists, So insert it into my database." */
-        const sql_query_medicalhistory = `INSERT INTO medicalhistory (PatientID) VALUES (?)`;
-        connection.query(sql_query_medicalhistory, [PatientID], (medicalhistoryErr, medicalhistoryResult) => {
-          if (medicalhistoryErr) {
-            console.error("Error creating medicalhistory:", medicalhistoryErr);
-            res.status(500).json({ error: "Internal Server Error, Check if PatientID exists" });
-            return;
-          }
-          console.log("New Patient is created with PatientID:",PatientID);
-          }
-        );
+      const sql_query_medicalhistory = `INSERT INTO medicalhistory (PatientID) VALUES (?)`;
+      await connection.promise().query(sql_query_medicalhistory, [PatientID]);
+      console.log("New Patient is created with PatientID:", PatientID);
+    }
+    
+    insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes, res, (insertedPrescriptionID) => {
+      if (Drugs.length > 0){
+        insertDrugs(insertedPrescriptionID,PatientID, Drugs, res ,() => {});
       }
-      insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes, res, (insertedPrescriptionID) => {
-        if (Drugs.length > 0){
-          insertDrugs(insertedPrescriptionID,PatientID, Drugs, res ,() => {});
-        }
-        console.log( "Prescription with Drugs is created successfully");
-        res.status(201).json({ message: "Prescription with Drugs is created successfully" });
-      });
-  });
+      console.log( "Prescription with Drugs is created successfully");
+      res.status(201).json({ message: "Prescription with Drugs is created successfully" });
+    });
+
     // Rest of your existing code
   } catch (appointmentsError) {
     console.error("Error checking for existing AppointmentID:", appointmentsError);
@@ -148,18 +133,12 @@ function processQueryResult(result) {          //Function to process the query r
   return Object.values(prescriptionMap);
 }
 //================================================================================================
-function insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes, res, callback) {    // Insert into Prescription table
+async function insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes, res, callback) {    // Insert into Prescription table
   const sql_query_Prescription = `INSERT INTO prescription (PatientID, AppointmentID,  DoctorName, Diagnosis, ExtraNotes) VALUES (?, ?, ?, ?, ?)`;
-  connection.query(sql_query_Prescription,[PatientID, AppointmentID,  DoctorName, Diagnosis, ExtraNotes],(prescriptionErr, prescriptionResult) => {
-    if (prescriptionErr) {
-      console.error("Error creating Prescription:", prescriptionErr);
-      res.status(500).json({ error: "Internal Server Error, Check if RecordID exists" });
-      return;
-    }
-    const insertedPrescriptionID = prescriptionResult.insertId;  // Get the auto-incremented RecordID from the inserted record
-    console.log("New Prescription created with PrescriptionID:",insertedPrescriptionID);
-    callback(insertedPrescriptionID);      // Pass the insertedPrescriptionID to the callback function
-  });
+  const [prescriptionResult] = await connection.promise().query(sql_query_Prescription,[PatientID, AppointmentID,  DoctorName, Diagnosis, ExtraNotes]);
+  const insertedPrescriptionID = prescriptionResult.insertId;  // Get the auto-incremented RecordID from the inserted record
+  console.log("New Prescription created with PrescriptionID:",insertedPrescriptionID);
+  callback(insertedPrescriptionID);      // Pass the insertedPrescriptionID to the callback function
 }
 //==============================================================================================
 function insertDrugs(insertedPrescriptionID,PatientID, Drugs, res , callback) {        // Insert drugs into drug table
