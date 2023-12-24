@@ -59,22 +59,22 @@ const Diagnosis = () => {
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
+          "& .MuiTextField-root": { m: 1 },
         }}
         noValidate
         autoComplete="off"
       >
         <Grid container spacing={0} columns={16} className="diagnosisframe">
-          <Grid item xs={3} >
+          <Grid item xs={4} >
             <TextField
               id="Diagnosis"
               label="Diagnosis"
               multiline
-              rows={5}
+              rows={6}
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={3} >
+          <Grid item xs={4} >
             <TextField
               id="ExtraNotes"
               label="ExtraNotes"
@@ -91,7 +91,7 @@ const Diagnosis = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={3} >
+          <Grid item xs={4} >
             <TextField
               id=" PatientHeight"
               label="Heigth"
@@ -109,7 +109,7 @@ const Diagnosis = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={3} >
+          <Grid item xs={4} >
             <TextField
               id="HeartRate"
               label="Heart Rate"
@@ -123,48 +123,9 @@ const Diagnosis = () => {
             <TextField id="SPO2" label="SPO2" onChange={handleInputChange} />
           </Grid>
         </Grid>
-        {/* <div >
-          <TextField
-            id="Diagnosis"
-            label="Diagnosis"
-            multiline
-            rows={5}
-            onChange={handleInputChange}
-          />
-
-          <div className="postionofdiagnosis">
-            
-            <TextField
-              id=" PatientHeight"
-              label="Heigth"
-              onChange={handleInputChange}
-            />
-
-            <TextField
-              id="BloodPressure"
-              label="BloodPressure"
-              onChange={handleInputChange}
-            />
-            <TextField
-              id="RespirationRate"
-              label="RespirationRate"
-              onChange={handleInputChange}
-            />
-            <TextField
-              id="HeartRate"
-              label="Heart Rate"
-              onChange={handleInputChange}
-            />
-            <TextField
-              id="DiabeticTest"
-              label="Diabetic Test"
-              onChange={handleInputChange}
-            />
-            <TextField id="SPO2" label="SPO2" onChange={handleInputChange} />
-          </div> */}
 
         <div className="postionbutton">
-          <Button variant="contained" onClick={handleDoneClick}>
+          <Button variant="contained" onClick={handleDoneClick} >
             Done
           </Button>
         </div>

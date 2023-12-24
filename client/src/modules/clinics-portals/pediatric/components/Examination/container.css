@@ -17,6 +17,7 @@
     }
   
   .postionbutton {
+    width: 50px;
     position: relative; 
     left: 820px;
     top : -10px;

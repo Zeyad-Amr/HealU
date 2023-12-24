@@ -10,6 +10,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { borderRadius } from "@mui/system";
+import { useAppDispatch } from "../../../../../core/store/index";
+import { useSelector } from "react-redux";
+import { fetchDevices, AddDevice, device } from "../../slices/pediatric-slice";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,14 +35,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const DevicesTable = (props: any) => {
-  const [selectedDevices, setSelectedDevices] = useState<DeviceState>(
-    {} as DeviceState
-  );
+const DevicesTable = () => {
+  const dispatch = useAppDispatch();
+  const deviceState: DeviceState = useSelector((state: any) => state.devices);
+  const [selectedDevices, setSelectedDevices] = useState<DeviceState>({} as DeviceState);
   useEffect(() => {
-    setSelectedDevices(props.data);
-  }, [props.data]);
-
+    dispatch(fetchDevices(deviceState.AllDevices));
+    setSelectedDevices(deviceState);
+  }, [deviceState])
   return (
     <>
       <TableContainer component={Paper}>
