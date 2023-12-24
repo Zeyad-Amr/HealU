@@ -149,10 +149,10 @@ async function createMedicalHistory(req, res) {
 
     const medicalTestResults = await Promise.all(medicalTestPromises);      // Wait for all promises to resolve
 
-    const testErrors = medicalTestResults.filter((result) => result && result.message);      // Collect errors from medicalTestResults
+    const testmessages = medicalTestResults.filter((result) => result && result.message);      // Collect errors from medicalTestResults
 
-    if (testErrors.length > 0) {
-      return res.status(404).json({ errors: testErrors });
+    if (testmessages.length > 0) {
+      return res.status(404).json({ messages: testmessages });
     }
     // Check if PatientID exists in MedicalHistory table
     const checkMedicalHistoryQuery = `SELECT * FROM medicalhistory WHERE PatientID = ?`;
@@ -180,9 +180,9 @@ async function createMedicalHistory(req, res) {
     const [referencesResult] = await connection.promise().query(referencesQuery, [PatientID, PatientID, PatientID, PatientID, PatientID]);
 
     if (referencesResult.length > 0) {        // If PatientID has referenced values, return an error (patient has already history)
-      const errorMessage = `Sorry, PatientID ${PatientID} has already added his medical history before`;
-      console.log(errorMessage);
-      return res.status(404).json({ message: errorMessage });
+      const Message = `Sorry, PatientID ${PatientID} has already added his medical history before`;
+      console.log(Message);
+      return res.status(404).json({ message: Message });
     }
 
     // Now that all validations passed, proceed with insertions into other tables
