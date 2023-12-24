@@ -33,9 +33,9 @@ async function createPrescription(req, res) {  // Create new prescription
       console.log("New Patient is created with PatientID:", PatientID);
     }
     
-    insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes, res, (insertedPrescriptionID) => {
+    insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes,(insertedPrescriptionID) => {
       if (Drugs.length > 0){
-        insertDrugs(insertedPrescriptionID,PatientID, Drugs, res ,() => {});
+        insertDrugs(insertedPrescriptionID,PatientID, Drugs,() => {});
       }
       console.log( "Prescription with Drugs is created successfully");
       res.status(201).json({ message: "Prescription with Drugs is created successfully" });
@@ -133,7 +133,7 @@ function processQueryResult(result) {          //Function to process the query r
   return Object.values(prescriptionMap);
 }
 //================================================================================================
-async function insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes, res, callback) {    // Insert into Prescription table
+async function insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes,callback) {    // Insert into Prescription table
   const sql_query_Prescription = `INSERT INTO prescription (PatientID, AppointmentID,  DoctorName, Diagnosis, ExtraNotes) VALUES (?, ?, ?, ?, ?)`;
   const [prescriptionResult] = await connection.promise().query(sql_query_Prescription,[PatientID, AppointmentID,  DoctorName, Diagnosis, ExtraNotes]);
   const insertedPrescriptionID = prescriptionResult.insertId;  // Get the auto-incremented RecordID from the inserted record
@@ -141,7 +141,7 @@ async function insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosi
   callback(insertedPrescriptionID);      // Pass the insertedPrescriptionID to the callback function
 }
 //==============================================================================================
-function insertDrugs(insertedPrescriptionID,PatientID, Drugs, res , callback) {        // Insert drugs into drug table
+function insertDrugs(insertedPrescriptionID,PatientID, Drugs,callback) {        // Insert drugs into drug table
   const sql_query_Drug = `INSERT INTO drug (PrescriptionID,PatientID, DName, DDuration, DDose) VALUES ( ?, ?, ?, ?, ?)`;
 
   // handling asynchronous insertion of multiple drugs
@@ -164,7 +164,6 @@ function insertDrugs(insertedPrescriptionID,PatientID, Drugs, res , callback) { 
   })
   .catch((error) => {
     console.error("Error inserting drugs:", error);
-    res.status(500).json({ error: "Internal Server Error, Check if PrescriptionID exists " });
   });
 }
 //===============================================================================================

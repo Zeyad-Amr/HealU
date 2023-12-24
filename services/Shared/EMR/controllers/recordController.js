@@ -45,30 +45,30 @@ async function createRecord(req, res) {   //Create new record
       console.log("New Patient is created with PatientID:", PatientID);
     }
 
-    insertRecord(PatientID, AppointmentID, ClinicID, RDate, Weight, Length,res,(insertedRecordID) => {
+    insertRecord(PatientID, AppointmentID, ClinicID, RDate, Weight, Length,(insertedRecordID) => {
       if (Vital != null && Object.keys(Vital).length !== 0) {      //Check if the patient's vital signs data has been obtained at the clinic.(Not NULL)
-        insertVital(insertedRecordID, Vital, res, () => {});
+        insertVital(insertedRecordID, Vital,() => {});
       }
       if (ServicesDescription !== "") {       //Check if patient had a additional service in the clinic (Not NULL)
-        insertServices(insertedRecordID, ServicesDescription, res, () => {});
+        insertServices(insertedRecordID, ServicesDescription, () => {});
       }
       if (RecommendedActionDescription !== "") {   //Check if patient had a recommended action in the clinic (Not NULL)
-        insertRecommendedAction( insertedRecordID, RecommendedActionDescription, res, () => {});
+        insertRecommendedAction( insertedRecordID, RecommendedActionDescription,() => {});
       }
       // Check ClinicName and insert accordingly
       if (responseClinicName ===  process.env.Pediatric_Clinic_ID) {        // Kids Clinic
         if (Vaccines.length > 0) { 
-          insertVaccines(insertedRecordID, Vaccines, res, () => {});
+          insertVaccines(insertedRecordID, Vaccines,() => {});
         }
       } 
       else if (responseClinicName ===  process.env.Ophthalmology_Clinic_ID) {        // Eyes Clinic
         if (EyeMeasurements != null && Object.keys(EyeMeasurements).length !== 0) {
-          insertEyeMeasurement(insertedRecordID,EyeMeasurements,res,() => {});
+          insertEyeMeasurement(insertedRecordID,EyeMeasurements,() => {});
         }
       } 
       else if (responseClinicName ===  process.env.Nutrition_Clinic_ID) {        // Nutrition Clinic
         if (NutritionData != null && Object.keys(NutritionData).length !== 0) {
-          insertNutrition(insertedRecordID, NutritionData, res, () => {});
+          insertNutrition(insertedRecordID, NutritionData,() => {});
         }
       }    
       console.log(`New Record is created successfully with ${responseClinicName} Clinic`); 
@@ -198,7 +198,7 @@ function processQueryResult(result) {          //Function to process the query r
   return Object.values(recordMap);
 }
 //=====================================================================================================================
-async function insertRecord(PatientID, AppointmentID, ClinicID, RDate, Weight, Length, res, callback) {  //insert into record table
+async function insertRecord(PatientID, AppointmentID, ClinicID, RDate, Weight, Length,callback) {  //insert into record table
   const sql_query_Record = "INSERT INTO record (PatientID, AppointmentID, ClinicID, RDate, Weight, Length) VALUES (?, ?, ?, ?, ?, ?)";
   const [RecordResult] = await connection.promise().query(sql_query_Record, [PatientID, AppointmentID, ClinicID, RDate, Weight, Length]);
   const insertedRecordID = RecordResult.insertId;  // Get the auto-incremented RecordID from the inserted record
@@ -206,7 +206,7 @@ async function insertRecord(PatientID, AppointmentID, ClinicID, RDate, Weight, L
   callback(insertedRecordID);      // Pass the RecordID to the callback function
 }
 //==============================================================================================================
-async function insertServices(RecordID,ServicesDescription,res, callback) {  //insert into Services table
+async function insertServices(RecordID,ServicesDescription,callback) {  //insert into Services table
   const sql_query_Services = `INSERT INTO services (RecordID,ServicesDescription) VALUES (?, ?)`;
   const [ServicesResult] = await connection.promise().query(sql_query_Services, [RecordID,ServicesDescription]);
   const insertedServiceID = ServicesResult.insertId;  
