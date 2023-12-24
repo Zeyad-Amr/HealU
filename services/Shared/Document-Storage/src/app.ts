@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(cookieParser());
 
-app.use(hpp({ 
+app.use(hpp({
     whitelist: [
         // @TODO add whitelist
     ]
@@ -52,6 +52,7 @@ app.use(express.json());
 
 // Use body-parser middleware to parse JSON
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/v1/images",imageRouter);
 app.use("/api/v1/files",fileRouter);
