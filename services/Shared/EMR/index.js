@@ -4,12 +4,13 @@ const dotenv = require('dotenv');
 dotenv.config(); // Load environment variables from .env file
 
 const connectionModule = require('./DataBase/connection');
+
 const RecordRoute = require('./routes/recordRouter');
 const PrescriptionRoute = require('./routes/prescriptionRouter');
 const medicalHistoryRoute = require('./routes/historyRouter');
 
 const EMR_app = express();
-const PORT = 5000;
+const PORT =  process.env.PORT;
 
 //====================================================================
 EMR_app.listen(PORT, () => {
