@@ -39,7 +39,8 @@ export const fetchSlotsForDoctor = createAsyncThunk(
 // Create an async thunk for creating a new slot for the doctor
 export const createSlotForDoctor = createAsyncThunk(
   "slot/createSlot",
-  async (newSlot: Slot) => {
+  async (newSlot: Slot, thunkApi) => {
+    const { rejectWithValue, dispatch } = thunkApi;
     try {
       const response = await axios.post(
         `https://appointment-service-y30u.onrender.com/slots/`,
@@ -49,6 +50,9 @@ export const createSlotForDoctor = createAsyncThunk(
           time: newSlot.time,
           weekDay: newSlot.weekDay,
         }
+      );
+      dispatch(
+        fetchSlotsForDoctor({ doctorId: newSlot.doctorId, date: "2023-12-24" })
       );
       return newSlot;
     } catch (error) {
@@ -60,11 +64,14 @@ export const createSlotForDoctor = createAsyncThunk(
 // Create an async thunk for fetching slots for doctors
 export const deleteSlot = createAsyncThunk(
   "slot/deleteSlot",
-  async (slotId: string) => {
+  async (slotId: string, thunkApi) => {
+    const { rejectWithValue, dispatch } = thunkApi;
     try {
       await axios.delete(
         `https://appointment-service-y30u.onrender.com/slots/${slotId}`
       );
+      dispatch(fetchSlotsForDoctor({ doctorId: 13, date: "2023-12-24" }));
+
       return slotId;
     } catch (error) {
       throw error;

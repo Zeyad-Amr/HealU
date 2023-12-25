@@ -53,7 +53,7 @@ const CreateSlotForm = () => {
           <CustomSelect
             label="Week Day"
             options={weekdaysMap}
-            onChange={handleDayChange}
+            onChange={(event:any)=>handleDayChange(event)}
           />
         </div>
         <button onClick={() => dispatch(createSlotForDoctor(newSlot))}>
