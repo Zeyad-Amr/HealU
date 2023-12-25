@@ -1,6 +1,6 @@
 // import ListGroup from "./components/ListGroup";
 import { useState } from "react";
-import Table from "./components/Table";
+import Table from "./Table";
 import "../../../App.css";
 
 const slotsColumn = [
