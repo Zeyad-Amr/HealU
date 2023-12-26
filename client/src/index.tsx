@@ -10,18 +10,18 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Divider } from "@mui/material";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+    document.getElementById("root") as HTMLElement
 );
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <h1>Doctor Slots</h1>
-      <SlotsTable />
-      <br></br>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <CreateSlotForm />
-      </LocalizationProvider>
-    </Provider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <Provider store={store}>
+            <h1>Doctor Slots</h1>
+            <SlotsTable />
+            <br></br>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <CreateSlotForm />
+            </LocalizationProvider>
+        </Provider>
+    </React.StrictMode>
 );
