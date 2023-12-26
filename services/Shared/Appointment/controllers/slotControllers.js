@@ -11,24 +11,10 @@ const weekdaysMap = {
     5: "Friday",
     6: "Saturday",
 };
-
-// // Reverse mapping for numeric to weekday names
-const weekdayNamesMap = Object.entries(weekdaysMap).reduce((acc, [key, value]) => {
-    acc[value] = key;
-    return acc;
-  }, {});
   
   const createSlot = async (req, res, next) => {
     try {
       const { doctorId, clinicId, time, weekDay } = req.body;
-  
-      // Validate weekday input
-      if (!Object.values(weekdaysMap).includes(weekDay)) {
-        return res.status(400).json({ message: "Invalid weekday provided" });
-      }
-  
-      // Convert weekday to numeric representation (if needed)
-      const numericWeekDay = weekdayNamesMap[weekDay] || weekDay; // Use existing numeric value or map from name
   
       // Check for existing slots with the same doctor, date, and different clinic
       const existingSlot = await Slot.findOne({
@@ -46,11 +32,11 @@ const weekdayNamesMap = Object.entries(weekdaysMap).reduce((acc, [key, value]) =
       const existingSlotWithTime = await Slot.findOne({
         time: time,
         // clinicId: { $ne: clinicId }, // Exclude current clinic
-        weekDay: numericWeekDay, // Use numeric weekday for comparison
+        weekDay: weekDay, // Use numeric weekday for comparison
       });
       if (existingSlotWithTime) {
         return res.status(400).json({
-          message: `Another clinic already has a slot at that time on ${weekdaysMap[numericWeekDay]}`,
+          message: `Another clinic already has a slot at that time on ${weekdaysMap[weekDay]}`,
         });
       }
   
@@ -59,7 +45,7 @@ const weekdayNamesMap = Object.entries(weekdaysMap).reduce((acc, [key, value]) =
         doctorId,
         clinicId,
         time,
-        weekDay: numericWeekDay, // Store numeric weekday in the database
+        weekDay:weekDay, // Store numeric weekday in the database
       });
       res.status(201).json({ message: "Success", newSlot });
       next();
@@ -112,45 +98,6 @@ const getSlotsByDoctorID = async (req, res, next) => {
             next(error);
     }
 };
-
-// const getSlotsByDoctorID = async (req, res, next) => {
-//     try {
-//       const { doctorId } = req.params;
-//       const { unscheduled } = req.query;
-  
-//       // Retrieve only available slots considering the unique constraints
-//       const slots = await Slot.find({
-//         doctorId: doctorId,
-//         $or: [
-//           {
-//             // Slot has no corresponding appointment
-//             $not: { _id: { $in: await Appointment.distinct('slotId') } }
-//           },
-//           {
-//             // Slot has a corresponding appointment that's not booked
-//             $and: [
-//               { _id: { $in: await Appointment.distinct('slotId') } },
-//               { 'appointments.status': { $ne: 'Booked' } } // Assuming 'Booked' status indicates a booked appointment
-//             ]
-//           }
-//         ]
-//       });
-  
-//       if (slots.length > 0) {
-//         res.status(200).json(slots);
-//       } else {
-//         res.status(404).json({
-//           message: `No slot found with Doctor ID: ${doctorId}`,
-//         });
-//       }
-//     } catch (error) {
-//       res
-//         .status(500)
-//         .json({ message: `Something went wrong, Please try again!` }) &&
-//         next(error);
-//     }
-//   };
-
 // ================================================================================= //
 
 const getSlotsByClinicID = async (req, res, next) => {
