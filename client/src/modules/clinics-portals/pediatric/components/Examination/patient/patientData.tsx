@@ -7,9 +7,26 @@ import HistoryInfo from "./history";
 import { styled } from "@mui/material/styles";
 import Item from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import { useAppDispatch } from "../../../../../../core/store/index";
+import { useSelector } from "react-redux";
+import { fetchPatientData,PatientsState,Patient} from "../../../slices/patient-slice";
 import "./patientData.css";
 
 const PatientSection = () => {
+  const dispatch = useAppDispatch();
+  const patientState: PatientsState = useSelector(
+    (state: any) => state.patients
+  );
+  const [selectedPatient, setSelectedPatient] = useState<Patient>(
+    {} as Patient
+  );
+
+  useEffect(() => {
+    console.log(dispatch(fetchPatientData(5)));
+  }, [patientState]);
+
+  
+
   return (
     <>
       <div className="patient-section">

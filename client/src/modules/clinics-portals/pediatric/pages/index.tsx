@@ -1,3 +1,4 @@
+import React from "react";
 import ClinicTitle from "../components/title/title";
 import DevicesTable from "../components/table/table";
 import ScheduleViwer from "../components/Grid/grid";
@@ -10,9 +11,9 @@ const PediatricClinicPortal = () => {
       <ClinicTitle />
       {/* <ExaminationScreen /> */}
 
-      {/* <ClinicMange /> */}
+      <ClinicMange />
 
-      <ScheduleViwer />
+      {/* <ScheduleViwer /> */}
     </>
   );
 };
