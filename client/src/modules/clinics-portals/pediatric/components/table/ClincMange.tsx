@@ -20,7 +20,7 @@ const ClinicMange = () => {
         </Button>
       </div>
 
-      <PopUp isOpen={isModalOpen} onClose={closeModal} title={"Prescreption"}>
+      <PopUp isOpen={isModalOpen} onClose={closeModal} title={"Add Divece"}>
         <div className="modal-body">
           <AddDeviceForm closeModal={closeModal} />
         </div>

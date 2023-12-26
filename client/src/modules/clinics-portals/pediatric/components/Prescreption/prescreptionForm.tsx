@@ -3,7 +3,13 @@ import { Grid } from "@mui/material";
 import Item from "@mui/material/Grid";
 import { TextField } from "@mui/material";
 
-const AddPrescreptionForm = () => {
+const AddPrescreptionForm = (props: any) => {
+  const handledrugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+  };
+  const handledoseChange = (event: React.ChangeEvent<HTMLInputElement>) => {};
+  const handletimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {};
+  const handlenotesChange = (event: React.ChangeEvent<HTMLInputElement>) => {};
   return (
     <Grid container spacing={2} columns={8}>
       <Grid item xs={8}>
@@ -18,12 +24,12 @@ const AddPrescreptionForm = () => {
         <TextField fullWidth label="Time" id="Time" />
       </Grid>
       <Grid item xs={8}>
-      <TextField
+        <TextField
           id="Notes"
           label="Notes"
           multiline
-                  rows={4}
-                    fullWidth
+          rows={4}
+          fullWidth
           variant="filled"
         />
       </Grid>

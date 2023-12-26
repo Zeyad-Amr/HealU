@@ -6,7 +6,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import { DatePicker } from "@mui/lab";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -21,14 +20,11 @@ import {
   GridEventListener,
   GridRowId,
   GridRowModel,
-GridRowEditStopReasons,
+  GridRowEditStopReasons,
 } from "@mui/x-data-grid";
-import { randomId} from "@mui/x-data-grid-generator";
+import { randomId } from "@mui/x-data-grid-generator";
 
-const initialRows: GridRowsProp = [
-
-];
-
+const initialRows: GridRowsProp = [];
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -50,8 +46,8 @@ function EditToolbar(props: EditToolbarProps) {
   };
 
   return (
-      <div className="CreateContainer">
-          <Button
+    <div className="CreateContainer">
+      <Button
         className="AddBtn"
         color="primary"
         startIcon={<AddIcon />}
@@ -60,7 +56,6 @@ function EditToolbar(props: EditToolbarProps) {
         Create New slot
       </Button>
     </div>
-      
   );
 }
 
@@ -114,9 +109,21 @@ export default function ScheduleViwer() {
   };
 
   const columns: GridColDef[] = [
-    { field: "Slot", width: 180, editable: true, cellClassName: "Slot", type: "dateTime" },
+    {
+      field: "Slot",
+      width: 180,
+      editable: true,
+      cellClassName: "Slot",
+      type: "dateTime",
+    },
 
-    { field: "Name", width: 500, editable: true, type: "string", cellClassName: "Name",},
+    {
+      field: "Name",
+      width: 500,
+      editable: true,
+      type: "string",
+      cellClassName: "Name",
+    },
     {
       field: "actions",
       type: "actions",
@@ -164,55 +171,53 @@ export default function ScheduleViwer() {
     },
   ];
   const [Data, setData] = useState<GridRowsProp[]>([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const response = await axios.get<GridRowsProp[]>('https://5zd4y.wiremockapi.cloud/json/1'); // Replace with your API endpoint
-            setData(response.data);
-        }
-        catch (error) {
-            
-        }
+      try {
+        const response = await axios.get<GridRowsProp[]>(
+          "https://5zd4y.wiremockapi.cloud/json/1"
+        ); // Replace with your API endpoint
+        setData(response.data);
+      } catch (error) {}
     };
     setRows(Data);
-      fetchData();
+    fetchData();
   }, []);
-  
-    return (
+
+  return (
     <div className="GridContainer">
-          
-    <Box
-      sx={{
-        height: 500,
-        width: "100%",
-        "& .actions": {
-          color: "text.secondary",
-        },
-        "& .textPrimary": {
-          color: "text.primary",
-        },
-      }}
-    >
+      <Box
+        sx={{
+          height: 500,
+          width: "100%",
+          "& .actions": {
+            color: "text.secondary",
+          },
+          "& .textPrimary": {
+            color: "text.primary",
+          },
+        }}
+      >
         <DataGrid
-        className="grid"
-        rows={rows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        hideFooter
-        disableColumnFilter
-        slots={{
-          toolbar: EditToolbar,
-        }}
-        slotProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
-      />
-    </Box>
+          className="grid"
+          rows={rows}
+          columns={columns}
+          editMode="row"
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={handleRowModesModelChange}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
+          hideFooter
+          disableColumnFilter
+          slots={{
+            toolbar: EditToolbar,
+          }}
+          slotProps={{
+            toolbar: { setRows, setRowModesModel },
+          }}
+        />
+      </Box>
     </div>
   );
 }
