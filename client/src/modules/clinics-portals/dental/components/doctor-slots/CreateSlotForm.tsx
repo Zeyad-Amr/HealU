@@ -1,10 +1,15 @@
-import styles from "../form/form.module.css";
-import CustomTextField from "../form/elements/CustomTextFiled";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { Slot, createSlotForDoctor } from "../../state/slices/slotsSlice";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../state/store";
-import { Slot, createSlotForDoctor } from "../../state/slices/slotsSlice";
-import { CustomMultiSelect, CustomSelect } from "../form";
-import { useState } from "react";
 
 let newSlot: Slot = {
   doctorId: 13,
@@ -22,46 +27,62 @@ const weekdaysMap = [
   { label: "Friday", value: 5 },
   { label: "Saturday", value: 6 },
 ];
-
 const CreateSlotForm = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  // function needs for multiple select you need to make this for each multiple select
-  const [selectedDay, setSelectedDay] = useState([]);
+  const [time, setTime] = React.useState("10:00");
+
+  const handleTimeChange = (value: any) => {
+    setTime(value);
+    newSlot.time = `${value["$H"]}:${value["$m"]}`;
+  };
+
+  const [selectedDay, setSelectedDay] = React.useState([]);
   const handleDayChange = (event: any) => {
     setSelectedDay(event.target.value);
     newSlot.weekDay = weekdaysMap[event.target.value].label;
   };
   return (
-    <>
-      <div className={styles.form}>
-        <div>
-          <CustomTextField
-            label="Clinic ID"
-            onChange={(event) =>
-              (newSlot.clinicId = parseInt(event.target.value))
-            }
-          />
-        </div>
-        <div>
-          <CustomTextField
-            label="Time"
-            onChange={(event) => (newSlot.time = event.target.value)}
-          />
-        </div>
-        <div>
-          <CustomSelect
-            label="Week Day"
-            options={weekdaysMap}
-            onChange={(event:any)=>handleDayChange(event)}
-          />
-        </div>
-        <button onClick={() => dispatch(createSlotForDoctor(newSlot))}>
+    <Box sx={{ minWidth: 120 }}>
+      <h1> Create Slot</h1>
+      <FormControl fullWidth>
+        <InputLabel id="weekday-label">Week Day</InputLabel>
+        <Select
+          labelId="weekday-label"
+          value={selectedDay}
+          label="Week Day"
+          onChange={handleDayChange}
+        >
+          {weekdaysMap.map((day) => (
+            <MenuItem value={day.value}>{day.label}</MenuItem>
+          ))}
+        </Select>
+        <br />
+        <TimePicker label="Time" value={time} onChange={handleTimeChange} />
+        <br />
+        <TextField
+          label="Doctor ID"
+          onChange={(event) =>
+            (newSlot.doctorId = parseInt(event.target.value))
+          }
+        />
+        <br />
+        <TextField
+          label="Clinic ID"
+          onChange={(event) =>
+            (newSlot.clinicId = parseInt(event.target.value))
+          }
+        />
+        <br />
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => dispatch(createSlotForDoctor(newSlot))}
+        >
           Create Slot
-        </button>
-      </div>
-    </>
+        </Button>
+      </FormControl>
+    </Box>
   );
 };
-
 export default CreateSlotForm;
