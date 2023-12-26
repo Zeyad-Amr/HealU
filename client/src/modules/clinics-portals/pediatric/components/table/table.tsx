@@ -12,7 +12,14 @@ import Paper from "@mui/material/Paper";
 import { borderRadius } from "@mui/system";
 import { useAppDispatch } from "../../../../../core/store/index";
 import { useSelector } from "react-redux";
-import { fetchDevices, AddDevice, device } from "../../slices/pediatric-slice";
+import {
+  fetchDevices,
+  AddDevice,
+  DeleteDevice,
+  device,
+} from "../../slices/pediatric-slice";
+import { Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,11 +45,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const DevicesTable = () => {
   const dispatch = useAppDispatch();
   const deviceState: DeviceState = useSelector((state: any) => state.devices);
-  const [selectedDevices, setSelectedDevices] = useState<DeviceState>({} as DeviceState);
+  const [selectedDevices, setSelectedDevices] = useState<DeviceState>(
+    {} as DeviceState
+  );
   useEffect(() => {
     dispatch(fetchDevices(deviceState.AllDevices));
     setSelectedDevices(deviceState);
-  }, [deviceState])
+  }, [deviceState]);
   return (
     <>
       <TableContainer component={Paper}>
@@ -50,7 +59,7 @@ const DevicesTable = () => {
           sx={{ minWidth: 700, maxWidth: 1100, margin: "auto" }}
           aria-label="customized table"
         >
-          <TableHead >
+          <TableHead>
             <TableRow>
               <StyledTableCell>Name</StyledTableCell>
               <StyledTableCell align="center">Type</StyledTableCell>
@@ -58,6 +67,7 @@ const DevicesTable = () => {
               <StyledTableCell align="center">PurchaseDate</StyledTableCell>
               <StyledTableCell align="center">ExpiryDate</StyledTableCell>
               <StyledTableCell align="center">DeviceStatus</StyledTableCell>
+              <StyledTableCell align="center">Delete</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -82,6 +92,17 @@ const DevicesTable = () => {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       {item.Device[0].DeviceStatus}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        variant="outlined"
+                        startIcon={<DeleteIcon />}
+                        onClick={() => {
+                          dispatch(DeleteDevice(item.DeviceID));
+                        }}
+                      >
+                        Delete
+                      </Button>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

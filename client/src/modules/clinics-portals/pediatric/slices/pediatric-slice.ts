@@ -4,8 +4,7 @@ import axios from 'axios';
 
 
 export interface Schedule{
-    id: number;
-   
+    id: number; 
     date: string;
     time: string;
     status: string;
@@ -55,7 +54,7 @@ export interface device{
 }
 
 export interface AllDevices { 
-    DeviceID: number;
+    DeviceID?: number;
     Device: device[];
 }
 
@@ -91,14 +90,25 @@ export const AddDevice = createAsyncThunk(
         const { rejectWithValue } = thunkApi;
         try {
             const response = await axios.post('https://pediatric-clinic-devices.onrender.com/device', data);
-            const devices: AllDevices[] = response.data;
-            return devices;
             
         } catch (error) {
             return rejectWithValue("Failed to fetch devices");
         }
     }
 );
+export const DeleteDevice = createAsyncThunk(
+    'devices/DeleteDevice',
+    async (data :Number, thunkApi) => {
+        const { rejectWithValue } = thunkApi;
+        try {
+            const response = await axios.delete(`https://pediatric-clinic-devices.onrender.com/device/${data}`);
+            
+        } catch (error) {
+            return rejectWithValue("Failed to fetch devices");
+        }
+    }
+);
+
 
 
 const deviceSlice = createSlice({
@@ -126,6 +136,17 @@ const deviceSlice = createSlice({
             state.error = '';
         });
         builder.addCase(AddDevice.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload as string;
+        });
+        builder.addCase(DeleteDevice.pending, (state, action) => {
+            state.loading = true;
+        });
+        builder.addCase(DeleteDevice.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = '';
+        });
+        builder.addCase(DeleteDevice.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload as string;
         });
