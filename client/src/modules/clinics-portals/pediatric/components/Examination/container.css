@@ -1,24 +1,22 @@
+.container {
+  background-color: #eeefff;
+  border-radius: 5px;
+  padding: 20px;
+}
+.diagnosisframe {
+  border-style: solid;
+  border-color: hsl(182, 75%, 50%); /* red */
+  border-width: 1px;
+  background: white;
+  border-radius: 5px;
+  padding: 10px !important;
+  margin-top: 20px !important;
+  position: relative;
+}
 
-.container{
-    background-color: #eeefff;
-    border-radius: 5px;
-    padding: 20px;
-  }
-  .diagnosisframe {
-
-    border-style: solid;
-    border-color: hsl(182, 75%, 50%); /* red */
-    border-width: 1px;
-    background: white;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 20px;
-    position: relative;
-    }
-  
-  .postionbutton {
-    width: 50px;
-    position: relative; 
-    left: 820px;
-    top : -10px;
+.postionbutton {
+  width: 50px;
+  position: relative;
+  left: 820px;
+  top: -10px;
 }

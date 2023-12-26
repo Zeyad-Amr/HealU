@@ -65,7 +65,7 @@ const Diagnosis = () => {
         autoComplete="off"
       >
         <Grid container spacing={0} columns={16} className="diagnosisframe">
-          <Grid item xs={4} >
+          <Grid item xs={4}>
             <TextField
               id="Diagnosis"
               label="Diagnosis"
@@ -74,7 +74,7 @@ const Diagnosis = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={4} >
+          <Grid item xs={4}>
             <TextField
               id="ExtraNotes"
               label="ExtraNotes"
@@ -91,7 +91,7 @@ const Diagnosis = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={4} >
+          <Grid item xs={4}>
             <TextField
               id=" PatientHeight"
               label="Heigth"
@@ -109,7 +109,7 @@ const Diagnosis = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={4} >
+          <Grid item xs={4}>
             <TextField
               id="HeartRate"
               label="Heart Rate"
@@ -125,7 +125,7 @@ const Diagnosis = () => {
         </Grid>
 
         <div className="postionbutton">
-          <Button variant="contained" onClick={handleDoneClick} >
+          <Button variant="contained" onClick={handleDoneClick}>
             Done
           </Button>
         </div>
