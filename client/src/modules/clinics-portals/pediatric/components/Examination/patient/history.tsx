@@ -5,11 +5,64 @@ import { Grid } from "@mui/material";
 import "./patientData.css";
 import Item from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import { useAppDispatch } from "../../../../../../core/store/index";
+import { useSelector } from "react-redux";
+import { fetchPatientData, PatientsState } from "../../../slices/patient-slice";
+import "./patientData.css";
+import Button from "@mui/material/Button";
 
 const HistoryInfo = (props: any) => {
+  const dispatch = useAppDispatch();
+  const patientState: PatientsState = useSelector(
+    (state: any) => state.patients
+  );
+  const [selectedPatient, setSelectedPatient] = useState<PatientsState>({
+    patients: [
+      {
+        PatientID: 0,
+        Illnesses: [
+          {
+            IllnessDescription: "",
+          },
+        ],
+        Operations: [
+          {
+            OperationName: "",
+            OperationDate: "",
+          },
+        ],
+        MedicalTests: [
+          {
+            TestID: "",
+            TestDescription: "",
+          },
+        ],
+        Complaints: [
+          {
+            ComplaintDescription: "",
+          },
+        ],
+        Drugs: [
+          {
+            DrugName: "",
+            DrugDose: "",
+            DrugDuration: "",
+          },
+        ],
+      },
+    ],
+  } as unknown as PatientsState);
+  const handleclick = () => {
+    dispatch(fetchPatientData(5));
+    setSelectedPatient(patientState);
+  };
+  useEffect(() => {
+    dispatch(fetchPatientData(5));
+    setSelectedPatient(patientState);
+  }, [selectedPatient]);
   return (
     <>
-      <div className="history">
+      <div className="history" onClick={handleclick}>
         <div className="mid">
           <Item>
             <p>History</p>
@@ -21,8 +74,13 @@ const HistoryInfo = (props: any) => {
               <div className="his2">
                 <p>Drugs</p>
               </div>
+
               <Item style={{ fontSize: "7px" }}>
-                <h1>{props.drugs}</h1>
+                {selectedPatient === undefined
+                  ? null
+                  : selectedPatient.patients[0]?.Drugs.map((item: any) => (
+                      <h1>{item.DrugName}</h1>
+                    ))}
               </Item>
             </div>
           </Grid>
@@ -33,7 +91,11 @@ const HistoryInfo = (props: any) => {
               </div>
               <div className="ill">
                 <Item style={{ fontSize: "7px" }}>
-                  <h1>{props.illnesses}</h1>
+                  {selectedPatient === undefined
+                    ? null
+                    : selectedPatient.patients[0]?.Illnesses.map(
+                        (item: any) => <h1>{item.IllnessDescription}</h1>
+                      )}
                 </Item>
               </div>
             </div>
@@ -55,7 +117,11 @@ const HistoryInfo = (props: any) => {
 
               <Grid container>
                 <Grid item xs>
-                  <h1>{props.tests}</h1>
+                  {selectedPatient === undefined
+                    ? null
+                    : selectedPatient.patients[0]?.MedicalTests.map(
+                        (item: any) => <h1>{item.TestDescription}</h1>
+                      )}
                 </Grid>
                 <Divider
                   orientation="vertical"
@@ -67,7 +133,11 @@ const HistoryInfo = (props: any) => {
                   }}
                 />
                 <Grid item xs>
-                  <h1>{props.operation}</h1>
+                  {selectedPatient === undefined
+                    ? null
+                    : selectedPatient.patients[0]?.Operations.map(
+                        (item: any) => <h1>{item.OperationName}</h1>
+                      )}
                 </Grid>
               </Grid>
             </div>

@@ -9,23 +9,18 @@ import Item from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import { useAppDispatch } from "../../../../../../core/store/index";
 import { useSelector } from "react-redux";
-import { fetchPatientData,PatientsState,Patient} from "../../../slices/patient-slice";
+import {
+  fetchPatientData,
+  PatientsState,
+  Patient,
+} from "../../../slices/patient-slice";
 import "./patientData.css";
+import Button from "@mui/material/Button";
 
 const PatientSection = () => {
-  const dispatch = useAppDispatch();
-  const patientState: PatientsState = useSelector(
-    (state: any) => state.patients
-  );
-  const [selectedPatient, setSelectedPatient] = useState<Patient>(
-    {} as Patient
-  );
-
-  useEffect(() => {
-    console.log(dispatch(fetchPatientData(5)));
-  }, [patientState]);
-
-  
+  // useEffect(() => {
+  //   console.log(dispatch(fetchPatientData(6)));
+  // }, []);
 
   return (
     <>
@@ -47,7 +42,12 @@ const PatientSection = () => {
             </div>
           </Grid>
           <Grid item xs={12}>
-            <HistoryInfo drugs="Pill" illnesses="low blood" tests="pcr" operation="surgry"/>
+            <HistoryInfo
+              drugs="Pill"
+              illnesses="low blood"
+              tests="pcr"
+              operation="surgry"
+            />
           </Grid>
         </Grid>
       </div>
