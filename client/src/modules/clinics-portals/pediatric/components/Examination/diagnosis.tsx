@@ -72,6 +72,7 @@ const Diagnosis = () => {
               multiline
               rows={6}
               onChange={handleInputChange}
+              className="input"
             />
           </Grid>
           <Grid item xs={4}>
@@ -79,16 +80,19 @@ const Diagnosis = () => {
               id="ExtraNotes"
               label="ExtraNotes"
               onChange={handleInputChange}
+              className="input"
             />
             <TextField
               id="RecommendedActionDescription"
               label="RecommendedAction"
               onChange={handleInputChange}
+              className="input"
             />
             <TextField
               id=" PatientWeight"
               label="Weights"
               onChange={handleInputChange}
+              className="input"
             />
           </Grid>
           <Grid item xs={4}>
@@ -96,17 +100,20 @@ const Diagnosis = () => {
               id=" PatientHeight"
               label="Heigth"
               onChange={handleInputChange}
+              className="input"
             />
 
             <TextField
               id="BloodPressure"
               label="BloodPressure"
               onChange={handleInputChange}
+              className="input"
             />
             <TextField
               id="RespirationRate"
               label="RespirationRate"
               onChange={handleInputChange}
+              className="input"
             />
           </Grid>
           <Grid item xs={4}>
@@ -114,13 +121,20 @@ const Diagnosis = () => {
               id="HeartRate"
               label="Heart Rate"
               onChange={handleInputChange}
+              className="input"
             />
             <TextField
               id="DiabeticTest"
               label="Diabetic Test"
               onChange={handleInputChange}
+              className="input"
             />
-            <TextField id="SPO2" label="SPO2" onChange={handleInputChange} />
+            <TextField
+              id="SPO2"
+              label="SPO2"
+              onChange={handleInputChange}
+              className="input"
+            />
           </Grid>
         </Grid>
 
@@ -129,7 +143,6 @@ const Diagnosis = () => {
             Done
           </Button>
         </div>
-        {/* </div> */}
       </Box>
     </>
   );

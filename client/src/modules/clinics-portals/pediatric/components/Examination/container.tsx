@@ -28,22 +28,42 @@ const ExaminationScreen = () => {
     <Container maxWidth="lg" className="container">
       <PatientSection />
       <Diagnosis />
-      <Button onClick={openPrescriptionModal}>Pris</Button>
-      <PopUp isOpen={isPrescriptionModalOpen} onClose={closePrescriptionModal} title={"Add Device"}>
+      <div className="AddBtns">
+        <Button fullWidth variant="contained" onClick={openPrescriptionModal}>
+          Prescription
+        </Button>
+        <Button fullWidth variant="contained" onClick={openTestsModal}>
+          test
+        </Button>
+        <Button fullWidth variant="contained" onClick={openServicesModal}>
+          Services
+        </Button>
+      </div>
+      <PopUp
+        isOpen={isPrescriptionModalOpen}
+        onClose={closePrescriptionModal}
+        title={"Add Device"}
+      >
         <div className="modal-body">
           <AddPrescreptionForm closeModal={closePrescriptionModal} />
         </div>
       </PopUp>
 
-      <Button onClick={openTestsModal}>test</Button>
-      <PopUp isOpen={isTestsModalOpen} onClose={closeTestsModal} title={"Tests"}>
+      <PopUp
+        isOpen={isTestsModalOpen}
+        onClose={closeTestsModal}
+        title={"Tests"}
+      >
         <div className="modal-body">
           <AddTestsForm closeModal={closeTestsModal} />
         </div>
       </PopUp>
 
-      <Button onClick={openServicesModal}>Services</Button>
-      <PopUp isOpen={isServicesModalOpen} onClose={closeServicesModal} title={"Services"}>
+      <PopUp
+        isOpen={isServicesModalOpen}
+        onClose={closeServicesModal}
+        title={"Services"}
+      >
         <div className="modal-body">
           <AddServicesForm closeModal={closeServicesModal} />
         </div>

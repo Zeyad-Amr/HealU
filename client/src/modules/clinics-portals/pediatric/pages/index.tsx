@@ -9,9 +9,9 @@ const PediatricClinicPortal = () => {
   return (
     <>
       <ClinicTitle />
-      {/* <ExaminationScreen /> */}
+      <ExaminationScreen />
 
-      <ClinicMange />
+      {/* <ClinicMange /> */}
 
       {/* <ScheduleViwer /> */}
     </>
