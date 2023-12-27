@@ -1,27 +1,11 @@
 import Joi, { ObjectSchema } from "joi";
-import passwordComplexity from "joi-password-complexity";
 
-const passwordValidations = {
-    min: 8,
-    max: 1024,
-    numeric: 1,
-    requirementCount: 4,
-};
 
 const loginSchema = Joi.object({
     username: Joi.string().min(5).max(45).required(),
-    password: passwordComplexity(passwordValidations).required(),
+    password: Joi.string().min(8).required(),
 })
 
-const postSchema = Joi.object({
-    username: Joi.string().min(5).max(45).required(),
-    password: passwordComplexity(passwordValidations).required(),
-    userId: Joi.string().required(),
-})
-
-const updateSchema = Joi.object({
-    username: Joi.string().min(5).max(45),
-})
 
 const validate = (input: any, schema: ObjectSchema) => {
     const result = schema.validate(input);
@@ -36,8 +20,6 @@ const validate = (input: any, schema: ObjectSchema) => {
 
 export default {
     validate,
-    postSchema,
-    updateSchema,
     loginSchema,
 
 }

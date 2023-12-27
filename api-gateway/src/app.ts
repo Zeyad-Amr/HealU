@@ -1,7 +1,7 @@
 import express, { Express } from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import authRouter from "./routes/authRouter";
+import clinicRouter from "./routes/clinicRouter";
 import { proxies } from "./config";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { alwaysAllow, protect } from "./services";
@@ -14,17 +14,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-main().catch((err) => console.log(err));
-
-async function main() {
-    await mongoose.connect(
-        (process.env.DB_URI as string)
-    );
-    console.log("***Connected to database***");
-}
-
 app.use('/api', authRouter)
+app.use('/api', clinicRouter)
 
 
 Object.keys(proxies).forEach((path) => {
