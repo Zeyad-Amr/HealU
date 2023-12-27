@@ -9,18 +9,18 @@ datasource db {
 }
 
 model User {
-  UserID              Int     @id @default(autoincrement())
-  Gender              String
-  FirstName           String
-  LastName            String
-  Email               String
-  PhoneNumber         String
-  Role                String
-  SSN                 String
-  Password            String
-  UserName            String  @unique
-  InsurancePersentage Float?
-  EmergencyContact    String?
-  Specialization      String?
-  ClinicID            Int?    
+  userId              Int     @id @default(autoincrement())
+  gender              String
+  firstName           String
+  lastName            String
+  email               String  @unique
+  phoneNumber         String
+  role                String
+  ssn                 String  @unique
+  password            String
+  userName            String  @unique
+  insurancePersentage Float?
+  emergencyContact    String?
+  specialization      String?
+  clinicId            Int?    
 }

@@ -4,13 +4,13 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const loginUser = async (req: Request, res: Response) => {
-  const { UserName, Password } = req.body;
+  const { userName, password } = req.body;
 
   try {
     const user = await prisma.user.findUnique({
       where: {
-        UserName: UserName,
-        Password: Password,
+        userName: userName,
+        password: password,
       },
     });
 

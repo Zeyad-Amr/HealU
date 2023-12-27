@@ -5,9 +5,9 @@ import * as staffController from '../controllers/staffController';
 const router = express.Router();
 
 router.get('/', staffController.getAllstaff); //  doctors and admin
-router.get('/:userID', staffController.getALLStaffById);
-router.get('/clinic/:clinicID', staffController.getDoctorsByClinicID);
+router.get('/:userId', staffController.getStaffById);
+router.get('/clinic/:clinicId', staffController.getDoctorsByClinicID);
 router.post('/', staffController.createStaff);
-router.put('/:userID', staffController.updateStaff);
-router.delete('/:userID', staffController.deleteStaff);
+router.put('/:userId', staffController.updateStaff);
+router.delete('/:userId', staffController.deleteStaff);
 export default router;
