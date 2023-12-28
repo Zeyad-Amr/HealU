@@ -10,10 +10,22 @@ export function checkUniqueValues(error:any,res:Response):void{
       res.status(400).json({ error: 'SSN must be unique' });
     } else if (targetArray && targetArray.includes('userName')) {
       res.status(400).json({ error: 'Username must be unique' });
-    } else {                                                      // Handle other Prisma known errors
+    }else if (targetArray && targetArray.includes('email')) {
+      res.status(400).json({ error: 'email must be unique' });
+    } 
+     else {                                                      // Handle other Prisma known errors
       res.status(400).json({ error: 'Invalid request to the database' });
     }
 }  
+}
+//-----------------------check for capital letter in password --------------------------------
+export function hasCapitalizedCharacter(inputString:string):boolean {
+  for (let i = 0; i < inputString.length; i++) {
+    if (inputString[i] === inputString[i].toUpperCase()) {
+      return true; // Found a capitalized character
+    }
+  }
+  return false; // No capitalized character found
 }
 //-----------------------Create Patient --------------------------------
 export const createPatient = async (req: Request, res: Response) => {
@@ -26,6 +38,9 @@ export const createPatient = async (req: Request, res: Response) => {
       !patientData.email||!patientData.phoneNumber||!patientData.role||!patientData.password||
       !patientData.userName||!patientData. insurancePersentage||!patientData.emergencyContact) {
       throw new Error('Missing required data');
+    }
+    else if(hasCapitalizedCharacter(patientData.password)==false){
+      throw new Error(' password must has at least one capital letter');
     }
     else{
       const newPatient = await prisma.user.create({
@@ -59,32 +74,32 @@ export const createPatient = async (req: Request, res: Response) => {
 export const updatePatient = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const patientData = req.body;
-
   const parsedUserId = parseInt(userId);
-  if (isNaN(parsedUserId)) {
-    throw new Error('Invalid userId format. Must be an integer.');
-  }
-
   try {
-    const updatedPatient = await prisma.user.update({
+    if (isNaN(parsedUserId)) {
+      throw new Error('Invalid userId format. Must be an integer.');
+    }
+    const patientExists = await prisma.user.findUnique({
       where: {
         userId: parsedUserId,
         role: 'Patient',
       },
-      data: {
-        ...patientData,
-        role: 'Patient',
-      }
-    });
-
-    // if (updatedPatient) {
-    //   res.status(200).json({ data: updatedPatient });
-    // } else {
-    //   throw new Error('Patient not found');
-    // }
-
-    // successsful response
-    res.status(200).json({ data: updatedPatient });
+    });  
+    if (!patientExists) {
+      throw new Error('User not found');
+    }else{
+      const updatedPatient = await prisma.user.update({
+        where: {
+          userId: parsedUserId,
+          role: 'Patient',
+        },
+        data: {
+          ...patientData,
+          role: 'Patient',
+        }
+      });
+      res.status(200).json({ data: updatedPatient });
+    } 
   } catch (error:any) {
     console.error(error);
     if (error instanceof Prisma.PrismaClientKnownRequestError) {

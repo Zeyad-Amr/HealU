@@ -1,3 +1,5 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -7,7 +9,6 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
 model User {
   userId              Int     @id @default(autoincrement())
   gender              String
@@ -17,8 +18,8 @@ model User {
   phoneNumber         String
   role                String
   ssn                 String  @unique
-  password            String
-  userName            String  @unique
+  password            String  
+  userName            String  @unique  
   insurancePersentage Float?
   emergencyContact    String?
   specialization      String?

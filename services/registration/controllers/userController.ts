@@ -53,6 +53,7 @@ export const getUserByUserName = async (req: Request, res: Response) => {
     const userMember = await prisma.user.findUnique({
       where: {
         userName: userName,
+        
       }
     });
     if (userMember) {

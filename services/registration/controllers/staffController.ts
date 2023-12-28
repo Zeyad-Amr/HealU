@@ -30,12 +30,10 @@ export const getAllstaff = async (req: Request, res: Response) => {
 export const getStaffById = async (req: Request, res: Response) => {
   const {userId } = req.params;
   try {
-    console.log(userId);
     const parsedUserId = parseInt(userId);
     if (isNaN(parsedUserId)) {
       throw new Error('Invalid userId format. Must be an integer.');
     }
-
     const userMember = await prisma.user.findUnique({
       where: {
         userId: parsedUserId,
@@ -45,7 +43,6 @@ export const getStaffById = async (req: Request, res: Response) => {
         ]
       }
     });
-
     if (userMember) {
       res.status(200).json({ data: userMember });
     } else {
@@ -98,6 +95,9 @@ export const createStaff = async (req: Request, res: Response) => {
       !userData.phoneNumber||!userData.role||!userData.password||!userData.userName) {
       throw new Error('Missing required data');
     }
+    else if(controller.hasCapitalizedCharacter(userData.password)==false){
+      throw new Error(' password must has at least one capital letter');
+    }
     else{
       const newUser = await prisma.user.create({
         data: userData,
@@ -121,34 +121,38 @@ export const createStaff = async (req: Request, res: Response) => {
     await prisma.$disconnect();
   }
 };
-
 //-------------------Update staff-----------------------
 export const updateStaff = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const userData = req.body;
-  try {
-    const paresdData=parseInt(userId);
-
-    if(isNaN(paresdData)){
+  const parsedUserId=parseInt(userId);
+  try { 
+    if(isNaN(parsedUserId)){
       throw new Error('Data type must be integer');
     }
-    else{
-      const updatedUser = await prisma.user.update({
+      const userExists = await prisma.user.findUnique({
         where: {
-          userId: paresdData,
+          userId: parsedUserId,
           OR: [
             { role: "Doctor" },
             { role: "Admin" }
-          ],  
-        },    
-        data: userData,
-      });
-
-      // if (!updatedUser) {
-      //   res.status(404).json({ error: 'User not found' });
-      // } else {
-      //   res.status(200).json({ data: updatedUser });
-      // }
+          ],
+        },
+      });  
+      if (!userExists) {
+        throw new Error('User not found');
+      }else{
+        const updatedUser = await prisma.user.update({
+          where: {
+            userId: parsedUserId,
+            OR: [
+              { role: "Doctor" },
+              { role: "Admin" }
+            ],  
+          },    
+          data: userData,
+        }); 
+        res.status(200).json({ data: updatedUser });  
     }
   } catch (error:any) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
