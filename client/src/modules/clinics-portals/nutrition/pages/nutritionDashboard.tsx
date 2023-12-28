@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+// import React from "react";
 import { Grid } from "@mui/material";
 import { styled, Theme } from "@mui/material/styles";
 import { Container } from "@mui/material";
@@ -9,11 +10,11 @@ import CustomContainer from "../components/dietPlan";
 import ListPrescription from "../components/list";
 import Add from "../components/Add";
 import Button from "../components/Button";
+import PrescriptionModal from "../components/modal";
 
 const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
   marginTop: "10px",
   display: "flex",
-  // height: "100%",
   justifyContent: "center",
 }));
 
@@ -25,6 +26,16 @@ const NutritionDashBoard = () => {
   const prescription = {
     drug: "Loratadine",
     dosage: "10 MG",
+  };
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
 
   return (
@@ -64,7 +75,10 @@ const NutritionDashBoard = () => {
 
         <Grid container spacing={2}>
           <Grid item>
-            <Button label="Done" />
+            <Button label="Done" onClick={handleOpenModal} />
+            <div>
+              <PrescriptionModal onClose={handleCloseModal} />
+            </div>
           </Grid>
         </Grid>
       </ContentWrapper>

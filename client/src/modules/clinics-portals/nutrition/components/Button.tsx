@@ -3,11 +3,12 @@ import { styled, Theme } from "@mui/material/styles";
 
 interface ButtonProps {
   label: string;
-  //   onClick: () => void;
+  onClick: () => void;
 }
 
 const StyledButton = styled("button")(({ theme }: { theme: Theme }) => ({
   marginLeft: "1280px",
+  marginBottom: "30px",
   width: "150px",
   fontFamily: theme.typography.fontFamily,
   fontSize: 16,
@@ -16,7 +17,7 @@ const StyledButton = styled("button")(({ theme }: { theme: Theme }) => ({
   backgroundImage:
     "linear-gradient(90deg, hsla(183, 85%, 47%, 1) 0%, hsla(180, 99%, 36%, 1) 100%)",
   border: "none",
-  borderRadius: 4,
+  borderRadius: "10px",
   padding: "12px 24px",
   cursor: "pointer",
   textAlign: "center",
@@ -33,7 +34,7 @@ const StyledButton = styled("button")(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-const Button: React.FC<ButtonProps> = ({ label }) => {
+const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
   return <StyledButton>{label}</StyledButton>;
 };
 
