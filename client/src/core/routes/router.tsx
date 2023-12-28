@@ -27,7 +27,6 @@ class Router {
     },
     {
       path: AppRoutes.clinicNutrition,
-
       element: <NutritionClinicPortal />,
     },
     {
