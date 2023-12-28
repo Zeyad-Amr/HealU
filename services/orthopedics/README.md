@@ -33,7 +33,7 @@ To set up and run the Clinic project, follow these steps:
 5. To run the project, execute:
 
    ```bash
-   node index.js
+   node orthopedics.js
    ```
 
    This will start the Clinic project.
