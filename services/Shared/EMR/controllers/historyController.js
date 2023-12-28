@@ -202,7 +202,7 @@ async function createMedicalHistory(req, res) {
     res.status(201).json({ message:`New Medical History is created successfully with PatientID: ${PatientID}`});
   } catch (error) {
     console.error("Error creating medical history:", error);
-    res.status(500).json({ error: "Internal Server Error, Check if patientId exists" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 //==============================================================================================================

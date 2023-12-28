@@ -44,7 +44,7 @@ async function createPrescription(req, res) {  // Create new prescription
     // Rest of your existing code
   } catch (appointmentsError) {
     console.error("Error checking for existing AppointmentID:", appointmentsError);
-    res.status(500).json({ error: "Internal Server Error, Check if AppointmentID exists" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 //================================================================================================
@@ -146,7 +146,7 @@ function insertDrugs(insertedPrescriptionID,PatientID, Drugs,callback) {        
 
   // handling asynchronous insertion of multiple drugs
   Promise.all(Drugs.map((drug) => { return new Promise((resolve, reject) => {
-    connection.query(sql_query_Drug,[insertedPrescriptionID,PatientID, drug.DName, drug.DDuration, drug.DDose],(drugErr, drugResult) => {
+    connection.query(sql_query_Drug,[insertedPrescriptionID,PatientID, drug.DrugName, drug.DrugDuration, drug.DrugDose],(drugErr, drugResult) => {
       if (drugErr) {
         console.error(`Error creating Drug`, drugErr);
         reject(drugErr);
