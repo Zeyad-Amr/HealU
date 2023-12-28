@@ -12,14 +12,14 @@ const uri = "mongodb+srv://Sherif:sherif2001@cluster0.rcyuxj2.mongodb.net";
 const port = 3000;
 
 mongoose
-  .connect(uri)
-  .then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(port, () => console.log("Server up and running"));
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+    .connect(uri)
+    .then(() => {
+        console.log("Connected to MongoDB");
+        app.listen(port, () => console.log("Server up and running"));
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 
 // Middleware
 app.use(express.json());

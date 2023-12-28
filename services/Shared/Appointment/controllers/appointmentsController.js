@@ -6,7 +6,11 @@ const createAppointment = async (req, res, next) => {
         const slotId = req.body.slotId;
         const patientId = req.body.patientId;
         const date = req.body.date;
-
+// Check for existing appointments for the same date and slot
+        const existingAppointment = await Appointment.findOne({ slotId, date });
+        if (existingAppointment) {
+        return res.status(400).json({ message: 'Appointment already booked for that slot and date' });
+  }
         const appointment = await Slot.findOne({ _id: slotId }).then((slot) => {
             return Appointment.create({
                 slotId: slotId,

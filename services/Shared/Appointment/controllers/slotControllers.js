@@ -11,22 +11,48 @@ const weekdaysMap = {
     5: "Friday",
     6: "Saturday",
 };
-
-const createSlot = async (req, res, next) => {
+  
+  const createSlot = async (req, res, next) => {
     try {
-        const newSlot = await Slot.create({
-            doctorId: req.body.doctorId,
-            clinicId: req.body.clinicId,
-            time: req.body.time,
-            weekDay: req.body.weekDay,
+      const { doctorId, clinicId, time, weekDay } = req.body;
+  
+      // Check for existing slots with the same doctor, date, and different clinic
+      const existingSlot = await Slot.findOne({
+        doctorId,
+        time,
+        // clinicId: { $ne: clinicId }, // Exclude current clinic
+      });
+      if (existingSlot) {
+        return res.status(400).json({
+          message: 'Doctor already has a slot on that date in another clinic',
         });
-        res.status(201).json({ message: "Success", newSlot });
-        next();
+      }
+  
+      // Check for existing slots with the same time in another clinic (considering weekday)
+      const existingSlotWithTime = await Slot.findOne({
+        time: time,
+        // clinicId: { $ne: clinicId }, // Exclude current clinic
+        weekDay: weekDay, // Use numeric weekday for comparison
+      });
+      if (existingSlotWithTime) {
+        return res.status(400).json({
+          message: `Another clinic already has a slot at that time on ${weekdaysMap[weekDay]}`,
+        });
+      }
+  
+      // Create the slot only if no conflicts are found
+      const newSlot = await Slot.create({
+        doctorId,
+        clinicId,
+        time,
+        weekDay:weekDay, // Store numeric weekday in the database
+      });
+      res.status(201).json({ message: "Success", newSlot });
+      next();
     } catch (error) {
-        res.status(500).json({ message: error.message }) && next(error);
+      res.status(500).json({ message: error.message }) && next(error);
     }
-};
-
+  };
 // ================================================================================= //
 
 const getAllSlots = async (req, res, next) => {
@@ -72,7 +98,6 @@ const getSlotsByDoctorID = async (req, res, next) => {
             next(error);
     }
 };
-
 // ================================================================================= //
 
 const getSlotsByClinicID = async (req, res, next) => {
@@ -183,7 +208,9 @@ const updateSlot = async (req, res, next) => {
 const deleteSlot = async (req, res, next) => {
     try {
         const { slotId } = req.params;
-        const slot = await Slot.findOneAndDelete({ _id: slotId }, req.body);
+
+        const slot = await Slot.findOneAndDelete({ _id: slotId });
+
         await Appointment.findOneAndDelete({ slotId: slotId });
 
         if (slot) res.status(200).json({ message: "Success" });
