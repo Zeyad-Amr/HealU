@@ -24,7 +24,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import "./style.css";
+import "./Appointments&Slotslist.css";
 
 const initialAppointments = [
   { time: "09:00 AM", patientName: "bassma" },
