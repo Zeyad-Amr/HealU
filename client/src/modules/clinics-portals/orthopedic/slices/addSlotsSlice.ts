@@ -4,18 +4,21 @@ import axios from "axios";
 import Patient from "./patientSlice";
 
 export default interface Slot {
+  id: number;
   patient?: Patient;
   date: string;
   time: string | null;
 }
 interface SlotsState {
   slots: Slot[];
-  selectedDate: string | null; // Add selectedDate field
+  selectedDate: string | null;
+  slotsLength: number; // Add selectedDate field
 }
 
 const initialStateSlots: SlotsState = {
   slots: [],
   selectedDate: null,
+  slotsLength: 0,
 };
 
 export const addSlot = createAsyncThunk(
@@ -48,18 +51,18 @@ export const addSlot = createAsyncThunk(
   }
 );
 
-const updateSlot = createAsyncThunk("slots/updateSlot", (_, thunkAPI) => {
-  const { rejectWithValue } = thunkAPI;
-  axios
-    .put("", {
-      scheduleId: 1,
-      patient: { patientId: 1, patientName: "onepatient" },
-      date: "21-1",
-      status: true,
-    })
-    .then((res) => res.data)
-    .catch((error) => rejectWithValue(error.message));
-});
+export const updateSlot = createAsyncThunk(
+  "slots/updateSlot",
+  async (id: number, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    return axios
+      .patch<Slot>(`http://localhost:3003/slots/${id}`, {
+        patient: "   ",
+      })
+      .then((res) => res.data)
+      .catch((error) => rejectWithValue(error.message));
+  }
+);
 
 export const getSlots = createAsyncThunk(
   "slots/getSlots",
@@ -76,18 +79,16 @@ export const getSlots = createAsyncThunk(
   }
 );
 
-const deleteSlot = createAsyncThunk("slots/deleteSlot", (_, thunkAPI) => {
-  const { rejectWithValue } = thunkAPI;
-  axios
-    .put("", {
-      scheduleId: 1,
-      patient: { patientId: 1, patientName: "onepatient" },
-      date: "21-1",
-      status: true,
-    })
-    .then((res) => res.data)
-    .catch((error) => rejectWithValue(error.message));
-});
+export const deleteSlot = createAsyncThunk(
+  "slots/deleteSlot",
+  async (id: number, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    return axios
+      .delete<Slot[]>(`http://localhost:3003/slots/${id}`)
+      .then((res) => res.data)
+      .catch((error) => rejectWithValue(error.message));
+  }
+);
 
 const addSlotSlice = createSlice({
   name: "slots",
@@ -125,6 +126,9 @@ const addSlotSlice = createSlice({
         ? action.payload
         : "An error occurred.";
       console.log(errorMessage);
+    });
+    builder.addCase(deleteSlot.rejected, (state, action) => {
+      console.log(action.payload);
     });
   },
 });

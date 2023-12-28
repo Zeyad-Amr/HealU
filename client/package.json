@@ -24,6 +24,7 @@
     "axios": "^1.6.3",
     "dayjs": "^1.11.10",
     "install": "^0.13.0",
+    "npm": "^10.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.4",
@@ -32,6 +33,7 @@
     "redux": "^5.0.1",
     "redux-devtools-extension": "^2.13.9",
     "typescript": "^5.3.3",
+    "uuid": "^9.0.1",
     "web-vitals": "^3.5.0"
   },
   "scripts": {
@@ -57,5 +59,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.7"
   }
 }

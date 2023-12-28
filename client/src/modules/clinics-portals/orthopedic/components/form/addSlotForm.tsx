@@ -83,17 +83,37 @@ const AddSlotForm = ({
   const dispatch = useDispatch();
   const [selectedDay, setSelectedDay] = useState<string>("");
   const [error, setError] = useState({ date: "", time: "", period: "" });
-  const newError = { date: "", time: "", period: "" };
   const [time, setTime] = useState<string | null>(null);
   const [period, setPeriod] = useState<string | null>(null);
+  const slots = useSelector((state: RootState) => state.slots.slots);
   const selectedDate = useSelector(
     (state: RootState) => state.slots.selectedDate
   );
 
   const add = (date: string) => {
+    let generatedId = slots.length + 1;
+    const existingSlot = slots.find(
+      (slot) => slot.date === date && slot.time === time
+    );
+    const isIdExists = slots.some((slot) => slot.id === slots.length + 1);
+    if (isIdExists) {
+      generatedId = generatedId + 3;
+    }
+    if (existingSlot) {
+      setError((prevError) => ({
+        ...prevError,
+        date: "Slot already exists for this time.",
+      }));
+      return;
+    }
     const data: Slot = {
-      time: `${time} ${period}`,
-      date: date,
+      patient: {
+        patientName: "Rawda",
+        patientId: 1,
+      },
+      id: generatedId,
+      date,
+      time,
     };
     if (selectedDate === selectedDay) {
       dispatch(getSlots(selectedDate) as any);
@@ -157,6 +177,7 @@ const AddSlotForm = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data: Slot = {
+      id: slots.length + 1,
       time: `${time} ${period}`,
       date: selectedDay,
     };

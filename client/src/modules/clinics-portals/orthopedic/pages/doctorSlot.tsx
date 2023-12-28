@@ -10,8 +10,11 @@ import { getSlots } from "../slices/addSlotsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../slices/combineReducers";
 
+
+
 const DoctorsSlot = () => {
   const { isFormVisible, toggleFormVisibility } = useFormVisibility(false);
+  const slots = useSelector((state: RootState) => state.slots.slots);
   // const dispatch = useDispatch();
   // const selectedDate = useSelector(
   //   (state: RootState) => state.slots.selectedDate
@@ -29,10 +32,11 @@ const DoctorsSlot = () => {
           onClick={toggleFormVisibility}
           text="Create New Slot"
           classStyle="ButtonComponent"
+          includeIcon={true}
         />
       </div>
-      <DateComponent />
-      <SchedulesTable />
+      <DateComponent toggleFormVisibility={toggleFormVisibility}  />
+      <SchedulesTable schedules={slots} />
       <AddSlotForm
         isFormVisible={isFormVisible}
         toggleFormVisibility={toggleFormVisibility}

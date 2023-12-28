@@ -28,7 +28,6 @@ const Patient = () => {
         submitButtonStyle="submitButton"
         inputType="text"
         isIncluded={true}
-
       />
     </div>
   );

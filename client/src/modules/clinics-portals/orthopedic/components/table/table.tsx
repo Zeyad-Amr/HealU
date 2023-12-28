@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import { RootState } from "../../slices/combineReducers";
 import { getSchedules } from "../../slices/scheduleSlice";
 import classes from "./schedulesTable.module.css";
+import TableComponent from "./schedulesTable";
+import ClassNames from "../../pages/doctorSlot.module.css";
 
 export default function ScheduleTable() {
   const dispatch = useDispatch();
@@ -37,50 +39,8 @@ export default function ScheduleTable() {
   };
 
   return (
-    <Paper sx={{ width: "1836px", overflow: "hidden" }}>
-      <TableContainer className={classes.customTableContainer}>
-        <Table
-          stickyHeader
-          aria-label="sticky table"
-          className={classes.customTable}
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell>Patient ID</TableCell>
-              <TableCell>Patient Name</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Doctor Name</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {Array.isArray(schedules) &&
-              schedules
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row.scheduleId}
-                  >
-                    <TableCell>{row.patient.patientId}</TableCell>
-                    <TableCell>{row.patient.patientName}</TableCell>
-                    <TableCell>{row.date}</TableCell>
-                    <TableCell>{row.doctorName}</TableCell>
-                  </TableRow>
-                ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={Array.isArray(schedules) ? schedules.length : 0}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+    <div className={ClassNames.mainContainer}>
+      <TableComponent schedules={schedules} />
+    </div>
   );
 }

@@ -9,7 +9,13 @@ import { useDispatch } from "react-redux";
 import { getSlots } from "../../slices/addSlotsSlice";
 import { addSlotActions } from "../../slices/addSlotsSlice";
 
-const DateComponent = () => {
+interface DateComponentProps {
+  toggleFormVisibility: () => void;
+}
+
+const DateComponent: React.FC<DateComponentProps> = ({
+  toggleFormVisibility,
+}) => {
   const [selectedDay, setSelectedDay] = React.useState<string | null>(null);
   const dispatch = useDispatch();
   const onchange = (date: string | null) => {
@@ -23,7 +29,7 @@ const DateComponent = () => {
   return (
     <div className={classes.datePickerWrapper}>
       {selectedDay && (
-          <label className={styles.labelElement}>{selectedDay}</label>
+        <label className={styles.labelElement}>{selectedDay}</label>
       )}
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
