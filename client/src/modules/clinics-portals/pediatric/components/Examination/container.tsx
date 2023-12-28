@@ -3,7 +3,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Container } from "@mui/material";
 import PatientSection from "./patient/patientData";
-import AddPrescreptionForm, { PrescreptionData } from "./../Prescreption/prescreptionForm";
+import AddPrescreptionForm, {
+  PrescreptionData,
+} from "./../Prescreption/prescreptionForm";
 import AddTestsForm, { testsData } from "./../Tests/testsForm";
 import AddServicesForm, { serviceData } from "./../Services/serviceForm";
 import Diagnosis from "./diagnosis";
@@ -15,39 +17,32 @@ const ExaminationScreen = () => {
   const [dataFromDiagnosis, setDataFromDiagnosis] = useState<diagnosisData>(
     {} as diagnosisData
   );
-  
-  const [dataFromPrescreption, setDataFromPrescreption] = useState<PrescreptionData>(
-    {} as PrescreptionData
-  );
+
+  const [dataFromPrescreption, setDataFromPrescreption] =
+    useState<PrescreptionData>({} as PrescreptionData);
 
   const [dataFromTests, setDataFromTests] = useState<testsData>({
     TestName: [],
-});
+  });
 
-const [dataFromServices, setDataFromServices] = useState<serviceData>({
-  ServiceName: [],
-});
+  const [dataFromServices, setDataFromServices] = useState<serviceData>({
+    ServiceName: [],
+  });
 
-const handleDataFromServices = (data: serviceData) => {
-  setDataFromServices(data);
-  console.log(data); // Do further processing here if needed
-};
+  const handleDataFromServices = (data: serviceData) => {
+    setDataFromServices(data);
+  };
 
-  
   const handleDataFromDiagnosiss = (data: diagnosisData) => {
     setDataFromDiagnosis(data);
-    console.log(data); // You can further process or send this data
   };
 
   const handleDataFromPrescreption = (data: PrescreptionData) => {
     setDataFromPrescreption(data);
-    console.log(data); // You can further process or send this data
   };
-  
-  
+
   const handleDataFromTests = (data: testsData) => {
     setDataFromTests(data);
-    console.log(data); // You can further process or send this data
   };
   const handleDoneClick = () => {
     // Process data or send it wherever needed
@@ -56,9 +51,7 @@ const handleDataFromServices = (data: serviceData) => {
     console.log("Tests Data:", dataFromTests);
     console.log("Services Data:", dataFromServices);
   };
-  
-  
-  
+
   const [isPrescriptionModalOpen, setPrescriptionModalOpen] = useState(false);
   const [isTestsModalOpen, setTestsModalOpen] = useState(false);
   const [isServicesModalOpen, setServicesModalOpen] = useState(false);
@@ -93,7 +86,10 @@ const handleDataFromServices = (data: serviceData) => {
         title={"Add Prescription"}
       >
         <div className="modal-body">
-          <AddPrescreptionForm DataFromPrescreption={handleDataFromPrescreption} OnClose={closePrescriptionModal} />
+          <AddPrescreptionForm
+            DataFromPrescreption={handleDataFromPrescreption}
+            OnClose={closePrescriptionModal}
+          />
         </div>
       </PopUp>
 
@@ -103,7 +99,10 @@ const handleDataFromServices = (data: serviceData) => {
         title={"Tests"}
       >
         <div className="modal-body">
-          <AddTestsForm DataFromTests={handleDataFromTests} OnClose={closeTestsModal}  />
+          <AddTestsForm
+            DataFromTests={handleDataFromTests}
+            OnClose={closeTestsModal}
+          />
         </div>
       </PopUp>
 
@@ -113,14 +112,16 @@ const handleDataFromServices = (data: serviceData) => {
         title={"Services"}
       >
         <div className="modal-body">
-          <AddServicesForm   DataFromservice={handleDataFromServices}OnClose={closeServicesModal} />
+          <AddServicesForm
+            DataFromservice={handleDataFromServices}
+            OnClose={closeServicesModal}
+          />
         </div>
       </PopUp>
       <div className="Donebtn">
-      <Button variant="contained" onClick={handleDoneClick}>
-            Done
-          </Button>
-
+        <Button variant="contained" onClick={handleDoneClick}>
+          Done
+        </Button>
       </div>
     </Container>
   );

@@ -45,11 +45,9 @@ const Diagnosis = (props: ChildProps) => {
           : value,
     }));
   };
-
-  const handleDoneClick = () => {
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     props.DataFromDiagnosis(formData);
   };
-  
   return (
     <>
       <Box
@@ -69,6 +67,7 @@ const Diagnosis = (props: ChildProps) => {
               rows={6}
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={4}>
@@ -77,18 +76,21 @@ const Diagnosis = (props: ChildProps) => {
               label="ExtraNotes"
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
             <TextField
               id="RecommendedActionDescription"
               label="RecommendedAction"
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
             <TextField
               id="PatientWeight"
               label="Weights"
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={4}>
@@ -97,6 +99,7 @@ const Diagnosis = (props: ChildProps) => {
               label="Heigth"
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
 
             <TextField
@@ -104,12 +107,14 @@ const Diagnosis = (props: ChildProps) => {
               label="BloodPressure"
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
             <TextField
               id="RespirationRate"
               label="RespirationRate"
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={4}>
@@ -118,27 +123,24 @@ const Diagnosis = (props: ChildProps) => {
               label="Heart Rate"
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
             <TextField
               id="DiabeticTest"
               label="Diabetic Test"
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
             <TextField
               id="SPO2"
               label="SPO2"
               onChange={handleInputChange}
               className="input"
+              onBlur={handleBlur}
             />
           </Grid>
         </Grid>
-
-        <div className="postionbutton">
-          <Button variant="contained" onClick={handleDoneClick}>
-            Save
-          </Button>
-        </div>
       </Box>
     </>
   );
