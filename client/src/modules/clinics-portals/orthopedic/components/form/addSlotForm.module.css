@@ -1,0 +1,154 @@
+.addSlotForm_formContainer {
+  width: 650px;
+  height: 626px;
+  position: absolute;
+  top: 227px;
+  left: 1000px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0px 0px 26px 0px #00000040;
+  z-index: 2;
+}
+.addSlotForm_div1 {
+  width: 585px;
+  height: 126px;
+  top: 367px;
+  left: 667px;
+  margin: 30px;
+}
+
+.addSlotForm_div2 {
+  width: 250px;
+  height: 126px;
+  position: absolute;
+  top: calc(20.6% + 126px);
+  left: calc(60% - 351.4px);
+  display: inline-block;
+}
+.prescriptionForm_formContainer {
+  width: 810px;
+  height: 821px;
+  position: absolute;
+  top: 410px;
+  left: 1000px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0px 0px 26px 0px #00000040;
+  z-index: 2;
+}
+
+.prescriptionForm_div1 {
+  height: 126px;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.prescriptionForm_div2 {
+  width: 250px;
+  height: 126px;
+  position: absolute;
+  top: calc(10.6% + 126px);
+  left: calc(58% - 101.4px);
+  margin-left: 80px;
+  display: inline-block;
+}
+
+.prescriptionForm_div3 {
+  width: 250px;
+  height: 126px;
+  position: absolute;
+  top: calc(10.6% + 126px);
+  left: calc(57% - 351.4px);
+  display: inline-block;
+}
+
+.prescriptionForm_div4 {
+  width: 591px;
+  height: 270px;
+  position: absolute;
+  top: calc(30.6% + 126px);
+  left: calc(57% - 351.4px);
+  display: inline-block;
+}
+
+.prescriptionForm_div2_inner {
+  width: 100%; /* Use 100% width to fill the entire container */
+  height: 100%; /* Use 100% height to fill the entire container */
+}
+
+.prescriptionForm_textField {
+  width: 100%;
+  height: 100%;
+  background-color: #f4f4f4;
+  color: black;
+  font-family: Roboto;
+  font-size: 40px;
+}
+
+.periodField {
+  width: 187px;
+  height: 82px;
+  top: 556px;
+  left: 1065px;
+  font-family: Roboto !important;
+  font-size: 32px !important;
+  border-radius: 15px;
+  background: #e5e5e5;
+  font-family: Roboto !important;
+}
+
+.textElement {
+  width: 231px;
+  height: 38px;
+  top: 282px;
+  left: 667px;
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 0em;
+  margin-left: 20px;
+  text-align: left;
+}
+
+.labelElement {
+  width: 54px;
+  height: 38px;
+  top: 367px;
+  left: 713px;
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-left: 20px;
+  color: #8b8b8b;
+}
+
+/* TextField */
+.textField {
+  width: 585px;
+  background-color: #f4f4f4;
+}
+
+.menuItem {
+  font-family: Roboto !important;
+  font-size: 32px !important;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: black;
+}
+
+.customDatePicker {
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: left;
+}
