@@ -3,7 +3,8 @@
   width: 365px;
   height: 82px;
   top: 169px;
-  margin-left: 1476px;
+  /*margin-left: 850px;*/
+  
   border-radius: 15px;
   margin-bottom: 20px;
 }
@@ -12,6 +13,8 @@
   width: 231px;
   height: 38px;
   font-family: Roboto;
+  margin-top: 10px;
+  margin-left: 50px;
   font-size: 32px;
   font-weight: 600;
   line-height: 38px;
