@@ -11,13 +11,34 @@ import { getSlots } from "../../slices/addSlotsSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 
+
+
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  box: {
+    "& table ": {
+      width: "80%",
+    },
+  },
+  containerA:{
+    "& div":{
+      width : "100%",
+
+    },
+  }
+});
+
 const TableComponent = () => {
+
+  const classesX = useStyles();
   const slots = useSelector((state: RootState) => state.slots.slots);
 
   return (
-    <Paper sx={{ width: "1836px", overflow: "hidden" }}>
-      <TableContainer className={classes.customTableContainer}>
-        <Table>
+    <Paper sx={{ width: "1836px", overflow: "hidden" }} classes={{ root: classesX.containerA}}>
+      <TableContainer className={classes.customTableContainer} classes={{ root: classesX.box }} >
+        <Table >
+
           <TableBody>
             {slots.map((row, rowIndex) => (
               <TableRow key={rowIndex}>

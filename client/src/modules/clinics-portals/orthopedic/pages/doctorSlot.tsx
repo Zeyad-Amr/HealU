@@ -23,15 +23,21 @@ const DoctorsSlot = () => {
   // };
 
   return (
+
     <div className={ClassNames.mainContainer}>
+      <div className={ClassNames.container}>
+      <DateComponent />
       <div className={classes.parent}>
+
         <ButtonComponent
           onClick={toggleFormVisibility}
           text="Create New Slot"
           classStyle="ButtonComponent"
         />
       </div>
-      <DateComponent />
+      
+      </div>
+      
       <SchedulesTable />
       <AddSlotForm
         isFormVisible={isFormVisible}
