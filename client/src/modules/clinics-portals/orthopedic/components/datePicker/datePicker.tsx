@@ -3,6 +3,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import classes from "./datePicker.module.css";
+import styles from "../../components/form/addSlotForm.module.css";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { getSlots } from "../../slices/addSlotsSlice";
@@ -22,9 +23,7 @@ const DateComponent = () => {
   return (
     <div className={classes.datePickerWrapper}>
       {selectedDay && (
-        <div>
-          <p>{selectedDay}</p>
-        </div>
+          <label className={styles.labelElement}>{selectedDay}</label>
       )}
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>

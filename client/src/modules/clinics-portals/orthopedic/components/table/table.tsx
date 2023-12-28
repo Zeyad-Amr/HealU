@@ -13,7 +13,7 @@ import { RootState } from "../../slices/combineReducers";
 import { getSchedules } from "../../slices/scheduleSlice";
 import classes from "./schedulesTable.module.css";
 
-export default function DoctorScheduleTable() {
+export default function ScheduleTable() {
   const dispatch = useDispatch();
   const schedules = useSelector(
     (state: RootState) => state.schedules.schedules
