@@ -19,8 +19,8 @@ export let proxies: ProxyConfig = {
         target: process.env.Admin_URL as string,
         changeOrigin: true,
         pathRewrite: {
+            '^/api/admin/clinic-service': '/api/v1/clinicService',
             '^/api/admin/clinic': '/api/v1/clinic',
-            '^/api/admin/clinicService': '/api/v1/clinicService',
         }
     },
     "/appointment": {
@@ -37,8 +37,8 @@ export let proxies: ProxyConfig = {
         target: process.env.Bill_URL as string,
         changeOrigin: true,
         pathRewrite: {
+            '^/api/bill/invoice': '/invoice',
             '^/api/bill': '/bill',
-            '^/api/bill/invoice/': '/invoice/'
         }
     },
     "/emr": {
@@ -46,7 +46,7 @@ export let proxies: ProxyConfig = {
         target: process.env.EMR_URL as string,
         changeOrigin: true,
         pathRewrite: {
-            '^/api/emr/records': '/record',
+            '^/api/emr/record': '/record',
             '^/api/emr/prescription': '/prescription',
             '^/api/emr/medical-history': '/medical-history'
         }
@@ -66,8 +66,8 @@ export let proxies: ProxyConfig = {
         target: process.env.Storage_URL as string,
         changeOrigin: true,
         pathRewrite: {
-            '^/api/storage/images': '/images',
-            '^/api/storage/files': '/files',
+            '^/api/storage/images': '/api/v1/images',
+            '^/api/storage/files': '/api/v1/files',
         }
     },
 }
