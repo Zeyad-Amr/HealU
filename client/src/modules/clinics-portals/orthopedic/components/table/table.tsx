@@ -11,12 +11,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { RootState } from "../../slices/combineReducers";
 import { getSchedules } from "../../slices/scheduleSlice";
+import classes from "./schedulesTable.module.css";
 
-export default function StickyHeadTable() {
+export default function DoctorScheduleTable() {
   const dispatch = useDispatch();
-  const schedules = useSelector((state: RootState) => state.schedules.schedules);
+  const schedules = useSelector(
+    (state: RootState) => state.schedules.schedules
+  );
   useEffect(() => {
-    dispatch(getSchedules());
+    dispatch(getSchedules() as any);
   }, [dispatch]);
 
   const [page, setPage] = React.useState(0);
@@ -34,9 +37,13 @@ export default function StickyHeadTable() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+    <Paper sx={{ width: "1836px", overflow: "hidden" }}>
+      <TableContainer className={classes.customTableContainer}>
+        <Table
+          stickyHeader
+          aria-label="sticky table"
+          className={classes.customTable}
+        >
           <TableHead>
             <TableRow>
               <TableCell>Patient ID</TableCell>
@@ -46,21 +53,22 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Array.isArray(schedules) && schedules
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow
-                  hover
-                  role="checkbox"
-                  tabIndex={-1}
-                  key={row.scheduleId}
-                >
-                  <TableCell>{row.patient.patientId}</TableCell>
-                  <TableCell>{row.patient.patientName}</TableCell>
-                  <TableCell>{row.date}</TableCell>
-                  <TableCell>{row.doctorName}</TableCell>
-                </TableRow>
-              ))}
+            {Array.isArray(schedules) &&
+              schedules
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={row.scheduleId}
+                  >
+                    <TableCell>{row.patient.patientId}</TableCell>
+                    <TableCell>{row.patient.patientName}</TableCell>
+                    <TableCell>{row.date}</TableCell>
+                    <TableCell>{row.doctorName}</TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </TableContainer>

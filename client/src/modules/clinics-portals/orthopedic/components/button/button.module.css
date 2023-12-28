@@ -1,0 +1,63 @@
+.parent {
+  background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
+  width: 365px;
+  height: 82px;
+  top: 169px;
+  margin-left: 1476px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.ButtonComponent {
+  width: 231px;
+  height: 38px;
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 0em;
+  color: white;
+  text-transform: none;
+}
+
+.submitButton {
+  width: 273px;
+  height: 82px;
+  position: absolute;
+  bottom: 80px; /* Adjusted distance from the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 15px;
+  background-color: black;
+  background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
+}
+
+.buttonPrescription {
+  width: 568.37px;
+  height: 100px;
+  top: 500px;
+  left: 400px;
+  border-radius: 15px;
+  position: absolute;
+  background-color: #8b8b8b;
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 0em;
+  color: white;
+  text-transform: none;
+}
+
+.datePicker{
+    background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
+    width: 365px;
+    height: 82px;
+    top: 169px;
+    margin-left: 1476px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+
+
