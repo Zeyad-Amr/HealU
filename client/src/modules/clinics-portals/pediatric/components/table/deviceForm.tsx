@@ -42,6 +42,17 @@ const AddDeviceForm = (props: any) => {
   };
 
   const handelSubmit = () => {
+    if (
+      DeviceName === "" ||
+      DeviceType === "" ||
+      DeviceManufacturer === "" ||
+      DateOfPurchase === null ||
+      DateOfExpiry === null ||
+      DeviceState === ""
+    ) {
+      alert("Please fill in all fields before submitting.");
+      return;
+    }
     dispatch(
       AddDevice({
         Devices: [

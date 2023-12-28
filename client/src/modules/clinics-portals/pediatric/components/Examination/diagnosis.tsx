@@ -6,7 +6,7 @@ import "./container.css";
 import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
-interface FormData {
+export interface diagnosisData {
   Diagnosis: string;
   ExtraNotes: string;
   PatientWeight: number;
@@ -18,9 +18,11 @@ interface FormData {
   DiabeticTest: string;
   SPO2: string;
 }
-
-const Diagnosis = () => {
-  const [formData, setFormData] = useState<FormData>({
+interface ChildProps {
+  DataFromDiagnosis: (data: diagnosisData) => void;
+}
+const Diagnosis = (props: ChildProps) => {
+  const [formData, setFormData] = useState<diagnosisData>({
     Diagnosis: "",
     ExtraNotes: "",
     PatientWeight: 0,
@@ -52,6 +54,7 @@ const Diagnosis = () => {
       alert("Please fill in all fields before submitting.");
       return;
     }
+    props.DataFromDiagnosis(formData);
     console.log(formData); // You can further process or send this data
   };
   return (

@@ -10,7 +10,16 @@ import Diagnosis from "./diagnosis";
 import "./container.css";
 import Button from "@mui/material/Button";
 import PopUp from "../PopUp/Popup";
+import { diagnosisData } from "./diagnosis";
 const ExaminationScreen = () => {
+  const [dataFromDiagnosis, setDataFromDiagnosis] = useState<diagnosisData>(
+    {} as diagnosisData
+  );
+
+  const handleDataFromDiagnosiss = (data: diagnosisData) => {
+    setDataFromDiagnosis(data);
+    console.log(data); // You can further process or send this data
+  };
   const [isPrescriptionModalOpen, setPrescriptionModalOpen] = useState(false);
   const [isTestsModalOpen, setTestsModalOpen] = useState(false);
   const [isServicesModalOpen, setServicesModalOpen] = useState(false);
@@ -27,7 +36,7 @@ const ExaminationScreen = () => {
   return (
     <Container maxWidth="lg" className="container">
       <PatientSection />
-      <Diagnosis />
+      <Diagnosis DataFromDiagnosis={handleDataFromDiagnosiss} />
       <div className="AddBtns">
         <Button fullWidth variant="contained" onClick={openPrescriptionModal}>
           Prescription

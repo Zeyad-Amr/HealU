@@ -1,0 +1,4 @@
+.Nav-Bar {
+  display: flex;
+  justify-content: space-around;
+}
