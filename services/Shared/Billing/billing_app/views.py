@@ -15,13 +15,23 @@ env=environ.Env()
 
 def get_services_data(services_ids):
      ### replace with logic for admin api call
-     api_url = 'https://dwl9v.wiremockapi.cloud/services'
-     services_data={"services_ids":services_ids}
-     headers={"auth":env("auth_data")}
-     response=requests.get(api_url,data=json.dumps(services_data),headers=headers)
-     services_response=response.json()
-     services_names=services_response["services_names"]
-     services_amounts=services_response["services_amounts"]
+     # only use 5 for testing because there are no other services currently
+     Admin_services_url=f'https://admin-service-healu.onrender.com/api/v1/clinicService/'
+     services_names=[]
+     services_amounts=[]
+     for id in services_ids:
+          response=requests.get(f'{Admin_services_url}{id}')
+          if response.status_code== 200:
+            service_data=json.loads(response.text)
+            service_name=service_data['data']['clinicService']["name"]
+            service_amount=service_data['data']['clinicService']["price"]
+            print(service_name,service_amount,response.status_code)
+            services_names.append(service_name)
+            services_amounts.append(service_amount)
+          else : ### handle 404 and other cases
+            pass
+
+        
      return services_names,services_amounts
 
 def get_patient_from_appointment(appointment_id):
