@@ -48,12 +48,21 @@ def get_patient_from_appointment(appointment_id):
 
 def get_insurance_percentage(patient_id):
      # change appointment to reg api
-     api_url = f'https://dwl9v.wiremockapi.cloud/registeration/:{patient_id}'
-     headers={"auth":env("auth_data")}
-     response=requests.get(api_url,headers=headers)
-     registration_response=response.json()
-     insurance=registration_response["insurance"]
-     return insurance
+     #api_url = f'https://dwl9v.wiremockapi.cloud/registeration/:{patient_id}'
+     #headers={"auth":env("auth_data")}
+     #response=requests.get(api_url,headers=headers)
+     #registration_response=response.json()
+     #insurance=registration_response["insurance"]
+     registeration_url=f'https://registrationservices.onrender.com/patient/'
+     response=requests.get(f'{registeration_url}5')
+     if response.status_code ==200:
+         response=json.loads(response.text)
+         print(response["data"]['insurancePersentage'])
+         insurance=response["data"]['insurancePersentage']
+         print(insurance)
+     else: 
+          pass
+     return 0.2
 
 def get_invoice_by_id(id):
             url = f'http://127.0.0.1:8000/invoice/{id}'
