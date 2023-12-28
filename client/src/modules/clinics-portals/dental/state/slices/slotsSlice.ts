@@ -1,127 +1,173 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Appointment } from "./appointmentSlice";
+import dayjs from "dayjs";
 
 export interface Slot {
-  _id?: string;
-  doctorId: number;
-  clinicId: number;
-  time: string;
-  weekDay: string;
+    _id?: string;
+    doctorId: number;
+    clinicId: number;
+    time: string;
+    weekDay: string;
+    appointment?: Appointment;
 }
 
 export interface SlotState {
-  slots: Array<Slot>;
-  loading: boolean;
-  error: string;
+    slots: Array<Slot>;
+    loading: boolean;
+    error: string;
 }
 
 const initialState: SlotState = {
-  slots: [],
-  loading: false,
-  error: "",
+    slots: [],
+    loading: false,
+    error: "",
 };
-
 
 // Create an async thunk for fetching slots for doctors
 export const fetchSlots = createAsyncThunk("slot/fetchSlots", async () => {
-  try {
-    const response = await axios.get(
-      `https://appointment-service-y30u.onrender.com/slots/`
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+    try {
+        const response = await axios.get(
+            `https://appointment-service-y30u.onrender.com/slots/`
+        );
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
 });
+
+export const fetchSlotsForDoctor = createAsyncThunk(
+    "slot/fetchDoctorSlots",
+    async ({ doctorId, weekDay }: { doctorId: number; weekDay: number }) => {
+        try {
+            // Convert weekday to date string
+            const date = dayjs().day(weekDay).format("YYYY-MM-DD");
+            console.log(date);
+
+            const response = await axios.get(
+                `https://appointment-service-y30u.onrender.com/slots/doctor/${doctorId}/date/${date}`
+            );
+
+            // Map each item in the array to a Slot instance
+            const slots: Slot[] = response.data.map((item: any) => ({
+                doctorId: item.slot.doctorId,
+                clinicId: item.slot.clinicId,
+                time: item.slot.time,
+                weekDay: item.slot.weekDay,
+                _id: item.slot._id,
+                appointment: item.appointmentObject, // Assuming appointmentObject is of type Appointment
+            }));
+            console.log(slots);
+            return { slots }; // Return an object
+        } catch (error) {
+            throw error;
+        }
+    }
+);
 
 // Create an async thunk for creating a new slot for the doctor
 export const createSlotForDoctor = createAsyncThunk(
-  "slot/createSlot",
-  async (newSlot: Slot, thunkApi) => {
-    const { rejectWithValue, dispatch } = thunkApi;
-    try {
-      const response = await axios.post(
-        `https://appointment-service-y30u.onrender.com/slots/`,
-        {
-          doctorId: newSlot.doctorId,
-          clinicId: newSlot.clinicId,
-          time: newSlot.time,
-          weekDay: newSlot.weekDay,
+    "slot/createSlot",
+    async (newSlot: Slot, thunkApi) => {
+        const { rejectWithValue, dispatch } = thunkApi;
+        try {
+            await axios.post(
+                `https://appointment-service-y30u.onrender.com/slots/`,
+                {
+                    doctorId: newSlot.doctorId,
+                    clinicId: newSlot.clinicId,
+                    time: newSlot.time,
+                    weekDay: newSlot.weekDay,
+                }
+            );
+            console.log(newSlot);
+            return newSlot;
+        } catch (error) {
+            throw error;
         }
-      );
-
-      dispatch(fetchSlots());
-      return newSlot;
-    } catch (error) {
-      throw error;
     }
-  }
 );
 
 // Create an async thunk for fetching slots for doctors
 export const deleteSlot = createAsyncThunk(
-  "slot/deleteSlot",
-  async (slotId: string, thunkApi) => {
-    const { rejectWithValue, dispatch } = thunkApi;
-    try {
-      await axios.delete(
-        `https://appointment-service-y30u.onrender.com/slots/${slotId}`
-      );
-      dispatch(fetchSlots());
-      return slotId;
-    } catch (error) {
-      throw error;
+    "slot/deleteSlot",
+    async (slotId: string, thunkApi) => {
+        const { rejectWithValue, dispatch } = thunkApi;
+        try {
+            await axios.delete(
+                `https://appointment-service-y30u.onrender.com/slots/${slotId}`
+            );
+            dispatch(fetchSlots());
+            return slotId;
+        } catch (error) {
+            throw error;
+        }
     }
-  }
 );
 
 // Create the slot slice
 const slotSlice = createSlice({
-  name: "slots",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchSlots.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(fetchSlots.fulfilled, (state, action) => {
-        state.loading = false;
-        state.slots = action.payload;
-      })
-      .addCase(fetchSlots.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      });
-    ///////////////////////////////////////////////////////////////
+    name: "slots",
+    initialState,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchSlots.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(fetchSlots.fulfilled, (state, action) => {
+                state.loading = false;
+                state.slots = action.payload;
+            })
+            .addCase(fetchSlots.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            });
+        ///////////////////////////////////////////////////////////////
 
-    builder
-      .addCase(deleteSlot.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(deleteSlot.fulfilled, (state, action) => {
-        state.loading = false;
-        state.slots = state.slots.filter((slot) => slot._id !== action.payload);
-      })
-      .addCase(deleteSlot.rejected, (state, action) => {
-        state.loading = false;
-        state.error = `Error deleting slot: ${action.error.message}`;
-      });
-    ///////////////////////////////////////////////////////////////
+        builder
+            .addCase(deleteSlot.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(deleteSlot.fulfilled, (state, action) => {
+                state.loading = false;
+                state.slots = state.slots.filter(
+                    (slot) => slot._id !== action.payload
+                );
+            })
+            .addCase(deleteSlot.rejected, (state, action) => {
+                state.loading = false;
+                state.error = `Error deleting slot: ${action.error.message}`;
+            });
+        ///////////////////////////////////////////////////////////////
 
-    builder
-      .addCase(createSlotForDoctor.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(createSlotForDoctor.fulfilled, (state, action) => {
-        state.loading = false;
-        state.slots = [...state.slots, action.payload];
-      })
-      .addCase(createSlotForDoctor.rejected, (state, action) => {
-        state.loading = false;
-        state.error = `Error deleting slot: ${action.error.message}`;
-      });
-  },
+        builder
+            .addCase(createSlotForDoctor.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(createSlotForDoctor.fulfilled, (state, action) => {
+                state.loading = false;
+                state.slots = [...state.slots, action.payload];
+            })
+            .addCase(createSlotForDoctor.rejected, (state, action) => {
+                state.loading = false;
+                state.error = `Error deleting slot: ${action.error.message}`;
+            });
+        ///////////////////////////////////////////////////////////////
+
+        builder
+            .addCase(fetchSlotsForDoctor.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(fetchSlotsForDoctor.fulfilled, (state, action) => {
+                state.loading = false;
+                state.slots = action.payload.slots;
+            })
+            .addCase(fetchSlotsForDoctor.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            });
+    },
 });
 
 // Export the reducer

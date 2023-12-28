@@ -12,15 +12,17 @@ import { Divider } from "@mui/material";
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
+let doctorId: number = 13,
+    clinicId: number = 5;
 
 root.render(
     <React.StrictMode>
         <Provider store={store}>
             <h1>Doctor Slots</h1>
-            <SlotsTable />
+            <SlotsTable doctorId={doctorId} clinicId={clinicId} />
             <br></br>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <CreateSlotForm />
+                <CreateSlotForm doctorId={doctorId} clinicId={clinicId} />
             </LocalizationProvider>
         </Provider>
     </React.StrictMode>
