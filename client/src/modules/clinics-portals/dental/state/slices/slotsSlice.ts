@@ -21,20 +21,6 @@ const initialState: SlotState = {
   error: "",
 };
 
-// Create an async thunk for fetching slots for doctors
-// export const fetchSlotsForDoctor = createAsyncThunk(
-//   "slot/fetchSlots",
-//   async ({ doctorId, date }: { doctorId: number; date: string }) => {
-//     try {
-//       const response = await axios.get(
-//         `https://appointment-service-y30u.onrender.com/slots/doctor/${doctorId}/date/${date}`
-//       );
-//       return response.data;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-// );
 
 // Create an async thunk for fetching slots for doctors
 export const fetchSlots = createAsyncThunk("slot/fetchSlots", async () => {
@@ -63,9 +49,7 @@ export const createSlotForDoctor = createAsyncThunk(
           weekDay: newSlot.weekDay,
         }
       );
-      // dispatch(
-      //   fetchSlotsForDoctor({ doctorId: newSlot.doctorId, date: "2023-12-24" })
-      // );
+
       dispatch(fetchSlots());
       return newSlot;
     } catch (error) {
@@ -83,7 +67,6 @@ export const deleteSlot = createAsyncThunk(
       await axios.delete(
         `https://appointment-service-y30u.onrender.com/slots/${slotId}`
       );
-      // dispatch(fetchSlotsForDoctor({ doctorId: 13, date: "2023-12-24" }));
       dispatch(fetchSlots());
       return slotId;
     } catch (error) {
@@ -98,19 +81,6 @@ const slotSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // builder
-    //   .addCase(fetchSlotsForDoctor.pending, (state, action) => {
-    //     state.loading = true;
-    //   })
-    //   .addCase(fetchSlotsForDoctor.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     state.slots = action.payload;
-    //   })
-    //   .addCase(fetchSlotsForDoctor.rejected, (state, action) => {
-    //     state.loading = false;
-    //     state.error = action.payload as string;
-    //   });
-
     builder
       .addCase(fetchSlots.pending, (state, action) => {
         state.loading = true;
@@ -123,6 +93,7 @@ const slotSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       });
+    ///////////////////////////////////////////////////////////////
 
     builder
       .addCase(deleteSlot.pending, (state) => {
@@ -136,6 +107,7 @@ const slotSlice = createSlice({
         state.loading = false;
         state.error = `Error deleting slot: ${action.error.message}`;
       });
+    ///////////////////////////////////////////////////////////////
 
     builder
       .addCase(createSlotForDoctor.pending, (state, action) => {
