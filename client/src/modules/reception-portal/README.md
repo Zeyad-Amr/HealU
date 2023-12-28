@@ -1,3 +1,0 @@
-# HealU
-
-Reception Portal Module

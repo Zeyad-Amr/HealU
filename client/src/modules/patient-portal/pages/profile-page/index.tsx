@@ -1,6 +1,6 @@
 import HeaderComponent from "../../components/header";
-const ProfilePage = () => {
+const PatientPortal = () => {
   return <HeaderComponent />;
 };
 
-export default ProfilePage;
+export default PatientPortal;
