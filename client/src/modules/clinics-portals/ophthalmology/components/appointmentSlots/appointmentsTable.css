@@ -1,3 +1,11 @@
+/* Your CSS file */
+
+/* Font styles */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap");
+
+/* Icon styles */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
 .appointment-container {
   margin-top: 20px;
   display: flex;
@@ -13,49 +21,13 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-.TableHead {
-  background-color: #2196f3;
-  color: #fff;
-  border-radius: 10px 10px 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-}
-
 .header-text {
   display: flex;
   align-items: center;
 }
 
-.TableHead button {
-  color: #fff;
-  background-color: #2196f3;
-  border: none;
-  border-radius: 0;
-  cursor: pointer;
-}
-
-.TableHead button:hover {
-  background-color: #1565c0;
-}
-
 .TableHead .MuiIconButton-root {
   color: #fff;
-}
-
-.TableRow {
-  transition: background-color 0.3s ease;
-  margin-bottom: 10px;
-}
-
-.TableRow:nth-child(even) {
-  background-color: #f5f5f5;
-}
-
-.TableRow:hover {
-  background-color: #e0e0e0;
 }
 
 .TableCell {
@@ -66,11 +38,13 @@
 }
 
 .time-cell {
-  background-color: #07d4c3;
+  border-radius: 15px;
+  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
   color: #fff;
   font-weight: bold;
   padding: 5px;
   width: 40px;
+  text-align: center;
 }
 
 .add-appointment-button {
@@ -103,7 +77,8 @@
 }
 
 .MuiButton-containedPrimary {
-  background-color: #07d4c3;
+  border-radius: 15px;
+  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
   color: #fff;
 }
 
@@ -144,13 +119,4 @@
   cursor: pointer;
   padding: 5px;
   border-radius: 5px;
-}
-
-.patient-cell.available {
-  background-color: #e0e0e0;
-  color: #424242;
-}
-
-.patient-cell.available:hover {
-  background-color: #bdbdbd;
 }

@@ -24,7 +24,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import "./Appointments&Slotslist.css";
+import "./appointmentsTable.css";
 
 const initialAppointments = [
   { time: "09:00 AM", patientName: "bassma" },
@@ -93,7 +93,7 @@ export default function DoctorAppointments() {
 
   return (
     <Box className="appointment-container">
-      <Typography variant="h5">Doctor's slots and appointments</Typography>
+      <Typography variant="h2">Doctor's slots and appointments</Typography>
       <TableContainer component={Paper} className="table-container">
         <Table>
           <TableHead>
