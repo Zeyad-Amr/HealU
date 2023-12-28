@@ -11,48 +11,45 @@ const weekdaysMap = {
     5: "Friday",
     6: "Saturday",
 };
-  
-  const createSlot = async (req, res, next) => {
+
+const createSlot = async (req, res, next) => {
     try {
-      const { doctorId, clinicId, time, weekDay } = req.body;
-  
-      // Check for existing slots with the same doctor, date, and different clinic
-      const existingSlot = await Slot.findOne({
-        doctorId,
-        time,
-        // clinicId: { $ne: clinicId }, // Exclude current clinic
-      });
-      if (existingSlot) {
-        return res.status(400).json({
-          message: 'Doctor already has a slot on that date in another clinic',
+        const { doctorId, clinicId, time, weekDay } = req.body;
+
+        // Validate the time format using a regular expression
+        const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+        if (!timeRegex.test(time)) {
+            return res.status(400).json({
+                message: "Invalid time format. Use the format HH:mm.",
+            });
+        }
+
+        // Check for existing slots with the same doctor, date, and different clinic
+        const existingSlot = await Slot.findOne({
+            doctorId,
+            time,
+            weekDay,
         });
-      }
-  
-      // Check for existing slots with the same time in another clinic (considering weekday)
-      const existingSlotWithTime = await Slot.findOne({
-        time: time,
-        // clinicId: { $ne: clinicId }, // Exclude current clinic
-        weekDay: weekDay, // Use numeric weekday for comparison
-      });
-      if (existingSlotWithTime) {
-        return res.status(400).json({
-          message: `Another clinic already has a slot at that time on ${weekdaysMap[weekDay]}`,
+        if (existingSlot) {
+            return res.status(400).json({
+                message: "Doctor already isn't available at that time and date",
+            });
+        }
+
+        // Create the slot only if no conflicts are found
+        const newSlot = await Slot.create({
+            doctorId,
+            clinicId,
+            time,
+            weekDay,
         });
-      }
-  
-      // Create the slot only if no conflicts are found
-      const newSlot = await Slot.create({
-        doctorId,
-        clinicId,
-        time,
-        weekDay:weekDay, // Store numeric weekday in the database
-      });
-      res.status(201).json({ message: "Success", newSlot });
-      next();
+
+        res.status(201).json({ message: "Success", newSlot });
+        next();
     } catch (error) {
-      res.status(500).json({ message: error.message }) && next(error);
+        res.status(500).json({ message: error.message }) && next(error);
     }
-  };
+};
 // ================================================================================= //
 
 const getAllSlots = async (req, res, next) => {
@@ -140,6 +137,10 @@ const getSlotsByDoctorIDandDate = async (req, res, next) => {
 
         const providedDate = new Date(date);
 
+        if (dateValidation(date).valid == false) {
+            return res.status(404).json(dateValidation(date).message);
+        }
+
         const slots = await Slot.find({
             doctorId: doctorId,
             weekDay: weekdaysMap[providedDate.getDay()],
@@ -225,6 +226,27 @@ const deleteSlot = async (req, res, next) => {
     }
 };
 
+const timeValidation = () => {
+    const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+    if (!timeRegex.test(time)) {
+        return json({
+            message: "Invalid time format. Use the format HH:mm.",
+        });
+    }
+};
+
+const dateValidation = (date) => {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+    if (!dateRegex.test(date)) {
+        return {
+            valid: false,
+            message: "Invalid date format. Use the format YYYY-MM-DD.",
+        };
+    }
+
+    return { valid: true };
+};
 module.exports = {
     createSlot,
     getAllSlots,
