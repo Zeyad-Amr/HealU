@@ -47,16 +47,9 @@ const Diagnosis = (props: ChildProps) => {
   };
 
   const handleDoneClick = () => {
-    const isAnyFieldEmpty = Object.values(formData).some(
-      (value) => value === ""
-    );
-    if (isAnyFieldEmpty) {
-      alert("Please fill in all fields before submitting.");
-      return;
-    }
     props.DataFromDiagnosis(formData);
-    console.log(formData); // You can further process or send this data
   };
+  
   return (
     <>
       <Box
@@ -92,7 +85,7 @@ const Diagnosis = (props: ChildProps) => {
               className="input"
             />
             <TextField
-              id=" PatientWeight"
+              id="PatientWeight"
               label="Weights"
               onChange={handleInputChange}
               className="input"
@@ -100,7 +93,7 @@ const Diagnosis = (props: ChildProps) => {
           </Grid>
           <Grid item xs={4}>
             <TextField
-              id=" PatientHeight"
+              id="PatientHeight"
               label="Heigth"
               onChange={handleInputChange}
               className="input"
@@ -143,7 +136,7 @@ const Diagnosis = (props: ChildProps) => {
 
         <div className="postionbutton">
           <Button variant="contained" onClick={handleDoneClick}>
-            Done
+            Save
           </Button>
         </div>
       </Box>

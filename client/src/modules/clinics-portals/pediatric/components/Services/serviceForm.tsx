@@ -11,7 +11,17 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-const AddServicesForm = (props: any) => {
+export interface serviceData {
+  ServiceName:  string[];
+  
+}
+interface ChildProps {
+  
+  DataFromservice: (data: serviceData) => void;
+}
+
+
+const AddServicesForm = (props: ChildProps) => {
   const serviceOptions = [
     { value: "Vaccine", label: "Vaccine" },
     { value: "IVAdministration", label: "IV administration" },
@@ -43,14 +53,8 @@ const AddServicesForm = (props: any) => {
     event.stopPropagation();
   };
   const handelSubmit = () => {
-    // dispatch(
-    //   AddTest({
-    //     MedicalTests: [],
-    //   })
-    // );
-    props.closeModal();
+    props.DataFromservice({ ServiceName: selectedTests });
   };
-
   return (
     <FormControl sx={{ m: 1, minWidth: 240 }} size="small">
       <InputLabel id="demo-select-small-label">Services</InputLabel>

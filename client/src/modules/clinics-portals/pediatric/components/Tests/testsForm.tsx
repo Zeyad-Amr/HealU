@@ -12,7 +12,15 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 
-const AddTestsForm = (props: any) => {
+export interface testsData {
+  TestName: string[];
+}
+
+interface ChildProps {
+  DataFromTests: (data: testsData) => void;
+}
+
+const AddTestsForm = (props: ChildProps) => {
   const testOptions = [
     { value: "CBC", label: "Complete Blood Picture (CBC)" },
     { value: "Bilirubin", label: "Bilirubin Total" },
@@ -27,6 +35,11 @@ const AddTestsForm = (props: any) => {
     { value: "Sensitivity", label: "Sensitivity test" },
     { value: "ESR", label: "Erythrocyte Sedimentation Rate (ESR)" },
   ];
+
+  const handelSubmit = () => {
+    props.DataFromTests({ TestName: selectedTests });
+  };
+
 
   const [selectedTests, setSelectedTests] = useState<string[]>([]);
 
@@ -49,14 +62,7 @@ const AddTestsForm = (props: any) => {
     event.preventDefault();
     event.stopPropagation();
   };
-  const handelSubmit = () => {
-    // dispatch(
-    //   AddTest({
-    //     MedicalTests: [],
-    //   })
-    // );
-    props.closeModal();
-  };
+  
 
   return (
     <FormControl sx={{ m: 1, minWidth: 240 }} size="small">
@@ -103,70 +109,3 @@ const AddTestsForm = (props: any) => {
 };
 
 export default AddTestsForm;
-
-//     const [selectedTests, setSelectedTests] = useState<string[]>([]);
-//   const filter = createFilterOptions();
-
-//   const handleDelete = (valueToDelete: string) => {
-//     const filteredTests = selectedTests.filter((value) => value !== valueToDelete);
-//     setSelectedTests(filteredTests);
-//   };
-
-//   const handleSubmit = () => {
-//     // Perform actions on form submission
-//   };
-
-//   return (
-//     <FormControl sx={{ m: 1, minWidth: 240 }} size="small">
-//       <InputLabel id="demo-autocomplete-label">Tests</InputLabel>
-//       <Autocomplete
-//         multiple
-//         id="medicalTests"
-//         options={testOptions}
-//         getOptionLabel={(option) => option.label}
-//         value={testOptions.filter(option => selectedTests.includes(option.value))}
-//         onChange={(event, newValue: { value: string; label: string; }[]) => {
-//           setSelectedTests(newValue.map(option => option.value));
-//         }}
-//         filterOptions={(options, params) => {
-//           const filtered = createFilterOptions<{ value: string; label: string }>()(
-//             options,
-//             params
-//           );
-
-//           if (params.inputValue !== '') {
-//             filtered.push({
-//               value: params.inputValue,
-//               label: `Add "${params.inputValue}"`,
-//             });
-//           }
-
-//           return filtered as { value: string; label: string }[];
-//         }}
-//         renderInput={(params) => (
-//           <TextField
-//             {...params}
-//             label="Tests"
-//           />
-//         )}
-//         renderTags={(value, getTagProps) =>
-//           value.map((option, index) => (
-//             <Chip
-//             key={`${option.value}-${index}`} // Use a combination of value and index for uniqueness
-//               label={option.label}
-//               {...getTagProps({ index })}
-//               onDelete={() => handleDelete(option.value)}
-//             />
-//           ))
-//         }
-//       />
-//       <div className="Controls">
-//         <Button variant="contained" onClick={handleSubmit}>
-//           Save
-//         </Button>
-//       </div>
-//     </FormControl>
-//   );
-// };
-
-// export default AddTestsForm;

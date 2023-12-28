@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Container } from "@mui/material";
 import PatientSection from "./patient/patientData";
-import AddPrescreptionForm from "./../Prescreption/prescreptionForm";
-import AddTestsForm from "./../Tests/testsForm";
-import AddServicesForm from "./../Services/serviceForm";
+import AddPrescreptionForm, { PrescreptionData } from "./../Prescreption/prescreptionForm";
+import AddTestsForm, { testsData } from "./../Tests/testsForm";
+import AddServicesForm, { serviceData } from "./../Services/serviceForm";
 import Diagnosis from "./diagnosis";
 import "./container.css";
 import Button from "@mui/material/Button";
@@ -15,11 +15,50 @@ const ExaminationScreen = () => {
   const [dataFromDiagnosis, setDataFromDiagnosis] = useState<diagnosisData>(
     {} as diagnosisData
   );
+  
+  const [dataFromPrescreption, setDataFromPrescreption] = useState<PrescreptionData>(
+    {} as PrescreptionData
+  );
 
+  const [dataFromTests, setDataFromTests] = useState<testsData>({
+    TestName: [],
+});
+
+const [dataFromServices, setDataFromServices] = useState<serviceData>({
+  ServiceName: [],
+});
+
+const handleDataFromServices = (data: serviceData) => {
+  setDataFromServices(data);
+  console.log(data); // Do further processing here if needed
+};
+
+  
   const handleDataFromDiagnosiss = (data: diagnosisData) => {
     setDataFromDiagnosis(data);
     console.log(data); // You can further process or send this data
   };
+
+  const handleDataFromPrescreption = (data: PrescreptionData) => {
+    setDataFromPrescreption(data);
+    console.log(data); // You can further process or send this data
+  };
+  
+  
+  const handleDataFromTests = (data: testsData) => {
+    setDataFromTests(data);
+    console.log(data); // You can further process or send this data
+  };
+  const handleDoneClick = () => {
+    // Process data or send it wherever needed
+    console.log("Diagnosis Data:", dataFromDiagnosis);
+    console.log("Prescription Data:", dataFromPrescreption);
+    console.log("Tests Data:", dataFromTests);
+    console.log("Services Data:", dataFromServices);
+  };
+  
+  
+  
   const [isPrescriptionModalOpen, setPrescriptionModalOpen] = useState(false);
   const [isTestsModalOpen, setTestsModalOpen] = useState(false);
   const [isServicesModalOpen, setServicesModalOpen] = useState(false);
@@ -51,10 +90,10 @@ const ExaminationScreen = () => {
       <PopUp
         isOpen={isPrescriptionModalOpen}
         onClose={closePrescriptionModal}
-        title={"Add Device"}
+        title={"Add Prescription"}
       >
         <div className="modal-body">
-          <AddPrescreptionForm closeModal={closePrescriptionModal} />
+          <AddPrescreptionForm DataFromPrescreption={handleDataFromPrescreption} />
         </div>
       </PopUp>
 
@@ -64,7 +103,7 @@ const ExaminationScreen = () => {
         title={"Tests"}
       >
         <div className="modal-body">
-          <AddTestsForm closeModal={closeTestsModal} />
+          <AddTestsForm DataFromTests={handleDataFromTests}   />
         </div>
       </PopUp>
 
@@ -74,9 +113,15 @@ const ExaminationScreen = () => {
         title={"Services"}
       >
         <div className="modal-body">
-          <AddServicesForm closeModal={closeServicesModal} />
+          <AddServicesForm   DataFromservice={handleDataFromServices}/>
         </div>
       </PopUp>
+      <div className="Donebtn">
+      <Button variant="contained" onClick={handleDoneClick}>
+            Done
+          </Button>
+
+      </div>
     </Container>
   );
 };
