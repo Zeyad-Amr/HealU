@@ -36,11 +36,14 @@ def get_services_data(services_ids):
 
 def get_patient_from_appointment(appointment_id):
      ### appointment api logic
-     api_url = f'https://dwl9v.wiremockapi.cloud/appointment/:{appointment_id}'
-     headers={"auth":env("auth_data")}
-     response=requests.get(api_url,headers=headers)
-     appointment_response=response.json()
-     patient_id=appointment_response["patient_id"]
+     api_url = f'https://appointment-service-y30u.onrender.com/appointments/{appointment_id}'
+     response=requests.get(api_url)
+     if response.status_code== 200:
+        appointment_response=json.loads(response.text)
+        print(appointment_response)
+        patient_id=appointment_response["patientId"]
+     else:
+          pass
      return patient_id
 
 def get_insurance_percentage(patient_id):
@@ -107,6 +110,7 @@ def new_invoice(request) :
      if request.method == 'POST':
           data=json.loads(request.body.decode("utf-8"))
           patient_id=get_patient_from_appointment(data['appointment_id'])
+          print(type(data['appointment_id']))
           new_invoice=Invoice(appointmentId=data['appointment_id'],patientId=patient_id,status="PN",dateTime=timezone.now().isoformat(),servicesIds=data['services_ids'])
           new_invoice.save()
           response=get_invoice_by_id(new_invoice.id)
