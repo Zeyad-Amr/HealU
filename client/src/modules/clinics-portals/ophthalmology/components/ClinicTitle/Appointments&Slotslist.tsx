@@ -45,7 +45,7 @@ export default function DoctorAppointments() {
     day: "sunday",
   });
 
-  const handleDeleteAppointment = (index) => {
+  const handleDeleteAppointment = (index: any) => {
     const updatedAppointments = [...appointments];
     updatedAppointments.splice(index, 1);
     setAppointments(updatedAppointments);
@@ -72,7 +72,7 @@ export default function DoctorAppointments() {
     setDateDialogOpen(false);
   };
 
-  const handleClearSlot = (index) => {
+  const handleClearSlot = (index: any) => {
     const updatedAppointments = [...appointments];
     updatedAppointments[index].patientName = "";
     setAppointments(updatedAppointments);
@@ -86,7 +86,7 @@ export default function DoctorAppointments() {
     setDateDialogOpen(false);
   };
 
-  const handleSelectDate = (selectedDate) => {
+  const handleSelectDate = (selectedDate: any) => {
     setSelectedDate(selectedDate);
     handleCloseDateDialog();
   };
