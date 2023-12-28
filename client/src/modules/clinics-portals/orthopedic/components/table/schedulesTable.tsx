@@ -17,8 +17,6 @@ import Schedule from "../../slices/scheduleSlice";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-
-
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
@@ -27,16 +25,14 @@ const useStyles = makeStyles({
       width: "80%",
     },
   },
-  containerA:{
-    "& div":{
-      width : "100%",
-
+  containerA: {
+    "& div": {
+      width: "100%",
     },
-  }
+  },
 });
 
 const TableComponent = ({ schedules }: { schedules: Schedule[] | Slot[] }) => {
-
   const classesX = useStyles();
   const slots = useSelector((state: RootState) => state.slots.slots);
   const dispatch = useDispatch();
@@ -50,10 +46,15 @@ const TableComponent = ({ schedules }: { schedules: Schedule[] | Slot[] }) => {
   };
 
   return (
-    <Paper sx={{ width: "1836px", overflow: "hidden" }} classes={{ root: classesX.containerA}}>
-      <TableContainer className={classes.customTableContainer} classes={{ root: classesX.box }} >
-        <Table >
-
+    <Paper
+      sx={{ width: "1836px", overflow: "hidden" }}
+      classes={{ root: classesX.containerA }}
+    >
+      <TableContainer
+        className={styles.customTableContainer}
+        classes={{ root: classesX.box }}
+      >
+        <Table>
           <TableBody>
             {schedules.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
