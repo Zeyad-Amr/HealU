@@ -18,6 +18,7 @@ export interface testsData {
 
 interface ChildProps {
   DataFromTests: (data: testsData) => void;
+  OnClose: () => void;
 }
 
 const AddTestsForm = (props: ChildProps) => {
@@ -38,6 +39,7 @@ const AddTestsForm = (props: ChildProps) => {
 
   const handelSubmit = () => {
     props.DataFromTests({ TestName: selectedTests });
+    props.OnClose();
   };
 
 

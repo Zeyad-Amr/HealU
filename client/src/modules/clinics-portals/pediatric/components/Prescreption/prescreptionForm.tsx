@@ -13,6 +13,7 @@ export interface PrescreptionData {
 
 interface ChildProps {
   DataFromPrescreption: (data: PrescreptionData) => void;
+  OnClose: () => void;
 }
 
 const AddPrescreptionForm = (props:ChildProps) => {
@@ -44,6 +45,7 @@ const AddPrescreptionForm = (props:ChildProps) => {
   // const handlenotesChange = (event: React.ChangeEvent<HTMLInputElement>) => {};
   const handelSubmit = () => {
     props.DataFromPrescreption(formData);
+    props.OnClose();
     
     // props.closeModal();
   };

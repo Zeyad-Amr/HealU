@@ -93,7 +93,7 @@ const handleDataFromServices = (data: serviceData) => {
         title={"Add Prescription"}
       >
         <div className="modal-body">
-          <AddPrescreptionForm DataFromPrescreption={handleDataFromPrescreption} />
+          <AddPrescreptionForm DataFromPrescreption={handleDataFromPrescreption} OnClose={closePrescriptionModal} />
         </div>
       </PopUp>
 
@@ -103,7 +103,7 @@ const handleDataFromServices = (data: serviceData) => {
         title={"Tests"}
       >
         <div className="modal-body">
-          <AddTestsForm DataFromTests={handleDataFromTests}   />
+          <AddTestsForm DataFromTests={handleDataFromTests} OnClose={closeTestsModal}  />
         </div>
       </PopUp>
 
@@ -113,7 +113,7 @@ const handleDataFromServices = (data: serviceData) => {
         title={"Services"}
       >
         <div className="modal-body">
-          <AddServicesForm   DataFromservice={handleDataFromServices}/>
+          <AddServicesForm   DataFromservice={handleDataFromServices}OnClose={closeServicesModal} />
         </div>
       </PopUp>
       <div className="Donebtn">

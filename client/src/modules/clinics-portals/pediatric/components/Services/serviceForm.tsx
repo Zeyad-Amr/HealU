@@ -18,6 +18,7 @@ export interface serviceData {
 interface ChildProps {
   
   DataFromservice: (data: serviceData) => void;
+  OnClose: () => void;
 }
 
 
@@ -54,6 +55,7 @@ const AddServicesForm = (props: ChildProps) => {
   };
   const handelSubmit = () => {
     props.DataFromservice({ ServiceName: selectedTests });
+    props.OnClose();
   };
   return (
     <FormControl sx={{ m: 1, minWidth: 240 }} size="small">
