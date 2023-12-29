@@ -9,6 +9,11 @@ interface PatientDataProps {
   age: number;
 }
 
+interface DataItem {
+  key: string;
+  value: string | number;
+}
+
 const PersonalDataContainer = styled("div")(({ theme: Theme }) => ({
   marginTop: 20,
   marginBottom: 16,
@@ -30,9 +35,10 @@ const Title = styled("h2")(({ theme: Theme }) => ({
   textAlign: "left",
 }));
 
-const DataItem = styled("p")(({ theme: Theme }) => ({
+const DataItemContainer = styled("div")(({ theme: Theme }) => ({
   marginBottom: 4,
   textAlign: "left",
+  marginTop: "20px",
 }));
 
 const DataItemKey = styled("span")(({ theme: Theme }) => ({
@@ -54,25 +60,22 @@ const PatientData: React.FC<PatientDataProps> = ({
 }) => {
   const currentTheme = theme();
 
+  const dataItems: DataItem[] = [
+    { key: "Name:", value: name },
+    { key: "Weight:", value: `${weight} Kg` },
+    { key: "Height:", value: `${length} Cm` },
+    { key: "Age:", value: age },
+  ];
+
   return (
     <PersonalDataContainer theme={currentTheme}>
       <Title theme={currentTheme}>Personal Data</Title>
-      <DataItem theme={currentTheme}>
-        <DataItemKey theme={currentTheme}>Name:</DataItemKey>{" "}
-        <DataItemValue theme={currentTheme}>{name}</DataItemValue>
-      </DataItem>
-      <DataItem theme={currentTheme}>
-        <DataItemKey theme={currentTheme}>Weight:</DataItemKey>{" "}
-        <DataItemValue theme={currentTheme}>{weight} Kg</DataItemValue>
-      </DataItem>
-      <DataItem theme={currentTheme}>
-        <DataItemKey theme={currentTheme}>Height:</DataItemKey>{" "}
-        <DataItemValue theme={currentTheme}>{length} Cm</DataItemValue>
-      </DataItem>
-      <DataItem theme={currentTheme}>
-        <DataItemKey theme={currentTheme}>Age:</DataItemKey>{" "}
-        <DataItemValue theme={currentTheme}>{age}</DataItemValue>
-      </DataItem>
+      {dataItems.map((item) => (
+        <DataItemContainer key={item.key} theme={currentTheme}>
+          <DataItemKey theme={currentTheme}>{item.key}</DataItemKey>{" "}
+          <DataItemValue theme={currentTheme}>{item.value}</DataItemValue>
+        </DataItemContainer>
+      ))}
     </PersonalDataContainer>
   );
 };

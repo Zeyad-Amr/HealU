@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-// import React from "react";
 import { Grid } from "@mui/material";
 import { styled, Theme } from "@mui/material/styles";
-import { Container } from "@mui/material";
-import { theme } from "../../../../../src/core/theme/theme";
 import PatientData from "../components/PatientData";
 import History from "../components/history";
 import CustomContainer from "../components/dietPlan";
 import ListPrescription from "../components/list";
 import Add from "../components/Add";
 import Button from "../components/Button";
-import PrescriptionModal from "../components/modal";
 
 const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
   marginTop: "10px",
@@ -18,25 +14,20 @@ const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
   justifyContent: "center",
 }));
 
-const ContentWrapper = styled("div")({
-  // marginTop: "10px",
-});
+const ContentWrapper = styled("div")({});
 
 const NutritionDashBoard = () => {
-  const prescription = {
-    drug: "Loratadine",
-    dosage: "10 MG",
-  };
-
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
     setOpenModal(true);
   };
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
+  const additionalComponents = [
+    { component: <Add title="Prescription" />, key: "prescription" },
+    { component: <Add title="Diet Plan" />, key: "dietPlan" },
+    { component: <Add title="Tests" />, key: "tests" },
+  ];
 
   return (
     <ContainerWrapper>
@@ -51,34 +42,24 @@ const NutritionDashBoard = () => {
           <Grid item>
             <CustomContainer />
             <Grid container spacing={2}>
-              <Grid item>
-                <Add title="Prescription" />
-              </Grid>
-              <Grid item>
-                <Add title="Diet Plan" />
-              </Grid>
-              <Grid item>
-                <Add title="Tests" />
-              </Grid>
+              {additionalComponents.map((componentData) => (
+                <Grid item key={componentData.key}>
+                  {componentData.component}
+                </Grid>
+              ))}
             </Grid>
 
             <Grid container spacing={2}>
               <Grid item>
                 <ListPrescription />
               </Grid>
-              <Grid item>{/* <ListPrescription /> */}</Grid>
-              <Grid item>{/* <ListPrescription /> */}</Grid>
             </Grid>
-            {/* <ListPrescription /> */}
           </Grid>
         </Grid>
 
         <Grid container spacing={2}>
           <Grid item>
             <Button label="Done" onClick={handleOpenModal} />
-            <div>
-              <PrescriptionModal onClose={handleCloseModal} />
-            </div>
           </Grid>
         </Grid>
       </ContentWrapper>

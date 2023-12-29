@@ -38,47 +38,42 @@ const CardTitle = styled(Typography)(({ theme }: { theme: Theme }) => ({
   marginBottom: "10px",
 }));
 
+const historySections = [
+  {
+    title: "Drugs",
+    items: ["Vitamin D3 250 mcg", "Centrum Multi-Vitamin"],
+  },
+  {
+    title: "Illnesses",
+    items: ["Heart Diseases", "Chest Diseases"],
+  },
+  {
+    title: "Medical Tests",
+    items: ["Vitamin D Test", "CBC Test"],
+  },
+  {
+    title: "Allergies",
+    items: ["Nuts Allergy", "Lactose Intolerance"],
+  },
+];
+
 const History: React.FC<HistoryProps> = () => {
   return (
     <ContainerWrapper>
       <Title>History</Title>
       <Grid container spacing={3}>
-        <Grid item xs={6} sm={3}>
-          <CustomCard>
-            <CardContent>
-              <CardTitle>Drugs</CardTitle>
-              <Typography>• Vitamin D3 250 mcg</Typography>
-              <Typography>• Centrum Multi-Vitamin</Typography>
-            </CardContent>
-          </CustomCard>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <CustomCard>
-            <CardContent>
-              <CardTitle>Illnesses</CardTitle>
-              <Typography>• Heart Diseases</Typography>
-              <Typography>• Chest Diseases</Typography>
-            </CardContent>
-          </CustomCard>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <CustomCard>
-            <CardContent>
-              <CardTitle>Medical Tests</CardTitle>
-              <Typography>• Vitamin D Test</Typography>
-              <Typography>• CBC Test</Typography>
-            </CardContent>
-          </CustomCard>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <CustomCard>
-            <CardContent>
-              <CardTitle>Allergies</CardTitle>
-              <Typography>• Nuts Allergy</Typography>
-              <Typography>• Lactose Intolerance</Typography>
-            </CardContent>
-          </CustomCard>
-        </Grid>
+        {historySections.map((section) => (
+          <Grid item xs={6} sm={3} key={section.title}>
+            <CustomCard>
+              <CardContent>
+                <CardTitle>{section.title}</CardTitle>
+                {section.items.map((item) => (
+                  <Typography key={item}>{`• ${item}`}</Typography>
+                ))}
+              </CardContent>
+            </CustomCard>
+          </Grid>
+        ))}
       </Grid>
     </ContainerWrapper>
   );

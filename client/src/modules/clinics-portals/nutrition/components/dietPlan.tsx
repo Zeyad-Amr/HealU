@@ -1,6 +1,7 @@
 import React from "react";
 import { styled, Theme } from "@mui/material/styles";
-import { Grid, CardContent, Typography, TextField } from "@mui/material";
+import { Grid, CardContent, Typography } from "@mui/material";
+import PdfDownloader from "./pdfDownloader";
 
 interface DietPlanProps {}
 
@@ -45,6 +46,35 @@ const FieldTitle = styled(Typography)(({ theme }: { theme: Theme }) => ({
   fontWeight: "bold",
 }));
 
+interface Field {
+  title: string;
+  value: string;
+}
+
+const fields: Field[] = [
+  { title: "Inbody Score", value: "80/100" },
+  { title: "Current Weight", value: "85 KG" },
+  { title: "Weight Control", value: "+5.0 KG" },
+  { title: "Target Weight", value: "75 KG" },
+  { title: "Fat Control", value: "-3.5 KG" },
+  { title: "Muscle Control", value: "+6.5 KG" },
+];
+
+interface Section {
+  title: string;
+  component: React.ReactNode;
+}
+
+const sections: Section[] = [
+  {
+    title: "Review Inbody",
+    component: <PdfDownloader />,
+  },
+  {
+    title: "Review Diet Plans",
+    component: <PdfDownloader />,
+  },
+];
 const DietPlan: React.FC<DietPlanProps> = () => {
   return (
     <ContainerWrapper>
@@ -53,22 +83,13 @@ const DietPlan: React.FC<DietPlanProps> = () => {
           <CustomCard>
             <CardContent>
               <CardTitle>Inbody Score & Weight Control</CardTitle>
-              <Grid container spacing={13}>
-                <Grid item>
-                  <FieldTitle>Inbody Score</FieldTitle>
-                  <GreyContainer>80/100</GreyContainer>
-
-                  <FieldTitle>Target Weight</FieldTitle>
-                  <GreyContainer>75 KG</GreyContainer>
-                  <FieldTitle>Weight Control</FieldTitle>
-                  <GreyContainer>+5.0 KG</GreyContainer>
-                </Grid>
-                <Grid item>
-                  <FieldTitle>Fat Control</FieldTitle>
-                  <GreyContainer>-3.5 KG</GreyContainer>
-                  <FieldTitle>Muscle Control</FieldTitle>
-                  <GreyContainer>+6.5 KG</GreyContainer>
-                </Grid>
+              <Grid container spacing={2}>
+                {fields.map((field) => (
+                  <Grid item key={field.title}>
+                    <FieldTitle>{field.title}</FieldTitle>
+                    <GreyContainer>{field.value}</GreyContainer>
+                  </Grid>
+                ))}
               </Grid>
             </CardContent>
           </CustomCard>
@@ -76,8 +97,20 @@ const DietPlan: React.FC<DietPlanProps> = () => {
         <Grid item xs={12} sm={6}>
           <CustomCard>
             <CardContent>
-              <CardTitle>Inbody & Diet Plans</CardTitle>
-              {/* Add your implementation for title and photo upload here */}
+              <Grid container spacing={13}>
+                {sections.map((section) => (
+                  <Grid item xs={6} key={section.title}>
+                    <CustomCard>
+                      <CardContent>
+                        <CardTitle>{section.title}</CardTitle>
+                        <Grid container spacing={2}>
+                          <Grid item>{section.component}</Grid>
+                        </Grid>
+                      </CardContent>
+                    </CustomCard>
+                  </Grid>
+                ))}
+              </Grid>
             </CardContent>
           </CustomCard>
         </Grid>

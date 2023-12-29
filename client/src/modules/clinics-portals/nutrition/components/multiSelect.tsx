@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
-const currencies = [
+const time = [
   {
     value: "After Breakfast",
     label: "After Breakfast",
@@ -47,7 +47,7 @@ export default function SelectTextFields() {
           defaultValue="After Breakfast"
           variant="filled"
         >
-          {currencies.map((option) => (
+          {time.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>

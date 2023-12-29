@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled, Theme } from "@mui/material/styles";
-import { Typography } from "@mui/material";
+import { Typography, Grid, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import PrescriptionModal from "./modal";
 
 interface AddProps {
   title: string;
@@ -29,13 +31,42 @@ const Title = styled(Typography)(({ theme }: { theme: Theme }) => ({
   fontWeight: "bold",
   color: "#333333",
   marginBottom: theme.spacing(1),
+  width: "50%",
 }));
 
 const Add: React.FC<AddProps> = ({ title }) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
   return (
     <Container>
       <Card>
-        <Title>{title}</Title>
+        <Grid item>
+          <Title>{title}</Title>
+        </Grid>
+        <Grid item>
+          {/* <Icon
+            sx={{
+              fontSize: 30,
+              color: "#BDBDBD",
+              backgroundColor: "#000",
+              borderRadius: "50%",
+              marginLeft: "8px",
+            }}
+          >
+            add_circle
+          </Icon> */}
+          <IconButton sx={{ color: "black" }} onClick={handleOpenModal}>
+            <AddIcon />
+          </IconButton>
+          {openModal && <PrescriptionModal onClose={handleCloseModal} />}
+        </Grid>
       </Card>
     </Container>
   );

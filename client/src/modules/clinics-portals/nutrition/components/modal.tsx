@@ -9,20 +9,36 @@ interface PrescriptionModalProps {
   onClose: () => void;
 }
 
+interface PrescriptionField {
+  label: string;
+  name: keyof Prescription;
+}
+
+interface Prescription {
+  drugName: string;
+  dose: string;
+  notes: string;
+  saveTime: string;
+}
+
 const ModalWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
   display: "flex",
-  marginTop: "100px",
+  marginTop: "5px",
   height: "75vh",
   width: "500px",
-  border: " 1px solid white",
+  backgroundColor: "#fff",
   boxSizing: "border-box",
   borderRadius: "10px",
   alignItems: "left",
   boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  zIndex: 100,
 }));
 
 const ModalTitle = styled("h3")({
-  //   marginTop: -40,
   marginTop: -16,
   marginBottom: 30,
   textAlign: "left",
@@ -46,7 +62,6 @@ const FormWrapper = styled("form")(({ theme }: { theme: Theme }) => ({
   marginLeft: "5px",
   marginTop: "20px",
   width: "500px",
-  //   alignItems: "left",
 }));
 
 const LabelWrapper = styled("label")(({ theme }: { theme: Theme }) => ({
@@ -101,9 +116,15 @@ const PrescriptionModal: React.FC<PrescriptionModalProps> = ({ onClose }) => {
     saveTime: "After Breakfast",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setPrescription({ ...prescription, [name]: value });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    name: keyof Prescription
+  ) => {
+    const { value } = e.target;
+    setPrescription((prevPrescription) => ({
+      ...prevPrescription,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -112,11 +133,17 @@ const PrescriptionModal: React.FC<PrescriptionModalProps> = ({ onClose }) => {
     // Submit logic here
   };
 
+  const prescriptionFields: PrescriptionField[] = [
+    { label: "Drug Name", name: "drugName" },
+    { label: "Dose", name: "dose" },
+    { label: "Notes", name: "notes" },
+  ];
+
   return (
     <ModalWrapper>
       <FormWrapper onSubmit={handleSubmit}>
         <Grid item>
-          <ExitButton>
+          <ExitButton onClick={onClose}>
             <CloseIcon />
           </ExitButton>
         </Grid>
@@ -124,37 +151,25 @@ const PrescriptionModal: React.FC<PrescriptionModalProps> = ({ onClose }) => {
           <ModalTitle>Prescription</ModalTitle>
         </Grid>
 
-        <LabelWrapper>
-          Drug Name
-          <InputWrapper
-            type="text"
-            name="drugName"
-            value={prescription.drugName}
-            onChange={handleChange}
-          />
-        </LabelWrapper>
-        <LabelWrapper>
-          Dose
-          <InputWrapper
-            type="text"
-            name="dose"
-            value={prescription.dose}
-            onChange={handleChange}
-          />
-        </LabelWrapper>
+        {prescriptionFields.map((field) => (
+          <LabelWrapper key={field.name}>
+            {field.label}
+            <InputWrapper
+              type="text"
+              name={field.name}
+              value={prescription[field.name]}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChange(e, field.name)
+              }
+            />
+          </LabelWrapper>
+        ))}
+
         <LabelWrapper>
           Time
           <MultiSelect />
         </LabelWrapper>
-        <LabelWrapper>
-          Notes
-          <InputWrapper
-            type="text"
-            name="notes"
-            value={prescription.notes}
-            onChange={handleChange}
-          />
-        </LabelWrapper>
+
         <StyledButton type="submit">Save</StyledButton>
       </FormWrapper>
     </ModalWrapper>
