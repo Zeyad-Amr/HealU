@@ -10,6 +10,8 @@ import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmolo
 import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages";
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
+import Login from "../../modules/login/pages";
+import Signup from "../../modules/patient-portal/components/signup/SignUp";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -44,6 +46,14 @@ class Router {
     {
       path: AppRoutes.adminPortal,
       element: <AdminPortal />,
+    },
+    {
+      path: AppRoutes.login,
+      element: <Login />,
+    },
+    {
+      path: AppRoutes.signup,
+      element: <Signup />,
     },
   ];
 
