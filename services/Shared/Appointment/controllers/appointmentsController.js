@@ -99,13 +99,7 @@ const getAppointmentByPatientID = async (req, res, next) => {
     try {
         const { patientId } = req.params;
         const appointment = await Appointment.find({ patientId: patientId });
-
-        if (appointment) res.status(200).json(appointment);
-        else
-            res.status(404).json({
-                message: `No Appointments with Patient ID: ${patientId}`,
-            });
-
+        res.status(200).json(appointment);
         next();
     } catch (error) {
         res.status(500).json({ message: error.message }) && next(error);
@@ -118,13 +112,7 @@ const getAppointmentByDoctorID = async (req, res, next) => {
     try {
         const { doctorId } = req.params;
         const appointment = await Appointment.find({ doctorId: doctorId });
-
-        if (appointment.length > 0) res.status(200).json(appointment);
-        else
-            res.status(404).json({
-                message: `No Appointments with Doctor ID: ${doctorId}`,
-            });
-
+        res.status(200).json(appointment);
         next();
     } catch (error) {
         res.status(500).json({ message: error.message }) && next(error);
@@ -137,13 +125,7 @@ const getAppointmentByClinicID = async (req, res, next) => {
     try {
         const { clinicId } = req.params;
         const appointment = await Appointment.find({ clinicId: clinicId });
-
-        if (appointment.length > 0) res.status(200).json(appointment);
-        else
-            res.status(404).json({
-                message: `No Appointments with Clinic ID: ${clinicId}`,
-            });
-
+        res.status(200).json(appointment);
         next();
     } catch (error) {
         res.status(500).json({ message: error.message }) && next(error);
