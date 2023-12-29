@@ -132,7 +132,7 @@ def handle_invoice(request,id):
                 "message":"invoice not found"
                     }
                 return JsonResponse(response,status=404)
-            new_services=json.loads(request.body)["services_ids"]
+            new_services=json.loads(request.body)["servicesIds"]
             services=invoice.servicesIds
             # list append
             for service in new_services:
@@ -162,9 +162,9 @@ def handle_invoice(request,id):
             serializer=invoice_serializer(invoice)
             invoice_response = serializer.data
             invoice_details={
-                'Services_names':services_names,
-                'Services_amounts':services_amounts,     
-                'amounts_total': amounts_after_insurace
+                'servicesNames':services_names,
+                'servicesAmounts':services_amounts,     
+                'amountsTotal': amounts_after_insurace
 
             }
             invoice_response.update(invoice_details)
@@ -185,12 +185,11 @@ def handle_invoice(request,id):
 def new_invoice(request) :
      if request.method == 'POST':
           data=json.loads(request.body.decode("utf-8"))
-          patient_response=get_patient_from_appointment(data['appointment_id'])
+          patient_response=get_patient_from_appointment(data['appointmentId'])
           print(patient_response)
           if(patient_response["status code"]==200):
-            print(type(data['appointment_id']))
             patient_id=patient_response["patient_id"]
-            new_invoice=Invoice(appointmentId=data['appointment_id'],patientId=patient_id,status="PN",dateTime=timezone.now().isoformat(),servicesIds=data['services_ids'])
+            new_invoice=Invoice(appointmentId=data['appointmentId'],patientId=patient_id,status="PN",dateTime=timezone.now().isoformat(),servicesIds=data['servicesIds'])
             new_invoice.save()
             response=get_invoice_by_id(new_invoice.id)
             return JsonResponse(response ,safe=False)
