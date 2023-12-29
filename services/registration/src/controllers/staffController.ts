@@ -4,7 +4,8 @@ import { Request, Response } from 'express';
 // import { PrismaClient } from '@prisma/client';
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-import * as controller from '../controllers/patientController';
+import * as controller from './patientController';
+import hashing from '../Hash/hashing'
 
 //-------------------Get All staff -----------------------
 export const getAllstaff = async (req: Request, res: Response) => {
@@ -99,6 +100,8 @@ export const createStaff = async (req: Request, res: Response) => {
       throw new Error(' password must has at least one capital letter');
     }
     else{
+      // hashing the password 
+      userData.password = await hashing.hashPassword(userData.password)
       const newUser = await prisma.user.create({
         data: userData,
       });
@@ -142,6 +145,11 @@ export const updateStaff = async (req: Request, res: Response) => {
       if (!userExists) {
         throw new Error('User not found');
       }else{
+        // Check if the request includes a password update
+        if (userData.password) {
+          // Hash the new password using your hashPassword function
+          userData.password = await hashing.hashPassword(userData.password);
+        }
         const updatedUser = await prisma.user.update({
           where: {
             userId: parsedUserId,
@@ -155,6 +163,7 @@ export const updateStaff = async (req: Request, res: Response) => {
         res.status(200).json({ data: updatedUser });  
     }
   } catch (error:any) {
+    console.error(error);
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       controller.checkUniqueValues(error,res);
     }

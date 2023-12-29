@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-
+import hashing from '../Hash/hashing';
 const prisma = new PrismaClient();
 
 export const loginUser = async (req: Request, res: Response) => {
@@ -10,15 +10,18 @@ export const loginUser = async (req: Request, res: Response) => {
     const user = await prisma.user.findUnique({
       where: {
         userName: userName,
-        password: password,
       },
     });
 
     if (!user) {
       res.status(401).json({ error: 'Invalid credentials' });
-    } else {
-      res.status(200).json({ data: user });
+      return;
     }
+
+    // Use your existing function to compare hashed password
+    await hashing.compareHashPassword(password, user.password, { error: 'Invalid credentials' });
+
+    res.status(200).json({ data: user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { Prisma, PrismaClient } from '@prisma/client';;
+import { Prisma, PrismaClient } from '@prisma/client';
+import hashing from '../Hash/hashing';
 
 const prisma = new PrismaClient();
 //-----------------------check for unique values in database --------------------------------
@@ -34,15 +35,17 @@ export const createPatient = async (req: Request, res: Response) => {
     if(patientData.role!="Patient"){
       throw new Error('Invalid role or unmatched data');
     }
-    else if(!patientData.gender || !patientData.firstName||!patientData.lastName||
-      !patientData.email||!patientData.phoneNumber||!patientData.role||!patientData.password||
-      !patientData.userName||!patientData. insurancePersentage||!patientData.emergencyContact) {
+    else if(!patientData.gender || !patientData.firstName||!patientData.lastName||!patientData.email||
+      !patientData.phoneNumber||!patientData.role||!patientData.password||!patientData.userName||
+      !patientData. insurancePersentage||!patientData.emergencyContactName ||!patientData.emergencyContactNumber) {
       throw new Error('Missing required data');
     }
     else if(hasCapitalizedCharacter(patientData.password)==false){
       throw new Error(' password must has at least one capital letter');
     }
     else{
+      // hashing the password 
+      patientData.password = await hashing.hashPassword(patientData.password)
       const newPatient = await prisma.user.create({
         data: {
           ...patientData,
@@ -52,6 +55,7 @@ export const createPatient = async (req: Request, res: Response) => {
       res.status(201).json({ data: newPatient });       // successsful response
     } 
   } catch (error:any) {
+    console.error(error);
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       checkUniqueValues(error,res);
     }
@@ -88,6 +92,11 @@ export const updatePatient = async (req: Request, res: Response) => {
     if (!patientExists) {
       throw new Error('User not found');
     }else{
+      // Check if the request includes a password update
+      if (patientData.password) {
+        // Hash the new password using your hashPassword function
+        patientData.password = await hashing.hashPassword(patientData.password);
+      }
       const updatedPatient = await prisma.user.update({
         where: {
           userId: parsedUserId,

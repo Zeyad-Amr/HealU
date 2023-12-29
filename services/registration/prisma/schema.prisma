@@ -10,18 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model User {
-  userId              Int     @id @default(autoincrement())
-  gender              String
-  firstName           String
-  lastName            String
-  email               String  @unique
-  phoneNumber         String
-  role                String
-  ssn                 String  @unique
-  password            String  
-  userName            String  @unique  
-  insurancePersentage Float?
-  emergencyContact    String?
-  specialization      String?
-  clinicId            Int?    
+  userId                    Int       @id @default(autoincrement())
+  gender                    String
+  firstName                 String
+  lastName                  String
+  // dateOfBirth               DateTime? @db.Date()
+  email                     String    @unique
+  phoneNumber               String
+  role                      String
+  ssn                       String    @unique
+  password                  String  
+  userName                  String    @unique  
+  insurancePersentage       Float?
+  emergencyContactName      String?
+  emergencyContactNumber    String?
+  specialization            String?
+  clinicId                  Int?    
 }
