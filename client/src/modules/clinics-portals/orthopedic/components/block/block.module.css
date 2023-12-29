@@ -1,0 +1,38 @@
+/* BlockComponent.css */
+.block {
+  width: 393px;
+  height: 226px;
+  top: 170px;
+  left: 79px;
+  border-radius: 15px;
+  background: linear-gradient(131.75deg, #01b6b6 2.18%, #13d2de 100%);
+  margin: 10px;
+  display: "flex";
+}
+
+.block2 {
+  width: 1367px;
+  height: 226px;
+  top: 170px;
+  left: 492px;
+  border-radius: 15px;
+  border: 1px;
+  background: linear-gradient(119.45deg, #006d6d 1.3%, #002426 100%);
+  display: "flex";
+  border: 1px solid #13d2de;
+  margin: 10px;
+
+  /*background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin: 10px;*/
+}
+
+.block3 {
+  width: 1450px;
+  height: 364px;
+  top: 618px;
+  left: 79px;
+  background-color: #f0f0f0;
+  border: 1px solid #01b6b6;
+}

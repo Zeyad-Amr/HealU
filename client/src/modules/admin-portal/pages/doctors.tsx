@@ -3,7 +3,7 @@ import TableComponent from "../../clinics-portals/orthopedic/components/table/sc
 const DoctorTable = () => {
   return (
     <>
-      <TableComponent schedules={} />
+      {/* <TableComponent schedules={} /> */}
     </>
   );
 };
