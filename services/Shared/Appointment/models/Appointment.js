@@ -29,7 +29,11 @@ const appointmentSchema = mongoose.Schema({
         type: String,
         required: [true, "Please enter the appointment's time"],
     },
-});
+},
+    {
+        timestamps: true,
+    }
+);
 
 const Appointment = mongoose.model("Appointment", appointmentSchema);
 
