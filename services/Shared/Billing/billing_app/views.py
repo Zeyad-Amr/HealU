@@ -216,22 +216,22 @@ def get_all_patient_invoices(requests,patient_id):
 def get_all_invoices(requests):
      invoices = Invoice.objects.all()
      serializer = invoice_serializer(invoices,many=True) 
+     if len(invoices)==0:
+         return JsonResponse({"message":" no invoices found"},status=404) 
      return JsonResponse(serializer.data,safe=False)
     
 
     
           
-
-
-
 @csrf_exempt
 def new_bill(request):
-    print("NEW BILLLLL")
     if request.method == 'POST':
-        print("POSTTTTT")
-
         body = json.loads(request.body.decode("utf-8"))
-        invoice = get_object_or_404(Invoice, id=body["invoiceId"])
+        try:
+            invoice = get_object_or_404(Invoice, id=body["invoiceId"])
+        except Http404:
+            return JsonResponse({"message":"invoice not found"}, status=404)
+
         if body["paymentMethod"]=="card":
             paymentSource = body["paymentSource"]["card"]       
             response = utils.pay_with_card(amount= body["amount"], card_number=paymentSource["number"],expiry=paymentSource["expiry"],cvv=paymentSource["cvv"],name=paymentSource["name"])
@@ -248,34 +248,40 @@ def new_bill(request):
             bill.save()
             response = BillSerializer(bill).data
             return JsonResponse(response, status = 201, safe=False)
-    
-    return JsonResponse({"message": "Invalid request"}, status=400)
+
+        return JsonResponse({"message": "Invalid request"}, status=400)
 
 @csrf_exempt
 def handle_bill(request, id):
-    if request.method == 'DELETE':
+    try:
         bill = get_object_or_404(Bill, id=id)
+    except Http404:
+        return JsonResponse({"message":"bill not found"}, status=404)
+    if request.method == 'DELETE':
         bill.delete()
         response= {"message":"bill deleted successfully"}
         return JsonResponse(response, status=200)
+    
     elif request.method == 'GET':
-        bill = get_object_or_404(Bill, id=id)
         response = BillSerializer(bill).data
         return JsonResponse(response, status=200, safe=False)
 
 
 @csrf_exempt
-def get_all_patient_bills(request, patient_id):
+def get_all_patient_bills(_, patient_id):
     bills = Bill.objects.filter(invoiceId__patientId = patient_id)
     bills = BillSerializer(bills, many=True).data
+    if len(bills)==0:
+         return JsonResponse({"message":"bills not found"},status=404)
     return JsonResponse(bills, status=200, safe=False)
-
 
 @csrf_exempt
 @require_http_methods(["GET"])
 def get_all_bills(requests):
      bills = Bill.objects.all()
-     serializer = BillSerializer(bills,many=True) 
+     serializer = BillSerializer(bills,many=True)
+     if len(bills)==0:
+         return JsonResponse({"message":" no bills found"},status=404) 
      return JsonResponse(serializer.data,safe=False)
     
 
