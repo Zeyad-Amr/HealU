@@ -3,11 +3,11 @@
 import React from "react";
 import { AppBar, Toolbar, IconButton, Button, Box, Stack } from "@mui/material";
 import Logo from "../../imgs/NavBarlogo.png";
-import styles from "./navBar.module.css";
+import styles from "./NavBar.module.css";
 
 const NavBar = () => {
   return (
-    <AppBar position="static" className={styles.appBar}>
+    <AppBar position="static" className={styles.Bar}>
       <Toolbar className={styles.toolbar}>
         <IconButton edge="start" color="inherit" aria-label="menu">
           <img src={Logo} alt="Logo" className={styles.logo} />

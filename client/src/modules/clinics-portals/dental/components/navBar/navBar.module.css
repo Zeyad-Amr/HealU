@@ -1,10 +1,11 @@
-.appBar {
+.Bar {
     width: 100%;
     height: auto;
-    background: rgb(255, 255, 255);
+    background: rgb(255, 255, 255) !important;
     box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.25);
     border-radius: 0 0 24px 24px;
     margin-bottom: 15px;
+    position:static;
 }
 
 .toolbar {
@@ -13,7 +14,7 @@
 }
 
 .logo {
-  max-width: 80%;
+  max-width: 70%;
   height: auto;
 }
 
@@ -26,9 +27,9 @@
 
 .button {
   font-family: Roboto;
-  color: black;
-  font-weight: 400;
-  font-size: medium;
+  color: black !important;
+  font-weight: 400 !important;
+  font-size: medium !important;
 }
 
 /* Media queries for responsive design */

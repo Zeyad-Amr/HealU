@@ -1,0 +1,72 @@
+/* DashBoard.module.css */
+
+.dashboard-container {
+    height: 84vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .table-container {
+    flex: 1;
+    position: relative;
+  }
+  
+  .create-slot-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 16px;
+    background: linear-gradient(285.17deg, #01B6B6 10.66%, #13D2DE 102.7%);
+    border-radius: 15px;
+  }
+  
+  .date-selection {
+    font-family: 'Roboto';
+    font-weight: 400;
+    background: transparent;
+    padding: 0px;
+    border-radius: 8px;
+    color: rgba(139, 139, 139, 1);
+    font-size: 1.5rem;
+    margin: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .menu {
+    border: 1px solid rgba(139, 139, 139, 1);
+  }
+  
+  .time-cell {
+    border: none;
+  }
+  
+  .patient-name {
+    font-family: 'Roboto';
+    font-weight: 400;
+    flex-grow: 1;
+    background: rgba(229, 229, 229, 1);
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .cancel-button,
+  .delete-button {
+    font-family: 'Roboto';
+    background: rgba(85, 85, 85, 1);
+    border-radius: 15px;
+    color: white;
+    width: 50px;
+  }
+  
+  .delete-icon {
+    font-family: 'Roboto';
+    background: rgba(184, 2, 2, 1);
+    border-radius: 15px;
+    color: white;
+    width: 50px;
+  }
+  
+  /* Add more styles as needed */
+  

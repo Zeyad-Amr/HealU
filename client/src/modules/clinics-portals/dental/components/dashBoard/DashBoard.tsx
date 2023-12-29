@@ -1,4 +1,5 @@
-import React from 'react';
+// DashBoard.tsx
+import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -10,24 +11,71 @@ import {
   Typography,
   IconButton,
   Button,
+  Modal,
+  Box,
+  MenuItem,
+  Menu,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CreateSlotModal from './popUP/CreateSlotModal';
 
-const DashBoard = () => {
-  const currentDate = new Date();
-  const formattedDate = `${currentDate.toLocaleDateString('en-US', {
-    weekday: 'long',
-  })}, ${currentDate.toLocaleDateString('en-US', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  })}`;
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-  const rowData = [
-    { time: '9:00 AM', patientName: 'John Doe' },
-    { time: '10:30 AM', patientName: 'Jane Smith' },
-    { time: '1:45 PM', patientName: 'Bob Johnson' },
+import styles from "./DashBoard.module.css"; // Import the CSS module
+
+interface Patient {
+  time: string;
+  patientName: string;
+  patientID: number;
+}
+
+interface DashBoardProps {
+  // Other props if needed
+}
+
+const DashBoard: React.FC<DashBoardProps> = () => {
+  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString());
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+  const [showCreateSlotModal, setShowCreateSlotModal] = useState<boolean>(false);
+
+  const getWeekDates = () => {
+    const currentDate = new Date(selectedDate);
+    const currentDay = currentDate.getDay();
+    const diff = currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 0);
+    const startDate = new Date(currentDate.setDate(diff));
+    const endDate = new Date(currentDate.setDate(diff + 6));
+    return { startDate, endDate };
+  };
+
+  const generateWeekDates = () => {
+    const { startDate, endDate } = getWeekDates();
+    const weekDates = [];
+    let currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      weekDates.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return weekDates;
+  };
+
+  const formatDateString = (date: Date) => {
+    return date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  };
+
+  const weekDates = generateWeekDates();
+
+  const rowData: Patient[] = [
+    { time: '9:00 AM', patientName: 'John Doe', patientID: 1 },
+    { time: '10:30 AM', patientName: 'Jane Smith', patientID: 2 },
+    { time: '1:45 PM', patientName: 'Bob Johnson', patientID: 3 },
     // Add more data as needed
   ];
 
@@ -36,10 +84,33 @@ const DashBoard = () => {
     fontWeight: 400,
   };
 
+  const handlePatientNameClick = (patient: Patient) => {
+    setSelectedPatient(patient);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPatient(null);
+  };
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setMenuAnchor(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
+  };
+
+  const handleCreateSlotClick = () => {
+    setShowCreateSlotModal(true);
+  };
+
+  const handleCreateSlotModalClose = () => {
+    setShowCreateSlotModal(false);
+  };
+
   return (
     <div style={{ height: '84vh', display: 'flex', flexDirection: 'column' }}>
       <TableContainer component={Paper} style={{ flex: 1, position: 'relative' }}>
-        {/* Create New Slot Button */}
         <Button
           variant="contained"
           style={{
@@ -48,9 +119,10 @@ const DashBoard = () => {
             right: 0,
             margin: '16px',
             background: 'linear-gradient(285.17deg, #01B6B6 10.66%, #13D2DE 102.7%)',
-            borderRadius: '15px', // Make the button circular
+            borderRadius: '15px',
           }}
-          startIcon={<AddCircleOutlineIcon />} // Use AddCircleOutlineIcon as the icon
+          startIcon={<AddCircleOutlineIcon />}
+          onClick={handleCreateSlotClick}
         >
           Create New Slot
         </Button>
@@ -61,20 +133,42 @@ const DashBoard = () => {
           alignItems="center"
           style={{ ...textStyle }}
         >
-          <Typography
-            variant="body1"
+          {/* Customized Date Selection */}
+          <div
             style={{
               ...textStyle,
-              background: 'white',
+              background: 'transparent',
               padding: '0px',
               borderRadius: '8px',
               color: 'rgba(139, 139, 139, 1)',
               fontSize: '1.5rem',
               margin: '16px',
+              border: 'none',
+              cursor: 'pointer',
             }}
+            onClick={handleMenuOpen}
           >
-            {formattedDate}
-          </Typography>
+            {formatDateString(new Date(selectedDate))}
+          </div>
+          <Menu
+            anchorEl={menuAnchor}
+            open={Boolean(menuAnchor)}
+            onClose={handleMenuClose}
+            style={{ border: '1px solid rgba(139, 139, 139, 1)' }}
+          >
+            {weekDates.map((date) => (
+              <MenuItem
+                key={date.toISOString()}
+                value={date.toISOString()}
+                onClick={() => {
+                  setSelectedDate(date.toISOString());
+                  handleMenuClose();
+                }}
+              >
+                {formatDateString(date)}
+              </MenuItem>
+            ))}
+          </Menu>
         </Stack>
         <Table style={{ borderCollapse: 'collapse' }}>
           <TableBody>
@@ -109,7 +203,9 @@ const DashBoard = () => {
                         background: 'rgba(229, 229, 229, 1)',
                         padding: '8px',
                         borderRadius: '8px',
+                        cursor: 'pointer',
                       }}
+                      onClick={() => handlePatientNameClick(row)}
                     >
                       {row.patientName}
                     </Typography>
@@ -144,6 +240,32 @@ const DashBoard = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* Modal for displaying patient details */}
+      <Modal open={Boolean(selectedPatient)} onClose={handleCloseModal}>
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, borderRadius: '8px' }}>
+          <Typography variant="h6" component="div">
+            Patient Details
+          </Typography>
+          <Typography variant="body1" style={{ marginTop: '8px' }}>
+            Patient ID: {selectedPatient?.patientID}
+          </Typography>
+          <Typography variant="body1" style={{ marginTop: '8px' }}>
+            {/* Add more patient details as needed */}
+          </Typography>
+        </Box>
+      </Modal>
+
+      {/* Modal for creating a new slot */}
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <CreateSlotModal
+        open={showCreateSlotModal}
+        onClose={handleCreateSlotModalClose}
+        onSlotCreate={(date, time) => console.log('Slot created:', date, time)}
+        weekDates={weekDates}
+      />                
+      </LocalizationProvider>
+
     </div>
   );
 };

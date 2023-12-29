@@ -19,13 +19,14 @@ const WeekDayPicker = ({
 }) => {
     return (
         <div>
-            <InputLabel id="weekday-label">Week Day</InputLabel>
+            <InputLabel id="weekday-label">Day</InputLabel>
             <Select
                 fullWidth
                 labelId="weekday-label"
                 value={selectedDay}
-                label="Week Day"
+                label="Day"
                 onChange={handleDayChange}
+                style={{ background: 'rgba(244, 244, 244, 1)' }}
             >
                 {weekdaysMap.map((day) => (
                     <MenuItem value={day.value}>{day.label}</MenuItem>
