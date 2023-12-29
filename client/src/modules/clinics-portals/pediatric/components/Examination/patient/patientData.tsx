@@ -42,12 +42,7 @@ const PatientSection = () => {
             </div>
           </Grid>
           <Grid item xs={12}>
-            <HistoryInfo
-              drugs="Pill"
-              illnesses="low blood"
-              tests="pcr"
-              operation="surgry"
-            />
+            <HistoryInfo />
           </Grid>
         </Grid>
       </div>

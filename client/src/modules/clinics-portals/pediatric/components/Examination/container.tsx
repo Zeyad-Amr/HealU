@@ -3,9 +3,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Container } from "@mui/material";
 import PatientSection from "./patient/patientData";
-import AddPrescreptionForm, {
-  PrescreptionData,
-} from "./../Prescreption/prescreptionForm";
+import AddPrescreptionForm from "./../Prescreption/prescreptionForm";
+import { drugData, prescreptionData } from "../../slices/prescreption-slice";
 import AddTestsForm, { testsData } from "./../Tests/testsForm";
 import AddServicesForm, { serviceData } from "./../Services/serviceForm";
 import Diagnosis from "./diagnosis";
@@ -13,13 +12,45 @@ import "./container.css";
 import Button from "@mui/material/Button";
 import PopUp from "../PopUp/Popup";
 import { diagnosisData } from "./diagnosis";
+import Icon from "@mui/material/Icon";
+import { useAppDispatch } from "../../../../../core/store";
+import { AddPrescreptions } from "../../slices/prescreption-slice";
+import { AddRecord, Record } from "../../slices/record-slice";
 const ExaminationScreen = () => {
+  const dispatch = useAppDispatch();
+  const [prescreptionData, setPrescreptionData] = useState<prescreptionData>({
+    AppointmentID: "658f2f080ac4f2704ae1a238",
+    DoctorName: "Dr. Abram Gad",
+    Diagnosis: "",
+    ExtraNotes: "",
+    Drugs: [],
+  } as prescreptionData);
+
+  const [recordData, setRecordData] = useState<Record>({
+    AppointmentID: "658f2f080ac4f2704ae1a238",
+    Weight: 0,
+    Height: 0,
+    ServicesDescription: "",
+    RecommendedActionDescription: "",
+    Vital: {
+      BloodPressure: "",
+      RespirationRate: "",
+      HeartRate: "",
+      DiabeticTest: "",
+      SPO2: "",
+    },
+    Vaccines: [],
+    EyeMeasurements: [],
+    NutritionData: [],
+  } as Record);
+
   const [dataFromDiagnosis, setDataFromDiagnosis] = useState<diagnosisData>(
     {} as diagnosisData
   );
 
-  const [dataFromPrescreption, setDataFromPrescreption] =
-    useState<PrescreptionData>({} as PrescreptionData);
+  const [dataFromPrescreption, setDataFromPrescreption] = useState<drugData>(
+    {} as drugData
+  );
 
   const [dataFromTests, setDataFromTests] = useState<testsData>({
     TestName: [],
@@ -35,10 +66,32 @@ const ExaminationScreen = () => {
 
   const handleDataFromDiagnosiss = (data: diagnosisData) => {
     setDataFromDiagnosis(data);
+    setPrescreptionData((prevData) => ({
+      ...prevData,
+      Diagnosis: data.Diagnosis,
+      ExtraNotes: data.ExtraNotes,
+    }));
+    setRecordData((prevData) => ({
+      ...prevData,
+      Weight: data.PatientWeight,
+      Height: data.PatientHeight,
+      RecommendedActionDescription: data.RecommendedActionDescription,
+      Vital: {
+        BloodPressure: data.BloodPressure,
+        RespirationRate: data.RespirationRate,
+        HeartRate: data.HeartRate,
+        DiabeticTest: data.DiabeticTest,
+        SPO2: data.SPO2,
+      },
+    }));
   };
 
-  const handleDataFromPrescreption = (data: PrescreptionData) => {
+  const handleDataFromPrescreption = (data: drugData) => {
     setDataFromPrescreption(data);
+    setPrescreptionData((prevData) => ({
+      ...prevData,
+      Drugs: [data],
+    }));
   };
 
   const handleDataFromTests = (data: testsData) => {
@@ -46,10 +99,12 @@ const ExaminationScreen = () => {
   };
   const handleDoneClick = () => {
     // Process data or send it wherever needed
-    console.log("Diagnosis Data:", dataFromDiagnosis);
-    console.log("Prescription Data:", dataFromPrescreption);
-    console.log("Tests Data:", dataFromTests);
-    console.log("Services Data:", dataFromServices);
+    // console.log("Diagnosis Data:", dataFromDiagnosis);
+    // console.log("Prescription Data:", dataFromPrescreption);
+    // console.log("Tests Data:", dataFromTests);
+    // console.log("Services Data:", dataFromServices);
+    dispatch(AddRecord(recordData));
+    dispatch(AddPrescreptions(prescreptionData));
   };
 
   const [isPrescriptionModalOpen, setPrescriptionModalOpen] = useState(false);

@@ -8,12 +8,10 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import "./grid.css";
-import PopUp from "../PopUp/Popup";
 import {
   GridRowsProp,
   GridRowModesModel,
@@ -26,23 +24,21 @@ import {
   GridRowModel,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
-import { randomId } from "@mui/x-data-grid-generator";
-import { styled } from "@mui/material/styles";
 
 let id: number = 0;
 const initialRows: GridRowsProp = [
   {
-    Slot: dayjs("2023-12-28T15:30"),
+    Slot: new Date(2023, 11, 10, 10, 30, 0, 0),
     Name: "abram Gad",
     id: id++,
   },
   {
-    Slot: dayjs("2023-12-17T1:30"),
+    Slot: new Date(2023, 12, 10, 10, 30, 0, 0),
     Name: "Nira Yosef",
     id: id++,
   },
   {
-    Slot: dayjs("2023-12-10T20:30"),
+    Slot: new Date(2023, 12, 10, 10, 30, 0, 0),
     Name: "Mayar fayze",
     id: id++,
   },
@@ -54,17 +50,20 @@ interface EditToolbarProps {
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel
   ) => void;
   setApointmentDateGlobal: (newValue: Dayjs) => void;
+  setAllRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
 }
 
 function EditToolbar(props: EditToolbarProps) {
-  const { setRows, setRowModesModel } = props;
+  const { setRows, setRowModesModel, setAllRows } = props;
+
   const [ApointmentDate, setApointmentDate] = React.useState<Dayjs | null>(
     null
   );
 
   const handleClick = () => {
     id = id + 1;
-    setRows((oldRows) => [...oldRows, { id, Slot: "", age: "", isNew: true }]);
+    setAllRows((oldRows) => [...oldRows, { id, isNew: true }]);
+    setRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: "Slot" },
@@ -100,21 +99,21 @@ function EditToolbar(props: EditToolbarProps) {
 
 export default function ScheduleViwer() {
   const [ApointmentDate, setApointmentDate] = React.useState<Dayjs>(dayjs());
-  const handelApointmentDateGlobal = (newValue: Dayjs) => {
-    setApointmentDate(newValue);
-    setRows(filterRowsByDay(initialRows, newValue));
-  };
-
-  const filterRowsByDay = (rows: GridRowsProp, targetDay: dayjs.Dayjs) => {
-    return rows.filter((row) => {
-      // Compare the day of the Slot with the targetDay
-      return dayjs(row.Slot).isSame(targetDay, "day");
-    });
-  };
+  const [allrows, setAllRows] = useState(initialRows);
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
+  const handelApointmentDateGlobal = (newValue: Dayjs) => {
+    setApointmentDate(newValue);
+    setRows(filterRowsByDay(allrows, newValue));
+  };
+
+  const filterRowsByDay = (rows: GridRowsProp, targetDay: dayjs.Dayjs) => {
+    return rows.filter((row) => {
+      return dayjs(row.Slot).isSame(targetDay, "day");
+    });
+  };
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
     params,
@@ -135,6 +134,7 @@ export default function ScheduleViwer() {
 
   const handleDeleteClick = (id: GridRowId) => () => {
     setRows(rows.filter((row) => row.id !== id));
+    setAllRows(allrows.filter((row) => row.id !== id));
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -152,6 +152,7 @@ export default function ScheduleViwer() {
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    setAllRows(allrows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
 
@@ -163,17 +164,11 @@ export default function ScheduleViwer() {
     {
       field: "Slot",
       width: 180,
-      editable: false,
+      editable: true,
       cellClassName: "Slot",
-      renderCell: (params) => {
-        return (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker
-              className="timePick"
-              defaultValue={initialRows[params.id as number]?.Slot}
-            ></TimePicker>
-          </LocalizationProvider>
-        );
+      type: "dateTime",
+      valueFormatter: ({ value }) => {
+        return dayjs(value as Date).format("HH:mm");
       },
     },
 
@@ -264,6 +259,7 @@ export default function ScheduleViwer() {
               setRows,
               setRowModesModel,
               setApointmentDateGlobal: handelApointmentDateGlobal,
+              setAllRows: setAllRows,
             },
           }}
         />

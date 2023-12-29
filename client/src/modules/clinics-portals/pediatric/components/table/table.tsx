@@ -85,10 +85,10 @@ const DevicesTable = () => {
                       {item.Device[0].DeviceManufacturer}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {item.Device[0].PurchaseDate}
+                      {item.Device[0].PurchaseDate.slice(0, 10)}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {item.Device[0].ExpiryDate}
+                      {item.Device[0].ExpiryDate.slice(0, 10)}
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       {item.Device[0].DeviceStatus}

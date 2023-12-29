@@ -11,7 +11,7 @@ import { fetchPatientData, PatientsState } from "../../../slices/patient-slice";
 import "./patientData.css";
 import Button from "@mui/material/Button";
 
-const HistoryInfo = (props: any) => {
+const HistoryInfo = () => {
   const dispatch = useAppDispatch();
   const patientState: PatientsState = useSelector(
     (state: any) => state.patients
