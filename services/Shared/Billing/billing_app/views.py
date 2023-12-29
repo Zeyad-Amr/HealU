@@ -209,6 +209,16 @@ def get_all_patient_invoices(requests,patient_id):
      filtered_invoices = Invoice.objects.filter(patientId=patient_id)
      serializer = invoice_serializer(filtered_invoices,many=True) 
      return JsonResponse(serializer.data,safe=False)
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_all_invoices(requests):
+     invoices = Invoice.objects.all()
+     serializer = invoice_serializer(invoices,many=True) 
+     return JsonResponse(serializer.data,safe=False)
+    
+
     
           
 
@@ -259,6 +269,15 @@ def get_all_patient_bills(request, patient_id):
     bills = Bill.objects.filter(invoiceId__patientId = patient_id)
     bills = BillSerializer(bills, many=True).data
     return JsonResponse(bills, status=200, safe=False)
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_all_bills(requests):
+     bills = Bill.objects.all()
+     serializer = BillSerializer(bills,many=True) 
+     return JsonResponse(serializer.data,safe=False)
+    
 
 
 
