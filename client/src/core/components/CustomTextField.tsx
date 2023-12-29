@@ -28,6 +28,7 @@ const CustomTextField = ({
   enable,
   nonEditable,
   isRequired = false,
+  props,
   sx,
   width,
 }: CustomTextFieldProps) => {
@@ -42,6 +43,8 @@ const CustomTextField = ({
         </Typography>
 
         <TextField
+          type={props?.type ? props.type : "text"}
+
           disabled={nonEditable || !enable}
           required={isRequired}
           onChange={onChange}
