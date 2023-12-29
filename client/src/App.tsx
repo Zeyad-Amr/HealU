@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import SlotsTable from "./modules/clinics-portals/dental/components/doctor-slots/SlotsTable";
+import CreateSlotForm from "./modules/clinics-portals/dental/components/doctor-slots/CreateSlotForm";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import CustomizedSnackbar from "./modules/clinics-portals/dental/components/doctor-slots/CustomizedSnackbar";
+import { useSelector } from "react-redux";
+import { RootState } from "./modules/clinics-portals/dental/state/store";
+
+let doctorId: number = 13,
+  clinicId: number = 5;
 
 function App() {
+  const SnackbarState = useSelector((state: RootState) => state.snackbar);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Doctor Slots</h1>
+      <SlotsTable doctorId={doctorId} clinicId={clinicId} />
+      <br></br>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CreateSlotForm doctorId={doctorId} clinicId={clinicId} />
+      </LocalizationProvider>
+      <CustomizedSnackbar
+        message={SnackbarState.snackbar.message}
+        messageType={SnackbarState.snackbar.type}
+        open={SnackbarState.snackbarOpen}
+      />
+    </>
   );
 }
 
