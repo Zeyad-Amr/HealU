@@ -6,13 +6,12 @@ import MenuItem from "@mui/material/MenuItem";
 import classes from "../button/button.module.css";
 import ButtonComponent from "../button/button";
 import { useDispatch } from "react-redux";
-import Slot from "../../slices/addSlotsSlice";
+import Slot, { addSlotActions } from "../../slices/addSlotsSlice";
 import { getSlots } from "../../slices/addSlotsSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 import { Dispatch } from "react";
 import { addSlot } from "../../slices/addSlotsSlice";
-
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
@@ -51,7 +50,7 @@ const weekdays: string[] = [
 
 const AddSlotForm = ({
   isFormVisible,
-  toggleFormVisibility,
+  // toggleFormVisibility,
   onAddSlot,
   classStyle,
   formTitle,
@@ -66,7 +65,7 @@ const AddSlotForm = ({
   div4Style,
 }: {
   isFormVisible: boolean;
-  toggleFormVisibility: Dispatch<SetStateAction<boolean>>;
+  // toggleFormVisibility: Dispatch<SetStateAction<boolean>>;
   classStyle?: string;
   formTitle: string;
   label1: string;
@@ -89,7 +88,7 @@ const AddSlotForm = ({
   const selectedDate = useSelector(
     (state: RootState) => state.slots.selectedDate
   );
-
+  const isVisible = useSelector((state: RootState) => state.slots.isVisible);
   const add = (date: string) => {
     let generatedId = slots.length + 1;
     const existingSlot = slots.find(
@@ -97,7 +96,7 @@ const AddSlotForm = ({
     );
     const isIdExists = slots.some((slot) => slot.id === slots.length + 1);
     if (isIdExists) {
-      generatedId = generatedId + 3;
+      generatedId = generatedId + 1;
     }
     if (existingSlot) {
       setError((prevError) => ({
@@ -107,10 +106,6 @@ const AddSlotForm = ({
       return;
     }
     const data: Slot = {
-      patient: {
-        patientName: "Rawda",
-        patientId: 1,
-      },
       id: generatedId,
       date,
       time,
@@ -196,11 +191,11 @@ const AddSlotForm = ({
     onAddSlot && add(data.date);
     console.log(error);
     if (error.date === "" && error.time === "" && error.period === "") {
-      toggleFormVisibility(false);
+      dispatch(addSlotActions.setFormVisibility(false));
     }
   };
 
-  return isFormVisible ? (
+  return isVisible ? (
     <form className={styles[formStyle as string]} onSubmit={handleSubmit}>
       <h2 className={styles.textElement}>{formTitle}</h2>
       <Box>
@@ -304,12 +299,17 @@ const AddSlotForm = ({
                 marginTop: "-80px",
                 marginLeft: "60px",
                 left: "calc(351.4px)",
+                fontSize: "40px",
               }}
               value={period || ""}
               helperText={error.period}
             >
               {[" ", "AM", "PM"].map((period) => (
-                <MenuItem key={period} value={period}>
+                <MenuItem
+                  key={period}
+                  value={period}
+                  className={styles.menuItem}
+                >
                   {period}
                 </MenuItem>
               ))}

@@ -1,20 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export  default interface Patient {
+export default interface Patient {
   patientId: number;
   patientName: string;
 }
 
-export const getPatients = createAsyncThunk("patient/getPatients", async (_, thunkAPI) => {
-  const { rejectWithValue } = thunkAPI;
-  await axios
-    .get<Patient[]>("http://localhost:3005/patients")
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => rejectWithValue(error.message));
-});
+export const getPatients = createAsyncThunk(
+  "patient/getPatients",
+  async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    await axios
+      .get<Patient[]>("http://localhost:3005/patients")
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => rejectWithValue(error.message));
+  }
+);
 
 const initialStatePatients: Patient[] = [
   {

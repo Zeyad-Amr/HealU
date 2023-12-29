@@ -9,16 +9,19 @@ export default interface Slot {
   date: string;
   time: string | null;
 }
+
 interface SlotsState {
   slots: Slot[];
   selectedDate: string | null;
-  slotsLength: number; // Add selectedDate field
+  slotsLength: number;
+  isVisible: boolean;
 }
 
 const initialStateSlots: SlotsState = {
   slots: [],
   selectedDate: null,
   slotsLength: 0,
+  isVisible: false,
 };
 
 export const addSlot = createAsyncThunk(
@@ -97,6 +100,9 @@ const addSlotSlice = createSlice({
     setSelectedDate: (state, action: PayloadAction<string | null>) => {
       state.selectedDate = action.payload;
     },
+    setFormVisibility: (state, action: PayloadAction<boolean>) => {
+      state.isVisible = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(addSlot.pending, (state, action) => {

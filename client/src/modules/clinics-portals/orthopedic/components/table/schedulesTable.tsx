@@ -13,7 +13,6 @@ import Slot, {
 } from "../../slices/addSlotsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
-import Schedule from "../../slices/scheduleSlice";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -32,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TableComponent = ({ schedules }: { schedules: Schedule[] | Slot[] }) => {
+const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
   const classesX = useStyles();
   const slots = useSelector((state: RootState) => state.slots.slots);
   const dispatch = useDispatch();
@@ -62,60 +61,36 @@ const TableComponent = ({ schedules }: { schedules: Schedule[] | Slot[] }) => {
                   key={`${rowIndex}-column1`}
                   className={styles.column1}
                 >
-                  {isSlot(row) ? row.time : row.patient.patientName}
+                  {row.time}
                 </TableCell>
                 <TableCell
                   key={`${rowIndex}-column2`}
                   className={styles.column2}
                 >
-                  {isSlot(row) && (
-                    <>
-                      <div>{row.patient?.patientName}</div>
-                    </>
-                  )}
-                  {isSchedule(row) && (
-                    <>
-                      <div>{row.doctorName}</div>
-                    </>
-                  )}
+                  <div>{row.patient?.patientName}</div>
                 </TableCell>
                 <TableCell
                   key={`${rowIndex}-column3`}
                   className={styles.column3}
                 >
-                  {isSlot(row) && (
-                    <>
-                      <div
-                        onClick={() => handleClearAppoinment(row.id, row.date)}
-                      >
-                        <ClearIcon className={styles.addIcon} />
-                      </div>
-                    </>
-                  )}
-                  {isSchedule(row) && (
-                    <>
-                      <div>{row.date}</div>
-                    </>
-                  )}
+                  <div onClick={() => handleClearAppoinment(row.id, row.date)}>
+                    <ClearIcon className={styles.addIcon} />
+                  </div>
+                  {/* <div>{row.date}</div> */}
                 </TableCell>
                 <TableCell
                   key={`${rowIndex}-column4`}
                   className={styles.column4}
                 >
-                  {isSlot(row) && (
-                    <>
-                      <div
-                        onClick={() => {
-                          if (row.time !== null) {
-                            handleDelete(row.id, row.date);
-                          }
-                        }}
-                      >
-                        <DeleteIcon className={styles.addIcon} />
-                      </div>
-                    </>
-                  )}
-                  {isSchedule(row) && <></>}
+                  <div
+                    onClick={() => {
+                      if (row.time !== null) {
+                        handleDelete(row.id, row.date);
+                      }
+                    }}
+                  >
+                    <DeleteIcon className={styles.addIcon} />
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -126,8 +101,8 @@ const TableComponent = ({ schedules }: { schedules: Schedule[] | Slot[] }) => {
   );
 };
 
-const isSlot = (obj: any): obj is Slot => "time" in obj && "date" in obj;
-const isSchedule = (obj: any): obj is Schedule =>
-  "scheduleId" in obj && "doctorName" in obj;
+// const isSlot = (obj: any): obj is Slot => "time" in obj && "date" in obj;
+// const isSchedule = (obj: any): obj is Schedule =>
+//   "scheduleId" in obj && "doctorName" in obj;
 
 export default TableComponent;

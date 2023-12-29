@@ -8,16 +8,22 @@ import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { getSlots } from "../../slices/addSlotsSlice";
 import { addSlotActions } from "../../slices/addSlotsSlice";
+import { RootState } from "../../slices/combineReducers";
+import { useSelector } from "react-redux";
 
-interface DateComponentProps {
-  toggleFormVisibility: () => void;
-}
+// interface DateComponentProps {
+//   isFormVisible: boolean;
+// }
 
-const DateComponent: React.FC<DateComponentProps> = ({
-  toggleFormVisibility,
-}) => {
+const DateComponent = () => {
   const [selectedDay, setSelectedDay] = React.useState<string | null>(null);
+  const isVisible = useSelector((state: RootState) => state.slots.isVisible);
   const dispatch = useDispatch();
+  const toggleFormVisibility = () => {
+    if (isVisible) {
+      dispatch(addSlotActions.setFormVisibility(!isVisible));
+    }
+  };
   const onchange = (date: string | null) => {
     if (date) {
       const dayName = dayjs(date).format("dddd").toString();
@@ -27,7 +33,12 @@ const DateComponent: React.FC<DateComponentProps> = ({
     }
   };
   return (
-    <div className={classes.datePickerWrapper}>
+    <div
+      className={classes.datePickerWrapper}
+      onClick={() => {
+        toggleFormVisibility();
+      }}
+    >
       {selectedDay && (
         <label className={styles.labelElement}>{selectedDay}</label>
       )}
