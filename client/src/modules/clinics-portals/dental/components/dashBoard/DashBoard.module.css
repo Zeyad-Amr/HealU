@@ -1,7 +1,7 @@
 /* DashBoard.module.css */
 
 .dashboardContainer {
-  height: 84vh;
+  height: 85vh;
   display: flex;
   flex-direction: column;
 }

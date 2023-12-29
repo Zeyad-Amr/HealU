@@ -9,6 +9,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import NavBar from "./modules/clinics-portals/dental/components/navBar/NavBar";
 import DashBoard from "./modules/clinics-portals/dental/components/dashBoard/DashBoard";
+import PersonCard from "./modules/clinics-portals/dental/components/examination/patientCard/PersonCard";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -19,7 +20,8 @@ let doctorId: number = 13,
 root.render(
     <React.StrictMode>
         <NavBar/>
-        <DashBoard/>
+        <PersonCard/>
+        {/* <DashBoard/> */}
         {/* <Provider store={store}>
             <h1>Doctor Slots</h1>
             <SlotsTable doctorId={doctorId} clinicId={clinicId} />

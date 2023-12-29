@@ -1,0 +1,25 @@
+.box_container{
+    background: linear-gradient(131.75deg, #01B6B6 2.18%, #13D2DE 100%);   
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.titleText{
+    font-family: Roboto ;
+    font-size: xx-large;
+    font-weight: 600;
+    color: white;
+}
+.labelText{
+    font-family: Roboto ;
+    font-size: large;
+    font-weight: 500;
+    color: white;
+}
+
+.parameterText{
+    font-family: Roboto;
+    font-size: x-large;
+    font-weight: 700;
+    color: rgba(1, 92, 92, 1);
+}
