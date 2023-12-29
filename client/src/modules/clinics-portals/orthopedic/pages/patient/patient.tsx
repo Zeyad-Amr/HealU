@@ -16,28 +16,36 @@ const Patient = () => {
     <div>
       <div style={{ display: "flex" }}>
         <BlockContainer
-          headerContent={"Block1"}
-          content={"Paragraph1"}
+          headerContent={"Personal Data"}
+          content={""}
           classStyle="block"
         />
         <BlockContainer
-          headerContent={"Block2"}
-          content={"Paragraph2"}
+          headerContent={"History"}
+          content={""}
           classStyle="block2"
         />
       </div>
-      <BlockContainer
-        headerContent={"Block3"}
-        content={"Paragraph3"}
-        classStyle="block3"
-      />
-      <ButtonComponent
+      <BlockContainer 
+        headerContent={"Diagnoses"}
+        content={""}
+        classStyle="block3"/>
+       <ButtonComponent
         classStyle="buttonPrescription"
         text="Prescription"
-        onClick={() => handleButtonClick()}
+        onClick={() => handleButtonClick()}/>
+      <ButtonComponent classStyle="buttonPrescription" text="Tests"   
+       onClick={() => handleButtonClick()} 
+       />
+      <ButtonComponent classStyle="buttonPrescription" text="Services" 
+      onClick={() => handleButtonClick()}
       />
-      <ButtonComponent classStyle="buttonPrescription" text="Tests" />
-      <ButtonComponent classStyle="buttonPrescription" text="Services" />
+      <div>
+      <ButtonComponent
+        classStyle="buttonDone"
+        text="Done"
+      />
+      </div>
       <AddSlotForm
         isFormVisible={isVisible}
         //toggleFormVisibility={toggleFormVisibility}
@@ -52,6 +60,7 @@ const Patient = () => {
         inputType="text"
         isIncluded={true}
       />
+    
     </div>
   );
 };
