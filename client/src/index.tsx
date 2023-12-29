@@ -7,7 +7,8 @@ import SlotsTable from "./modules/clinics-portals/dental/components/doctor-slots
 import CreateSlotForm from "./modules/clinics-portals/dental/components/doctor-slots/CreateSlotForm";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { Divider } from "@mui/material";
+import NavBar from "./modules/clinics-portals/dental/components/navBar/NavBar";
+import DashBoard from "./modules/clinics-portals/dental/components/dashBoard/DashBoard";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -17,13 +18,15 @@ let doctorId: number = 13,
 
 root.render(
     <React.StrictMode>
-        <Provider store={store}>
+        <NavBar/>
+        <DashBoard/>
+        {/* <Provider store={store}>
             <h1>Doctor Slots</h1>
             <SlotsTable doctorId={doctorId} clinicId={clinicId} />
             <br></br>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <CreateSlotForm doctorId={doctorId} clinicId={clinicId} />
             </LocalizationProvider>
-        </Provider>
+        </Provider> */}
     </React.StrictMode>
 );
