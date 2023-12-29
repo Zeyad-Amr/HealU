@@ -1,33 +1,52 @@
 const Appointment = require("../models/Appointment");
 const Slot = require("../models/Slot");
 
+const status = {
+    Booked: 0,
+    InProgress: 1,
+    Completed: 2,
+};
+
+const weekDays = {
+    0: "Sunday",
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
+};
+
 const createAppointment = async (req, res, next) => {
     try {
         const slotId = req.body.slotId;
         const patientId = req.body.patientId;
         const date = req.body.date;
 
-        //Check for existing appointments for the same date and slot
-        const existingAppointment = await Appointment.findOne({ slotId, date });
-        if (existingAppointment) {
+        const weekDay = weekDays[new Date(date).getDay()];
+
+        // Validate that slotId exists
+        try {
+            if (!(await Slot.findOne({ _id: slotId, weekDay: weekDay }))) {
+                return res.status(400).json({
+                    message:
+                        "There is no slot found either in this Day or with this SlotID",
+                });
+            }
+        } catch (error) {
+            res.status(500).json({
+                message: "There is no slot found with this SlotID",
+            }) && next(error);
+        }
+
+        // Check for existing appointments for the same date and slot
+        if (await Appointment.findOne({ slotId, date })) {
             return res.status(400).json({
                 message: "Appointment already booked for that slot and date",
             });
         }
 
-        // Validate that slotId exists
-        try {
-            const slot = await Slot.findOne({ _id: slotId });
-        } catch (error) {
-            res
-                .status(500)
-                .json({ message: "There is no slot found with this slotId" }) &&
-                next(error);
-        }
-
         const appointment = await Slot.findOne({ _id: slotId }).then((slot) => {
-            console.log(slot);
-
             const appointmentCreated = Appointment.create({
                 slotId: slotId,
                 patientId: patientId,
@@ -35,7 +54,7 @@ const createAppointment = async (req, res, next) => {
                 clinicId: slot.clinicId,
                 date: date,
                 time: slot.time,
-                status: "Booked",
+                status: status.Booked,
             });
 
             return appointmentCreated;
@@ -136,11 +155,12 @@ const updateAppointment = async (req, res, next) => {
     try {
         const { appointmentId } = req.params;
         const appointment = await Appointment.findOneAndUpdate(
-            { appointmentId: appointmentId },
+            { _id: appointmentId },
             req.body
         );
 
-        if (appointment) res.status(200).json({ message: "Success" });
+        if (appointment)
+            res.status(200).json({ message: "Success", appointment });
         else
             res.status(404).json({
                 message: `No Appointment found for the given appointmentId`,

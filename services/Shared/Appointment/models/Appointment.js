@@ -18,7 +18,7 @@ const appointmentSchema = mongoose.Schema({
         required: [true, "Please enter clinic id"],
     },
     status: {
-        type: String,
+        type: Number,
         required: [true, "Please enter the appointment's status"],
     },
     date: {
