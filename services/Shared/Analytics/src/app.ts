@@ -1,9 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import cors from "cors";
-import authRouter from "./routes/authRouter";
-
+import { get_analytics } from "./controllers/analyticsController";
 
 dotenv.config()
 
@@ -14,17 +12,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api', authRouter)
-
-main().catch((err) => console.log(err));
-
-async function main() {
-    await mongoose.connect(
-        (process.env.DB_URI as string)
-    );
-    console.log("***Connected to database***");
-}
-
+app.use('/api', get_analytics)
 
 const PORT = 4000;
 
