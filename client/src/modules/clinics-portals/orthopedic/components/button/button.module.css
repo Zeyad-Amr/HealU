@@ -36,13 +36,13 @@
 }
 
 .buttonPrescription {
-  width: 568.37px;
-  height: 100px;
-  top: 500px;
-  left: 400px;
+  width: 368.37px;
+  height: 70px;
+  top: 10px;
+  left: 10px;
   border-radius: 15px;
-  position: absolute;
-  background-color: #8b8b8b;
+  margin: 30px;
+  background: #C3C3C3;
   font-family: Roboto;
   font-size: 32px;
   font-weight: 600;

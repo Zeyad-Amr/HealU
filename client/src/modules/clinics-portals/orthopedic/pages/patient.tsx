@@ -1,4 +1,6 @@
 import { useState } from "react";
+import BlockComponent3 from "../components/block3";
+import BlockContainer from "../components/BlockContainer";
 import ButtonComponent from "../components/button/button";
 import AddSlotForm from "../components/form/addSlotForm";
 import useFormVisibility from "../components/form/formVisibility";
@@ -9,11 +11,24 @@ const Patient = () => {
     toggleFormVisibility();
   };
   return (
+
+    <div>
+      <BlockContainer />
+      <BlockComponent3/>
+    
     <div>
       <ButtonComponent
         classStyle="buttonPrescription"
-        text="Prescription Form"
+        text="Prescription"
         onClick={() => handleButtonClick()}
+      />
+      <ButtonComponent
+        classStyle="buttonPrescription"
+        text="Tests"
+      />
+      <ButtonComponent
+        classStyle="buttonPrescription"
+        text="Services"
       />
       <AddSlotForm
         isFormVisible={isFormVisible}
@@ -29,6 +44,7 @@ const Patient = () => {
         inputType="text"
         isIncluded={true}
       />
+    </div>
     </div>
   );
 };
