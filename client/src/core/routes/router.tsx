@@ -12,6 +12,7 @@ import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
 import Login from "../../modules/login/pages";
 import Signup from "../../modules/patient-portal/components/signup/SignUp";
+import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -40,8 +41,12 @@ class Router {
       element: <PediatricClinicPortal />,
     },
     {
-      path: AppRoutes.patientPortal,
+      path: AppRoutes.patientPortalProfile,
       element: <PatientPortal />,
+    },
+    {
+      path: AppRoutes.patientPortalAppointments,
+      element: <AppointmentsPage />,
     },
     {
       path: AppRoutes.adminPortal,
