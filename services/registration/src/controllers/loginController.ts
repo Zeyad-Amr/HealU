@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import hashing from '../Hash/hashing';
+import hashing from '../Scripts/hashing';
 const prisma = new PrismaClient();
 
 export const loginUser = async (req: Request, res: Response) => {

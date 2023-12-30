@@ -1,11 +1,11 @@
 import { Prisma } from '@prisma/client';
 import { error } from 'console';
 import { Request, Response } from 'express';
-// import { PrismaClient } from '@prisma/client';
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-import * as controller from './patientController';
-import hashing from '../Hash/hashing'
+import * as validate from '../Scripts/validation';
+import validation from '../Scripts/validation';
+import hashing from '../Scripts/hashing'
 
 //-------------------Get All staff -----------------------
 export const getAllstaff = async (req: Request, res: Response) => {
@@ -96,30 +96,16 @@ export const createStaff = async (req: Request, res: Response) => {
       !userData.phoneNumber||!userData.role||!userData.password||!userData.userName) {
       throw new Error('Missing required data');
     }
-    else if(controller.hasCapitalizedCharacter(userData.password)==false){
-      throw new Error(' password must has at least one capital letter');
-    }
     else{
-      // hashing the password 
-      userData.password = await hashing.hashPassword(userData.password)
+      await validation.validateUsertData(userData);
       const newUser = await prisma.user.create({
         data: userData,
       });
       res.status(201).json({ data: newUser });
     } 
   } catch (error:any) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      controller.checkUniqueValues(error,res);
-    }
-    else if (error instanceof Prisma.PrismaClientValidationError) {
-      res.status(422).json({ error: 'Validation error in database request' });
-    }
-    else if (error.message){
-      res.status(400).json({ error: error.message });
-    }
-    else{
-    res.status(500).json({ error: 'Internal Server Error' });
-    }
+    validate.handleErrors(error, res);
+
   } finally {
     await prisma.$disconnect();
   }
@@ -145,11 +131,8 @@ export const updateStaff = async (req: Request, res: Response) => {
       if (!userExists) {
         throw new Error('User not found');
       }else{
-        // Check if the request includes a password update
-        if (userData.password) {
-          // Hash the new password using your hashPassword function
-          userData.password = await hashing.hashPassword(userData.password);
-        }
+
+        await validation.validateUsertData(userData)
         const updatedUser = await prisma.user.update({
           where: {
             userId: parsedUserId,
@@ -163,19 +146,7 @@ export const updateStaff = async (req: Request, res: Response) => {
         res.status(200).json({ data: updatedUser });  
     }
   } catch (error:any) {
-    console.error(error);
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      controller.checkUniqueValues(error,res);
-    }
-    else if (error instanceof Prisma.PrismaClientValidationError) {               // Handle validation errors
-      res.status(422).json({ error: 'Validation error in database request' });
-    }
-    else if(error.message ){
-      res.status(400).json({ error: error.message });
-    }
-    else{
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+    validate.handleErrors(error, res);
   } finally {
     await prisma.$disconnect();
   }
