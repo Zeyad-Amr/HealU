@@ -7,7 +7,7 @@ const PageBody = (props: any) => {
     sx={{
       backgroundColor: "#fff",
       width: "95%",
-      height: "100%",
+      height: "96.4%",
       margin: "0 auto",
       borderTopRightRadius: "24px",
       borderTopLeftRadius: "24px",

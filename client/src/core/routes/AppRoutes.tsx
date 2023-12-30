@@ -8,7 +8,8 @@ class AppRoutes {
   static readonly adminPortal = "/admin";
   static readonly login = "/login";
   static readonly signup = "/signup";
-  static readonly patientPortal = "/patient";
+  static readonly patientPortalProfile = "/patient/profile";
+  static readonly patientPortalAppointments = "/patient/appointments";
 }
 
 export default AppRoutes;
