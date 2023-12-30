@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 
 const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
   const classesX = useStyles();
-  const slots = useSelector((state: RootState) => state.slots.slots);
+  // const slots = useSelector((state: RootState) => state.slots.slots);
   const dispatch = useDispatch();
   const handleDelete = async (dateId: number, date: string) => {
     await dispatch(deleteSlot(dateId) as any);
@@ -43,6 +43,7 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
     await dispatch(updateSlot(dateId) as any);
     dispatch(getSlots(date) as any);
   };
+  
 
   return (
     <Paper

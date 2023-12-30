@@ -4,7 +4,8 @@
   height: 82px;
   top: 169px;
   /*margin-left: 850px;*/
-  
+  justify-content: center;
+  display: flex;
   border-radius: 15px;
   margin-bottom: 20px;
 }
