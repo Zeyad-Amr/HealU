@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import cors from "cors";
 import authRouter from "./routes/authRouter";
-import clinicRouter from "./routes/dataRouter";
+import dataRouter from "./routes/dataRouter";
 import { proxies } from "./config";
 import { createProxyMiddleware, fixRequestBody } from "http-proxy-middleware";
 import { alwaysAllow, protect } from "./services";
@@ -24,7 +24,7 @@ Object.keys(proxies).forEach((path) => {
 
 
 app.use('/api', express.json(), authRouter)
-app.use('/api', clinicRouter)
+app.use('/api', express.json(), dataRouter)
 
 const PORT = process.env.PORT ?? 4000;
 
