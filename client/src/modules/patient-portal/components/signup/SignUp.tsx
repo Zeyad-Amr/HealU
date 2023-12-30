@@ -19,6 +19,8 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateField } from "@mui/x-date-pickers/DateField";
+import CustomHeader from "../../../../core/components/CustomHeader";
+import HeaderComponent from "../header";
 const Signup = () => {
   const initialValues = {
     userName: "",
@@ -72,33 +74,47 @@ const Signup = () => {
       sx={{
         width: "100vw",
         height: "100vh",
-        overflow: "hidden" ,
-        backgroundColor:"#111"
+        overflow: "hidden",
       }}
     >
-                <Box
-          sx={{
-            overflow: "hidden",
-            width: "100vw",
-            height: "100vh",
-            background:
-              " linear-gradient(285deg, #01B6B6 10.66%, #13D2DE 102.7%)",
-            borderTopLeftRadius: "100rem",
-            borderTopRightRadius: "100rem",
-            transform: "translateY(0%)",
-          }}
-        ></Box>
       <Box
         sx={{
-          height: "95vh",
-          width: "90vw",
+          overflow: "hidden",
+          width: "100vw",
+          height: "100vh",
+          background:
+            " linear-gradient(285deg, #01B6B6 10.66%, #13D2DE 102.7%)",
+          borderTopLeftRadius: "100rem",
+          borderTopRightRadius: "100rem",
           position: "absolute",
           left: "50%",
           top: "50%",
           transform: "translate(-50%, -50%)",
+          zIndex: "-1",
+        }}
+      ></Box>
+      <Box
+        sx={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "#1f1f1f",
+          zIndex: "-2",
+        }}
+      ></Box>
+      <HeaderComponent />
+      <Box
+        sx={{
+          height: "87vh",
+          width: "95vw",
+          margin:"0 auto",
+
           backgroundColor: "white",
           borderRadius: "15px",
-          padding: "3rem",
+          padding: "2rem 3rem",
           overflowY: "auto",
         }}
       >
@@ -106,21 +122,20 @@ const Signup = () => {
           sx={{
             display: "flex",
             width: "100%",
-            padding: "0 3rem",
-            marginBottom: "1rem",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "space-between",
           }}
         >
+          <CustomHeader title="Sign Up" />
           <Typography
             sx={{
-              fontSize: "2rem",
-              fontWeight: "600",
               width: "100%",
-              textAlign: "center",
+              textAlign: "right",
+              cursor: "pointer",
+              color: "secondary.main",
             }}
           >
-            Sign Up
+            Already has an account?
           </Typography>
         </Box>
         <Formik

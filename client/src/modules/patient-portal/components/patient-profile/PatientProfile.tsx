@@ -6,6 +6,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import CustomTextField from "../../../../core/components/CustomTextField";
 import PatientDataHeader from "./PatientDataHeader";
 import PrimaaryBtn from "../../../../core/components/PrimaaryBtn";
+import CustomHeader from "../../../../core/components/CustomHeader";
 
 const PatientProfile = () => {
   const initialValues = {
@@ -56,15 +57,14 @@ const PatientProfile = () => {
         sx={{
           display: "flex",
           width: "100%",
-          padding: "0 3rem",
           marginBottom: "1rem",
           alignItems: "center",
           justifyContent: "space-between",
         }}
       >
-        <Typography sx={{ fontSize: "2rem", fontWeight: "600" }}>
-          My Data
-        </Typography>
+
+        <CustomHeader title="My Data" />
+
         {isUpdating ? (
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <PrimaaryBtn title="done" Func={handleSubmit} />
