@@ -72,11 +72,7 @@ export const getDoctorsByClinicID  = async (req: Request, res: Response) => {
           role: "Doctor",
         },
       });
-      if ( (userMember.length === 0)) {
-        throw new Error('No Clinic with this ID.');
-      } else {
         res.status(200).json({ data: userMember });
-      }
     } catch (error: any) {
       console.error(error);
       res.status(400).json({ error: error.message });
