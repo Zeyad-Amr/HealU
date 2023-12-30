@@ -24,23 +24,24 @@ import {
   GridRowModel,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
+import ExaminationScreen from "../Examination/container";
 
-let id: number = 0;
+let id: string = "";
 const initialRows: GridRowsProp = [
   {
     Slot: new Date(2023, 11, 10, 10, 30, 0, 0),
     Name: "abram Gad",
-    id: id++,
+    id: "658f2f080ac4f2704ae1a238",
   },
   {
     Slot: new Date(2023, 12, 10, 10, 30, 0, 0),
     Name: "Nira Yosef",
-    id: id++,
+    id: "120",
   },
   {
     Slot: new Date(2023, 12, 10, 10, 30, 0, 0),
     Name: "Mayar fayze",
-    id: id++,
+    id: "150",
   },
 ];
 
@@ -61,7 +62,7 @@ function EditToolbar(props: EditToolbarProps) {
   );
 
   const handleClick = () => {
-    id = id + 1;
+    id = Math.random().toString(36).substr(2, 9);
     setAllRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRowModesModel((oldModel) => ({
@@ -97,7 +98,7 @@ function EditToolbar(props: EditToolbarProps) {
   );
 }
 
-export default function ScheduleViwer() {
+export default function ScheduleViwer(props: any) {
   const [ApointmentDate, setApointmentDate] = React.useState<Dayjs>(dayjs());
   const [allrows, setAllRows] = useState(initialRows);
   const [rows, setRows] = React.useState(initialRows);
@@ -249,6 +250,12 @@ export default function ScheduleViwer() {
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
+          onCellDoubleClick={(params, event) => {
+            if (params.field === "Name") {
+              props.setValueOfScreen(2);
+              props.setValueOfappointmentID(params.id);
+            }
+          }}
           hideFooter
           disableColumnFilter
           slots={{

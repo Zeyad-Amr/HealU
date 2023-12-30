@@ -16,10 +16,10 @@ import Icon from "@mui/material/Icon";
 import { useAppDispatch } from "../../../../../core/store";
 import { AddPrescreptions } from "../../slices/prescreption-slice";
 import { AddRecord, Record } from "../../slices/record-slice";
-const ExaminationScreen = () => {
+const ExaminationScreen = (props: any) => {
   const dispatch = useAppDispatch();
   const [prescreptionData, setPrescreptionData] = useState<prescreptionData>({
-    AppointmentID: "658f2f080ac4f2704ae1a238",
+    AppointmentID: props.appointmentID,
     DoctorName: "Dr. Abram Gad",
     Diagnosis: "",
     ExtraNotes: "",
@@ -105,6 +105,7 @@ const ExaminationScreen = () => {
     // console.log("Services Data:", dataFromServices);
     dispatch(AddRecord(recordData));
     dispatch(AddPrescreptions(prescreptionData));
+    // console.log(props.appointmentID);
   };
 
   const [isPrescriptionModalOpen, setPrescriptionModalOpen] = useState(false);
