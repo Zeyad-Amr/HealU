@@ -30,6 +30,8 @@ export const getDoctors = createAsyncThunk(
   }
 );
 
+// export const addDoctor = createAsyncThunk()
+
 const doctorSlice = createSlice({
   name: "doctors",
   initialState,

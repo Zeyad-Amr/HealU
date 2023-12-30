@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;400&display=swap');
+
 .addSlotForm_formContainer {
   width: 650px;
   height: 626px;
@@ -100,7 +102,7 @@
 }
 
 .textElement {
-  width: 231px;
+  width: 238px;
   height: 38px;
   top: 282px;
   left: 667px;

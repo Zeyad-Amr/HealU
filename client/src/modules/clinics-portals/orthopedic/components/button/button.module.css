@@ -10,11 +10,6 @@
 }
 
 .ButtonComponent {
-  width: 231px;
-  height: 38px;
-  font-family: Roboto;
-  margin-top: 10px;
-  margin-left: 50px;
   font-size: 32px;
   font-weight: 600;
   line-height: 38px;
@@ -33,6 +28,9 @@
   border-radius: 15px;
   background-color: black;
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
+  justify-content: center;
+  display: flex;
+  align-items: center; 
 }
 
 .buttonPrescription {
