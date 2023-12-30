@@ -12,6 +12,8 @@ import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
 import Login from "../../modules/login/pages";
 import Signup from "../../modules/patient-portal/components/signup/SignUp";
+import Analytics from "../../modules/admin-portal/pages/analytics";
+import path from "path";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -54,6 +56,10 @@ class Router {
     {
       path: AppRoutes.signup,
       element: <Signup />,
+    },
+    {
+      path: AppRoutes.Analytics,
+      element: <Analytics />,
     },
   ];
 
