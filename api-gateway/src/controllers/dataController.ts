@@ -37,33 +37,61 @@ export const get_previous_appointments = async (req: Request, res: Response) => 
     try {
         const { patientId } = req.params
 
-        const [appointmentsRes, medicalRecordRes, medicalHistoryRes, prescriptionsRes] = await Promise.all([
+        const [appointmentsRes, prescriptionsRes] = await Promise.all([
             axios.get(`${process.env.Appointment_URL}/appointments/patient/${patientId}`),
-            axios.get(`${process.env.EMR_URL}/record/patient/${patientId}`),
-            axios.get(`${process.env.EMR_URL}/medical-history/${patientId}`),
             axios.get(`${process.env.EMR_URL}/prescription/patient/${patientId}`),
         ])
 
+
         let appointments: any[] = appointmentsRes.data
         appointments = appointments.filter((item) => {
-            return item.status === 'Completed'
+            return item.status === 2
         })
 
         const appointmentIds = appointments.map((item) => { item._id })
-
+        const clinicIds = appointments.map((appointment: any) => (appointment.clinicId))
         const filterByAppointmentId = (item: any) => {
             appointmentIds.includes(item.AppointmentID)
         }
+        const prescriptions = prescriptionsRes.data.filter(filterByAppointmentId)
 
-        let medicalRecord = medicalRecordRes.data.filter(filterByAppointmentId)
-        let prescriptions = prescriptionsRes.data.filter(filterByAppointmentId)
-        let medicalHistory = medicalHistoryRes.data
+        let clinics = (await axios.get(`${process.env.Admin_URL}/api/v1/clinic`)).data.data.clinics
+        clinics = clinics.filter((clinic: any) => {
+            return clinicIds.includes(clinic.id)
+        })
 
+        const doctorIds = appointments.map((appointment: any) => (appointment.doctorId))
+        let doctors: any[] = [];
+
+
+
+        for await (const doctorId of new Set(doctorIds)) {
+            const doctor = (await axios.get(`${process.env.Registration_URL}/staff/${doctorId}`)).data.data
+            doctors.push(doctor)
+        }
+
+
+
+        appointments = appointments.map((appointment) => {
+            const doctor = doctors.find((doctor) => doctor.userId === appointment.doctorId)
+            const clinic = clinics.find((clinic: any) => clinic.id === appointment.clinicId)
+
+            return {
+                appointmentId: appointment._id,
+                doctor: {
+                    id: doctor.userId,
+                    name: doctor.firstName + " " + doctor.lastName
+                },
+                clinic: {
+                    id: clinic.id,
+                    name: clinic.name,
+                    description: clinic.description
+                },
+            }
+        })
 
         return res.status(200).json({
             appointments,
-            medicalHistory,
-            medicalRecord,
             prescriptions
         })
 
@@ -91,11 +119,11 @@ export const get_all_slots = async (req: Request, res: Response) => {
         // get all slots and Appointments from Appointment Service
         let getSlotsURL = `${process.env.Appointment_URL}/slots`
         let getAppointmentsURL = `${process.env.Appointment_URL}/appointments`
-        if (clinicId) {
+        if (parseInt(clinicId as string)) {
             getSlotsURL = `${process.env.Appointment_URL}/slots/clinic/${clinicId}/?unscheduled=false`
             getAppointmentsURL = `${process.env.Appointment_URL}/appointments/clinic/${clinicId}/?unscheduled=false`
         }
-        if (doctorId) {
+        if (parseInt(doctorId as string)) {
             getSlotsURL = `${process.env.Appointment_URL}/slots/doctor/${doctorId}/?unscheduled=false`
             getAppointmentsURL = `${process.env.Appointment_URL}/appointments/doctor/${doctorId}/?unscheduled=false`
         }
@@ -135,7 +163,9 @@ export const get_all_slots = async (req: Request, res: Response) => {
                 (appointment: any) => appointment.date == slot.date
             );
         });
+
         console.log(slotsWithDates);
+
 
 
         /* 
@@ -159,11 +189,12 @@ export const get_all_slots = async (req: Request, res: Response) => {
                 slotId: slot._id,
                 doctor: {
                     id: doctor.userId,
-                    name: doctor.firstName + doctor.lastName
+                    name: doctor.firstName + " " + doctor.lastName
                 },
                 clinic: {
                     id: clinic.id,
-                    name: clinic.name
+                    name: clinic.name,
+                    description: clinic.description
                 },
                 time: slot.time,
                 weekDay: slot.weekDay,
