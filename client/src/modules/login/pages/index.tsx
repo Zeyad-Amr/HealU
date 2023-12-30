@@ -115,7 +115,12 @@ const Login = () => {
               )}
             </Formik>
           </Box>
-          <PrimaaryBtn title="log in" Func={() => formSubmit.current.click()} />
+          <PrimaaryBtn
+            title="log in"
+            Func={() => formSubmit.current.click()}
+            sx={{ width: "70%", margin:"0 auto 1rem" }}
+          />
+          <Typography sx={{width:'100%', textAlign:'center',  cursor:'pointer'}}>Don't have an account?</Typography>
         </Box>
       </Box>
     </>
