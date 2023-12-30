@@ -34,6 +34,7 @@ const WeekDayPicker = ({
         value={selectedDay}
         label="Week Day"
         onChange={handleDayChange}
+        style={{ background: "rgba(244, 244, 244, 1)" }}
       >
         {weekdaysMap.map((day) => (
           <MenuItem value={day.value}>{day.label}</MenuItem>

@@ -1,0 +1,98 @@
+/* DashBoard.module.css */
+
+.dashboardContainer {
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.tableContainer {
+  flex: 1;
+  position: relative;
+}
+
+.createSlotButton {
+  display: flex;
+  justify-content: flex-end;
+  margin: 16px;
+  background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
+  border-radius: 15px;
+}
+.createSlotButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 16px;
+    align-items: center;
+  }
+
+.textStyle {
+  font-family: "Roboto";
+  font-weight: 400;
+}
+
+.dateSelection {
+  background: transparent;
+  padding: 0px;
+  border-radius: 8px;
+  color: rgba(139, 139, 139, 1);
+  font-size: 1.5rem;
+  margin: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.menu {
+  border: 1px solid rgba(139, 139, 139, 1);
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.tableCell {
+  border: none;
+}
+
+.timeCell {
+  flex-grow: 0;
+  width: 100px;
+}
+
+.timeTextStyle {
+  background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
+  padding: 8px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+}
+
+.patientName {
+  flex-grow: 1;
+  background: rgba(229, 229, 229, 1);
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.deleteIcon {
+  background-color: rgba(184, 2, 2, 1) !important;
+  border-radius: 15px !important;
+  color: white !important;
+  width: 50px;
+  font-family: "Roboto";
+  font-weight: 400;
+}
+
+.cancelButton {
+  background-color: rgba(85, 85, 85, 1) !important;
+  border-radius: 15px !important;
+  color: white !important;
+  width: 50px;
+  font-family: "Roboto";
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+.deleteIcon {
+  background-color: rgba(184, 2, 2, 1);
+}
