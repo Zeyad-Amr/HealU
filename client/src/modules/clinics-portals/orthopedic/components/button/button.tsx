@@ -12,6 +12,7 @@ interface ButtonProps {
   classStyle?: string;
   textStyle?: string;
   includeIcon?: boolean;
+  
 }
 
 const ButtonComponent: React.FC<ButtonProps> = ({
@@ -20,6 +21,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   classStyle,
   type,
   includeIcon = false,
+  
 }) => {
   return (
     <Button
