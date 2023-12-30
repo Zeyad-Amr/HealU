@@ -10,19 +10,21 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import NavBar from "./modules/clinics-portals/dental/components/navBar/NavBar";
 import DashBoard from "./modules/clinics-portals/dental/components/dashBoard/DashBoard";
 import PersonCard from "./modules/clinics-portals/dental/components/examination/patientCard/PersonCard";
+import Examination from "./modules/clinics-portals/dental/components/examination/Examination";
 
 const root = ReactDOM.createRoot(
-    document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 let doctorId: number = 13,
-    clinicId: number = 5;
+  clinicId: number = 5;
 
 root.render(
-    <React.StrictMode>
-        <NavBar/>
-        <PersonCard/>
-        {/* <DashBoard/> */}
-        {/* <Provider store={store}>
+  <React.StrictMode>
+    <NavBar />
+    <PersonCard />
+    <Examination />
+    {/* <DashBoard /> */}
+    {/* <Provider store={store}>
             <h1>Doctor Slots</h1>
             <SlotsTable doctorId={doctorId} clinicId={clinicId} />
             <br></br>
@@ -30,5 +32,5 @@ root.render(
                 <CreateSlotForm doctorId={doctorId} clinicId={clinicId} />
             </LocalizationProvider>
         </Provider> */}
-    </React.StrictMode>
+  </React.StrictMode>
 );

@@ -43,6 +43,7 @@ const DiagnosisForm = () => {
     <div className={styles.container}>
       <div className={styles.input}>
         <CustomTextArea
+          height={5}
           title="Report"
           placeholder="Enter Report"
           value={report}
@@ -50,6 +51,7 @@ const DiagnosisForm = () => {
       </div>
       <div className={styles.input}>
         <CustomTextArea
+          height={5}
           title="Recommendations"
           placeholder="Enter Recommendations.."
           value={recommendations}
