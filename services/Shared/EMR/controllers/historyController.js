@@ -4,7 +4,7 @@ require('dotenv').config();
 // ============================================================================================================
 function generateRecordQuery(joinConditions, whereConditions) {   // Function to generate the common SQL query for retrieving mwdical history
   select_query = `
-  SELECT medicalhistory.PatientID,
+  SELECT medicalhistory.PatientID, medicalhistory.CreatedAt, 
   illnesses.IllnessID, illnesses.IllnessDescription,
   operations.OperationID, operations.OperationName, operations.OperationDate,
   medicaltests.TestID, medicaltests.TestDescription,
@@ -40,7 +40,6 @@ function getMedicalhistory (req, res)  {         //Get All medical histories
 function getMedicalhistoryByPatientID(req, res) {     //Get medical history with id
   const patientID = req.params.patientId;
   const sql_query = generateRecordQuery('', `AND medicalhistory.PatientID = ${patientID}`);
-
   connection.query(sql_query, (err, result) => {
     if (err) throw err;
     if (result.length === 0) {
@@ -67,6 +66,7 @@ function processQueryResult(result) {          //Function to process the query r
     if (!patientsMap[PatientID]) {
       patientsMap[PatientID] = {
         PatientID,
+        CreatedAt: row.CreatedAt,
         Illnesses: [],
         Operations: [],
         MedicalTests: [],
@@ -113,7 +113,7 @@ async function createMedicalHistory(req, res) {
   try {
     // Check if PatientID exists
     const registerationUrl = process.env.REGISTERATION_API_URL;
-    const response = await axios.get(`${registerationUrl}/user/patient/${PatientID}`).catch(() => null);
+    const response = await axios.get(`${registerationUrl}/patient/${PatientID}`).catch(() => null);
 
     if (!response || !response.data) {
       console.log(`PatientID ${PatientID} is not found in Registeration List`);
@@ -208,7 +208,6 @@ async function createMedicalHistory(req, res) {
 //==============================================================================================================
 function insertDataIntoTable(tableName, columns, data,ID) {
   const sqlQuery = `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES (${columns.map(() => '?').join(', ')})`;
-
   return Promise.all(
     data.map((item) => {
       return new Promise((resolve, reject) => {
