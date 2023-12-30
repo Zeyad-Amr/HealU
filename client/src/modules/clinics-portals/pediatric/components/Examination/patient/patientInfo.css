@@ -1,0 +1,11 @@
+.label{
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    display: inline-block;
+}
+.data{
+    display: inline-block;
+    color: black;
+    font-size: 13px;
+}
