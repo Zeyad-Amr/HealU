@@ -983,10 +983,12 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                     ? mockWeeklyAnalytics
                     : timeframe == 'monthly'
                         ? mockMonthlyAnalytics
-                        : {
-                            status: 'failed',
-                            message: 'Invalid timeframe',
-                        };
+                        : timeframe == 'yearly'
+                            ? mockYearlyAnalytics
+                            : {
+                                status: 'failed',
+                                message: 'Invalid timeframe',
+                            };
 
         console.log(data);
         return res.status(200).json(data);
