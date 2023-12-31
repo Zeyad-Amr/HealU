@@ -1,7 +1,7 @@
 .datePickerWrapper {
     display: inline-block; /* Display the DatePicker wrapper inline */
     vertical-align: top; /* Align the top of the DatePicker with the top of the existing .parent element */
-    margin-right: 10px; /* Adjust the margin as needed to create space between the elements */
-    position: absolute;
-    left: 430px;
+    /*margin-right: 2px; /* Adjust the margin as needed to create space between the elements */
+    /*position: absolute;
+    /*left: 100px;*/
   }

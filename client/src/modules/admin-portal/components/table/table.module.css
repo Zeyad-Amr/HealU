@@ -1,5 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 .customTableContainer {
-  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +9,7 @@
 }
 
 .customTable {
-  width: 60%;
+  width: 80%;
   border-radius: 0 0 24px 24px;
   padding: 0 10px 10px;
   margin-top: 0;
@@ -17,55 +18,64 @@
 }
 
 .column1 {
-  width: 136px;
-  height: 60px;
-  top: 299px;
-  left: 139px;
+  width: 60px;
+  height: 80px;
   border-radius: 15px;
-  font-family: Roboto !important;
-  font-size: 32px !important;
-  font-weight: 400;
-  line-height: 38px;
-  letter-spacing: 0em;
-  text-align: left;
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
-  color: white !important;
+  color: white;
+  display: flex;
 }
 
 .column2 {
-  width: 1299px;
-  height: 60px;
+  width: 400px;
+  height: 80px;
   top: 299px;
   left: 350px;
-  font-family: Roboto !important;
-  font-size: 32px !important;
   border-radius: 15px;
   background: #e5e5e5;
-  font-family: Roboto !important;
 }
 
 .column3 {
-  width: 82px;
-  height: 60px;
+  width: 400px;
+  height: 80px;
   top: 299px;
   left: 1663px;
-  font-family: Roboto !important;
-  font-size: 32px !important;
   border-radius: 15px;
-  background-color: #555555;
+  background: #e5e5e5;
 }
 
 .column4 {
-  width: 82px;
-  height: 60px;
+  width: 400px;
+  height: 80px;
+  top: 299px;
+  left: 1745px;
+  border-radius: 15px;
+  background: #e5e5e5;
+}
+
+.column5 {
+  width: 50px;
+  height: 80px;
   top: 299px;
   left: 1745px;
   border-radius: 15px;
   background-color: #b80202;
 }
 
+.column6 {
+  width: 50px;
+  height: 80px;
+  top: 299px;
+  left: 1745px;
+  border-radius: 15px;
+  background: #555555;
+}
+
 .addIcon {
   width: 38px;
   height: 38px;
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

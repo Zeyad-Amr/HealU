@@ -3,15 +3,14 @@
   width: 365px;
   height: 82px;
   top: 169px;
-  margin-left: 1476px;
+  /*margin-left: 850px;*/
+  justify-content: center;
+  display: flex;
   border-radius: 15px;
   margin-bottom: 20px;
 }
 
 .ButtonComponent {
-  width: 231px;
-  height: 38px;
-  font-family: Roboto;
   font-size: 32px;
   font-weight: 600;
   line-height: 38px;
@@ -23,30 +22,49 @@
 .submitButton {
   width: 273px;
   height: 82px;
-  position: absolute;
   bottom: 80px; /* Adjusted distance from the bottom */
   left: 50%;
+  position: absolute ;
   transform: translateX(-50%);
   border-radius: 15px;
   background-color: black;
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
+  justify-content: center;
+  display: flex;
+  align-items: center; 
 }
 
 .buttonPrescription {
-  width: 568.37px;
-  height: 100px;
-  top: 500px;
-  left: 400px;
+  width: 368.37px;
+  height: 35px;
+  top: 10px;
+  left: 10px;
   border-radius: 15px;
-  position: absolute;
-  background-color: #8b8b8b;
+  margin: 30px;
+  background: #C3C3C3;
   font-family: Roboto;
   font-size: 32px;
   font-weight: 600;
   line-height: 38px;
   letter-spacing: 0em;
+  text-align: center;
   color: white;
   text-transform: none;
+}
+.buttonDone {
+  width: 200px;
+  height: 35px;
+  position: relative;
+  left: 1250px;
+  border-radius: 15px;
+  background: linear-gradient(285.17deg, #01B6B6 10.66%, #13D2DE 102.7%);
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: white;
 }
 
 .datePicker{
@@ -59,5 +77,11 @@
     margin-bottom: 20px;
 }
 
+
+.icon {
+  margin-right: 5px; /* Adjust margin as needed to control the space between the icon and text */
+  width: 16px; /* Adjust icon width as needed */
+  height: 16px; /* Adjust icon height as needed */
+}
 
 

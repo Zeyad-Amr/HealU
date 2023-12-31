@@ -6,16 +6,15 @@ import MenuItem from "@mui/material/MenuItem";
 import classes from "../button/button.module.css";
 import ButtonComponent from "../button/button";
 import { useDispatch } from "react-redux";
-import Slot from "../../slices/addSlotsSlice";
+import Slot, { addSlotActions } from "../../slices/addSlotsSlice";
 import { getSlots } from "../../slices/addSlotsSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 import { Dispatch } from "react";
 import { addSlot } from "../../slices/addSlotsSlice";
-
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles({
+export const useStyles = makeStyles({
   textField: {
     width: "591px",
     height: "215px",
@@ -23,12 +22,23 @@ const useStyles = makeStyles({
       width: "591px",
       height: "200px",
       backgroundColor: " #F4F4F4 ",
+      fontSize: "40px",
+    },
+  },
+  menuItem: {
+    fontSize: "40px",
+    "& div": {
+      backgroundColor: " #F4F4F4 ",
+      fontFamily: "Roboto !important",
+      fontSize: "32px !important",
+      letterSpacing: "0em",
+      textAlign: "left",
+      color: "black",
     },
   },
 });
 
 const weekdays: string[] = [
-  " ",
   "Sunday",
   "Monday",
   "Tuesday",
@@ -40,7 +50,7 @@ const weekdays: string[] = [
 
 const AddSlotForm = ({
   isFormVisible,
-  toggleFormVisibility,
+  // toggleFormVisibility,
   onAddSlot,
   classStyle,
   formTitle,
@@ -55,7 +65,7 @@ const AddSlotForm = ({
   div4Style,
 }: {
   isFormVisible: boolean;
-  toggleFormVisibility: Dispatch<SetStateAction<boolean>>;
+  // toggleFormVisibility: Dispatch<SetStateAction<boolean>>;
   classStyle?: string;
   formTitle: string;
   label1: string;
@@ -70,22 +80,40 @@ const AddSlotForm = ({
   isIncluded: boolean;
 }) => {
   const dispatch = useDispatch();
-  const [selectedDay, setSelectedDay] = useState<string>(" ");
+  const [selectedDay, setSelectedDay] = useState<string>("");
+  const [error, setError] = useState({ date: "", time: "", period: "" });
   const [time, setTime] = useState<string | null>(null);
   const [period, setPeriod] = useState<string | null>(null);
+  const slots = useSelector((state: RootState) => state.slots.slots);
   const selectedDate = useSelector(
     (state: RootState) => state.slots.selectedDate
   );
+  const isVisible = useSelector((state: RootState) => state.slots.isVisible);
   const add = (date: string) => {
+    let generatedId = slots.length + 1;
+    const existingSlot = slots.find(
+      (slot) => slot.date === date && slot.time === time
+    );
+    const isIdExists = slots.some((slot) => slot.id === slots.length + 1);
+    if (isIdExists) {
+      generatedId = generatedId + 1;
+    }
+    if (existingSlot) {
+      setError((prevError) => ({
+        ...prevError,
+        date: "Slot already exists for this time.",
+      }));
+      return;
+    }
     const data: Slot = {
-      time: `${time} ${period}`,
-      date: date,
+      id: generatedId,
+      date,
+      time,
     };
     if (selectedDate === selectedDay) {
-
       dispatch(getSlots(selectedDate) as any);
     }
-    
+
     dispatch(addSlot(data) as any);
   };
 
@@ -111,33 +139,63 @@ const AddSlotForm = ({
   const timeOptions = generateTimeOptions();
 
   const handleDayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedDay(event.target.value);
+    if (event.target.value === " " || event.target.value === null) {
+      setError((prevError) => ({ ...prevError, date: "Please select a day" }));
+    } else {
+      setError((prevError) => ({ ...prevError, date: "" }));
+      setSelectedDay(event.target.value);
+    }
   };
 
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTime(event.target.value);
+    if (event.target.value === "" || event.target.value === null) {
+      setError((prevError) => ({ ...prevError, time: "Please select a time" }));
+    } else {
+      setError((prevError) => ({ ...prevError, time: "" }));
+      setTime(event.target.value);
+    }
   };
 
   const handlePeriodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value === "AM" || value === "PM") {
+      setError((prevError) => ({ ...prevError, period: "" }));
       setPeriod(value);
     } else {
-      console.error("Invalid period value");
+      setError((prevError) => ({
+        ...prevError,
+        period: "Please select a Period",
+      }));
     }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data: Slot = {
+      id: slots.length + 1,
       time: `${time} ${period}`,
       date: selectedDay,
     };
+    if (selectedDay === "" || time === null || period === null) {
+      setError({
+        date: !selectedDay ? "Please select a day" : "",
+        time: !time ? "Please select a time" : "",
+        period: !period ? "Please select a period" : "",
+      });
+      return;
+    } else {
+      setSelectedDay("");
+      setTime(null);
+      setPeriod(null);
+    }
     onAddSlot && add(data.date);
-    toggleFormVisibility(false);
+    console.log(error);
+    if (error.date === "" && error.time === "" && error.period === "") {
+      dispatch(addSlotActions.setFormVisibility(false));
+    }
   };
 
-  return isFormVisible ? (
+  return isVisible ? (
     <form className={styles[formStyle as string]} onSubmit={handleSubmit}>
       <h2 className={styles.textElement}>{formTitle}</h2>
       <Box>
@@ -148,8 +206,12 @@ const AddSlotForm = ({
               id="doctorDay"
               select
               className={styles.textField}
-              onChange={handleDayChange}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleDayChange(e)
+              }
+              classes={{ root: classesM.menuItem }}
               value={selectedDay}
+              helperText={error.date}
             >
               {weekdays.map((date) => (
                 <MenuItem key={date} value={date} className={styles.menuItem}>
@@ -161,7 +223,11 @@ const AddSlotForm = ({
             <TextField
               id="doctorDay"
               className={styles.textField}
-              onChange={handleDayChange}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleDayChange(e)
+              }
+              classes={{ root: classesM.menuItem }}
+              helperText={error.date}
               value={selectedDay}
             />
           )}
@@ -178,7 +244,9 @@ const AddSlotForm = ({
             <TextField
               id="doctorTime"
               select
-              onChange={handleTimeChange}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleTimeChange(e)
+              }
               value={time || ""}
               style={{
                 width: "248.5px ",
@@ -187,6 +255,8 @@ const AddSlotForm = ({
                 fontFamily: "Roboto",
                 fontSize: "40px",
               }}
+              classes={{ root: classesM.menuItem }}
+              helperText={error.time}
             >
               {timeOptions.map((option) => (
                 <MenuItem
@@ -208,26 +278,38 @@ const AddSlotForm = ({
                 fontFamily: "Roboto",
                 fontSize: "40px",
               }}
-              onChange={handleTimeChange}
+              classes={{ root: classesM.menuItem }}
+              required
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleTimeChange(e)
+              }
+              helperText={error.time}
               value={time || ""}
             />
           )}
           {inputType === "select" && (
             <TextField
+              classes={{ root: classesM.menuItem }}
               id="doctorPeriod"
               select
               onChange={handlePeriodChange}
               style={{
                 width: "170px",
                 backgroundColor: " #F4F4F4 ",
-                marginTop: "-55px",
+                marginTop: "-80px",
                 marginLeft: "60px",
                 left: "calc(351.4px)",
+                fontSize: "40px",
               }}
               value={period || ""}
+              helperText={error.period}
             >
-              {["AM", "PM"].map((period) => (
-                <MenuItem key={period} value={period}>
+              {[" ", "AM", "PM"].map((period) => (
+                <MenuItem
+                  key={period}
+                  value={period}
+                  className={styles.menuItem}
+                >
                   {period}
                 </MenuItem>
               ))}
@@ -237,7 +319,11 @@ const AddSlotForm = ({
         {isIncluded && (
           <div className={styles[div4Style as string]}>
             <label className={styles.labelElement}>Notes</label>
-            <TextField id="Notes" className={classesM.textField} />
+            <TextField
+              id="Notes"
+              className={classesM.textField}
+              classes={{ root: classesM.menuItem }}
+            />
           </div>
         )}
       </Box>
