@@ -171,119 +171,127 @@ const Appointments = () => {
   console.log(allClinicsData);
 
   return (
-    <Box sx={{ margingTop : "1.5rem" }}>
+    <>
       <CustomHeader
         separatorColor="primary.main"
         title="Appointments"
         separatorWidth="50px"
       />
-      <Grid container spacing={2}>
-        <Grid item lg={3} md={3} sm={6} xs={12}>
-          <FormControl sx={{ width: "100%" }}>
-            <InputLabel id="demo-simple-select-label">Clinics</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={clinicIdData}
-              label="Clinics"
-              onChange={onChangeClinics}
-            >
-              {allClinicsData.map((clinic: any, index: number) => {
-                return (
-                  <MenuItem key={index} value={clinic.id}>
-                    {clinic.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
+      <Box sx={{ marginTop: "1.5rem" }}>
+        <Grid container spacing={2}>
+          <Grid item lg={3} md={3} sm={6} xs={12}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="demo-simple-select-label">Clinics</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={clinicIdData}
+                label="Clinics"
+                onChange={onChangeClinics}
+              >
+                {allClinicsData.map((clinic: any, index: number) => {
+                  return (
+                    <MenuItem key={index} value={clinic.id}>
+                      {clinic.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item lg={3} md={3} sm={6} xs={12}>
+            <FormControl sx={{ width: "100%", height: "5rem" }}>
+              <InputLabel id="demo-simple-select-label">Doctors</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={doctorIdData}
+                label="Clinics"
+                onChange={onChangeDoctors}
+              >
+                <MenuItem value={doctorIdData}>All Doctors</MenuItem>
+                {allDoctorsData.map((doctor: any, index: number) => {
+                  return (
+                    <MenuItem key={index} value={doctor.userId}>
+                      {doctor.firstName + " " + doctor.lastName}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item lg={3} md={3} sm={6} xs={12}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{ width: "100%", height: "56px" }}
+                label="Start Date"
+                value={selectedFromDate}
+                onChange={handleFromDateChange}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item lg={3} md={3} sm={6} xs={12}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{ width: "100%", height: "56px" }}
+                label="To Date"
+                value={selectedToDate}
+                onChange={handleToDateChange}
+              />
+            </LocalizationProvider>
+          </Grid>
         </Grid>
-        <Grid item lg={3} md={3} sm={6} xs={12}>
-          <FormControl sx={{ width: "100%", height: "5rem" }}>
-            <InputLabel id="demo-simple-select-label">Doctors</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={doctorIdData}
-              label="Clinics"
-              onChange={onChangeDoctors}
-            >
-              <MenuItem value={doctorIdData}>All Doctors</MenuItem>
-              {allDoctorsData.map((doctor: any, index: number) => {
-                return (
-                  <MenuItem key={index} value={doctor.userId}>
-                    {doctor.firstName + " " + doctor.lastName}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item lg={3} md={3} sm={6} xs={12}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              sx={{ width: "100%", height: "56px" }}
-              label="Start Date"
-              value={selectedFromDate}
-              onChange={handleFromDateChange}
-            />
-          </LocalizationProvider>
-        </Grid>
-        <Grid item lg={3} md={3} sm={6} xs={12}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              sx={{ width: "100%", height: "56px" }}
-              label="To Date"
-              value={selectedToDate}
-              onChange={handleToDateChange}
-            />
-          </LocalizationProvider>
-        </Grid>
-      </Grid>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" , marginBottom : "1rem" }}>
         <Box
           sx={{
-            width: "4.5rem",
-            backgroundColor: "primary.main",
-            color: "#fff",
-            padding: "0.4rem",
-            cursor: "pointer",
-            borderRadius: "6px",
-            margin: "0.5rem",
-            textAlign : "center",
-          }}
-          onClick={() => {
-            onSearch(
-              doctorIdData,
-              clinicIdData,
-              selectedFromDate,
-              selectedToDate
-            );
+            display: "flex",
+            justifyContent: "flex-end",
+            marginBottom: "1rem",
           }}
         >
-          Search
+          <Box
+            sx={{
+              width: "4.5rem",
+              backgroundColor: "primary.main",
+              color: "#fff",
+              padding: "0.4rem",
+              cursor: "pointer",
+              borderRadius: "6px",
+              margin: "0.5rem",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              onSearch(
+                doctorIdData,
+                clinicIdData,
+                selectedFromDate,
+                selectedToDate
+              );
+            }}
+          >
+            Search
+          </Box>
+          <Box
+            sx={{
+              width: "4.5rem",
+              textAlign: "center",
+              borderColor: "primary.main",
+              borderStyle: "solid",
+              borderWidth: "1px",
+              backgroundColor: "transparent",
+              cursor: "pointer",
+              color: "primary.main",
+              padding: "0.4rem",
+              borderRadius: "6px",
+              margin: "0.5rem",
+            }}
+            onClick={onClear}
+          >
+            Clear
+          </Box>
         </Box>
-        <Box
-          sx={{
-            width: "4.5rem",
-            textAlign : "center",
-            borderColor: "primary.main",
-            borderStyle: "solid",
-            borderWidth: "1px",
-            backgroundColor: "transparent",
-            cursor: "pointer",
-            color: "primary.main",
-            padding: "0.4rem",
-            borderRadius: "6px",
-            margin: "0.5rem",
-          }}
-          onClick={onClear}
-        >
-          Clear
-        </Box>
+        <AppointmentsFilterResults />
       </Box>
-      <AppointmentsFilterResults/>
-    </Box>
+    </>
   );
 };
 

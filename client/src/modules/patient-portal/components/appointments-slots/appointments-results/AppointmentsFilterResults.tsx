@@ -7,10 +7,7 @@ import {
   Grid,
   Box,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
-import React from "react";
-import moment from "moment";
-import "moment-timezone";
+import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 
 interface AppointmentsFilterResultsPropsI {
   resultData?: any[];
@@ -43,22 +40,23 @@ const AppointmentsFilterResults = ({
   //     return formattedDate;
   //   };
 
-  const formatDate = (dateString : string) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    
+
     // Subtract two hours
     date.setHours(date.getHours() - 2);
-    
-    const options : any = { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric', 
-      hour: 'numeric', 
-      minute: 'numeric' 
+
+    const options: any = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
     };
-    
-    const formattedDate = date.toLocaleString('en-US', options)
-      .replace(' at ', ' '); 
+
+    const formattedDate = date
+      .toLocaleString("en-US", options)
+      .replace(" at ", " ");
     return formattedDate;
   };
 
@@ -216,7 +214,7 @@ const AppointmentsFilterResults = ({
   ];
 
   return (
-    <Box sx={{ overflowY : "auto" }}>
+    <Box sx={{ overflowY: "auto" }}>
       <Grid container spacing={2}>
         {slotsData.map((slot: any, index: number) => {
           return (
@@ -238,7 +236,22 @@ const AppointmentsFilterResults = ({
                       {getInitials(slot.doctor.name)}
                     </Avatar>
                   }
-                  title={slot.doctor.name}
+                  title={
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginBottom: "1px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <span>{slot.doctor.name}</span>
+                      <AddBoxRoundedIcon
+                        sx={{ color: "primary.main", fontSize: "1.8rem" }}
+                      />
+                    </div>
+                  }
                   subheader={formatDate(slot.date)}
                 />
                 <CardContent>
