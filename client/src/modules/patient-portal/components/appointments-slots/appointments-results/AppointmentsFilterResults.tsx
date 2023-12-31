@@ -30,34 +30,31 @@ const AppointmentsFilterResults = ({
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-    } while (color === "#FFFFFF" || color === "#EEEAFF"); // Exclude specific colors
+    } while (color === "#FFFFFF" || color === "#EEEAFF");
 
     return color;
   }
 
-  //   const formatDate = (dateString : string) => {
-  //     const formattedDate = moment(dateString).format('MMMM DD, YYYY hh:mm a');
-  //     return formattedDate;
-  //   };
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
 
-    // Subtract two hours
     date.setHours(date.getHours() - 2);
 
-    const options: any = {
+    const dateOptions: any = {
       year: "numeric",
       month: "long",
       day: "numeric",
+    };
+    const timeOptions: any = {
       hour: "numeric",
       minute: "numeric",
     };
+    const dateTime = new Date(dateString);
 
-    const formattedDate = date
-      .toLocaleString("en-US", options)
-      .replace(" at ", " ");
-    return formattedDate;
+    const formattedDate = dateTime.toLocaleDateString("en-US", dateOptions);
+    const formattedTime = dateTime.toLocaleTimeString("en-US", timeOptions);
+    return [formattedDate, formattedTime];
+
   };
 
   const slotsData = [
@@ -248,11 +245,16 @@ const AppointmentsFilterResults = ({
                     >
                       <span>{slot.doctor.name}</span>
                       <AddBoxRoundedIcon
-                        sx={{ color: "primary.main", fontSize: "1.8rem" }}
+                        sx={{ color: "secondary.main", fontSize: "1.8rem" }}
                       />
                     </div>
                   }
-                  subheader={formatDate(slot.date)}
+                  subheader={
+                    <>
+                      {formatDate(slot.date)[0]} <br></br>
+                      {formatDate(slot.date)[1]}
+                    </>
+                  }
                 />
                 <CardContent>
                   <Typography variant="h6" sx={{ color: "#00000080" }}>
