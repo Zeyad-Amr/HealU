@@ -1,94 +1,89 @@
 // DashBoard.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Table,
-  TableBody,
-  TableCell,
   TableContainer,
-  TableRow,
   Paper,
   Stack,
-  Typography,
-  IconButton,
   Button,
-  Modal,
-  Box,
   MenuItem,
   Menu,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CreateSlotModal from "./popUP/CreateSlotModal";
-
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-
 import styles from "./DashBoard.module.css"; // Import the CSS module
-
-interface Patient {
-  time: string;
-  patientName: string;
-  patientID: number;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../state/store";
+import { Slot, fetchSlots } from "../../state/slices/slotsSlice";
+import {
+  Appointment,
+  fetchAppointments,
+} from "../../state/slices/appointmentSlice";
+import AppointmentModal from "./AppointmentModal";
+import dayjs from "dayjs";
+import SlotsTable from "./SlotsTable";
 
 interface DashBoardProps {
   // Other props if needed
 }
 
 const DashBoard: React.FC<DashBoardProps> = () => {
-  const [selectedDate, setSelectedDate] = useState<string>(
-    new Date().toISOString()
-  );
-  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const SlotsState = useSelector((state: RootState) => state.slots);
+
+  const [selectedDate, setSelectedDate] = useState<number>(0);
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<Appointment | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const [showCreateSlotModal, setShowCreateSlotModal] =
     useState<boolean>(false);
+  const [slots, setSlots] = useState<Slot[]>([]);
 
-  const getWeekDates = () => {
-    const currentDate = new Date(selectedDate);
-    const currentDay = currentDate.getDay();
-    const diff =
-      currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 0);
-    const startDate = new Date(currentDate.setDate(diff));
-    const endDate = new Date(currentDate.setDate(diff + 6));
-    return { startDate, endDate };
-  };
+  ///////////////////////////////////////////////////
 
-  const generateWeekDates = () => {
-    const { startDate, endDate } = getWeekDates();
+  useEffect(() => {
+    dispatch(fetchSlots());
+    dispatch(fetchAppointments());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const selectedWeekday = dayjs(getCuurentWeekDates()[selectedDate]).format(
+      "dddd"
+    );
+    setSlots(
+      SlotsState.slots
+        .filter((slot) => slot.weekDay === selectedWeekday)
+        .sort((a: Slot, b: Slot) => {
+          if (a.time > b.time) return 1;
+          if (a.time < b.time) return -1;
+          return 0;
+        })
+    );
+  }, [selectedDate, SlotsState.slots]);
+
+  ///////////////////////////////////////////////////
+
+  function getCuurentWeekDates() {
+    const today = dayjs().add(1, "day");
     const weekDates = [];
-    let currentDate = new Date(startDate);
-    while (currentDate <= endDate) {
-      weekDates.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
+    for (let i = 0; i < 7; i++) {
+      const daysUntilNextSelectedDay = (i - today.day() + 7) % 7;
+      const nextSelectedDay = today.add(daysUntilNextSelectedDay, "days");
+      weekDates.push(nextSelectedDay.format("dddd YYYY-MM-DD"));
     }
     return weekDates;
-  };
+  }
 
-  const formatDateString = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-  };
+  ///////////////////////////////////////////////////
 
-  const weekDates = generateWeekDates();
-
-  const rowData: Patient[] = [
-    { time: "9:00 AM", patientName: "John Doe", patientID: 1 },
-    { time: "10:30 AM", patientName: "Jane Smith", patientID: 2 },
-    { time: "1:45 PM", patientName: "Bob Johnson", patientID: 3 },
-    // Add more data as needed
-  ];
-
-  const handlePatientNameClick = (patient: Patient) => {
-    setSelectedPatient(patient);
+  const handleAppointmenClick = (
+    selectedAppointment: Appointment | undefined
+  ) => {
+    if (selectedAppointment === undefined) return;
+    setSelectedAppointment(selectedAppointment);
   };
 
   const handleCloseModal = () => {
-    setSelectedPatient(null);
+    setSelectedAppointment(null);
   };
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -107,6 +102,11 @@ const DashBoard: React.FC<DashBoardProps> = () => {
     setShowCreateSlotModal(false);
   };
 
+  const handleDateChange = (date: string) => {
+    setSelectedDate(getCuurentWeekDates().indexOf(date));
+    handleMenuClose();
+  };
+
   return (
     <div className={styles.dashboardContainer}>
       <TableContainer component={Paper} className={styles.tableContainer}>
@@ -119,7 +119,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
           >
             {/* Customized Date Selection */}
             <div className={styles.dateSelection} onClick={handleMenuOpen}>
-              {formatDateString(new Date(selectedDate))}
+              {getCuurentWeekDates()[selectedDate].toString()}
             </div>
             <Menu
               anchorEl={menuAnchor}
@@ -127,16 +127,13 @@ const DashBoard: React.FC<DashBoardProps> = () => {
               onClose={handleMenuClose}
               className={styles.menu}
             >
-              {weekDates.map((date) => (
+              {getCuurentWeekDates().map((date) => (
                 <MenuItem
-                  key={date.toISOString()}
-                  value={date.toISOString()}
-                  onClick={() => {
-                    setSelectedDate(date.toISOString());
-                    handleMenuClose();
-                  }}
+                  key={date.toString()}
+                  value={date}
+                  onClick={() => handleDateChange(date)}
                 >
-                  {formatDateString(date)}
+                  {date}
                 </MenuItem>
               ))}
             </Menu>
@@ -152,84 +149,23 @@ const DashBoard: React.FC<DashBoardProps> = () => {
           </Button>
         </div>
 
-        <Table className={styles.table}>
-          <TableBody>
-            {rowData.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell className={styles.tableCell}>
-                  <Stack direction="row" spacing={2} style={{ width: "100%" }}>
-                    <div className={styles.timeCell}>
-                      <Typography
-                        variant="body1"
-                        className={styles.timeTextStyle}
-                      >
-                        {row.time}
-                      </Typography>
-                    </div>
-                    <Typography
-                      variant="body1"
-                      className={styles.patientName}
-                      onClick={() => handlePatientNameClick(row)}
-                    >
-                      {row.patientName}
-                    </Typography>
-                    <IconButton
-                      aria-label="Cancel"
-                      className={styles.cancelButton}
-                    >
-                      X
-                    </IconButton>
-                    <IconButton
-                      aria-label="Delete"
-                      className={styles.deleteIcon}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Stack>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <SlotsTable
+          slots={slots}
+          handleAppointmentClick={handleAppointmenClick}
+        />
       </TableContainer>
 
       {/* Modal for displaying patient details */}
-      <Modal open={Boolean(selectedPatient)} onClose={handleCloseModal}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
-            borderRadius: "8px",
-          }}
-        >
-          <Typography variant="h6" component="div">
-            Patient Details
-          </Typography>
-          <Typography variant="body1" style={{ marginTop: "8px" }}>
-            Patient ID: {selectedPatient?.patientID}
-          </Typography>
-          <Typography variant="body1" style={{ marginTop: "8px" }}>
-            {/* Add more patient details as needed */}
-          </Typography>
-        </Box>
-      </Modal>
+      <AppointmentModal
+        selectedAppointment={selectedAppointment ?? undefined}
+        handleCloseModal={handleCloseModal}
+      />
 
       {/* Modal for creating a new slot */}
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <CreateSlotModal
-          open={showCreateSlotModal}
-          onClose={handleCreateSlotModalClose}
-          onSlotCreate={(date, time) =>
-            console.log("Slot created:", date, time)
-          }
-          weekDates={weekDates}
-        />
-      </LocalizationProvider>
+      <CreateSlotModal
+        open={showCreateSlotModal}
+        onClose={handleCreateSlotModalClose}
+      />
     </div>
   );
 };

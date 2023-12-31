@@ -1,28 +1,34 @@
 // CreateSlotModal.tsx
 import React, { useState } from "react";
-import {
-  Box,
-  Modal,
-  Button,
-  Stack,
-  IconButton,
-} from "@mui/material";
+import { Box, Modal, Button, Stack, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import WeekDayPicker from "../../doctor-slots/WeekDayPicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import styles from "./CreateSlotModal.module.css"; // Import the CSS module
+import { openSnackbar } from "../../../state/slices/snackbarSlice";
+import { createSlotForDoctor } from "../../../state/slices/slotsSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../state/store";
 
 interface CreateSlotModalProps {
   open: boolean;
   onClose: () => void;
-  onSlotCreate: (date: string, time: string) => void;
-  weekDates: Date[];
 }
 
 interface TimeObject {
   $H: number;
   $m: number;
 }
+
+const weekdaysMap = [
+  { label: "Sunday", value: 0 },
+  { label: "Monday", value: 1 },
+  { label: "Tuesday", value: 2 },
+  { label: "Wednesday", value: 3 },
+  { label: "Thursday", value: 4 },
+  { label: "Friday", value: 5 },
+  { label: "Saturday", value: 6 },
+];
 
 const formatTime = (timeObject: TimeObject) => {
   let hours = timeObject.$H.toString();
@@ -37,34 +43,47 @@ const formatTime = (timeObject: TimeObject) => {
   return `${hours}:${minutes}`;
 };
 
-const CreateSlotModal: React.FC<CreateSlotModalProps> = ({
-  open,
-  onClose,
-  onSlotCreate,
-  weekDates,
-}) => {
-  const [selectedDay, setSelectedDay] = useState(0);
+const CreateSlotModal: React.FC<CreateSlotModalProps> = ({ open, onClose }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [selectedDay, setSelectedDay] = useState<number>(0);
+  const [selectedTime, setSelectedTime] = useState<string>("10:00");
 
   const handleDayChange = (event: any) => {
     const selectedDayValue = event.target.value as number;
     setSelectedDay(selectedDayValue);
   };
 
+  const handleTimeChange = (value: any) => {
+    setSelectedTime(formatTime(value));
+  };
+
+  const createSlot = async (weekDay: string, time: string) => {
+    await dispatch(
+      createSlotForDoctor({
+        doctorId: 13,
+        clinicId: 5,
+        time: time,
+        weekDay: weekDay,
+      })
+    ).then((resultAction) => {
+      dispatch(
+        openSnackbar({
+          message:
+            resultAction.meta.requestStatus === "fulfilled"
+              ? "Slot Created Successfully"
+              : "Something Went Wrong! Please try again later",
+          type:
+            resultAction.meta.requestStatus === "fulfilled"
+              ? "success"
+              : "warning",
+        })
+      );
+    });
+  };
+
   const handleCreateSlot = () => {
-    const currentDate = new Date();
-    const selectedDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate() + selectedDay
-    );
-
-    const timeObject = { $H: 12, $m: 0 };
-    const formattedTime = formatTime(timeObject);
-
-    const slotDateTime = `${
-      selectedDate.toISOString().split("T")[0]
-    } ${formattedTime}`;
-    onSlotCreate(slotDateTime, formattedTime);
+    createSlot(weekdaysMap[selectedDay].label, selectedTime);
 
     onClose();
   };
@@ -90,7 +109,11 @@ const CreateSlotModal: React.FC<CreateSlotModalProps> = ({
             selectedDay={selectedDay}
             handleDayChange={handleDayChange}
           />
-          <TimePicker label="Time" className={styles.timePicker} />
+          <TimePicker
+            label="Time"
+            onChange={handleTimeChange}
+            className={styles.timePicker}
+          />
         </Stack>
 
         <Button

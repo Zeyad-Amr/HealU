@@ -91,7 +91,8 @@ const appointmentSlice = createSlice({
           });
           return (
             appointmentDate.isAfter(currentDate) &&
-            appointmentDate.isBefore(nextWeekDate)
+            appointmentDate.isBefore(nextWeekDate) &&
+            appointment.doctorId === 13
           );
         });
 

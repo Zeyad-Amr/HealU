@@ -18,12 +18,6 @@ const WeekDayPicker = ({
   selectedDay: number;
   handleDayChange: any;
 }) => {
-  function getNextOccurrenceOfSelectedDay() {
-    const today = dayjs();
-    const daysUntilNextSelectedDay = (selectedDay - today.day() + 7) % 7;
-    const nextSelectedDay = today.add(daysUntilNextSelectedDay, "days");
-    return nextSelectedDay.format("YYYY-MM-DD");
-  }
 
   return (
     <div>
@@ -40,7 +34,6 @@ const WeekDayPicker = ({
           <MenuItem value={day.value}>{day.label}</MenuItem>
         ))}
       </Select>
-      {getNextOccurrenceOfSelectedDay()}
     </div>
   );
 };

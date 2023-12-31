@@ -3,6 +3,9 @@ import axios from "axios";
 import { Appointment } from "./appointmentSlice";
 import dayjs from "dayjs";
 
+let doctorId: number = 13,
+  clinicId: number = 5;
+
 export interface Slot {
   _id?: string;
   doctorId: number;
@@ -100,7 +103,8 @@ export const deleteSlot = createAsyncThunk(
 const slotSlice = createSlice({
   name: "slots",
   initialState,
-  reducers: {},
+  reducers: {
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSlots.pending, (state, action) => {
@@ -109,6 +113,10 @@ const slotSlice = createSlice({
       .addCase(fetchSlots.fulfilled, (state, action) => {
         state.loading = false;
         state.slots = action.payload;
+        state.slots = state.slots.filter(
+          (slot) => slot.doctorId === doctorId && slot.clinicId === clinicId
+        );
+        
       })
       .addCase(fetchSlots.rejected, (state, action) => {
         state.loading = false;
