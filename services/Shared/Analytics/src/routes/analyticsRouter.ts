@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { get_analytics } from "../controllers/analyticsController";
+import { getAnalytics, getAnalyticsMock } from "../controllers/analyticsController";
 
 const router = Router();
 
 //create 
-router.get('/analytics', get_analytics)
+router.get('/analytics', getAnalyticsMock)
+router.get('/analytics-test', getAnalytics)
 
 
 export default router;

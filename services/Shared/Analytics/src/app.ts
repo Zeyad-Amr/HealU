@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { get_analytics } from "./controllers/analyticsController";
+import router from "./routes/analyticsRouter";
 
 dotenv.config()
 
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api', get_analytics)
+app.use('/api', router);
 
 const PORT = 4000;
 
