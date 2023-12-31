@@ -21,7 +21,9 @@
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
+    "@types/cors": "^2.8.17",
     "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
     "date-fns": "^3.0.6",
     "express": "^4.18.2"
   },
