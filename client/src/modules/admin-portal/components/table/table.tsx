@@ -49,7 +49,7 @@ const TableComponent = () => {
   useEffect(() => {
     dispatch(getDoctors() as any);
   }, [dispatch]);
-  const handleDelete = async (doctorId: number) => {
+  const handleDelete = async (doctorId: string) => {
     await dispatch(deleteDoctor(doctorId) as any);
     dispatch(getDoctors() as any);
   };
@@ -83,11 +83,11 @@ const TableComponent = () => {
   //   dispatch(formActions.setIsEdit(true));
   // };
   // const [selectedDoctor, setSelectedDoctor] = useState<Partial<Doctor>>({});
-  const handleEdit = async (doctorId: number) => {
+  const handleEdit = async (doctorId: string) => {
     await dispatch(getDoctorById(doctorId) as any);
     dispatch(formActions.setFormVisibility(!isFormVisible));
     dispatch(formActions.setIsEdit(true));
-    const selectedDoctor = doctors.find((row) => row.id === doctorId);
+    const selectedDoctor = doctors.find((row) => row.ssn === doctorId);
     if (selectedDoctor) {
       dispatch(formActions.setEditedDoctor(selectedDoctor));
     }
@@ -114,28 +114,53 @@ const TableComponent = () => {
                   </TableCell>
 
                   <TableCell
+                    key={`${rowIndex}-column1`}
+                    className={styles.column1}
+                  >
+                    {row.userName}
+                  </TableCell>
+
+                  <TableCell
                     key={`${rowIndex}-column2`}
                     className={styles.column2}
                   >
-                    {row.name}
+                    {row.firstName}
+                  </TableCell>
+                  <TableCell
+                    key={`${rowIndex}-column2`}
+                    className={styles.column2}
+                  >
+                    {row.lastName}
                   </TableCell>
                   <TableCell
                     key={`${rowIndex}-column3`}
                     className={styles.column3}
                   >
-                    {row.speciality}
+                    {row.specialization}
                   </TableCell>
                   <TableCell
                     key={`${rowIndex}-column4`}
                     className={styles.column4}
                   >
-                    {row.phone}
+                    {row.phoneNumber}
                   </TableCell>
                   <TableCell
                     key={`${rowIndex}-column5`}
                     className={styles.column4}
                   >
                     {row.email}
+                  </TableCell>
+                  <TableCell
+                    key={`${rowIndex}-column5`}
+                    className={styles.column4}
+                  >
+                    {row.dateOfBirth}
+                  </TableCell>
+                  <TableCell
+                    key={`${rowIndex}-column5`}
+                    className={styles.column4}
+                  >
+                    {row.ssn}
                   </TableCell>
 
                   <TableCell
@@ -144,7 +169,7 @@ const TableComponent = () => {
                   >
                     <div
                       className={styles.addIcon}
-                      onClick={() => handleDelete(row.id)}
+                      onClick={() => handleDelete(row.ssn)}
                     >
                       <DeleteIcon style={{ width: "38px", height: "38px" }} />
                     </div>
@@ -156,7 +181,7 @@ const TableComponent = () => {
                     <div className={styles.addIcon}>
                       <BorderColorIcon
                         style={{ width: "38px", height: "38px" }}
-                        onClick={() => handleEdit(row.id)}
+                        onClick={() => handleEdit(row.ssn)}
                       />
                     </div>
                   </TableCell>

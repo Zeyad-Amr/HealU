@@ -23,6 +23,13 @@ const specialties: string[] = [
   "Neurologist",
 ];
 
+const clinics = [
+  { clinicName: "Orthopedic", clinicId: 1 },
+  { clinicName: "Cardiologist", clinicId: 2 },
+  { clinicName: "Dentist", clinicId: 3 },
+  { clinicName: "Neurologist", clinicId: 4 },
+];
+
 const formStyles = makeStyles({
   menuItem: {
     fontSize: "20px",
@@ -43,10 +50,7 @@ interface FormProps {
 
 export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   const dispatch = useDispatch();
-  const classesUI = formStyles(); // Update this line
-  const id: number = useSelector(
-    (state: RootState) => state.doctors.doctors.length + 1
-  );
+  const classesUI = formStyles();
   const isVisible = useSelector((state: RootState) => state.form.isFormVisible);
   const isEditForm = useSelector((state: RootState) => state.form.isEdit);
   const editedDoctor = useSelector(
@@ -54,30 +58,48 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   );
 
   const [localFormState, setLocalFormState] = useState({
-    id: id,
-    name: "",
-    email: "",
-    phone: "",
-    speciality: specialties[0],
+    ssn: "",
+    firstName: "",
+    lastName: "",
+    dateOfBirth: " ",
+    gender: "",
+    userName: "",
+    password: "",
+    // clinicId: NaN,
+    email: " ",
+    phoneNumber: "",
+    specialization: "",
   });
   useEffect(() => {
     // Update localFormState if editedDoctor is available
     if (isEditForm && editedDoctor) {
       setLocalFormState({
-        id: editedDoctor.id,
-        name: editedDoctor.name || "",
+        ssn: editedDoctor.ssn || "",
+        firstName: editedDoctor.firstName || "",
+        lastName: editedDoctor.lastName || "",
         email: editedDoctor.email || "",
-        phone: editedDoctor.phone || "",
-        speciality: editedDoctor.speciality || specialties[0],
+        phoneNumber: editedDoctor.phoneNumber || "",
+        gender: editedDoctor.gender || "",
+        specialization: editedDoctor.specialization || specialties[0],
+        dateOfBirth: editedDoctor.dateOfBirth || "",
+        userName: editedDoctor.userName || "",
+        password: editedDoctor.password || "",
+        // clinicId: editedDoctor.clinicId,
       });
     } else {
       // Reset localFormState to default values
       setLocalFormState({
-        id: id,
-        name: "",
+        ssn: "",
+        firstName: "",
+        lastName: "",
         email: "",
-        phone: "",
-        speciality: specialties[0],
+        phoneNumber: "",
+        gender: "",
+        specialization: specialties[0],
+        dateOfBirth: "",
+        userName: "",
+        password: "",
+        // clinicId: "",
       });
     }
   }, [isEditForm, editedDoctor]);
@@ -93,11 +115,18 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     (state: RootState) => state.form.isFormVisible
   );
 
+  
+  const selectedClinic = clinics.find(
+    (clinic) => clinic.clinicName === localFormState.specialization
+  );
   const validateSpeciality = (inputData: string) => {
     if (!inputData) {
       localErrors.errorSpeciality = "Please select a speciality";
     } else {
-      setLocalFormState({ ...localFormState, speciality: inputData }) as any;
+      setLocalFormState({
+        ...localFormState,
+        specialization: inputData,
+      }) as any;
       setLocalErrors({
         ...localErrors,
         errorSpeciality: localErrors.errorSpeciality,
@@ -115,7 +144,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     } else {
       localErrors.errorName = "";
     }
-    setLocalFormState({ ...localFormState, name: inputData }) as any;
+    setLocalFormState({ ...localFormState, firstName: inputData }) as any;
 
     setLocalErrors({
       ...localErrors,
@@ -137,7 +166,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
       errorPhone: localErrors.errorPhone,
     }) as any;
 
-    setLocalFormState({ ...localFormState, phone: inputData });
+    setLocalFormState({ ...localFormState, phoneNumber: inputData });
   };
 
   const validateEmail = (inputData: string) => {
@@ -151,7 +180,6 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
       ...localErrors,
       errorEmail: localErrors.errorEmail,
     }) as any;
-
     setLocalFormState({ ...localFormState, email: inputData }) as any;
   };
 
@@ -160,33 +188,49 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   ) => {
     e.preventDefault();
     const data = {
-      id: id,
-      name: localFormState.name,
-      speciality: localFormState.speciality,
-      phone: localFormState.phone,
+      ssn: localFormState.ssn,
+      firstName: localFormState.firstName,
+      gender: localFormState.firstName,
+      lastName: localFormState.lastName,
+      specialization: localFormState.specialization,
+      phoneNumber: localFormState.phoneNumber,
       email: localFormState.email,
+      userName: localFormState.userName,
+      password: localFormState.password,
+      dateOfBirth: localFormState.dateOfBirth,
+      role: "Doctor",
+      clinicId: selectedClinic?.clinicId,
     };
     if (
       !localErrors.errorEmail &&
       !localErrors.errorName &&
       !localErrors.errorPhone &&
       !localErrors.errorSpeciality &&
-      data.name &&
+      data.firstName &&
+      data.lastName &&
+      data.phoneNumber &&
+      data.specialization &&
       data.email &&
-      data.phone &&
-      data.speciality
+      data.userName &&
+      data.password &&
+      data.dateOfBirth
     ) {
       try {
         if (isEditForm) {
           if (editedDoctor) {
             await dispatch(
               editDoctor({
-                doctorId: editedDoctor.id,
+                doctorId: editedDoctor.ssn,
                 updatedData: {
-                  name: data.name,
-                  speciality: data.speciality,
-                  phone: data.phone,
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  specialization: data.specialization,
+                  phoneNumber: data.phoneNumber,
                   email: data.email,
+                  userName: data.userName,
+                  password: data.password,
+                  dateOfBirth: data.dateOfBirth,
+                  role: "Doctor",
                 },
               }) as any
             );
@@ -232,6 +276,83 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
       <div className={styles.formContainer}>
         <form onSubmit={(e) => handleOnSubmit(e)}>
           <h2 className={classes.textElement}>{formTitle}</h2>
+
+          <div className={styles.formRow}>
+            <div className={styles.column}>
+              <label className={styles.labelElement}>First Name</label>
+              <TextField
+                value={localFormState.firstName || " "}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "name");
+                }}
+              />
+              {localErrors.errorName && (
+                <label className={styles.errorLabel}>
+                  {localErrors.errorName}
+                </label>
+              )}
+            </div>
+
+            <div className={styles.column}>
+              <label className={styles.labelElement}>Last Name</label>
+              <TextField value={localFormState.lastName || " "} />
+            </div>
+          </div>
+
+          <div className={styles.formRow}>
+            <div className={styles.column}>
+              <label className={styles.labelElement}>Phone</label>
+              <TextField
+                value={localFormState.phoneNumber || ""}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "phone");
+                }}
+              />
+              {localErrors.errorPhone && (
+                <label className={styles.errorLabel}>
+                  {localErrors.errorPhone}
+                </label>
+              )}
+            </div>
+            <div className={styles.column}>
+              <label className={styles.labelElement}>Email</label>
+              <TextField
+                value={localFormState.email || " "}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "email");
+                }}
+              />
+              {localErrors.errorEmail && (
+                <label className={styles.errorLabel}>
+                  {localErrors.errorEmail}
+                </label>
+              )}
+            </div>
+          </div>
+
+          <div className={styles.formRow}>
+            <div className={styles.column}>
+              <label className={styles.labelElement}>Date of Birth</label>
+              <TextField value={localFormState.dateOfBirth || " "} />
+            </div>
+
+            <div className={styles.column}>
+              <label className={styles.labelElement}>User Name</label>
+              <TextField value={localFormState.userName || " "} />
+            </div>
+          </div>
+
+          <div className={styles.formRow}>
+            <div className={styles.column}>
+              <label className={styles.labelElement}>Password</label>
+              <TextField value={localFormState.password || " "} />
+            </div>
+
+            <div className={styles.column}>
+              <label className={styles.labelElement}>Gender</label>
+              <TextField value={localFormState.gender || " "} />
+            </div>
+          </div>
           <div className={styles.formRow}>
             <label className={styles.labelElement}>Specialty</label>
             <TextField
@@ -241,7 +362,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 handleOnChange(e, "speciality");
               }}
-              value={localFormState.speciality || " "}
+              value={localFormState.specialization || " "}
             >
               {specialties.map((specialty, index) => (
                 <MenuItem
@@ -253,65 +374,10 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
                 </MenuItem>
               ))}
             </TextField>
-            <>
-              {localErrors.errorSpeciality ? (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorSpeciality}
-                </label>
-              ) : (
-                " "
-              )}
-            </>
-          </div>
-
-          <div className={styles.formRow}>
-            <div className={styles.column}>
-              <label className={styles.labelElement}>Name</label>
-              <TextField
-                value={localFormState.name || " "}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "name");
-                }}
-              />
-              {localErrors.errorName ? (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorName}
-                </label>
-              ) : (
-                " "
-              )}
-            </div>
-            <div className={styles.column}>
-              <label className={styles.labelElement}>Phone</label>
-              <TextField
-                value={localFormState.phone || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "phone");
-                }}
-              />
-              {localErrors.errorPhone ? (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorPhone}
-                </label>
-              ) : (
-                " "
-              )}
-            </div>
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.labelElement}>Email</label>
-            <TextField
-              value={localFormState.email || " "}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleOnChange(e, "email");
-              }}
-            />
-            {localErrors.errorEmail ? (
+            {localErrors.errorSpeciality && (
               <label className={styles.errorLabel}>
-                {localErrors.errorEmail}
+                {localErrors.errorSpeciality}
               </label>
-            ) : (
-              " "
             )}
           </div>
           <div className={styles.submitButton}>

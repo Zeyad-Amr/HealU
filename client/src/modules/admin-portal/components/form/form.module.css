@@ -19,6 +19,7 @@
 
 .formRow {
   margin-bottom: 10px;
+  display: flex;
 }
 
 .labelElement {
@@ -39,7 +40,7 @@
 }
 
 .column {
-  flex: 3; /* Equal width columns */
+  flex: 1; /* Equal width columns */
   margin-right: 20px; /* Adjust spacing between columns */
 }
 
@@ -51,22 +52,24 @@
   font-family: Roboto;
 }
 
-
 .submitButton {
-    background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
-    color: #ffffff;
-    padding: 10px 20px;
-    margin-top: 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 140px; /* Set the fixed width */
-    display: block; /* Make it a block-level element */
-    margin: 0 auto; /* Center the button horizontally */
-  }
-  
-  .submitButton:hover {
-    background: linear-gradient(285.17deg, #008b8b 10.66%, #11a0a0 102.7%); /* Change the hover background color */
-  }
-  
+  background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
+  color: #ffffff;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 140px; /* Set the fixed width */
+  display: block; /* Make it a block-level element */
+  margin: 0 auto; /* Center the button horizontally */
+}
+
+.submitButton:hover {
+  background: linear-gradient(
+    285.17deg,
+    #008b8b 10.66%,
+    #11a0a0 102.7%
+  ); /* Change the hover background color */
+}

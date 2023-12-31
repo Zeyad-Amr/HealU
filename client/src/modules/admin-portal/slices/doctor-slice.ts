@@ -2,11 +2,19 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export interface Doctor {
-  id: number;
-  name?: string;
-  email?: string;
-  phone?: string;
-  speciality?: string;
+  id?: number;
+  ssn: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  gender: string;
+  userName: string;
+  password: string;
+  email: string;
+  phoneNumber: string;
+  specialization: string;
+  clinicId?: number;
+  role: string;
 }
 
 export interface DoctorState {
@@ -22,7 +30,7 @@ export const getDoctors = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .get<Doctor[]>("http://localhost:3003/doctors")
+      .get< any>("https://registration-zf9n.onrender.com/staff/")
       .then((res) => res.data)
       .catch((error) => {
         rejectWithValue(error.message);
@@ -49,7 +57,7 @@ export const addDoctor = createAsyncThunk(
 
 export const getDoctorById = createAsyncThunk(
   " doctors/getDoctorById",
-  async (id: number, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
       .get<Doctor>(`http://localhost:3003/doctors/${id}`)
@@ -62,7 +70,7 @@ export const getDoctorById = createAsyncThunk(
 
 export const deleteDoctor = createAsyncThunk(
   "doctors/deleteDoctor",
-  async (id: number, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
       .delete<Doctor>(`http://localhost:3003/doctors/${id}`)
@@ -76,7 +84,7 @@ export const deleteDoctor = createAsyncThunk(
 export const editDoctor = createAsyncThunk(
   "doctors/editDoctor",
   async (
-    data: { doctorId: number; updatedData: Partial<Doctor> },
+    data: { doctorId: string; updatedData: Partial<Doctor> },
     thunkAPI
   ) => {
     const { rejectWithValue } = thunkAPI;
@@ -107,10 +115,10 @@ const doctorSlice = createSlice({
       state.doctors.push(action.payload as Doctor);
     });
     builder.addCase(deleteDoctor.fulfilled, (state, action) => {
-      const deletedDoctorId = action.payload as number | undefined;
+      const deletedDoctorId = action.payload as string | undefined;
       if (deletedDoctorId !== undefined) {
         state.doctors = state.doctors.filter(
-          (doctor) => doctor.id !== deletedDoctorId
+          (doctor) => doctor.ssn !== deletedDoctorId
         );
       }
     });
@@ -118,7 +126,7 @@ const doctorSlice = createSlice({
       const editedDoctor = action.payload as Doctor | undefined;
       if (editedDoctor !== undefined) {
         state.doctors = state.doctors.map((doctor) =>
-          doctor.id === editedDoctor.id ? editedDoctor : doctor
+          doctor.ssn === editedDoctor.ssn ? editedDoctor : doctor
         );
       }
     });
@@ -126,7 +134,7 @@ const doctorSlice = createSlice({
       const getDoctor = action.payload as Doctor | undefined;
       if (getDoctor !== undefined) {
         state.doctors = state.doctors.map((doctor) =>
-          doctor.id === getDoctor.id ? getDoctor : doctor
+          doctor.ssn === getDoctor.ssn ? getDoctor : doctor
         );
       }
     });
