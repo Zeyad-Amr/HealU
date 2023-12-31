@@ -14,7 +14,7 @@ import { Dispatch } from "react";
 import { addSlot } from "../../slices/addSlotsSlice";
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles({
+export const useStyles = makeStyles({
   textField: {
     width: "591px",
     height: "215px",

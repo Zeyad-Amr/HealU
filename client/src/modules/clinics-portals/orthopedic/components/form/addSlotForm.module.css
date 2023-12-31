@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 .addSlotForm_formContainer {
   width: 650px;
   height: 626px;
@@ -92,7 +94,6 @@
   height: 82px;
   top: 556px;
   left: 1065px;
-  font-family: Roboto !important;
   font-size: 32px !important;
   border-radius: 15px;
   background: #e5e5e5;
@@ -100,7 +101,7 @@
 }
 
 .textElement {
-  width: 231px;
+  width: 238px;
   height: 38px;
   top: 282px;
   left: 667px;
@@ -116,8 +117,6 @@
 .labelElement {
   width: 54px;
   height: 38px;
-  top: 367px;
-  left: 713px;
   font-family: Roboto;
   font-size: 32px;
   font-weight: 400;
@@ -127,6 +126,7 @@
   margin-left: 20px;
   color: #8b8b8b;
 }
+
 
 /* TextField */
 .textField {
