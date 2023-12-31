@@ -18,6 +18,7 @@ const CustomHeader = ({
     <Box>
       <Typography
         variant="h2"
+
         sx={{ marginBottom: "1rem", color: `${titleColor}`, width: "max-content",}}
       >
         {title}
@@ -25,6 +26,7 @@ const CustomHeader = ({
       <Box
         sx={{
           height: "2px",
+
           width: separatorWidth ? `${separatorWidth}` : "3rem",
           backgroundColor: separatorColor
             ? `${separatorColor}`
