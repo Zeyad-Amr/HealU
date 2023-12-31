@@ -1,10 +1,26 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  Grid,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
 import { useRef } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import CustomTextField from "../../../../core/components/CustomTextField";
 import PatientDataHeader from "../patient-profile/PatientDataHeader";
 import PrimaaryBtn from "../../../../core/components/PrimaaryBtn";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateField } from "@mui/x-date-pickers/DateField";
+import CustomHeader from "../../../../core/components/CustomHeader";
+import HeaderComponent from "../header";
 const Signup = () => {
   const initialValues = {
     userName: "",
@@ -26,13 +42,17 @@ const Signup = () => {
     password: Yup.string().required("Password Should be entered"),
     firstName: Yup.string().required("First Name Should be entered"),
     secondName: Yup.string().required("Second Name Should be entered"),
-    gender: Yup.string().required(),
-    DOB: Yup.string().required(),
-    SSN: Yup.number().required(),
-    email: Yup.string().required(),
-    phone: Yup.string()
+    gender: Yup.string().required("Gender Should be entered"),
+    DOB: Yup.string().required("Date Of Birth Should be entered"),
+    SSN: Yup.string()
+      .required("SSN Should be entered")
       .matches(/^[0-9]+$/, "Must be only digits")
-      .required()
+      .max(14, "phone number should be 14 number")
+      .min(14, "phone number should be 14 number"),
+    email: Yup.string().required("Email Should be entered"),
+    phone: Yup.string()
+      .required("Phone Should be entered")
+      .matches(/^[0-9]+$/, "Must be only digits")
       .max(11, "phone number should be 11 number")
       .min(11, "phone number should be 11 number"),
     emergencyContactName: Yup.string().required(
@@ -54,43 +74,68 @@ const Signup = () => {
       sx={{
         width: "100vw",
         height: "100vh",
-        background: " linear-gradient(285deg, #01B6B6 10.66%, #13D2DE 102.7%)",
+        overflow: "hidden",
       }}
     >
       <Box
         sx={{
-          height: "95vh",
-          width: "90vw",
+          overflow: "hidden",
+          width: "100vw",
+          height: "100vh",
+          background:
+            " linear-gradient(285deg, #01B6B6 10.66%, #13D2DE 102.7%)",
+          borderTopLeftRadius: "100rem",
+          borderTopRightRadius: "100rem",
           position: "absolute",
           left: "50%",
           top: "50%",
           transform: "translate(-50%, -50%)",
+          zIndex: "-1",
+        }}
+      ></Box>
+      <Box
+        sx={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "#1f1f1f",
+          zIndex: "-2",
+        }}
+      ></Box>
+      <HeaderComponent />
+      <Box
+        sx={{
+          height: "87vh",
+          width: "95vw",
+          margin:"0 auto",
+
           backgroundColor: "white",
           borderRadius: "15px",
-          padding: "3rem",
+          padding: "2rem 3rem",
           overflowY: "auto",
-          boxShadow: "0 0 10px #00000080",
         }}
       >
         <Box
           sx={{
             display: "flex",
             width: "100%",
-            padding: "0 3rem",
-            marginBottom: "1rem",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "space-between",
           }}
         >
+          <CustomHeader title="Sign Up" />
           <Typography
             sx={{
-              fontSize: "2rem",
-              fontWeight: "600",
               width: "100%",
-              textAlign: "center",
+              textAlign: "right",
+              cursor: "pointer",
+              color: "secondary.main",
             }}
           >
-            Sign Up
+            Already has an account?
           </Typography>
         </Box>
         <Formik
@@ -111,7 +156,7 @@ const Signup = () => {
             <Box component="form" onSubmit={handleSubmit} noValidate>
               <PatientDataHeader title="Personal Data" />
               <Grid container spacing={2}>
-                <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Grid item lg={3} md={3} sm={6} xs={12}>
                   <CustomTextField
                     enable={true}
                     isRequired
@@ -128,7 +173,7 @@ const Signup = () => {
                     }}
                   />
                 </Grid>
-                <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Grid item lg={3} md={3} sm={6} xs={12}>
                   <CustomTextField
                     enable={true}
                     isRequired
@@ -145,24 +190,7 @@ const Signup = () => {
                     }}
                   />
                 </Grid>
-                <Grid item lg={2} md={2} sm={6} xs={12}>
-                  <CustomTextField
-                    enable={true}
-                    isRequired
-                    name="gender"
-                    label="gender"
-                    value={values.gender}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={errors.gender}
-                    touched={touched.gender}
-                    width="100%"
-                    props={{
-                      type: "text",
-                    }}
-                  />
-                </Grid>
-                <Grid item lg={2} md={2} sm={6} xs={12}>
+                <Grid item lg={3} md={3} sm={6} xs={12}>
                   <CustomTextField
                     enable={true}
                     isRequired
@@ -175,12 +203,46 @@ const Signup = () => {
                     touched={touched.DOB}
                     width="100%"
                     props={{
-                      type: "text",
+                      type: "date",
                     }}
                   />
                 </Grid>
+                <Grid item lg={3} md={3} sm={6} xs={12}>
+                  <FormControl>
+                    <Typography>Gender</Typography>
+                    <RadioGroup
+                      sx={{ height: "4rem" }}
+                      row
+                      name="gender"
+                      value={values.gender}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    >
+                      <FormControlLabel
+                        value="male"
+                        control={<Radio required size="small" />}
+                        label="Male"
+                      />
+                      <FormControlLabel
+                        value="female"
+                        control={<Radio required size="small" />}
+                        label="Female"
+                      />
+                    </RadioGroup>
+                    <FormHelperText
+                      sx={{
+                        color: "#FF5630",
+                        paddingLeft: "1rem",
+                      }}
+                    >
+                      {handleFormSchema.isValidSync(values) || (
+                        <div>{errors.gender}</div>
+                      )}
+                    </FormHelperText>
+                  </FormControl>
+                </Grid>
 
-                <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Grid item lg={3} md={3} sm={6} xs={12}>
                   <CustomTextField
                     enable={true}
                     isRequired
@@ -197,7 +259,7 @@ const Signup = () => {
                     }}
                   />
                 </Grid>
-                <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Grid item lg={3} md={3} sm={6} xs={12}>
                   <CustomTextField
                     enable={true}
                     isRequired
@@ -214,7 +276,7 @@ const Signup = () => {
                     }}
                   />
                 </Grid>
-                <Grid item lg={2} md={2} sm={6} xs={12}>
+                <Grid item lg={3} md={3} sm={6} xs={12}>
                   <CustomTextField
                     enable={true}
                     isRequired
@@ -231,7 +293,7 @@ const Signup = () => {
                     }}
                   />
                 </Grid>
-                <Grid item lg={2} md={2} sm={6} xs={12}>
+                <Grid item lg={3} md={3} sm={6} xs={12}>
                   <CustomTextField
                     enable={true}
                     isRequired
@@ -281,7 +343,7 @@ const Signup = () => {
                     touched={touched.password}
                     width="100%"
                     props={{
-                      type: "text",
+                      type: "password",
                     }}
                   />
                 </Grid>
@@ -329,7 +391,11 @@ const Signup = () => {
             </Box>
           )}
         </Formik>
-        <PrimaaryBtn title="Sign Up" Func={() => handleSubmit()} />
+        <PrimaaryBtn
+          title="Sign Up"
+          Func={() => handleSubmit()}
+          sx={{ width: "15rem", margin: "1rem auto 0" }}
+        />
       </Box>
     </Box>
   );
