@@ -9,22 +9,45 @@ export const get_appointment_data = async (req: Request, res: Response) => {
 
         const appointment = (await axios.get(`${process.env.Appointment_URL}/appointments/${appointmentId}`)).data
 
-        const [doctorRes, patientRes, recordRes, medicalHistoryRes] = await Promise.all([
-            axios.get(`${process.env.Registration_URL}/staff/doctor/${appointment.doctorId}`),
-            axios.get(`${process.env.Registration_URL}/staff/patient/${appointment.patientId}`),
+        let errors: any[] = []
+        const [doctorRes, patientRes, recordRes, medicalHistoryRes] = await Promise.allSettled([
+            axios.get(`${process.env.Registration_URL}/staff/${appointment.doctorId}`),
+            axios.get(`${process.env.Registration_URL}/patient/${appointment.patientId}`),
             axios.get(`${process.env.EMR_URL}/record/patient/${appointment.patientId}`),
             axios.get(`${process.env.EMR_URL}/medical-history/${appointment.patientId}`),
         ])
-        const doctorData = doctorRes.data.data
-        const patientData = patientRes.data.data
-        const patientRecord = recordRes.data[0]
-        const medicalHistory = medicalHistoryRes.data[0]
+
+        let doctorData = {};
+        if (doctorRes.status === 'fulfilled') {
+            doctorData = doctorRes.value.data.data
+        } else {
+            errors.push(doctorRes.reason)
+        }
+        let patientData = {};
+        if (patientRes.status === 'fulfilled') {
+            patientData = patientRes.value.data.data
+        } else {
+            errors.push(patientRes.reason)
+        }
+        let patientRecord = {};
+        if (recordRes.status === 'fulfilled') {
+            patientRecord = recordRes.value.data
+        } else {
+            errors.push(recordRes.reason)
+        }
+        let medicalHistory = {};
+        if (medicalHistoryRes.status === 'fulfilled') {
+            medicalHistory = medicalHistoryRes.value.data[0]
+        } else {
+            errors.push(medicalHistoryRes.reason)
+        }
 
         return res.status(200).json({
             doctor: doctorData,
             patient: patientData,
             patientRecord,
-            medicalHistory
+            medicalHistory,
+            errors
         })
     } catch (error: any) {
         const err = errorHandler(error)
@@ -44,17 +67,20 @@ export const get_previous_appointments = async (req: Request, res: Response) => 
 
 
         let appointments: any[] = appointmentsRes.data
+        // get the completed appointments only 
         appointments = appointments.filter((item) => {
             return item.status === 2
         })
 
-        const appointmentIds = appointments.map((item) => { item._id })
-        const clinicIds = appointments.map((appointment: any) => (appointment.clinicId))
-        const filterByAppointmentId = (item: any) => {
-            appointmentIds.includes(item.AppointmentID)
+        const appointmentIds = appointments.map((item) => item._id)
+        function filterByAppointmentId(item: any) {
+            return appointmentIds.includes(item.AppointmentID)
         }
-        const prescriptions = prescriptionsRes.data.filter(filterByAppointmentId)
+        let prescriptions = prescriptionsRes.data
+        // get prescriptions assigned to these appointments
+        prescriptions = prescriptionsRes.data.filter(filterByAppointmentId)
 
+        const clinicIds = appointments.map((appointment: any) => (appointment.clinicId))
         let clinics = (await axios.get(`${process.env.Admin_URL}/api/v1/clinic`)).data.data.clinics
         clinics = clinics.filter((clinic: any) => {
             return clinicIds.includes(clinic.id)
@@ -63,18 +89,15 @@ export const get_previous_appointments = async (req: Request, res: Response) => 
         const doctorIds = appointments.map((appointment: any) => (appointment.doctorId))
         let doctors: any[] = [];
 
-
-
         for await (const doctorId of new Set(doctorIds)) {
             const doctor = (await axios.get(`${process.env.Registration_URL}/staff/${doctorId}`)).data.data
             doctors.push(doctor)
         }
 
-
-
         appointments = appointments.map((appointment) => {
             const doctor = doctors.find((doctor) => doctor.userId === appointment.doctorId)
             const clinic = clinics.find((clinic: any) => clinic.id === appointment.clinicId)
+            const prescription = prescriptions.find((pres: any) => pres.AppointmentID === appointment._id)
 
             return {
                 appointmentId: appointment._id,
@@ -87,12 +110,12 @@ export const get_previous_appointments = async (req: Request, res: Response) => 
                     name: clinic.name,
                     description: clinic.description
                 },
+                prescription
             }
         })
 
         return res.status(200).json({
             appointments,
-            prescriptions
         })
 
     } catch (error: any) {
@@ -166,8 +189,6 @@ export const get_all_slots = async (req: Request, res: Response) => {
 
         console.log(slotsWithDates);
 
-
-
         /* 
         get clinic ids from slots
         get doctor ids from slots
@@ -201,29 +222,6 @@ export const get_all_slots = async (req: Request, res: Response) => {
                 date: slot.date,
             }
         })
-
-        console.log(slotsWithDates);
-
-
-        /*
-        {
-            slotId: '658f1886aadce3fc8458c47a',
-            doctor: {
-                id:13,
-                name:'Zeyad Amr'
-            },
-            clinic: {
-                id:5,
-                name:'Dental clinic'
-            },
-            time: '11:00',
-            weekDay: 'Monday',
-            booked: true,
-            __v: 0,
-            date: 2023-12-18T11:00:00.000Z,
-        }
-
-          */
 
         return res.status(200).json({
             slots: slotsWithDates,
