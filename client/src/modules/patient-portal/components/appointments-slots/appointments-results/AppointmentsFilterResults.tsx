@@ -29,10 +29,13 @@ const AppointmentsFilterResults = ({
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
+
     } while (color === "#FFFFFF" || color === "#EEEAFF"); 
+
 
     return color;
   }
+
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -53,6 +56,7 @@ const AppointmentsFilterResults = ({
     const formattedDate = dateTime.toLocaleDateString("en-US", dateOptions);
     const formattedTime = dateTime.toLocaleTimeString("en-US", timeOptions);
     return [formattedDate, formattedTime];
+
   };
 
   const slotsData = [
@@ -238,6 +242,7 @@ const AppointmentsFilterResults = ({
                       {formatDate(slot.date)[1]}
                     </>
                   }
+
                 />
                 <CardContent>
                   <Typography variant="h6" sx={{ color: "#00000080" }}>
