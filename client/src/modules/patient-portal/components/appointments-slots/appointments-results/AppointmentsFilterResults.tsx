@@ -272,6 +272,7 @@ const AppointmentsFilterResults = ({
                         textAlign: "center",
                         padding: "0.2rem",
                         color: "secondary.main",
+                        cursor : "pointer"
                       }}
                     >
                       Book
