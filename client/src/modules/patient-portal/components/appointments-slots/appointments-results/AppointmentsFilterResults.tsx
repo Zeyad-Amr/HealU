@@ -8,6 +8,7 @@ import {
   Box,
 } from "@mui/material";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
+import { useState } from "react";
 
 interface AppointmentsFilterResultsPropsI {
   resultData?: any[];
@@ -38,23 +39,23 @@ const AppointmentsFilterResults = ({
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
 
-    date.setHours(date.getHours() - 2);
-
     const dateOptions: any = {
+      weekday: "short",
+      day: "2-digit",
+      month: "short",
       year: "numeric",
-      month: "long",
-      day: "numeric",
     };
+
     const timeOptions: any = {
-      hour: "numeric",
-      minute: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
     };
-    const dateTime = new Date(dateString);
 
-    const formattedDate = dateTime.toLocaleDateString("en-US", dateOptions);
-    const formattedTime = dateTime.toLocaleTimeString("en-US", timeOptions);
-    return [formattedDate, formattedTime];
+    const formattedDate = date.toLocaleDateString("en-US", dateOptions);
+    const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
 
+    return { formattedDate, formattedTime };
   };
 
   const slotsData = [
@@ -210,15 +211,31 @@ const AppointmentsFilterResults = ({
     },
   ];
 
+  // const [searchDay, setSearchDay] = useState(""); 
+
+  // const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearchDay(event.target.value); 
+  // };
+
+  // const filteredSlots = slotsData.filter((slot: any) =>
+  //   slot.weekDay.toLowerCase().includes(searchDay.toLowerCase())
+  // );
+
+
   return (
     <Box sx={{ overflowY: "auto" }}>
+      {/* <input
+        type="text"
+        placeholder="Search by day..."
+        value={searchDay}
+        onChange={handleSearchChange}
+      /> */}
       <Grid container spacing={2}>
         {slotsData.map((slot: any, index: number) => {
           return (
-            <Grid key={index} item lg={3} md={3} sm={6} xs={12}>
+            <Grid key={index} item lg={3} md={3} sm={6} xs={12} minWidth={270}>
               <Card
                 sx={{
-                  maxWidth: 345,
                   backgroundColor: "#EEEFFF",
                   boxShadow: "none",
                   borderRadius: "10px",
@@ -233,36 +250,33 @@ const AppointmentsFilterResults = ({
                       {getInitials(slot.doctor.name)}
                     </Avatar>
                   }
-                  title={
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginBottom: "1px",
-                        cursor: "pointer",
+                  title={'Dr. ' + slot.doctor.name}
+                  subheader={slot.clinic.name}
+                  
+                />
+                <CardContent sx={{ paddingBottom :"10px !important", paddingTop :"2px !important"}}>
+                  <Box sx={{ display: "flex", justifyContent: "space-between" , alignItems : "center" }}>
+                  <Typography variant="h6" color="text.secondary">
+                    {formatDate(slot.date).formattedDate}
+                    <br />
+                    {formatDate(slot.date).formattedTime}
+                  </Typography>
+                    <Box
+                      sx={{
+                        outline: "none",
+                        borderWidth: "1.9px",
+                        borderColor: " secondary.main",
+                        borderStyle: "solid",
+                        borderRadius: "6px",
+                        width: "4rem",
+                        textAlign: "center",
+                        padding: "0.2rem",
+                        color: "secondary.main",
                       }}
                     >
-                      <span>{slot.doctor.name}</span>
-                      <AddBoxRoundedIcon
-                        sx={{ color: "secondary.main", fontSize: "1.8rem" }}
-                      />
-                    </div>
-                  }
-                  subheader={
-                    <>
-                      {formatDate(slot.date)[0]} <br></br>
-                      {formatDate(slot.date)[1]}
-                    </>
-                  }
-                />
-                <CardContent>
-                  <Typography variant="h6" sx={{ color: "#00000080" }}>
-                    {slot.clinic.name}
-                  </Typography>
-                  <Typography variant="subtitle1" color="text.secondary">
-                    {slot.clinic.description}
-                  </Typography>
+                      Book
+                    </Box>
+                  </Box>
                 </CardContent>
               </Card>
             </Grid>
