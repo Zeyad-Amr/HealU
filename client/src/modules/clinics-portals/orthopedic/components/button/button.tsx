@@ -1,6 +1,7 @@
 import React, { MouseEvent, FormEvent } from "react";
 import Button from "@mui/material/Button";
 import classes from "./button.module.css";
+import PlusIcon from "./plusIcon";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 interface ButtonProps {
@@ -38,6 +39,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
       }
     >
       <span className={classes[classStyle as string]}> {text} </span>
+      <PlusIcon  />
     </Button>
   );
 };

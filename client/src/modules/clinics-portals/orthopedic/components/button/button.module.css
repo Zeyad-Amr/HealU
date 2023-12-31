@@ -78,4 +78,10 @@
 }
 
 
+.icon {
+  margin-right: 5px; /* Adjust margin as needed to control the space between the icon and text */
+  width: 16px; /* Adjust icon width as needed */
+  height: 16px; /* Adjust icon height as needed */
+}
+
 

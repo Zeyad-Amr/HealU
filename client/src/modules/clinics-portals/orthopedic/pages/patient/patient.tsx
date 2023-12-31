@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 import { addSlotActions } from "../../slices/addSlotsSlice";
 import BlockContainer from "../../components/block/blockContainer";
+import MyContainer from "../../components/block2/blockContainer2";
 
 const Patient = () => {
   const isVisible = useSelector((state: RootState) => state.slots.isVisible);
@@ -20,11 +21,9 @@ const Patient = () => {
           content={""}
           classStyle="block"
         />
-        <BlockContainer
-          headerContent={"History"}
-          content={""}
-          classStyle="block2"
-        />
+        <MyContainer
+        headerContent={"History"}
+        classStyle="block2"/>
       </div>
       <BlockContainer 
         headerContent={"Diagnoses"}
