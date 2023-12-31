@@ -7,6 +7,7 @@ import {
   Grid,
   Box,
 } from "@mui/material";
+import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 
 interface AppointmentsFilterResultsPropsI {
   resultData?: any[];
@@ -29,13 +30,10 @@ const AppointmentsFilterResults = ({
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-
-    } while (color === "#FFFFFF" || color === "#EEEAFF"); 
-
+    } while (color === "#FFFFFF" || color === "#EEEAFF");
 
     return color;
   }
-
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -235,14 +233,28 @@ const AppointmentsFilterResults = ({
                       {getInitials(slot.doctor.name)}
                     </Avatar>
                   }
-                  title={slot.doctor.name}
+                  title={
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginBottom: "1px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <span>{slot.doctor.name}</span>
+                      <AddBoxRoundedIcon
+                        sx={{ color: "secondary.main", fontSize: "1.8rem" }}
+                      />
+                    </div>
+                  }
                   subheader={
                     <>
                       {formatDate(slot.date)[0]} <br></br>
                       {formatDate(slot.date)[1]}
                     </>
                   }
-
                 />
                 <CardContent>
                   <Typography variant="h6" sx={{ color: "#00000080" }}>
