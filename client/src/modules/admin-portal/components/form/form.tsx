@@ -35,6 +35,7 @@ const formStyles = makeStyles({
     fontSize: "20px",
     fontFamily: "Roboto",
     backgroundColor: "#f5f5f5",
+    fontColor: "#000000",
   },
   textElement: {
     fontSize: "20px",

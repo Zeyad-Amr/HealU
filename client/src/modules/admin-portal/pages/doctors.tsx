@@ -66,7 +66,6 @@ const AddDoctor = () => {
         <AddForm formTitle={"Add Doctor"} />
       )}
       <TableComponent />
-      <TableComponent />
     </div>
   );
 };

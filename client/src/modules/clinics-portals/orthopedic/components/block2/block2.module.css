@@ -66,11 +66,10 @@
   left: 1px;
   flex: 1; /* Each form container takes equal width */
   -ms-flex-align: center;
-  
   margin-bottom: 1px
 }
 
-form {
+.form {
   top: 300px;
   display: flex;
   flex-direction: column;

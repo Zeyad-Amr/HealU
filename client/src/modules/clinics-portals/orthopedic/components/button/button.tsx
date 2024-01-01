@@ -39,7 +39,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
       }
     >
       <span className={classes[classStyle as string]}> {text} </span>
-      <PlusIcon  />
+      {/* <PlusIcon  /> */}
     </Button>
   );
 };

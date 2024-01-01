@@ -47,11 +47,12 @@ const TableComponent = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log('Dispatching getDoctors');
     dispatch(getDoctors() as any);
-  }, [dispatch]);
+  }, []);
+
   const handleDelete = async (doctorId: string) => {
-    await dispatch(deleteDoctor(doctorId) as any);
-    dispatch(getDoctors() as any);
+    dispatch(deleteDoctor(doctorId) as any);
   };
   // const handleEdit = (
   //   doctorId: number,
@@ -114,57 +115,57 @@ const TableComponent = () => {
                   </TableCell>
 
                   <TableCell
-                    key={`${rowIndex}-column1`}
+                    key={`${rowIndex}-column2`}
                     className={styles.column1}
                   >
                     {row.userName}
                   </TableCell>
 
                   <TableCell
-                    key={`${rowIndex}-column2`}
+                    key={`${rowIndex}-column3`}
                     className={styles.column2}
                   >
                     {row.firstName}
                   </TableCell>
                   <TableCell
-                    key={`${rowIndex}-column2`}
+                    key={`${rowIndex}-column4`}
                     className={styles.column2}
                   >
                     {row.lastName}
                   </TableCell>
                   <TableCell
-                    key={`${rowIndex}-column3`}
+                    key={`${rowIndex}-column5`}
                     className={styles.column3}
                   >
                     {row.specialization}
                   </TableCell>
                   <TableCell
-                    key={`${rowIndex}-column4`}
+                    key={`${rowIndex}-column6`}
                     className={styles.column4}
                   >
                     {row.phoneNumber}
                   </TableCell>
                   <TableCell
-                    key={`${rowIndex}-column5`}
+                    key={`${rowIndex}-column7`}
                     className={styles.column4}
                   >
                     {row.email}
                   </TableCell>
                   <TableCell
-                    key={`${rowIndex}-column5`}
+                    key={`${rowIndex}-column8`}
                     className={styles.column4}
                   >
                     {row.dateOfBirth}
                   </TableCell>
                   <TableCell
-                    key={`${rowIndex}-column5`}
+                    key={`${rowIndex}-column9`}
                     className={styles.column4}
                   >
                     {row.ssn}
                   </TableCell>
 
                   <TableCell
-                    key={`${rowIndex}-column6`}
+                    key={`${rowIndex}-column10`}
                     className={styles.column5}
                   >
                     <div
@@ -175,7 +176,7 @@ const TableComponent = () => {
                     </div>
                   </TableCell>
                   <TableCell
-                    key={`${rowIndex}-column7`}
+                    key={`${rowIndex}-column11`}
                     className={styles.column6}
                   >
                     <div className={styles.addIcon}>

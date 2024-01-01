@@ -30,7 +30,7 @@ export const getDoctors = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .get< any>("https://registration-zf9n.onrender.com/staff/")
+      .get<any>("http://localhost:3003/data")
       .then((res) => res.data)
       .catch((error) => {
         rejectWithValue(error.message);
@@ -109,7 +109,7 @@ const doctorSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getDoctors.fulfilled, (state, action) => {
-      state.doctors = action.payload as Doctor[];
+      state.doctors = action.payload as any;
     });
     builder.addCase(addDoctor.fulfilled, (state, action) => {
       state.doctors.push(action.payload as Doctor);
