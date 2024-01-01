@@ -5,7 +5,7 @@ require('dotenv').config();
 async function createRecord(req, res) {   //Create new record
   const {
     AppointmentID, Weight, Length,
-    ServicesDescription, RecommendedActionDescription,
+    ServicesDescription, RecommendedActionDescription, MedicalTests,
     Vital, Vaccines, EyeMeasurements, NutritionData,
   } = req.body;
 
@@ -37,22 +37,25 @@ async function createRecord(req, res) {   //Create new record
 
     insertRecord(PatientID, AppointmentID, ClinicID, RDate, Weight, Length, (insertedRecordID) => {
       if (Vital != null && Object.keys(Vital).length !== 0) {      //Check if the patient's vital signs data has been obtained at the clinic.(Not NULL)
-        insertVital(insertedRecordID, Vital, () => { });
+        insertVital(insertedRecordID, Vital, () => {});
       }
       if (ServicesDescription !== "") {       //Check if patient had a additional service in the clinic (Not NULL)
-        insertServices(insertedRecordID, ServicesDescription, () => { });
+        insertServices(insertedRecordID, ServicesDescription, () => {});
       }
       if (RecommendedActionDescription !== "") {   //Check if patient had a recommended action in the clinic (Not NULL)
-        insertRecommendedAction(insertedRecordID, RecommendedActionDescription, () => { });
+        insertRecommendedAction(insertedRecordID, RecommendedActionDescription, () => {});
+      }
+      if (MedicalTests.length > 0) {   //Check if DR told patient to do any test 
+        insertMedicalTests(PatientID, insertedRecordID, MedicalTests, () => {});
       }
       if (Vaccines.length > 0) {
-        insertVaccines(insertedRecordID, Vaccines, () => { });
+        insertVaccines(insertedRecordID, Vaccines, () => {});
       }
       if (EyeMeasurements != null && Object.keys(EyeMeasurements).length !== 0) {
-        insertEyeMeasurement(insertedRecordID, EyeMeasurements, () => { });
+        insertEyeMeasurement(insertedRecordID, EyeMeasurements, () => {});
       }
       if (NutritionData != null && Object.keys(NutritionData).length !== 0) {
-        insertNutrition(insertedRecordID, NutritionData, () => { });
+        insertNutrition(insertedRecordID, NutritionData, () => {});
       }
       console.log(`New Record is created successfully with ClinicID  ${ClinicID}`);
       res.status(201).json({ message: `New Record is created successfully with ClinicID ${ClinicID}`});
@@ -114,7 +117,8 @@ function generateRecordQuery(joinConditions, whereConditions) {   // Function to
   vital.VitalID, vital.BloodPressure, vital.RespirationRate, vital.HeartRate, vital.DiabeticTest, vital.SPO2,
   vaccines.VaccinesID, vaccines.VName, vaccines.VType, vaccines.VDate,
   eyemeasurement.EyeMeasurementID, eyemeasurement.LeftEye, eyemeasurement.RightEye,
-  nutrition.NutritionID, nutrition.DietPlan, nutrition.Inbody
+  nutrition.NutritionID, nutrition.DietPlan, nutrition.Inbody,
+  medicaltests.ID, medicaltests.TestID, medicaltests.TestDescription
 
   FROM record
   LEFT JOIN services ON record.RecordID = services.RecordID
@@ -123,6 +127,7 @@ function generateRecordQuery(joinConditions, whereConditions) {   // Function to
   LEFT JOIN vaccines ON record.RecordID = vaccines.RecordID
   LEFT JOIN eyemeasurement ON record.RecordID = eyemeasurement.RecordID
   LEFT JOIN nutrition ON record.RecordID = nutrition.RecordID
+  LEFT JOIN medicaltests ON record.RecordID = medicaltests.RecordID
   ${joinConditions}
   WHERE record.RecordID IS NOT NULL ${whereConditions}`;
 
@@ -132,8 +137,17 @@ function generateRecordQuery(joinConditions, whereConditions) {   // Function to
 function processQueryResult(result) {          //Function to process the query result and build the record map
   const recordMap = {};
 
+  // Create a set to store unique IDs for each type
+  const uniqueServicesIDs = new Set();
+  const uniqueRecommendedActionIDs = new Set();
+  const uniqueVitalIDs = new Set();
+  const uniqueVaccinesIDs = new Set();
+  const uniqueEyeMeasurementIDs = new Set();
+  const uniqueNutritionIDs = new Set();
+  const uniqueIDs = new Set();
+
   result.forEach((row) => {
-    const { RecordID, ServicesID, RecommendedActionID, VitalID, VaccinesID, EyeMeasurementID, NutritionID } = row;
+    const { RecordID, ServicesID, RecommendedActionID, VitalID, VaccinesID, EyeMeasurementID, NutritionID, ID } = row;
 
     if (!recordMap[RecordID]) {
       recordMap[RecordID] = {
@@ -147,36 +161,47 @@ function processQueryResult(result) {          //Function to process the query r
         CreatedAt: row.CreatedAt,
         Services: [],
         RecommendedAction: [],
+        MedicalTests: [],
         Vital: [],
         Vaccines: [],
         EyeMeasurement: [],
         Nutrition: [],
       };
     }
-    if (ServicesID != null) {        // Check if ServicesID is not null 
+    if (ServicesID != null && !uniqueServicesIDs.has(ServicesID)) {        // Check if ServicesID is not null 
+      uniqueServicesIDs.add(ServicesID);
       recordMap[RecordID].Services.push({ ServicesDescription: row.ServicesDescription });
     }
 
-    if (RecommendedActionID != null) {       // Check if RecommendedActionID is not null 
+    if (RecommendedActionID != null && !uniqueRecommendedActionIDs.has(RecommendedActionID)) {        // Check if RecommendedActionID is not null 
+      uniqueRecommendedActionIDs.add(RecommendedActionID);
       recordMap[RecordID].RecommendedAction.push({ RecommendedActionDescription: row.RecommendedActionDescription });
     }
 
-    if (VitalID != null) {       // Check if VitalID is not null 
-      recordMap[RecordID].Vital.push({
-        BloodPressure: row.BloodPressure, RespirationRate: row.RespirationRate, HeartRate: row.HeartRate,
+    if (ID != null && !uniqueIDs.has(ID)) {        // Check if ID is not null 
+      uniqueIDs.add(ID);
+      recordMap[RecordID].MedicalTests.push({ TestID: row.TestID, TestDescription: row.TestDescription });
+    }
+
+    if (VitalID != null && !uniqueVitalIDs.has(VitalID)) {        // Check if VitalID is not null 
+      uniqueVitalIDs.add(VitalID);
+      recordMap[RecordID].Vital.push({BloodPressure: row.BloodPressure, RespirationRate: row.RespirationRate, HeartRate: row.HeartRate,
         DiabeticTest: row.DiabeticTest, SPO2: row.SPO2,
       });
     }
 
-    if (VaccinesID != null) {      // Check if VaccinesID is not null 
+    if (VaccinesID != null && !uniqueVaccinesIDs.has(VaccinesID)) {        // Check if VaccinesID is not null 
+      uniqueVaccinesIDs.add(VaccinesID);
       recordMap[RecordID].Vaccines.push({ VaccineName: row.VName, VaccineType: row.VType, VaccineDate: row.VDate });
     }
 
-    if (EyeMeasurementID != null) {       // Check if EyeMeasurementID is not null 
+    if (EyeMeasurementID != null && !uniqueEyeMeasurementIDs.has(EyeMeasurementID)) {        // Check if EyeMeasurementID is not null 
+      uniqueEyeMeasurementIDs.add(EyeMeasurementID);
       recordMap[RecordID].EyeMeasurement.push({ LeftEye: row.LeftEye, RightEye: row.RightEye });
     }
 
-    if (NutritionID != null) {        // Check if NutritionID is not null
+    if (NutritionID != null && !uniqueNutritionIDs.has(NutritionID)) {        // Check if NutritionID is not null 
+      uniqueNutritionIDs.add(NutritionID);
       recordMap[RecordID].Nutrition.push({ DietPlan: row.DietPlan, Inbody: row.Inbody });
     }
   });
@@ -206,6 +231,32 @@ async function insertRecommendedAction(RecordID, RecommendedActionDescription, c
   const insertedRecommendedActionID = RecommendedActionResult.insertId;
   console.log("New RecommendedAction is created with RecommendedActionID:", insertedRecommendedActionID);
   callback();
+}
+//==============================================================================================================
+async function insertMedicalTests(PatientID, RecordID, Tests, callback) {  //insert into MedicalTest table
+  const sql_query_MedicalTests = `INSERT INTO medicaltests (PatientID, RecordID, TestDescription) VALUES (?, ?, ?)`;
+  Promise.all(
+    Tests.map((test) => {
+      return new Promise((resolve, reject) => {
+        connection.query(sql_query_MedicalTests, [PatientID, RecordID, test.TestDescription], (TestsErr, TestsResult) => {
+          if (TestsErr) {
+            console.error("Error creating test:", TestsErr);
+            reject(TestsErr);
+          } else {
+            const insertedtestID = TestsResult.insertId;
+            console.log("New test is created with testID:", insertedtestID);
+            resolve(TestsResult);
+          }
+        });
+      });
+    })
+  )
+    .then(() => {
+      callback();
+    })
+    .catch((error) => {
+      console.error("Error inserting test data:", error);
+    });
 }
 //==============================================================================================================
 async function insertVital(RecordID, Vital, callback) {  //insert into Vital Sign table
@@ -258,9 +309,28 @@ async function insertNutrition(RecordID, NutritionData, callback) {  //insert in
   callback();
 }
 //====================================================================================================================
+async function updateMedicalTestByID(req, res) { // Update Medical Test ID 
+  const testID = req.params.medicaltestId; 
+  const newTestID = req.body.Storage_TestID; 
+  try {
+    const updateQuery = 'UPDATE medicaltests SET TestID = ? WHERE ID = ?';
+    const [result] = await connection.promise().query(updateQuery, [newTestID, testID]);
+
+    if (result.affectedRows > 0) {
+      res.status(200).json({ message: 'Medical test updated successfully.' });
+    } else {
+      res.status(404).json({ message: `Medical test with ID ${testID} not found.` });
+    }
+  } catch (error) {
+    console.error('Error updating medical test:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+//====================================================================================================================
 module.exports = {
   createRecord,
   getRecord,
   getRecordByRecordID,
-  getRecordByPatientID
+  getRecordByPatientID,
+  updateMedicalTestByID
 };

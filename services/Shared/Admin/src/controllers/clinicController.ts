@@ -3,6 +3,27 @@ import {Request, Response} from 'express';
 import asyncErrorCatching from '../utils/asyncErrorCatching';
 import {Op} from 'sequelize';
 
+
+const createClinics = (req: Request, res: Response) => {
+    const {data} = req.body
+
+    data.forEach(async (clinic: any) => {
+        await Clinic.create({
+            name: clinic.name,
+            description: clinic.description,
+            operatingHours: clinic.operatingHours,
+            doctorsIds: clinic.doctorsIds
+        })
+    })
+
+    res
+        .status(201)
+        .json({
+            status: 'success',
+            data: null,
+        })
+}
+
 const createQueryWhereClause = (req: Request) => {
     const whereClause: any = {};
 
@@ -45,8 +66,6 @@ const createQueryOptions = (req: Request) => {
 const getAllClinics = asyncErrorCatching(async (req: Request, res: Response) => {
 
     const options = createQueryOptions(req);
-
-    console.log(options)
 
     const clinics = await Clinic.findAll(options);
 
@@ -175,6 +194,7 @@ export default {
     createClinic,
     updateClinic,
     deleteClinic,
+    createClinics
 };
 
 

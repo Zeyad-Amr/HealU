@@ -10,7 +10,6 @@ const ClinicService = sequelize.define('ClinicService', {
     name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
     },
     description: {
         type: DataTypes.STRING,
@@ -19,7 +18,7 @@ const ClinicService = sequelize.define('ClinicService', {
         type: DataTypes.INTEGER,
     },
 }, {
-    timestamps: false,
+    timestamps: true,
 });
 
 export default ClinicService;
