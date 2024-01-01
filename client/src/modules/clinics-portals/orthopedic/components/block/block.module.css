@@ -1,114 +1,51 @@
 /* BlockComponent.css */
+.mainContainer{
+  margin-left: 100px;
+
+}
 .block {
   width: 393px;
-  height: 250px;
+  height: 300px;
   top: 170px;
   left: 79px;
   border-radius: 15px;
   background: linear-gradient(131.75deg, #01b6b6 2.18%, #13d2de 100%);
-  margin: 10px;
   display: "flex";
   font-family: Roboto;
   font-size: 14px;
   font-weight: 600;
   line-height: 38px;
   letter-spacing: 0em;
-  text-align: center;
-  -webkit-text-fill-color: #FFFFFF;
-  /* Add these styles to your CSS file */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1px; /* Adjust the gap as needed for spacing between fields */
-  }
-
-  input {
-    background-color: transparent; /* Make the input transparent */
-    padding: 8px;
-    background-color: transparent; /* Make the input transparent */
-    border: none; /* Remove the border */
-    outline: none; /* Remove the outline */
-    box-shadow: none; /* Remove the box shadow */
-    border-radius: 4px;
-  }
-
-
-
-}
-
-.block2 {
-  width: 1367px;
-  height: 250px;
-  top: 170px;
-  left: 492px;
-  border-radius: 15px;
-  border: 1px;
-  background: linear-gradient(119.45deg, #006d6d 1.3%, #002426 100%);
-  display: "flex";
-  border: 1px solid #13d2de;
-  margin: 10px;
-  font-family: Roboto;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 38px;
-  letter-spacing: 0em;
-  text-align: center;
-  -webkit-text-fill-color: #FFFFFF;
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1px; /* Adjust the gap as needed for spacing between fields */
-  }
-
-  input {
-    background-color: transparent; /* Make the input transparent */
-    padding: 8px;
-    background-color: transparent; /* Make the input transparent */
-    border: none; /* Remove the border */
-    outline: none; /* Remove the outline */
-    box-shadow: none; /* Remove the box shadow */
-    border-radius: 4px;
-  }
-
-  
-
-
-  
+  -webkit-text-fill-color: #ffffff;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  margin-right: 10px;
 }
 
 .block3 {
-  width: 1440px;
-  height: 250px;
-  position: relative;
-  top: 20px;
-  left: 14px;
-  background-color: #f0f0f0;
-  border: 1px solid #01b6b6;
+  margin-top: 10px;
+  height: 300px;
+  width: 1792px;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  margin-bottom: 1px;
+  padding-bottom: 20px;
+  background: #FFFFFF;
+  border: 1px solid #13d2de;
   font-family: Roboto;
   font-size: 14px;
   font-weight: 600;
   line-height: 38px;
   letter-spacing: 0em;
   text-align: center;
-  -webkit-text-fill-color: #000000;
-
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1px; /* Adjust the gap as needed for spacing between fields */
-  }
-
-  input {
-    background-color: transparent; /* Make the input transparent */
-    padding: 8px;
-    background-color: transparent; /* Make the input transparent */
-    border: none; /* Remove the border */
-    outline: none; /* Remove the outline */
-    box-shadow: none; /* Remove the box shadow */
-    border-radius: 4px;
-  }
-
-
+  -webkit-text-fill-color: #ffffff;
+  flex-direction: column;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+

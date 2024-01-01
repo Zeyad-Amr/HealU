@@ -30,8 +30,8 @@ export const getDoctors = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .get<any>("http://localhost:3003/data")
-      .then((res) => res.data)
+      .get<any>("http://localhost:3003/doctors")
+      .then((res) => console.log(res.data.data))
       .catch((error) => {
         rejectWithValue(error.message);
       });

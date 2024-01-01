@@ -1,12 +1,12 @@
 import React from "react";
-import classes from "./block2.module.css";
+import classes from "./diagnosisBlock.module.css";
 
-const MyContainer = ({
+const DiagnosisBlock = ({
   headerContent,
   classStyle,
 }: {
   headerContent: string;
-  classStyle: string;
+  classStyle?: string;
 }) => {
   return (
     <div className={classes[classStyle as string]}>
@@ -115,81 +115,4 @@ const MyContainer = ({
   );
 };
 
-export default MyContainer;
-/*import React from "react";
-import classes from "./block2.module.css"; // Import your CSS module
-
-const MyContainer = ({
-  headerContent,
-  classStyle,
-}: {
-  headerContent: string;
-  classStyle: string;
-}) => {
-  return (
-    <div className={classes[classStyle as string]}>
-      <h2 className={classes.centeredHeader}>{headerContent}</h2>
-
-      <div className={classes[classStyle]}>
-        <div className={classes.formField}>
-          <h2>{"Drugs"}</h2>
-          <form>
-            <div>
-              <label htmlFor="name">*</label>
-              <input type="text" id="username" name="username" placeholder="Enter your name" />
-            </div> 
-            <div>
-              <label htmlFor="weight">*</label>
-              <input type="text" id="weight" name="weight" placeholder="Enter your weight" />
-            </div>
-            <div>
-              <label htmlFor="height">*</label>
-              <input type="text" id="height" name="height" placeholder="Enter your height" />
-            </div>
-          </form>
-        </div>
-
-        <div>
-          <h2>{"Illnesses"}</h2>
-          <form>
-          < div>
-              <label htmlFor="name"> *</label>
-              <input type="text" id="username" name="username" placeholder="Enter your name" />
-            </div> 
-
-            <div>
-              <label htmlFor="weight">*</label>
-              <input type="text" id="weight" name="weight" placeholder="Enter your weight" />
-            </div>
-          </form>
-        </div>
-
-        <div>
-          <h2>{"Operations and Tests"}</h2>
-          <form>
-              <div>
-                <label htmlFor="name">*</label>
-                <input type="text" id="username" name="username" placeholder="Enter your name" />
-              </div> 
-
-              <div>
-              <label htmlFor="weight">*</label>
-              <input type="text" id="weight" name="weight" placeholder="Enter your weight" />
-              </div>
-              <div>
-              <label htmlFor="height">*</label>
-              <input type="text" id="height" name="height" placeholder="Enter your height" />
-              </div>
-              <div>
-
-              <label htmlFor="age">*</label>
-              <input type="text" id="age" name="age" placeholder="Enter your age" />
-              </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default MyContainer;*/
+export default DiagnosisBlock;

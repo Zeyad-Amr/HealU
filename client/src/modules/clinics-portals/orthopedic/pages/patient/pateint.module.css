@@ -6,3 +6,38 @@
   border-radius: 15px;
   position: absolute;
 }
+
+
+.pageContainer {
+  width: fit-content;
+  height: 100vh; /* Make the container take the full height of the viewport */
+  margin: auto; /* Push the container to the right */
+}
+
+.flexContainer {
+  display: flex;
+
+}
+
+.block3 {
+  margin-top: 10px;
+  height: 300px;
+  width: 1792px;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  margin-bottom: 1px;
+  padding-bottom: 20px;
+  background: #FFFFFF;
+  border: 1px solid #13d2de;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: center;
+  -webkit-text-fill-color: #ffffff;
+  flex-direction: column;
+}
+
+/* Add other styles as needed */
