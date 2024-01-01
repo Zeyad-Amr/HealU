@@ -24,14 +24,13 @@ import {
   GridRowModel,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
-import ExaminationScreen from "../Examination/container";
 
 let id: string = "";
 const initialRows: GridRowsProp = [
   {
     Slot: new Date(2023, 11, 10, 10, 30, 0, 0),
     Name: "abram Gad",
-    id: "658f2f080ac4f2704ae1a238",
+    id: "6591b693d27e9449b0240242",
   },
   {
     Slot: new Date(2023, 12, 10, 10, 30, 0, 0),

@@ -5,64 +5,16 @@ import { Grid } from "@mui/material";
 import "./patientData.css";
 import Item from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import { useAppDispatch } from "../../../../../../core/store/index";
-import { useSelector } from "react-redux";
-import { fetchPatientData, PatientsState } from "../../../slices/patient-slice";
 import "./patientData.css";
-import Button from "@mui/material/Button";
+import { appointmentMedicalHistory } from "../../../slices/appointment-slice";
+interface propsData {
+  MedicalyHistory: appointmentMedicalHistory;
+}
 
-const HistoryInfo = () => {
-  const dispatch = useAppDispatch();
-  const patientState: PatientsState = useSelector(
-    (state: any) => state.patients
-  );
-  const [selectedPatient, setSelectedPatient] = useState<PatientsState>({
-    patients: [
-      {
-        PatientID: 0,
-        Illnesses: [
-          {
-            IllnessDescription: "",
-          },
-        ],
-        Operations: [
-          {
-            OperationName: "",
-            OperationDate: "",
-          },
-        ],
-        MedicalTests: [
-          {
-            TestID: "",
-            TestDescription: "",
-          },
-        ],
-        Complaints: [
-          {
-            ComplaintDescription: "",
-          },
-        ],
-        Drugs: [
-          {
-            DrugName: "",
-            DrugDose: "",
-            DrugDuration: "",
-          },
-        ],
-      },
-    ],
-  } as unknown as PatientsState);
-  const handleclick = () => {
-    dispatch(fetchPatientData(5));
-    setSelectedPatient(patientState);
-  };
-  useEffect(() => {
-    dispatch(fetchPatientData(5));
-    setSelectedPatient(patientState);
-  }, [selectedPatient]);
+const HistoryInfo = (props: propsData) => {
   return (
     <>
-      <div className="history" onClick={handleclick}>
+      <div className="history">
         <div className="mid">
           <Item>
             <p>History</p>
@@ -76,9 +28,9 @@ const HistoryInfo = () => {
               </div>
 
               <Item style={{ fontSize: "7px" }}>
-                {selectedPatient === undefined
+                {props.MedicalyHistory === undefined
                   ? null
-                  : selectedPatient.patients[0]?.Drugs.map((item: any) => (
+                  : props.MedicalyHistory.Drugs?.map((item: any) => (
                       <h1>{item.DrugName}</h1>
                     ))}
               </Item>
@@ -91,11 +43,11 @@ const HistoryInfo = () => {
               </div>
               <div className="ill">
                 <Item style={{ fontSize: "7px" }}>
-                  {selectedPatient === undefined
+                  {props.MedicalyHistory === undefined
                     ? null
-                    : selectedPatient.patients[0]?.Illnesses.map(
-                        (item: any) => <h1>{item.IllnessDescription}</h1>
-                      )}
+                    : props.MedicalyHistory.Illnesses?.map((item: any) => (
+                        <h1>{item.IllnessDescription}</h1>
+                      ))}
                 </Item>
               </div>
             </div>
@@ -117,11 +69,11 @@ const HistoryInfo = () => {
 
               <Grid container>
                 <Grid item xs>
-                  {selectedPatient === undefined
+                  {props.MedicalyHistory === undefined
                     ? null
-                    : selectedPatient.patients[0]?.MedicalTests.map(
-                        (item: any) => <h1>{item.TestDescription}</h1>
-                      )}
+                    : props.MedicalyHistory.MedicalTests?.map((item: any) => (
+                        <h1>{item.TestDescription}</h1>
+                      ))}
                 </Grid>
                 <Divider
                   orientation="vertical"
@@ -133,11 +85,11 @@ const HistoryInfo = () => {
                   }}
                 />
                 <Grid item xs>
-                  {selectedPatient === undefined
+                  {props.MedicalyHistory === undefined
                     ? null
-                    : selectedPatient.patients[0]?.Operations.map(
-                        (item: any) => <h1>{item.OperationName}</h1>
-                      )}
+                    : props.MedicalyHistory.Operations?.map((item: any) => (
+                        <h1>{item.OperationName}</h1>
+                      ))}
                 </Grid>
               </Grid>
             </div>

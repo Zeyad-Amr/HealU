@@ -16,18 +16,41 @@ import Icon from "@mui/material/Icon";
 import { useAppDispatch } from "../../../../../core/store";
 import { AddPrescreptions } from "../../slices/prescreption-slice";
 import { AddRecord, Record } from "../../slices/record-slice";
+import {
+  appointmentData,
+  appointmentPatientRecord,
+  appointmentMedicalHistory,
+} from "./../../slices/appointment-slice";
+import {
+  getAllAppointmentData,
+  appointmentState,
+} from "../../slices/appointment-slice";
+import { useSelector } from "react-redux";
+
 const ExaminationScreen = (props: any) => {
   const dispatch = useAppDispatch();
+  const appointmentState: appointmentState = useSelector(
+    (state: any) => state.appointment
+  );
+
+  useEffect(() => {
+    dispatch(getAllAppointmentData(props.appointmentID));
+    // setAppointmentData(appointmentState.appointment);
+    console.log(appointmentState);
+  }, []);
   const [prescreptionData, setPrescreptionData] = useState<prescreptionData>({
     AppointmentID: props.appointmentID,
-    DoctorName: "Dr. Abram Gad",
+    DoctorName:
+      appointmentState.appointment?.doctor?.firstName +
+      " " +
+      appointmentState.appointment?.doctor?.lastName,
     Diagnosis: "",
     ExtraNotes: "",
     Drugs: [],
   } as prescreptionData);
 
   const [recordData, setRecordData] = useState<Record>({
-    AppointmentID: "658f2f080ac4f2704ae1a238",
+    AppointmentID: props.appointmentID,
     Weight: 0,
     Height: 0,
     ServicesDescription: "",
@@ -62,6 +85,10 @@ const ExaminationScreen = (props: any) => {
 
   const handleDataFromServices = (data: serviceData) => {
     setDataFromServices(data);
+    setRecordData((prevData) => ({
+      ...prevData,
+      ServicesDescription: data.ServiceName.join(", "),
+    }));
   };
 
   const handleDataFromDiagnosiss = (data: diagnosisData) => {
@@ -123,7 +150,19 @@ const ExaminationScreen = (props: any) => {
 
   return (
     <Container maxWidth="lg" className="container">
-      <PatientSection />
+      <PatientSection
+        patient={appointmentState.appointment?.patient}
+        patientRecord={
+          appointmentState.appointment.patientRecord
+            ? appointmentState.appointment.patientRecord[0]
+            : ({} as appointmentPatientRecord)
+        }
+        medicalHistory={
+          appointmentState.appointment.medicalHistory
+            ? appointmentState.appointment.medicalHistory
+            : ({} as appointmentMedicalHistory)
+        }
+      />
       <Diagnosis DataFromDiagnosis={handleDataFromDiagnosiss} />
       <div className="AddBtns">
         <Button fullWidth variant="contained" onClick={openPrescriptionModal}>

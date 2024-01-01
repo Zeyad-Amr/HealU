@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import exp from "constants";
 
 export interface VitalSingns {
   BloodPressure: string;
@@ -53,8 +52,14 @@ export const AddRecord = createAsyncThunk(
     const { rejectWithValue } = thunkApi;
     try {
       const response = await axios.post(
-        "https://emr-sevice.onrender.com/record",
-        data
+        "https://healu-api-gateway.onrender.com/api/emr/record",
+        data,
+        {
+          headers: {
+            "auth-token":
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY",
+          },
+        }
       );
       console.log(response.data);
       return response.data;
