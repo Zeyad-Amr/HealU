@@ -1,16 +1,14 @@
-import CustomizedSnackbar from "./components/doctor-slots/CustomizedSnackbar";
 import { useSelector } from "react-redux";
-import { RootState } from "./state/store";
-import NavBar from "./components/navBar/NavBar";
-import DashBoard from "./components/dashBoard/DashBoard";
+import { RootState } from "../../state/store";
+import NavBar from "../../components/navBar/NavBar";
+import DashBoard from "../../components/dashBoard/DashBoard";
+import CustomizedSnackbar from "../../components/doctor-slots/CustomizedSnackbar";
 
-function App() {
+const DashBoardPage = () => {
   const SnackbarState = useSelector((state: RootState) => state.snackbar);
   return (
     <>
       <NavBar />
-      {/* <PersonCard />
-    <Examination /> */}
       <DashBoard />
       <CustomizedSnackbar
         message={SnackbarState.snackbar.message}
@@ -19,6 +17,5 @@ function App() {
       />
     </>
   );
-}
-
-export default App;
+};
+export default DashBoardPage;
