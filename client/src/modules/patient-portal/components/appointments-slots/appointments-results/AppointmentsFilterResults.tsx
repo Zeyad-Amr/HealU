@@ -6,22 +6,36 @@ import {
   Typography,
   Grid,
   Box,
+  Button,
 } from "@mui/material";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import { useState } from "react";
+import React, { Dispatch, SetStateAction } from 'react';
+import AppointmentsBill from "../appointments-bill/AppointmentsBill";
 
 interface AppointmentsFilterResultsPropsI {
-  resultData?: any[];
+  resultData : any[];
 }
 
 const AppointmentsFilterResults = ({
-  resultData,
+  resultData
 }: AppointmentsFilterResultsPropsI) => {
+
+  const [open, setOpen] = useState(false);
+
   function getInitials(name: string) {
     const words = name.split(" ");
     const initials = words.map((word: string) => word.charAt(0).toUpperCase());
     return initials.join("");
   }
+
+ const onOpenDialog = () => {
+  setOpen(true)
+ }
+
+ const onCloseDialog = () => {
+  setOpen(false)
+ }
 
   function getRandomColor() {
     const letters = "0123456789ABCDEF";
@@ -231,7 +245,7 @@ const AppointmentsFilterResults = ({
         onChange={handleSearchChange}
       /> */}
       <Grid container spacing={2}>
-        {slotsData.map((slot: any, index: number) => {
+        {resultData?.map((slot: any, index: number) => {
           return (
             <Grid key={index} item lg={3} md={3} sm={6} xs={12} minWidth={270}>
               <Card
@@ -261,7 +275,8 @@ const AppointmentsFilterResults = ({
                     <br />
                     {formatDate(slot.date).formattedTime}
                   </Typography>
-                    <Box
+                    <Button
+                      onClick={onOpenDialog}
                       sx={{
                         outline: "none",
                         borderWidth: "1.9px",
@@ -276,7 +291,7 @@ const AppointmentsFilterResults = ({
                       }}
                     >
                       Book
-                    </Box>
+                    </Button>
                   </Box>
                 </CardContent>
               </Card>
@@ -284,6 +299,7 @@ const AppointmentsFilterResults = ({
           );
         })}
       </Grid>
+      <AppointmentsBill open={open} handleClose={onCloseDialog} />
     </Box>
   );
 };

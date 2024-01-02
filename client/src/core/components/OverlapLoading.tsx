@@ -1,42 +1,43 @@
-import React, { useEffect } from 'react';
-import { useLoading } from '../services/loading-service';
-import { Box, Typography } from '@mui/material';
+import React, { useEffect } from "react";
+import { useLoading } from "../services/loading-service";
+import { Box, Typography } from "@mui/material";
+import PulseLoader from "react-spinners/PulseLoader";
 import axios from "axios";
 
 const LoadingOverlay = () => {
-    const { loading, setLoadingState } = useLoading();
+  const { loading, setLoadingState } = useLoading();
 
-    useEffect(() => {
-      const requestInterceptor = axios.interceptors.request.use(
-        (config) => {
-          setLoadingState(true);
-          return config;
-        },
-        (error) => {
-          setLoadingState(false);
-          return Promise.reject(error);
-        }
-      );
+  useEffect(() => {
+    const requestInterceptor = axios.interceptors.request.use(
+      (config) => {
+        setLoadingState(true);
+        return config;
+      },
+      (error) => {
+        setLoadingState(false);
+        return Promise.reject(error);
+      }
+    );
 
-      const responseInterceptor = axios.interceptors.response.use(
-        (response: any) => {
-          setLoadingState(false);
-          return response;
-        },
-        (error: any) => {
-          setLoadingState(false);
-          return Promise.reject(error);
-        }
-      );
+    const responseInterceptor = axios.interceptors.response.use(
+      (response: any) => {
+        setLoadingState(false);
+        return response;
+      },
+      (error: any) => {
+        setLoadingState(false);
+        return Promise.reject(error);
+      }
+    );
 
-      return () => {
-        axios.interceptors.request.eject(requestInterceptor);
-        axios.interceptors.response.eject(responseInterceptor);
-      };
-    }, [setLoadingState]);
+    return () => {
+      axios.interceptors.request.eject(requestInterceptor);
+      axios.interceptors.response.eject(responseInterceptor);
+    };
+  }, [setLoadingState]);
 
   return loading ? (
-    <div
+    <Box
       style={{
         position: "fixed",
         top: 0,
@@ -68,9 +69,8 @@ const LoadingOverlay = () => {
           U
         </Typography>
       </Box>
-      {/* <LinearProgress color="primary"/> */}
-      <Typography>Loading...</Typography>
-    </div>
+      <PulseLoader color={"#13D2DE"} loading={true} size={10} />
+    </Box>
   ) : null;
 };
 
