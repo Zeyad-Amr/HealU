@@ -218,7 +218,7 @@ const ExaminationScreen = (props: any) => {
           Done
         </Button>
         <Button variant="contained" onClick={handleSubmitClick}>
-          Submit
+          pay
         </Button>
       </div>
     </Container>

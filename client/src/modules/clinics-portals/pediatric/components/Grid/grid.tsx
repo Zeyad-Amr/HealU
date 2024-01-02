@@ -42,23 +42,6 @@ const convertDate = (date: string) => {
   d.setMinutes(minutes);
   return d;
 };
-const initialRows: GridRowsProp = [
-  {
-    Slot: new Date(2023, 11, 10, 10, 30, 0, 0),
-    Name: "abram Gad",
-    id: "6591b693d27e9449b0240242",
-  },
-  {
-    Slot: new Date(2023, 12, 10, 10, 30, 0, 0),
-    Name: "Nira Yosef",
-    id: "120",
-  },
-  {
-    Slot: new Date(2023, 12, 10, 10, 30, 0, 0),
-    Name: "Mayar fayze",
-    id: "150",
-  },
-];
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -85,7 +68,6 @@ function EditToolbar(props: EditToolbarProps) {
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: "Slot" },
     }));
-    // openModal();
   };
 
   return (
