@@ -1,6 +1,6 @@
 import sequelize from '../db';
 import { DataTypes } from 'sequelize';
-
+import ClinicService from '../models/clinicServiceModel';
 
 const Clinic = sequelize.define('Clinic', {
     id:{
@@ -22,6 +22,13 @@ const Clinic = sequelize.define('Clinic', {
     doctorsIds: {
         type: DataTypes.ARRAY(DataTypes.STRING)
     },
+    defaultServiceId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: ClinicService,
+            key: 'id'
+        },
+    }
 }, {
     timestamps: true,
 });
