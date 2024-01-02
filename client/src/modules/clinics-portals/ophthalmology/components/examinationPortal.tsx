@@ -7,6 +7,8 @@ import {
   Paper,
   TextField,
   Typography,
+  Select,
+  MenuItem
 } from '@mui/material';
 
 const OphthalmologyForm = () => {
@@ -28,6 +30,7 @@ const OphthalmologyForm = () => {
     drugName: '',
     dosage: '',
     time: '',
+    note: '',
   });
 
   const [medicalHistory, setMedicalHistory] = useState({
@@ -64,21 +67,48 @@ const OphthalmologyForm = () => {
   };
 
   const handlePrescriptionSubmit = () => {
-    if (prescriptionData.drugName && prescriptionData.dosage && prescriptionData.time) {
-      const newPrescription = `Prescription: ${prescriptionData.drugName}, Dosage: ${prescriptionData.dosage}, Time: ${prescriptionData.time}`;
-      setPrescriptionData({ drugName: '', dosage: '', time: '' });
+    if (prescriptionData.drugName && prescriptionData.dosage && prescriptionData.time &&prescriptionData.note) {
+      const newPrescription = `Prescription: ${prescriptionData.drugName}, Dosage: ${prescriptionData.dosage}, Time: ${prescriptionData.time},  Note: ${prescriptionData.note}`;
+      setPrescriptionData({ drugName: '', dosage: '', time: '' ,note: ''});
       setOpenPopup((prevState) => ({ ...prevState, prescription: false }));
       setPrescriptionCard(newPrescription);
     }
   };
 
+  const [tests, setTests] = useState([]);
+  const [editTestIndex, setEditTestIndex] = useState(null);
+  
+  
   const handleTestSubmit = () => {
     if (testName) {
+      if (editTestIndex !== null) {
+        // If an edit is in progress, update the existing test
+        const updatedTests:any = [...tests];
+        updatedTests[editTestIndex] = testName;
+        setTests(updatedTests);
+        setEditTestIndex(null);
+      } else {
+        // If not editing, add a new test
+        const updatedTests:any = [...tests, testName];
+        setTests(updatedTests);
+      }
       setOpenPopup((prevState) => ({ ...prevState, tests: false }));
-      setTestCard(`Test: ${testName}`);
       setTestName('');
     }
   };
+  
+  const handleEditTest = (index:any) => {
+    const editedTest = tests[index]; // Fetch the test based on index
+    setOpenPopup((prevState) => ({ ...prevState, tests: true }));
+    setTestName(editedTest);
+    setEditTestIndex(index);
+  };
+  
+  const handleDeleteTest = (index:any) => {
+    const updatedTests = tests.filter((test, idx) => idx !== index);
+    setTests(updatedTests);
+  };
+  
 
   const handleEditDiagnosis = () => {
     setShowEditDiagnosis(true);
@@ -93,8 +123,26 @@ const OphthalmologyForm = () => {
     setOpenPopup((prevState) => ({ ...prevState, prescription: true }));
   };
 
-  const handleEditTest = () => {
-    setOpenPopup((prevState) => ({ ...prevState, tests: true }));
+ 
+
+  const handleOpenServices = () => {
+    setShowServiceModal(true);
+  };
+
+  const [selectedService, setSelectedService] = useState('');
+  const [showServiceModal, setShowServiceModal] = useState(false);
+  const services = ['Service 1', 'Service 2', 'Service 3']; // Ad services here
+
+
+  const handleServiceChange = (event:any) => {
+    setSelectedService(event.target.value);
+  };
+
+  const handleCloseServices = () => {
+    if (selectedService) {
+      setTestCard(`Selected Service: ${selectedService}`);
+    }
+    setShowServiceModal(false);
   };
 
   return (
@@ -231,6 +279,12 @@ const OphthalmologyForm = () => {
               onChange={(e) => setPrescriptionData({ ...prescriptionData, time: e.target.value })}
               fullWidth
             />
+                <TextField
+      label="Note"
+      value={prescriptionData.note}
+      onChange={(e) => setPrescriptionData({ ...prescriptionData, note: e.target.value })}
+      fullWidth
+    />
             <Button variant="contained" color="primary" onClick={handlePrescriptionSubmit}>
               Save Prescription
             </Button>
@@ -240,39 +294,33 @@ const OphthalmologyForm = () => {
 
       {/* Add Test Section */}
       <Grid item xs={4}>
-        <Paper   className="add-section"
-          elevation={3}
-          style={{
-            backgroundColor: '#C3C3C3',
-            padding: '16px',
-            borderRadius: '8px',
-            marginBottom: '16px',
-          }}>
-          <Typography variant="h6">Add Test</Typography>
-          <Button onClick={() => handleOpenPopup('tests')}>Add Test</Button>
-          <Typography>{testCard}</Typography>
-          {testCard && (
-            <Button variant="outlined" onClick={handleEditTest}>
-              Edit
-            </Button>
-          )}
-        </Paper>
-        {/* Test Popup */}
+  <Paper className="add-section" elevation={3} style={{ backgroundColor: '#C3C3C3', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
+    <Typography variant="h6">Add Test</Typography>
+    <Button onClick={() => handleOpenPopup('tests')}>Add Test</Button>
+    {tests.map((test, index) => (
+      <div key={index}>
+        <Typography>{test}</Typography>
+        <Button onClick={() => handleEditTest(index)}>Edit</Button>
+        <Button onClick={() => handleDeleteTest(index)}>Delete</Button>
+      </div>
+    ))}
+    {/* Test Popup */}
     <Modal open={openPopup.tests} onClose={() => handleClosePopup('tests')}>
-          <Paper className="popup">
-            <Typography variant="h6">Add Test</Typography>
-            <TextField
-              label="Test Name"
-              value={testName}
-              onChange={(e) => setTestName(e.target.value)}
-              fullWidth
-            />
-            <Button variant="contained" color="primary" onClick={handleTestSubmit}>
-              Save Test
-            </Button>
-          </Paper>
-        </Modal>
-              </Grid>
+      <Paper className="popup">
+        <Typography variant="h6">{editTestIndex !== null ? 'Edit Test' : 'Add Test'}</Typography>
+        <TextField
+          label="Test Name"
+          value={testName}
+          onChange={(e) => setTestName(e.target.value)}
+          fullWidth
+        />
+        <Button variant="contained" color="primary" onClick={handleTestSubmit}>
+          {editTestIndex !== null ? 'Save Edited Test' : 'Save Test'}
+        </Button>
+      </Paper>
+    </Modal>
+  </Paper>
+</Grid>
 
       {/* Add Services Section */}
       <Grid item xs={4}>
@@ -285,7 +333,40 @@ const OphthalmologyForm = () => {
             marginBottom: '16px'}}
             >
           <Typography variant="h6">Add Services</Typography>
-          <Button onClick={() => handleOpenPopup('services')}>Select Services</Button>
+          <Button onClick={handleOpenServices}>Select Services</Button>
+            <Typography>{testCard}</Typography>
+
+          <Modal open={showServiceModal} onClose={handleCloseServices}>
+            <Paper
+              className="popup"
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                backgroundColor: '#F4F4F4',
+                padding: '16px',
+                borderRadius: '8px',
+              }}
+            >
+              <Typography variant="h6">Select Services</Typography>
+              <Select
+                value={selectedService}
+                onChange={handleServiceChange}
+                variant="outlined"
+                fullWidth
+              >
+                {services.map((service, index) => (
+                  <MenuItem key={index} value={service}>
+                    {service}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Button variant="contained" color="primary" onClick={handleCloseServices}>
+                Close
+              </Button>
+            </Paper>
+          </Modal>
         </Paper>
         {/* Services Popup */}
         <Modal open={openPopup.services} onClose={() => handleClosePopup('services')}>
@@ -298,7 +379,22 @@ const OphthalmologyForm = () => {
           </Paper>
         </Modal>     
 	 </Grid>
+   <Grid container spacing={2}>
+  {/* Rest of your code */}
+  {/* Submit Buttons */}
+  <Grid item xs={12}>
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Button variant="contained" color="primary" style={{ marginRight: '8px' }}>
+        Submit
+      </Button>
+      <Button variant="outlined" color="primary">
+        Pay
+      </Button>
+    </div>
+  </Grid>
+</Grid>
        </Grid>
+       
   );
 };
 
