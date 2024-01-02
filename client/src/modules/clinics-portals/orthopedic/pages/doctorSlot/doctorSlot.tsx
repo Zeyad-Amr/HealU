@@ -1,6 +1,7 @@
 // import { useState } from "react";
 import ButtonComponent from "../../components/button/button";
 import classes from "../../components/button/button.module.css";
+import classSlot from "../../components/form/addSlotForm.module.css";
 import ClassNames from "./doctorSlot.module.css";
 import AddSlotForm from "../../components/form/addSlotForm";
 import SchedulesTable from "../../components/table/schedulesTable";
@@ -36,6 +37,7 @@ const DoctorsSlot = () => {
         </div>
       </div>
       <SchedulesTable schedules={slots} />
+      {/* < div className={classSlot.ddSlotForm_formContainer}> */}
       <AddSlotForm
         isFormVisible={isVisible}
         formTitle="Create New Slot"
@@ -48,7 +50,8 @@ const DoctorsSlot = () => {
         isIncluded={false}
         onAddSlot={true}
       />
-    </div>
+      </div>
+      //  </div>
   );
 };
 export default DoctorsSlot;

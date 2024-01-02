@@ -138,6 +138,7 @@ export const editDoctor = createAsyncThunk(
       )
       .then((res) => res.data)
       .catch((error) => {
+        alert(error.response.data.error);
         rejectWithValue(error.message);
       });
   }
@@ -149,16 +150,31 @@ const doctorSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getDoctors.fulfilled, (state, action) => {
-      state.doctors = (action.payload as any) || [];
+      if(action.payload!==undefined){
+        state.doctors = action.payload as any || [];
+      }
+     
     });
     builder.addCase(addDoctor.fulfilled, (state, action) => {
-      state.doctors.push(action.payload as Doctor);
+      console.log("rawda",action.payload);
+      if(action.payload !==undefined){
+        state.doctors.push(action.payload as Doctor);
+      }
     });
     builder.addCase(deleteDoctor.fulfilled, (state, action) => {
       const deletedDoctorId = action.payload as number | undefined;
       if (deletedDoctorId !== undefined) {
         state.doctors = state.doctors.filter(
           (doctor) => doctor.userId !== deletedDoctorId
+        );
+      }
+    });
+
+    builder.addCase(getDoctors.rejected, (state, action) => {
+      const doctorId = action.payload as number | undefined;
+      if (doctorId !== undefined) {
+        state.doctors = state.doctors.filter(
+          (doctor) => doctor.userId !== doctorId
         );
       }
     });

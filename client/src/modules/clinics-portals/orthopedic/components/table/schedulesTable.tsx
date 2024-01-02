@@ -22,7 +22,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const useStyles = makeStyles({
   box: {
     "& table ": {
-      width: "80%",
+      width: "100%",
     },
   },
   containerA: {
@@ -60,92 +60,91 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
 
   return (
     <div>
-      {!slots && (
-        <Paper
-          sx={{ width: "220vh", overflow: "hidden" }}
-          classes={{ root: classesX.containerA }}
-        >
-          <TableContainer
-            className={styles.customTableContainer}
-            classes={{ root: classesX.box }}
-          >
-            <Table>
-              <TableBody>
-                {schedules.map((row, rowIndex) => (
-                  <TableRow key={rowIndex}>
-                    <TableCell
-                      key={`${rowIndex}-column1`}
-                      className={styles.column1}
-                    >
-                      {row.time}
-                    </TableCell>
-                    <TableCell
-                      key={`${rowIndex}-column2`}
-                      className={styles.column2}
-                    >
-                      <div>{row.patientId}</div>
-                    </TableCell>
-                    <TableCell
-                      key={`${rowIndex}-column3`}
-                      className={styles.column3}
-                    >
-                      <div
-                        onClick={() => {
-                          if (row._id) {
-                            handleClearAppoinment(row._id, row.weekDay);
-                          }
-                        }}
-                        className={styles.addIcon}
-                        style={{ justifyContent: "center", display: "flex" }}
-                      >
-                        <ClearIcon style={{ width: "38px", height: "38px" }} />
-                      </div>
-                      {/* <div>{row.date}</div> */}
-                    </TableCell>
-                    <TableCell
-                      key={`${rowIndex}-column4`}
-                      className={styles.column4}
-                    >
-                      <div
-                        onClick={() => {
-                          if (row.time !== null && row._id) {
-                            handleDelete(row._id, row.weekDay);
-                          }
-                        }}
-                        className={styles.addIcon}
-                        style={{ justifyContent: "center", display: "flex" }}
-                      >
-                        <DeleteIcon style={{ width: "38px", height: "38px" }} />
-                      </div>
-                    </TableCell>
-                    <TableCell
-                      key={`${rowIndex}-column5`}
-                      className={styles.column5}
-                    >
-                      <div
-                        onClick={() => {
-                          if (row.time !== null) {
-                            navigate(`/ExaminationScreen/${row.patientId}`);
-                          }
-                        }}
-                        className={styles.addIcon}
-                        style={{ justifyContent: "center", display: "flex" }}
-                      >
-                        <PreviewIcon
-                          style={{ width: "38px", height: "38px" }}
-                        />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+      {!slots && (<Paper
+      sx={{ width: "70%", overflow: "hidden" }}
+      classes={{ root: classesX.containerA }}
+    >
+      <TableContainer
+        className={styles.customTableContainer}
+        classes={{ root: classesX.box }}
+      >
+        <Table  style={{ width: "100%" }}>
+          <TableBody>
+            {schedules.map((row, rowIndex) => (
+              <TableRow key={rowIndex}>
+                <TableCell
+                  key={`${rowIndex}-column1`}
+                  className={styles.column1}
+                >
+                  {row.time}
+                </TableCell>
+                <TableCell
+                  key={`${rowIndex}-column2`}
+                  className={styles.column2}
+                >
+                  <div>{row.patientId}</div>
+                </TableCell>
+                <TableCell
+                  key={`${rowIndex}-column3`}
+                  className={styles.column3}
+                >
+                  <div
+                    onClick={() => {
+                      if (row._id) {
+                        handleClearAppoinment(row._id, row.weekDay);
+                      }
+                    }}
+                    className={styles.addIcon}
+                    style={{ justifyContent: "center", display: "flex" }}
+                  >
+                    <ClearIcon style={{ width: "38px", height: "38px" }} />
+                  </div>
+                  {/* <div>{row.date}</div> */}
+                </TableCell>
+                <TableCell
+                  key={`${rowIndex}-column4`}
+                  className={styles.column4}
+                >
+                  <div
+                    onClick={() => {
+                      if (row.time !== null && row._id) {
+                        handleDelete(row._id, row.weekDay);
+                      }
+                    }}
+                    className={styles.addIcon}
+                    style={{ justifyContent: "center", display: "flex" }}
+                  >
+                    <DeleteIcon style={{ width: "38px", height: "38px" }} />
+                  </div>
+                </TableCell>
+                <TableCell
+                  key={`${rowIndex}-column5`}
+                  className={styles.column5}
+                >
+                  <div
+                    onClick={() => {
+                      if (row.time !== null) {
+                        navigate(
+                          `/ExaminationScreen/${row.patientId}`
+                        );
+                      }
+                    }}
+                    className={styles.addIcon}
+                    style={{ justifyContent: "center", display: "flex" }}
+                  >
+                    <PreviewIcon style={{ width: "38px", height: "38px" }} />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
       )}
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 // const isSlot = (obj: any): obj is Slot => "time" in obj && "date" in obj;
 // const isSchedule = (obj: any): obj is Schedule =>
