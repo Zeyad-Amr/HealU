@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
 import axios from "../../../../../core/api/api";
 
 interface Doctor {
@@ -64,11 +63,11 @@ interface PatientRecord {
   RecordDate: string;
   CreatedAt: string;
   ////////////////////////////////
-  // our clinical doesn't have them
-  Vital: { VitalDescription: string }[];
-  Vaccines: { VaccinesDescription: string }[];
-  EyeMeasurement: { EyeMeasurementDescription: string }[];
-  Nutrition: { NutritionDescription: string }[];
+  // our clinical doesn't have them 
+  Vital: { VitalDescription: string }[] |null;
+  Vaccines: { VaccinesDescription: string }[]|null;
+  EyeMeasurement: { EyeMeasurementDescription: string }[]|null;
+  Nutrition: { NutritionDescription: string }[]|null;
 }
 
 interface MedicalHistory {

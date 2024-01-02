@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-// import axios from "../../../../../core/api/api";
+import axios from "../../../../../core/api/api";
 import { Appointment } from "./appointmentSlice";
 import dayjs from "dayjs";
 
@@ -31,7 +30,7 @@ const initialState: SlotState = {
 export const fetchSlots = createAsyncThunk("slot/fetchSlots", async () => {
   try {
     const response = await axios.get(
-      `https://appointment-service-y30u.onrender.com/slots/`
+      `appointment/slots/`
     );
     return response.data;
   } catch (error) {
@@ -47,7 +46,7 @@ export const fetchSlotsForDoctor = createAsyncThunk(
       const date = dayjs().day(weekDay).format("YYYY-MM-DD");
 
       const response = await axios.get(
-        `https://appointment-service-y30u.onrender.com/slots/doctor/${doctorId}/date/${date}`
+        `appointment/slots/doctor/${doctorId}/date/${date}`
       );
 
       // Map each item in the array to a Slot instance
@@ -72,7 +71,7 @@ export const createSlotForDoctor = createAsyncThunk(
   async ({ time, weekDay }: { time: string; weekDay: string }) => {
     try {
       const res = await axios.post(
-        `https://appointment-service-y30u.onrender.com/slots/`,
+        `appointment/slots/`,
         {
           doctorId: doctorId,
           time: time,
@@ -92,7 +91,7 @@ export const deleteSlot = createAsyncThunk(
   async (slotId: string) => {
     try {
       await axios.delete(
-        `https://appointment-service-y30u.onrender.com/slots/${slotId}`
+        `appointment/slots/${slotId}`
       );
       return slotId;
     } catch (error) {

@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
 import axios from "../../../../../core/api/api";
 import dayjs from "dayjs";
 
@@ -34,7 +33,7 @@ export const fetchAppointments = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(
-        `https://appointment-service-y30u.onrender.com/appointments/`
+        `/appointment/`
       );
       return response.data;
     } catch (error) {
@@ -49,7 +48,7 @@ export const cancelAppointment = createAsyncThunk(
   async (appointmentId: string) => {
     try {
       await axios.delete(
-        `https://appointment-service-y30u.onrender.com/appointments/${appointmentId}`
+        `appointment/${appointmentId}`
       );
       return appointmentId;
     } catch (error) {
