@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { styled, Theme } from "@mui/material/styles";
 import PatientData from "../components/PatientData";
 import History from "../components/history";
-import DietPlan from "../components/dietPlan";
+import DietInfo from "../components/dietInfo";
 import List from "../components/list";
 import Add from "../components/Add";
 import Button from "../components/Button";
@@ -33,7 +33,11 @@ const NutritionDashBoard = () => {
       component: <Add title="Diet Plan" modalType="dietPlan" />,
       key: "dietPlan",
     },
-    { component: <Add title="Test" modalType="test" />, key: "tests" },
+    { component: <Add title="Tests" modalType="test" />, key: "tests" },
+    {
+      component: <Add title="Services" modalType="services" />,
+      key: "services",
+    },
   ];
   const listComponents = [
     {
@@ -52,6 +56,11 @@ const NutritionDashBoard = () => {
       Content1: "CBC",
       Content2: "Vitamin D",
     },
+    {
+      modalType: "service" as const,
+      Content1: "New Appointment",
+      Content2: "Follow-up Appointment",
+    },
   ];
 
   return (
@@ -59,13 +68,13 @@ const NutritionDashBoard = () => {
       <ContentWrapper>
         <Grid container spacing={13}>
           <Grid item>
-            <PatientData name="John Doe" weight={70} length={175} age={30} />
+            <PatientData name="Mohamed Aly" weight={70} length={175} age={30} />
           </Grid>
           <Grid item>
             <History />
           </Grid>
           <Grid item>
-            <DietPlan />
+            <DietInfo />
             <Grid container spacing={2}>
               {additionalComponents.map((componentData) => (
                 <Grid item key={componentData.key}>
@@ -81,7 +90,7 @@ const NutritionDashBoard = () => {
                     modalType={listData.modalType}
                     title={listData.title}
                     Content1={listData.Content1}
-                    Content2={listData.Content2}
+                    Content2={listData.Content2} 
                   />
                 </Grid>
               ))}

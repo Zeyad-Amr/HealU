@@ -3,7 +3,12 @@ import { styled, Theme } from "@mui/material/styles";
 import { Grid, CardContent, Typography } from "@mui/material";
 import PdfDownloader from "./pdfDownloader";
 
-interface DietPlanProps {}
+interface File {
+  name: string;
+  url: string;
+}
+
+interface DietInfoProps {}
 
 interface Field {
   title: string;
@@ -14,6 +19,21 @@ interface Section {
   title: string;
   component: React.ReactNode;
 }
+
+const InbodyFiles: File[] = [
+  { name: "InBody 1", url: "http://example.com/file1.pdf" },
+  { name: "InBody 2", url: "http://example.com/file2.pdf" },
+  { name: "InBody 3", url: "http://example.com/file3.pdf" },
+  { name: "InBody 4", url: "http://example.com/file4.pdf" },
+];
+
+const DietPlans: File[] = [
+  { name: "Diet Plan 1", url: "http://example.com/fileA.pdf" },
+  { name: "Diet Plan 2", url: "http://example.com/fileB.pdf" },
+  { name: "Diet Plan 3", url: "http://example.com/fileC.pdf" },
+  { name: "Diet Plan 4", url: "http://example.com/fileD.pdf" },
+];
+
 
 const fields: Field[] = [
   { title: "Inbody Score", value: "80/100" },
@@ -27,11 +47,12 @@ const fields: Field[] = [
 const sections: Section[] = [
   {
     title: "Review Inbody",
-    component: <PdfDownloader />,
+    component: <PdfDownloader files={InbodyFiles} />,
   },
   {
     title: "Review Diet Plans",
-    component: <PdfDownloader />,
+    component: <PdfDownloader files={DietPlans} />
+    ,
   },
 ];
 const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
@@ -75,7 +96,7 @@ const FieldTitle = styled(Typography)(({ theme }: { theme: Theme }) => ({
   fontWeight: "bold",
 }));
 
-const DietPlan: React.FC<DietPlanProps> = () => {
+const DietInfo: React.FC<DietInfoProps> = () => {
   return (
     <ContainerWrapper>
       <Grid container spacing={3}>
@@ -119,4 +140,4 @@ const DietPlan: React.FC<DietPlanProps> = () => {
   );
 };
 
-export default DietPlan;
+export default DietInfo;

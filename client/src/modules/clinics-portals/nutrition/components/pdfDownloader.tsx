@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled, Theme } from "@mui/material/styles";
 
 interface File {
   name: string;
   url: string;
+}
+
+interface PdfDownloaderProps {
+  files: File[];
 }
 
 const Container = styled("div")({
@@ -39,16 +43,7 @@ const DownloadButton = styled("button")(({ theme }: { theme: Theme }) => ({
   textDecoration: "none",
 }));
 
-const PdfDownloader: React.FC = () => {
-  const [files, setFiles] = useState<File[]>([
-    { name: "File 1", url: "http://example.com/file1.pdf" },
-    { name: "File 2", url: "http://example.com/file2.pdf" },
-    { name: "File 1", url: "http://example.com/file1.pdf" },
-    { name: "File 2", url: "http://example.com/file2.pdf" },
-    { name: "File 1", url: "http://example.com/file1.pdf" },
-    { name: "File 2", url: "http://example.com/file2.pdf" },
-  ]);
-
+const PdfDownloader: React.FC<PdfDownloaderProps> = ({ files }) => {
   const handleDownload = (file: File) => {
     window.open(file.url, "_blank");
   };

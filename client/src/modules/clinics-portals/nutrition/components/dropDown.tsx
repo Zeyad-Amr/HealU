@@ -3,13 +3,18 @@ import { FormControl, Select, MenuItem, Chip } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { SelectChangeEvent } from "@mui/material/Select";
 
-const Dropdown: React.FC = () => {
+
+interface DropdownProps {
+  options: { value: string; label: string }[];
+}
+
+const Dropdown: React.FC<DropdownProps> = ({ options }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
-  const options = [
-    { value: "cbc", label: "CBC" },
-    { value: "vitamin D", label: "Vitamin D" },
-  ];
+  // const options = [
+  //   { value: "cbc", label: "CBC" },
+  //   { value: "vitamin D", label: "Vitamin D" },
+  // ];
 
   const handleOptionChange = (event: SelectChangeEvent<string[]>) => {
     setSelectedOptions(event.target.value as string[]);

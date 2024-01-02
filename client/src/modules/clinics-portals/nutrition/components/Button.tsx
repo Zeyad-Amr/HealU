@@ -30,7 +30,6 @@ const StyledButton = styled("button")(({ theme }: { theme: Theme }) => ({
   },
   "&:active": {
     backgroundColor: "#004085",
-    boxShadow: "0 5px #666",
     transform: "translateY(4px)",
   },
 }));
