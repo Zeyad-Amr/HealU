@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+// import axios from "../../../../../core/api/api";
 import { Appointment } from "./appointmentSlice";
 import dayjs from "dayjs";
 

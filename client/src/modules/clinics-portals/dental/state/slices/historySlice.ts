@@ -31,7 +31,8 @@ export const fetchHistoryByPatientID = createAsyncThunk(
   async (patientId: number) => {
     try {
       const response = await axios.get(
-        `https://healu-api-gateway.onrender.com/api/emr/medical-history/${patientId}`
+        // `https://healu-api-gateway.onrender.com/api/emr/medical-history/${patientId}`
+        `https://emr-sevice.onrender.com/medical-history/${patientId}`
       );
       return response.data;
     } catch (error) {

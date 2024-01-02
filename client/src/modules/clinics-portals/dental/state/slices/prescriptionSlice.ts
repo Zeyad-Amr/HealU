@@ -28,7 +28,8 @@ export const createPrescriptionForAppointment = createAsyncThunk(
   async (newPrescription: Prescription) => {
     try {
       await axios.post(
-        `https://healu-api-gateway.onrender.com/api/emr/prescription`,
+        // `https://healu-api-gateway.onrender.com/api/emr/prescription`,
+        `https://emr-sevice.onrender.com/prescription`,
         {
           AppointmentID: newPrescription.AppointmentID,
           Diagnosis: newPrescription.Diagnosis,

@@ -38,7 +38,8 @@ export const fetchRecordByPatientID = createAsyncThunk(
     async (patientId: number) => {
       try {
         const response = await axios.get(
-          `https://healu-api-gateway.onrender.com/api/emr/record/patient/${patientId}`
+          // `https://healu-api-gateway.onrender.com/api/emr/record/patient/${patientId}`
+          `https://emr-sevice.onrender.com/record/patient/${patientId}`
         );
         return response.data;
       } catch (error) {
@@ -54,7 +55,9 @@ export const createRecordForAppointment = createAsyncThunk(
     async (newRecord: Record) => {
       try {
         await axios.post(
-          `https://healu-api-gateway.onrender.com/api/emr/record`,
+          // `https://healu-api-gateway.onrender.com/api/emr/record`,
+          `https://emr-sevice.onrender.com/record`,
+
           {
             AppointmentID: newRecord.AppointmentID,
             Services: newRecord.Services,

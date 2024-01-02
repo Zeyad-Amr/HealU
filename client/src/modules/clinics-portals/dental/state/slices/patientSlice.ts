@@ -40,7 +40,8 @@ export const fetchPatientByID = createAsyncThunk(
   async (patientId: number) => {
     try {
       const response = await axios.get(
-        `https://healu-api-gateway.onrender.com/api/registration/patient/${patientId}`
+        // `https://healu-api-gateway.onrender.com/api/registration/patient/${patientId}`
+        `https://registration-zf9n.onrender.com${patientId}`
       );
       return response.data;
     } catch (error) {
