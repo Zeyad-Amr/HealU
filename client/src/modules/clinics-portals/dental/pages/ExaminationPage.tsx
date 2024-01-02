@@ -1,20 +1,28 @@
 import NavBar from "../components/navBar/NavBar";
 import PersonCard from "../components/examination/patientCard/PersonCard";
-import Examination from "../components/examination/Examination";
-import { useEffect } from "react";
+import Patientxamination from "../components/examination/Examination";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import {
+  Examination,
+  fetchExaminationByAppointmentID,
+} from "../state/slices/examinationSlice";
+import { RootState, useAppDispatch } from "../../../../core/store";
+import { useSelector } from "react-redux";
 
 const ExaminationPage = () => {
-  const { patientId } = useParams();
+  const { appointmetId } = useParams();
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-      console.log(patientId);
-  }, [])
-  
+    dispatch(fetchExaminationByAppointmentID(appointmetId ?? ""));
+  }, [dispatch]);
+
   return (
     <>
       <NavBar />
       <PersonCard />
-      <Examination />
+      <Patientxamination />
     </>
   );
 };

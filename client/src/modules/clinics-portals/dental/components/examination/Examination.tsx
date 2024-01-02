@@ -37,7 +37,7 @@ const dentalTests = [
   { label: "X-ray", value: 1 },
   { label: "Panorama", value: 2 },
 ];
-const Examination: React.FC = () => {
+const PatientExamination: React.FC = () => {
   const [modalContent, setModalContent] = useState<React.ReactNode | null>(
     null
   );
@@ -174,4 +174,4 @@ const Examination: React.FC = () => {
   );
 };
 
-export default Examination;
+export default PatientExamination;

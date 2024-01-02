@@ -64,7 +64,7 @@ interface PatientRecord {
   RecordDate: string;
   CreatedAt: string;
   ////////////////////////////////
-  // our clinical doesn't have them 
+  // our clinical doesn't have them
   Vital: { VitalDescription: string }[];
   Vaccines: { VaccinesDescription: string }[];
   EyeMeasurement: { EyeMeasurementDescription: string }[];
@@ -81,20 +81,21 @@ interface MedicalHistory {
   Drugs: { DrugName: string; DrugDuration: string; DrugDose: string }[];
 }
 
-export interface ExaminationState {
+export interface Examination {
   doctor: Doctor;
   patient: Patient;
   patientRecord: PatientRecord[];
   medicalHistory: MedicalHistory;
+}
+
+export interface ExaminationState {
+  examination: Examination;
   loading: boolean;
   error: string;
 }
 
 const initialState: ExaminationState = {
-  doctor: {} as Doctor,
-  patient: {} as Patient,
-  patientRecord: [] as Array<PatientRecord>,
-  medicalHistory: {} as MedicalHistory,
+  examination: {} as Examination,
   loading: false,
   error: "",
 };
@@ -105,7 +106,7 @@ export const fetchExaminationByAppointmentID = createAsyncThunk(
   async (AppointmentID: string) => {
     try {
       const response = await axios.get(`/appointment/${AppointmentID}`);
-      console.log(response);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
@@ -124,10 +125,7 @@ const ExaminationSlice = createSlice({
       })
       .addCase(fetchExaminationByAppointmentID.fulfilled, (state, action) => {
         state.loading = false;
-        state.doctor = action.payload.doctor;
-        state.patient = action.payload.patient;
-        state.patientRecord = action.payload.patientRecord;
-        state.medicalHistory = action.payload.medicalHistory;
+        state.examination = action.payload;
       })
       .addCase(fetchExaminationByAppointmentID.rejected, (state, action) => {
         state.loading = false;
@@ -136,15 +134,5 @@ const ExaminationSlice = createSlice({
       });
   },
 });
-
-export const selectDoctor = (state: { examination: ExaminationState }) =>
-  state.examination.doctor;
-export const selectPatient = (state: { examination: ExaminationState }) =>
-  state.examination.patient;
-export const selectPatientRecord = (state: { examination: ExaminationState }) =>
-  state.examination.patientRecord;
-export const selectMedicalHistory = (state: {
-  examination: ExaminationState;
-}) => state.examination.medicalHistory;
 
 export default ExaminationSlice.reducer;

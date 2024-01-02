@@ -11,6 +11,7 @@ import patientReducer from "../../modules/clinics-portals/dental/state/slices/pa
 import historyReducer from "../../modules/clinics-portals/dental/state/slices/historySlice";
 import prescriptionReducer from "../../modules/clinics-portals/dental/state/slices/prescriptionSlice";
 import dentalRecordReducer from "../../modules/clinics-portals/dental/state/slices/recordSlice";
+import examinationReducer from "../../modules/clinics-portals/dental/state/slices/examinationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     historyReducer,
     prescriptionReducer,
     dentalRecordReducer,
+    examinationReducer
   },
 });
 

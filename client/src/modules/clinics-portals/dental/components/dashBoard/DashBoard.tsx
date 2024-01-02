@@ -82,7 +82,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   ) => {
     if (selectedAppointment === undefined) return;
     // setSelectedAppointment(selectedAppointment);
-    navigate(`/clinic/dental/examination/${selectedAppointment.patientId}`);
+    navigate(`/clinic/dental/examination/${selectedAppointment._id}`);
   };
 
   const handleCloseModal = () => {
