@@ -5,17 +5,17 @@ const Portfolio = () => {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="section-title">
-                            <h2>We Maintain Cleanliness Rules Inside Our Hospital</h2>
+                            <h2>Choose from variety of our services</h2>
                             <img src="/img/section-img.png" alt="#"/>
-                            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit praesent aliquet.
-                                pretiumts</p>
+                            <p>HealU provides a lot of services in different aspects</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-lg-12 col-12">
+                    <div className="col-lg-12 col-9">
+
                         <div className="owl-carousel portfolio-slider">
                             <div className="single-pf">
                                 <img src="/img/pf1.jpg" alt="#"/>
