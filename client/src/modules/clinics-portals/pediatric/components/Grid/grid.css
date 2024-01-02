@@ -32,9 +32,9 @@
 .css-14wibxr-MuiDataGrid-root .MuiDataGrid-withBorderColor {
   border: none !important;
 }
-.MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor.css-1iyq7zh-MuiDataGrid-columnHeaders {
+/* .MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor.css-1iyq7zh-MuiDataGrid-columnHeaders {
   display: none !important;
-}
+} */
 .MuiDataGrid-virtualScrollerRenderZone.css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone {
   gap: 20px !important;
 }

@@ -31,14 +31,17 @@ const Services = () => {
   return (
     <>
       <Container>
-        <Typography
-          gutterBottom
-          variant="h1"
-          color="textSecondary"
-          align="center"
-        >
-          Clinic Services
-        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Typography
+            gutterBottom
+            variant="h1"
+            color="textSecondary"
+            align="center"
+          >
+            Clinic Services
+          </Typography>
+        </Box>
+
         <br></br>
 
         <Box

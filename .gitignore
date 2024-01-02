@@ -3,5 +3,5 @@
 node_modules
 prisma/migrations
 
-
-**dental
+.venv
+__pycache__
