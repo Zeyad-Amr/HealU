@@ -1,16 +1,23 @@
+import React from "react";
+import {styled, Theme} from "@mui/material/styles";
+import Appointments from "./Appointments";
+
+const ContainerWrapper = styled("div")(({theme}: { theme: Theme }) => ({
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+}));
+
+const ContentWrapper = styled("div")({});
+
 const NutritionClinicPortal = () => {
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "90vh",
-      }}
-    >
-      <h1>Nutrition Clinic Portal</h1>
-    </div>
-  );
+    return (
+        <ContainerWrapper>
+            <ContentWrapper>
+                <Appointments/>
+            </ContentWrapper>
+        </ContainerWrapper>
+    );
 };
 
 export default NutritionClinicPortal;
