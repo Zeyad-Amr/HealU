@@ -3,12 +3,23 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import Patient from "./patientSlice";
 
+const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY"
+
 export default interface Slot {
-  id: number;
+  _id?: string;
+  doctorId: number;
+  clinicId: number;
   patient?: Patient;
-  date: string;
+  weekDay: string;
   time: string | null;
 }
+
+// {
+//   "doctorId": 2,
+//   "clinicId": 3,
+//   "time": "21:00",
+//   "weekDay": "Sunday"
+// }
 
 interface SlotsState {
   slots: Slot[];
@@ -27,10 +38,10 @@ const initialStateSlots: SlotsState = {
 export const addSlot = createAsyncThunk(
   "slots/addSlot",
   async (data: Slot, thunkAPI) => {
-    const { time, date } = data;
+    const { time, weekDay } = data;
 
     // Check for empty strings
-    if (!time || !date) {
+    if (!time || !weekDay) {
       return thunkAPI.rejectWithValue({
         message: "Time and date are required fields.",
       });
@@ -38,11 +49,12 @@ export const addSlot = createAsyncThunk(
 
     try {
       const response = await axios.post<Slot>(
-        "http://localhost:3003/slots",
+        "https://healu-api-gateway.onrender.com/api/appointment/slots",
         data,
         {
           headers: {
             "Content-Type": "application/json",
+            "auth-token": authToken,
           },
         }
       );
@@ -59,7 +71,7 @@ export const updateSlot = createAsyncThunk(
   async (id: number, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .patch<Slot>(`http://localhost:3003/slots/${id}`, {
+      .patch<Slot>(`https://healu-api-gateway.onrender.com/api/appointment/slots/${id}`, {
         patient: "   ",
       })
       .then((res) => res.data)
@@ -72,9 +84,16 @@ export const getSlots = createAsyncThunk(
   async (selectedDate: string | void, thunkAPI) => {
     try {
       const response = await axios.get<Slot[]>(
-        `http://localhost:3003/slots?date=${selectedDate}`
-      );
-      return response.data;
+        `https://healu-api-gateway.onrender.com/api/appointment/doctor/:doctorId`, {
+          headers: {
+            "auth-token": authToken,
+          },
+        })
+      return response.data.filter((item: any) => {
+        // Assuming item.date is in the format "YYYY-MM-DDTHH:mm:ss.000Z"
+        const itemDate = new Date(item.date).toISOString().split('T')[0];
+        return itemDate === selectedDate;
+      });
     } catch (error) {
       console.error(error);
       throw error;
@@ -111,7 +130,7 @@ const addSlotSlice = createSlice({
     builder.addCase(addSlot.fulfilled, (state, action) => {
       console.log(action.payload);
       const newSlot = action.payload;
-      if (state.selectedDate === newSlot.date) {
+      if (state.selectedDate === newSlot.weekDay) {
         state.slots.push(newSlot);
       }
     });

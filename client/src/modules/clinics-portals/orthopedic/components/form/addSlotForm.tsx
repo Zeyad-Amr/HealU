@@ -14,6 +14,9 @@ import { Dispatch } from "react";
 import { addSlot } from "../../slices/addSlotsSlice";
 import { makeStyles } from "@mui/styles";
 
+const orthoId = 2;
+const doctorId = 27;
+
 export const useStyles = makeStyles({
   textField: {
     width: "591px",
@@ -89,12 +92,12 @@ const AddSlotForm = ({
     (state: RootState) => state.slots.selectedDate
   );
   const isVisible = useSelector((state: RootState) => state.slots.isVisible);
-  const add = (date: string) => {
+  const add = (weekDay: string) => {
     let generatedId = slots.length + 1;
     const existingSlot = slots.find(
-      (slot) => slot.date === date && slot.time === time
+      (slot) => slot.weekDay === weekDay && slot.time === time
     );
-    const isIdExists = slots.some((slot) => slot.id === slots.length + 1);
+    const isIdExists = slots.some((slot) => slot._id);
     if (isIdExists) {
       generatedId = generatedId + 1;
     }
@@ -106,8 +109,10 @@ const AddSlotForm = ({
       return;
     }
     const data: Slot = {
-      id: generatedId,
-      date,
+      _id: "2389",
+      doctorId: 20,
+      clinicId: 2,
+      weekDay,
       time,
     };
     if (selectedDate === selectedDay) {
@@ -172,9 +177,10 @@ const AddSlotForm = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data: Slot = {
-      id: slots.length + 1,
-      time: `${time} ${period}`,
-      date: selectedDay,
+      time: `${time}`,
+      weekDay: selectedDay,
+      clinicId: orthoId,
+      doctorId: doctorId
     };
     if (selectedDay === "" || time === null || period === null) {
       setError({
@@ -188,7 +194,7 @@ const AddSlotForm = ({
       setTime(null);
       setPeriod(null);
     }
-    onAddSlot && add(data.date);
+    onAddSlot && add(data.weekDay);
     console.log(error);
     if (error.date === "" && error.time === "" && error.period === "") {
       dispatch(addSlotActions.setFormVisibility(false));

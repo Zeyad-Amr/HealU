@@ -39,8 +39,8 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
     await dispatch(deleteSlot(dateId) as any);
     dispatch(getSlots(date) as any);
   };
-  const handleClearAppoinment = async (dateId: number, date: string) => {
-    await dispatch(updateSlot(dateId) as any);
+  const handleClearAppoinment = async (dateId: string, date: string) => {
+    await dispatch(updateSlot(parseInt(dateId)) as any);
     dispatch(getSlots(date) as any);
   };
   
@@ -74,7 +74,7 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                   key={`${rowIndex}-column3`}
                   className={styles.column3}
                 >
-                  <div onClick={() => handleClearAppoinment(row.id, row.date)}>
+                  <div onClick={() => {if (row._id){ handleClearAppoinment(row._id, row.weekDay)}}}>
                     <ClearIcon className={styles.addIcon} />
                   </div>
                   {/* <div>{row.date}</div> */}
@@ -86,7 +86,7 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                   <div
                     onClick={() => {
                       if (row.time !== null) {
-                        handleDelete(row.id, row.date);
+                        handleDelete(row._id, row.weekDay);
                       }
                     }}
                   >
