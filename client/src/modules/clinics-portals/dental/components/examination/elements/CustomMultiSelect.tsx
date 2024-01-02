@@ -24,13 +24,10 @@ interface CustomMultiSelectProps {
 const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
   label,
   options,
-  width = "232px", // Default width or use the provided width
   selectedValues,
   onChange,
   ...props
 }) => {
-  const selectStyle = { width };
-
   return (
     <FormControl>
       <InputLabel>{label}</InputLabel>
@@ -39,15 +36,8 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
         multiple
         value={selectedValues}
         onChange={onChange}
-        style={selectStyle}
         renderValue={(selected) => (
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              overflowY: "auto", // Enable vertical scrolling
-            }}
-          >
+          <div>
             {selected.map((value) => (
               <Chip
                 key={value}
