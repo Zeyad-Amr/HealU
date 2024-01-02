@@ -12,7 +12,6 @@ interface ListProps {
   title?: string;
   Content1: string;
   Content2: string;
-  Price?: string; 
 }
 
 const Tests = [
@@ -114,7 +113,6 @@ const StyledButton = styled(Button)(({ theme }: { theme: Theme }) => ({
     transform: "translateY(4px)",
   },
 }));
-
 const InputWrapper = styled(TextField)(({ theme }: { theme: Theme }) => ({
   marginTop: "5px",
   "& .MuiOutlinedInput-root": {
@@ -147,7 +145,6 @@ const List: React.FC<ListProps> = ({
   title,
   Content1,
   Content2,
-  Price, 
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const [cardVisible, setCardVisible] = useState(false);
@@ -217,39 +214,38 @@ const List: React.FC<ListProps> = ({
             </StyledButton>
           </Modal>
         );
-      case "test":
-        return (
-          <Modal
-            onClose={handleCloseModal}
-            handleShowCard={handleShowCard}
-            modalTitle="Tests"
-          >
-          <Dropdown options={Tests} />
+        case "test":
+          return (
+            <Modal
+              onClose={handleCloseModal}
+              handleShowCard={handleShowCard}
+              modalTitle="Tests"
+            >
+            <Dropdown options={Tests} />
+  
+              <StyledButton type="submit" onClick={handleShowCard}>
+                Save
+              </StyledButton>
+            </Modal>
+          );
+          case "service":
+          return (
+            <Modal
+              onClose={handleCloseModal}
+              handleShowCard={handleShowCard}
+              modalTitle="Services"
+            >
+            <Dropdown options={Services} />
 
-            <StyledButton type="submit" onClick={handleShowCard}>
-              Save
-            </StyledButton>
-          </Modal>
-        );
-        case "service":
-        return (
-          <Modal
-            onClose={handleCloseModal}
-            handleShowCard={handleShowCard}
-            modalTitle="Services"
-          >
-          <Dropdown options={Services} />
-
-            <StyledButton type="submit" onClick={handleShowCard}>
-              Save
-            </StyledButton>
-          </Modal>
-        );
-      default:
-        return null;
-    }
-  };
-
+              <StyledButton type="submit" onClick={handleShowCard}>
+                Save
+              </StyledButton>
+            </Modal>
+          );
+        default:
+          return null;
+      }
+    };
   return (
     <>
       {/* {cardVisible && ( */}

@@ -21,6 +21,7 @@ const Services = [
   { value: "Follow-up Appointment", label: "Follow-up Appointment" },
 ];
 
+
 const prescriptionField = [
   { label: "Drug Name", name: "drugName" },
   { label: "Dose", name: "dose" },

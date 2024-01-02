@@ -13,21 +13,20 @@ import AdminPortal from "../../modules/admin-portal";
 
 class Router {
   static readonly routes: RouteModel[] = [
-    // {
-    //   path: AppRoutes.home,
-    //   element: <LandingPage />,
-    // },
-    // {
-    //   path: AppRoutes.clinicDental,
-    //   element: <DentalClinicPortal />,
-    // },
-    // {
-    //   path: AppRoutes.clinicDermatology,
-    //   element: <DermatologyClinicPortal />,
-    // },
     {
       path: AppRoutes.home,
-      // path: AppRoutes.clinicNutrition,
+      element: <LandingPage />,
+    },
+    {
+      path: AppRoutes.clinicDental,
+      element: <DentalClinicPortal />,
+    },
+    {
+      path: AppRoutes.clinicDermatology,
+      element: <DermatologyClinicPortal />,
+    },
+    {
+      path: AppRoutes.clinicNutrition,
       element: <NutritionClinicPortal />,
     },
     {
