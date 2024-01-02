@@ -2,6 +2,30 @@ import axios from 'axios';
 import { Request, Response } from 'express';
 import { errorHandler } from '../services';
 
+interface CustomRequest extends Request {
+    user: {
+        sub: string
+    }
+}
+
+
+export const get_doctor_slots = async (req: Request, res: Response) => {
+    try {
+        const { date } = req.params
+        const doctorId = (req as CustomRequest).user.sub
+
+        const slots = (await axios.get(`${process.env.Appointment_URL}/slots/doctor/${doctorId}/date/${date}`)).data
+
+
+        return res.status(200).json({
+            slots
+        })
+    } catch (error: any) {
+        const err = errorHandler(error)
+
+        res.status(err?.statusCode ?? 500).json(err)
+    }
+}
 
 export const get_appointment_data = async (req: Request, res: Response) => {
     try {
