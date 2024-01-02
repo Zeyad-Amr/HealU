@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import { styled, Theme } from "@mui/material/styles";
 import { Typography, Grid, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-// import PrescriptionModal from "./modal";
-// import DietPlanModal from "./DietPlanModal";
-// import TestModal from "./testModal";
 import Modal from "./ModalTrial";
 import Dropdown from "./dropDown";
-// import TModal from "./Tmodal";
 import MultiSelect from "./multiSelect";
 
 interface AddProps {
@@ -64,9 +60,6 @@ const prescriptionAdditionalElements = [
   </>,
 ];
 
-// const testFields = [{ label: "Test Name", name: "testName" }];
-// const initialTestData = { testName: "" };
-
 const Container = styled("div")(({ theme }: { theme: Theme }) => ({
   display: "flex",
   flexDirection: "column",
@@ -113,10 +106,6 @@ const Add: React.FC<AddProps> = ({ title, modalType }) => {
     switch (modalType) {
       case "prescription":
         return (
-          // <PrescriptionModal
-          //   onClose={handleCloseModal}
-          //   handleShowCard={handleShowCard}
-          // />
           <Modal
             onClose={handleCloseModal}
             handleShowCard={handleShowCard}
@@ -138,16 +127,10 @@ const Add: React.FC<AddProps> = ({ title, modalType }) => {
         );
       case "test":
         return (
-          // <TestModal
-          //   onClose={handleCloseModal}
-          //   handleShowCard={handleShowCard}
-          // />
           <Modal
             onClose={handleCloseModal}
             handleShowCard={handleShowCard}
             additionalElements={testAdditionalElements}
-            // modals={testFields}
-            // initialData={initialTestData}
             modalTitle="Tests"
           />
         );

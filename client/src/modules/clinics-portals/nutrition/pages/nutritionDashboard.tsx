@@ -4,10 +4,9 @@ import { styled, Theme } from "@mui/material/styles";
 import PatientData from "../components/PatientData";
 import History from "../components/history";
 import DietPlan from "../components/dietPlan";
-import ListPrescription from "../components/list";
+import List from "../components/list";
 import Add from "../components/Add";
 import Button from "../components/Button";
-// import DietPlanModal from "../components/DietPlanModal";
 
 const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
   marginTop: "10px",
@@ -36,18 +35,24 @@ const NutritionDashBoard = () => {
     },
     { component: <Add title="Test" modalType="test" />, key: "tests" },
   ];
-
-  // const additionalComponents = [
-  //   {
-  //     component: <Add title="Prescription" />,
-  //     key: "prescription",
-  //   },
-  //   {
-  //     component: <Add title="Diet Plan" />,
-  //     key: "dietPlan",
-  //   },
-  //   { component: <Add title="Test" />, key: "tests" },
-  // ];
+  const listComponents = [
+    {
+      modalType: "prescription" as const,
+      title: "Vitamin D3",
+      Content1: "250 mcg",
+      Content2: "Once A Week",
+    },
+    {
+      modalType: "dietPlan" as const,
+      Content1: "BreakFast",
+      Content2: "Lunch",
+    },
+    {
+      modalType: "test" as const,
+      Content1: "CBC",
+      Content2: "Vitamin D",
+    },
+  ];
 
   return (
     <ContainerWrapper>
@@ -70,9 +75,16 @@ const NutritionDashBoard = () => {
             </Grid>
 
             <Grid container spacing={2}>
-              <Grid item>
-                <ListPrescription />
-              </Grid>
+              {listComponents.map((listData, index) => (
+                <Grid item key={index}>
+                  <List
+                    modalType={listData.modalType}
+                    title={listData.title}
+                    Content1={listData.Content1}
+                    Content2={listData.Content2}
+                  />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
         </Grid>

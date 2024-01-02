@@ -3,7 +3,6 @@ import { styled, Theme } from "@mui/material/styles";
 import { Button, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid";
-import MultiSelect from "./multiSelect";
 
 interface ModalProps<T> {
   onClose: () => void;
@@ -122,8 +121,6 @@ const Modal = <T extends Record<string, any>>({
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-    // Submit logic here
   };
 
   return (
