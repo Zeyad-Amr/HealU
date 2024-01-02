@@ -13,7 +13,7 @@ router.get('/data/previous-appointments/:patientId', get_previous_appointments)
 router.get('/data/slots', get_all_slots)
 
 
-// get patient previous appointments
+// get doctor's slots in given date
 router.get('/data/slots/:date', get_doctor_slots)
 
 
