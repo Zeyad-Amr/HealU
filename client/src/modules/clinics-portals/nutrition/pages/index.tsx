@@ -1,11 +1,11 @@
 import React from "react";
-import {styled, Theme} from "@mui/material/styles";
-import Appointments from "./Appointments";
+import { styled, Theme } from "@mui/material/styles";
+import NutritionDashBoard from "../pages/nutritionDashboard";
 
-const ContainerWrapper = styled("div")(({theme}: { theme: Theme }) => ({
-    display: "flex",
-    justifyContent: "center",
-    width: "100%",
+const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
+  marginTop: "10px",
+  display: "flex",
+  justifyContent: "center",
 }));
 
 const ContentWrapper = styled("div")({});
@@ -15,6 +15,7 @@ const NutritionClinicPortal = () => {
         <ContainerWrapper>
             <ContentWrapper>
                 <Appointments/>
+<!--                 <NutritionDashBoard /> -->
             </ContentWrapper>
         </ContainerWrapper>
     );
