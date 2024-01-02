@@ -6,6 +6,11 @@ const loginSchema = Joi.object({
     password: Joi.string().min(8).required(),
 })
 
+const bookApptSchema = Joi.object({
+    appointment: Joi.object().length(3).required(),
+    card: Joi.object().length(4).required(),
+})
+
 
 const validate = (input: any, schema: ObjectSchema) => {
     const result = schema.validate(input);
@@ -21,5 +26,6 @@ const validate = (input: any, schema: ObjectSchema) => {
 export default {
     validate,
     loginSchema,
+    bookApptSchema
 
 }
