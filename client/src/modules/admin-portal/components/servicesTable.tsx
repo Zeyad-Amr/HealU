@@ -100,7 +100,7 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
           ) : (
             <IconButton
               aria-label="edit"
-              onClick={() => handleEdit(params.row.id)} // Implement handleEdit function
+              onClick={() => handleEdit(params.row.id)} 
             >
               <Edit />
             </IconButton>
@@ -109,7 +109,7 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
           <IconButton
             aria-label="delete"
             color="warning"
-            onClick={() => handleDelete(params.row.id)} // Implement handleDelete function
+            onClick={() => handleDelete(params.row.id)} 
           >
             <Delete />
           </IconButton>
