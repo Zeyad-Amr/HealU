@@ -11,13 +11,14 @@ const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
 const ContentWrapper = styled("div")({});
 
 const NutritionClinicPortal = () => {
-  return (
-    <ContainerWrapper>
-      <ContentWrapper>
-        <NutritionDashBoard />
-      </ContentWrapper>
-    </ContainerWrapper>
-  );
+    return (
+        <ContainerWrapper>
+            <ContentWrapper>
+                <Appointments/>
+<!--                 <NutritionDashBoard /> -->
+            </ContentWrapper>
+        </ContainerWrapper>
+    );
 };
 
 export default NutritionClinicPortal;
