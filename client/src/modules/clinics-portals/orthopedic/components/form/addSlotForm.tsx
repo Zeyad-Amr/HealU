@@ -16,7 +16,7 @@ import { makeStyles } from "@mui/styles";
 import CloseIcon from "@mui/icons-material/Close";
 
 const orthoId = 2;
-const doctorId = 27;
+const doctorId = 13;
 
 export const useStyles = makeStyles({
   textField: {

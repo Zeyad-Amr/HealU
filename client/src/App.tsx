@@ -9,7 +9,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<DoctorSlot />} />
-        {/* <Route path="/patient" element={<Patient />} /> */}
+        <Route path="/patient" element={<Patient />} />
         <Route path="/addDoctor"  element={<AddDoctor />} />
         <Route path="/ExaminationScreen/:id" element={<Patient />}/>
       </Routes>

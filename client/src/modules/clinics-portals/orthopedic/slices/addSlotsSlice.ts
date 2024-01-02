@@ -3,7 +3,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import Patient from "./patientSlice";
 
-const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY"
+const authToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY";
 
 export default interface Slot {
   _id?: string;
@@ -71,9 +72,12 @@ export const updateSlot = createAsyncThunk(
   async (id: number, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .patch<Slot>(`https://healu-api-gateway.onrender.com/api/appointment/slots/${id}`, {
-        patient: "   ",
-      })
+      .patch<Slot>(
+        `https://healu-api-gateway.onrender.com/api/appointment/slots/${id}`,
+        {
+          patient: "   ",
+        }
+      )
       .then((res) => res.data)
       .catch((error) => rejectWithValue(error.message));
   }
@@ -84,14 +88,24 @@ export const getSlots = createAsyncThunk(
   async (selectedDate: string | void, thunkAPI) => {
     try {
       const response = await axios.get<Slot[]>(
-        `https://healu-api-gateway.onrender.com/api/appointment/doctor/:doctorId`, {
+        `http://localhost:3003/slots?doctorId=13`,
+        {
           headers: {
             "auth-token": authToken,
           },
-        })
+        }
+      );
       return response.data.filter((item: any) => {
-        // Assuming item.date is in the format "YYYY-MM-DDTHH:mm:ss.000Z"
-        const itemDate = new Date(item.date).toISOString().split('T')[0];
+        const dateValue = new Date(item[0].date);
+
+        // Check if dateValue is a valid date
+        if (isNaN(dateValue.getTime())) {
+          console.error(`Invalid date: ${item.date}`);
+          return false; // Skip this item
+        }
+
+        // Convert the valid date to ISO format
+        const itemDate = dateValue.toISOString().split("T")[0];
         return itemDate === selectedDate;
       });
     } catch (error) {
@@ -121,7 +135,7 @@ const addSlotSlice = createSlice({
     },
     setFormVisibility: (state, action: PayloadAction<boolean>) => {
       state.isVisible = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(addSlot.pending, (state, action) => {

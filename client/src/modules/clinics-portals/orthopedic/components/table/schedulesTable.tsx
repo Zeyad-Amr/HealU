@@ -17,7 +17,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PreviewIcon from "@mui/icons-material/Preview";
 import { makeStyles } from "@mui/styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
   box: {
@@ -32,10 +32,12 @@ const useStyles = makeStyles({
   },
 });
 
+
 const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
+  const params = useParams();
   const navigate = useNavigate();
   const classesX = useStyles();
-  const slots = useSelector((state: RootState) => state.slots.slots);
+  // const slots = useSelector((state: RootState) => state.slots.slots);
   const dispatch = useDispatch();
   const handleDelete = async (dateId: string, date?: string) => {
     dispatch(deleteSlot(parseInt(dateId)) as any);

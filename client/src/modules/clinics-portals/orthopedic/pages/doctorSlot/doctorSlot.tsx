@@ -16,7 +16,6 @@ const DoctorsSlot = () => {
   const handleButtonClick = () => {
     dispatch(addSlotActions.setFormVisibility(true));
   };
-
   return (
     <div className={ClassNames.mainContainer}>
       <div className={ClassNames.container}>
