@@ -248,12 +248,53 @@ export const get_all_slots = async (req: Request, res: Response) => {
 
 export const post_examination = async (req: Request, res: Response) => {
     try {
+
         const data = req.body
 
+        const prescriptions = data.prescription
 
+        let prescriptionResponse: any[] = []
+        for await (const prescription of prescriptions) {
+            let prescriptionData = {
+                AppointmentID: data.appointmentId,
+                Diagnosis: data.Diagnosis,
+                ExtraNotes: prescription.ExtraNotes,
+                DoctorName: "",
+                Drugs: [
+                    {
+                        DrugName: prescription.DrugName,
+                        DrugDuration: prescription.DrugDuration,
+                        DrugDose: prescription.DrugDose
+                    }
+                ]
+            }
+            const newPrescription = (await axios.post(`${process.env.EMR_URL}/prescription`, prescriptionData)).data
+            prescriptionResponse.push(newPrescription)
+        }
+
+        const recordData = {
+            AppointmentID: data.appointmentId,
+            Weight: data.weight,
+            Length: data.height,
+            MedicalTests: data.MedicalTests,
+            Vital: data.Vitals,
+            Vaccines: data.Vaccines,
+            EyeMeasurements: data.EyeMeasurements,
+            NutritionData: data.NutritionData,
+            ServicesDescription: "",
+            RecommendedActionDescription: "",
+        }
+
+        const newRecord = (await axios.post(`${process.env.EMR_URL}/record`, recordData)).data
+
+        console.log({
+            recordResponse: newRecord,
+            prescriptionResponse
+        });
 
         return res.status(200).json({
-
+            status: 'success',
+            msg: 'examination added successfully'
         })
 
     } catch (error: any) {
@@ -305,6 +346,7 @@ export const book_appt = async (req: Request, res: Response) => {
 
         // create appointment 
         const appt = await axios.post(`${process.env.Appointment_URL}`)
+        // const invoice/
 
 
 
@@ -319,3 +361,13 @@ export const book_appt = async (req: Request, res: Response) => {
     }
 }
 
+
+
+/*
+    POST book appointment
+    POST add examination
+
+    GET previous appts
+    GET upcoming appts
+    GET user data with photo
+ */
