@@ -1,15 +1,22 @@
+import React from "react";
+import { styled, Theme } from "@mui/material/styles";
+import NutritionDashBoard from "../pages/nutritionDashboard";
+
+const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
+  marginTop: "10px",
+  display: "flex",
+  justifyContent: "center",
+}));
+
+const ContentWrapper = styled("div")({});
+
 const NutritionClinicPortal = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "90vh",
-      }}
-    >
-      <h1>Nutrition Clinic Portal</h1>
-    </div>
+    <ContainerWrapper>
+      <ContentWrapper>
+        <NutritionDashBoard />
+      </ContentWrapper>
+    </ContainerWrapper>
   );
 };
 
