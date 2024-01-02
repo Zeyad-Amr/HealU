@@ -55,15 +55,12 @@
 
 .timeCell {
   flex-grow: 0;
-  width: 100px;
-}
-
-.timeTextStyle {
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
   padding: 8px;
   border-radius: 8px;
   color: white;
   text-align: center;
+  margin-right: 15px !important; 
 }
 
 .patientName {

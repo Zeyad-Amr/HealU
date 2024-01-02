@@ -77,14 +77,10 @@ function SlotsTable(props: {
             <TableRow key={slot._id}>
               <TableCell className={styles.tableCell}>
                 <Stack direction="row" spacing={2} style={{ width: "100%" }}>
-                  <div className={styles.timeCell}>
-                    <Typography
-                      variant="body1"
-                      className={styles.timeTextStyle}
-                    >
-                      {slot.time}
-                    </Typography>
-                  </div>
+                  
+                  <Typography variant="body1" className={styles.timeCell}>
+                    {slot.time}
+                  </Typography>
 
                   <Typography
                     variant="body1"
