@@ -4,9 +4,12 @@ import classes from "./diagnosisBlock.module.css";
 const DiagnosisBlock = ({
   headerContent,
   classStyle,
+  id
 }: {
   headerContent: string;
   classStyle?: string;
+  id:number
+
 }) => {
   return (
     <div className={classes[classStyle as string]}>

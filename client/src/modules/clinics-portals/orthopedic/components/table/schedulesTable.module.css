@@ -63,6 +63,14 @@
   background-color: #b80202;
 }
 
+.column5 {
+  width: 82px;
+  height: 60px;
+  border-radius: 15px;
+  background-color: darkgray;
+}
+
+
 .addIcon {
   width: 38px;
   height: 38px;

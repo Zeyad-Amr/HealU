@@ -27,6 +27,8 @@ const DoctorsSlot = () => {
             text="Create New Slot"
             classStyle="ButtonComponent"
             includeIcon={true}
+            color="white"
+            fontSize="32px"
           />
         </div>
       </div>

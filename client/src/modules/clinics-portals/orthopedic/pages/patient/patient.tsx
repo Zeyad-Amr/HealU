@@ -6,9 +6,13 @@ import { RootState } from "../../slices/combineReducers";
 import { addSlotActions } from "../../slices/addSlotsSlice";
 import classes from "./pateint.module.css";
 import BlockContainer from "../../components/block/blockContainer";
+import { useParams } from "react-router-dom";
 
 const Patient = () => {
+  const { id } = useParams();
+  const parsedId = id ? parseInt(id, 10) : undefined;
   const isVisible = useSelector((state: RootState) => state.slots.isVisible);
+
   const dispatch = useDispatch();
   const handleButtonClick = () => {
     dispatch(addSlotActions.setFormVisibility(true));
@@ -17,11 +21,11 @@ const Patient = () => {
   return (
     <div className={classes.pageContainer}>
       <div className={classes.flexContainer}>
-        <BlockContainer headerContent={"Personal Data"} classStyle="block" />
-        <BlockContainer headerContent={"History"} classStyle=" " />
+        <BlockContainer headerContent={"Personal Data"} classStyle="block" id={parsedId} />
+        <BlockContainer headerContent={"History"} classStyle=" " id={parsedId} />
       </div>
 
-      <BlockContainer headerContent={"Diagnoses"} classStyle="block3" />
+      <BlockContainer headerContent={"Diagnoses"} classStyle="block3" id={parsedId}/>
       <div style={{ marginLeft: "-72.5px", marginTop: "20px" }}>
         <ButtonComponent
           classStyle="buttonPrescription"
@@ -49,7 +53,7 @@ const Patient = () => {
           marginRight="25px"
         />
       </div>
-      <div style={{ marginTop: "20px", marginLeft:"330px" }}>
+      <div style={{ marginTop: "20px", marginLeft: "330px" }}>
         <ButtonComponent
           classStyle="buttonDone"
           text="Done"
