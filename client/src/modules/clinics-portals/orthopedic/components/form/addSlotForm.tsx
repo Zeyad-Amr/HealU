@@ -13,6 +13,7 @@ import { RootState } from "../../slices/combineReducers";
 import { Dispatch } from "react";
 import { addSlot } from "../../slices/addSlotsSlice";
 import { makeStyles } from "@mui/styles";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const useStyles = makeStyles({
   textField: {
@@ -28,6 +29,14 @@ export const useStyles = makeStyles({
   menuItem: {
     fontSize: "40px",
     "& div": {
+      backgroundColor: " #F4F4F4 ",
+      fontFamily: "Roboto !important",
+      fontSize: "32px !important",
+      letterSpacing: "0em",
+      textAlign: "left",
+      color: "black",
+    },
+    "& input": {
       backgroundColor: " #F4F4F4 ",
       fontFamily: "Roboto !important",
       fontSize: "32px !important",
@@ -196,6 +205,12 @@ const AddSlotForm = ({
 
   return isVisible ? (
     <form className={styles[formStyle as string]} onSubmit={handleSubmit}>
+            <div className={styles.closeIcon}>
+        <CloseIcon
+          onClick={() => dispatch(addSlotActions.setFormVisibility(false))}
+          style={{ width: "30px", height: "30px" }}
+        />
+      </div>
       <h2 className={styles.textElement}>{formTitle}</h2>
       <Box>
         <div className={styles[div1Style as string]}>
@@ -232,62 +247,65 @@ const AddSlotForm = ({
           )}
         </div>
         <div className={styles.prescriptionForm_div}>
-        {isIncluded && (
-          <div className={styles[div3Style as string]}>
-            <label className={styles.labelElement}>Dose</label>
-            <TextField id="Dose" style={{ backgroundColor: "#F4F4F4" }} />
-          </div>
-        )}
-        <div className={styles[div2Style as string]}>
-          <label className={styles.labelElement}>Time</label>
-          {inputType === "select" ? (
-            <TextField
-              id="doctorTime"
-              select
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleTimeChange(e)
-              }
-              value={time || ""}
-              style={{
-                width: "248.5px ",
-                backgroundColor: " #F4F4F4 ",
-                color: "black",
-                fontFamily: "Roboto",
-                fontSize: "40px",
-              }}
-              classes={{ root: classesM.menuItem }}
-              helperText={error.time}
-            >
-
-              {timeOptions.map((option) => (
-                <MenuItem
-                  key={`${option.value}-${option.period}`}
-                  value={option.value}
-                  className={styles.menuItem}
-                >
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          ) : (
-            <TextField
-              id="doctorTime"
-              style={{
-                width: "248.5px ",
-                backgroundColor: " #F4F4F4 ",
-                color: "black",
-                fontFamily: "Roboto",
-                fontSize: "40px",
-              }}
-              classes={{ root: classesM.menuItem }}
-              required
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleTimeChange(e)
-              }
-              helperText={error.time}
-              value={time || ""}
-            />
+          {isIncluded && (
+            <div className={styles[div3Style as string]}>
+              <label className={styles.labelElement}>Dose</label>
+              <TextField
+                id="Dose"
+                style={{ backgroundColor: "#F4F4F4" }}
+                classes={{ root: classesM.menuItem }}
+              />
+            </div>
           )}
+          <div className={styles[div2Style as string]}>
+            <label className={styles.labelElement}>Time</label>
+            {inputType === "select" ? (
+              <TextField
+                id="doctorTime"
+                select
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleTimeChange(e)
+                }
+                value={time || ""}
+                style={{
+                  width: "248.5px ",
+                  backgroundColor: " #F4F4F4 ",
+                  color: "black",
+                  fontFamily: "Roboto",
+                  fontSize: "40px",
+                }}
+                classes={{ root: classesM.menuItem }}
+                helperText={error.time}
+              >
+                {timeOptions.map((option) => (
+                  <MenuItem
+                    key={`${option.value}-${option.period}`}
+                    value={option.value}
+                    className={styles.menuItem}
+                  >
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            ) : (
+              <TextField
+                id="doctorTime"
+                style={{
+                  width: "248.5px ",
+                  backgroundColor: " #F4F4F4 ",
+                  color: "black",
+                  fontFamily: "Roboto",
+                  fontSize: "40px",
+                }}
+                classes={{ root: classesM.menuItem }}
+                required
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleTimeChange(e)
+                }
+                helperText={error.time}
+                value={time || ""}
+              />
+            )}
           </div>
           {inputType === "select" && (
             <TextField

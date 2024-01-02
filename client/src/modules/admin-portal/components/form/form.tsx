@@ -5,13 +5,18 @@ import styles from "./form.module.css";
 import classes from "../../../clinics-portals/orthopedic/components/form/addSlotForm.module.css";
 import { TextField, MenuItem } from "@mui/material";
 import { makeStyles } from "@mui/styles"; // Add this import
-import { doctorSliceActions, editDoctor, getDoctors } from "../../slices/doctor-slice";
+import {
+  doctorSliceActions,
+  editDoctor,
+  getDoctors,
+} from "../../slices/doctor-slice";
 import { addDoctor } from "../../slices/doctor-slice";
 import { useRef } from "react";
 import { MouseEvent, FormEvent } from "react";
 import { formActions } from "../../slices/form-slice";
 import { FormState } from "../../slices/form-slice";
 import ButtonComponent from "../../../clinics-portals/orthopedic/components/button/button";
+import CloseIcon from "@mui/icons-material/Close";
 import { stat } from "fs";
 // import { handleEdit } from "../table/table";
 
@@ -24,11 +29,7 @@ const specialties: string[] = [
   "Ophthalmology",
 ];
 
-const gender: string[] = [
-  " ",
-  "Male",
-  "Female",
-]
+const gender: string[] = [" ", "Male", "Female"];
 
 const clinics = [
   { clinicName: "Nutrition", clinicId: 1 },
@@ -121,16 +122,15 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     errorPhone: "",
     errorSpeciality: "",
     errorPassword: "",
-    errorDateOfBirth:"",
-    errorGender:"",
-    errorSSN:""
+    errorDateOfBirth: "",
+    errorGender: "",
+    errorSSN: "",
   });
 
   const isFormVisible = useSelector(
     (state: RootState) => state.form.isFormVisible
   );
 
-  
   const selectedClinic = clinics.find(
     (clinic) => clinic.clinicName === localFormState.specialization
   );
@@ -139,8 +139,13 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     if (!inputData) {
       localErrors.errorSpeciality = "Please select a speciality";
     } else {
-      setLocalFormState({...localFormState, specialization: inputData}) as any;
-      setLocalErrors({...localErrors, errorSpeciality: localErrors.errorSpeciality,
+      setLocalFormState({
+        ...localFormState,
+        specialization: inputData,
+      }) as any;
+      setLocalErrors({
+        ...localErrors,
+        errorSpeciality: localErrors.errorSpeciality,
       }) as any;
     }
   };
@@ -149,22 +154,24 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     if (!inputData) {
       localErrors.errorGender = "Please select a Gender";
     } else {
-      setLocalFormState({...localFormState, gender: inputData}) as any;
-      setLocalErrors({...localErrors, errorGender: localErrors.errorGender}) as any;
+      setLocalFormState({ ...localFormState, gender: inputData }) as any;
+      setLocalErrors({
+        ...localErrors,
+        errorGender: localErrors.errorGender,
+      }) as any;
     }
   };
 
   const validateSSN = (inputData: string) => {
-    const ssnFormat = /^\d{14}$/
-    if ((inputData.length === 14) && ssnFormat.test(inputData))
-      localErrors.errorSSN = ""
-    else{
-      localErrors.errorSSN = "SSN is incorrect"
+    const ssnFormat = /^\d{14}$/;
+    if (inputData.length === 14 && ssnFormat.test(inputData))
+      localErrors.errorSSN = "";
+    else {
+      localErrors.errorSSN = "SSN is incorrect";
     }
-    setLocalFormState({...localFormState, ssn: inputData}) as any;
-    setLocalErrors({...localErrors, errorSSN: localErrors.errorSSN}) as any;
-  }
-
+    setLocalFormState({ ...localFormState, ssn: inputData }) as any;
+    setLocalErrors({ ...localErrors, errorSSN: localErrors.errorSSN }) as any;
+  };
 
   const validateName = (inputData: string, nameFlag: number, error: string) => {
     if (inputData.length < 3) {
@@ -176,42 +183,50 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     } else {
       error = "";
     }
-    if(nameFlag === 1){
-      setLocalFormState({ ...localFormState, firstName: inputData}) as any;
-      setLocalErrors({ ...localErrors, errorFirstName: error, }) as any;
-    }else if(nameFlag === 2){
-      setLocalFormState({ ...localFormState, lastName: inputData}) as any;
-      setLocalErrors({ ...localErrors, errorLastName: error, }) as any;
-    }else{
-      setLocalFormState({ ...localFormState, userName: inputData}) as any;
-      setLocalErrors({ ...localErrors, errorUserName: error, }) as any;
+    if (nameFlag === 1) {
+      setLocalFormState({ ...localFormState, firstName: inputData }) as any;
+      setLocalErrors({ ...localErrors, errorFirstName: error }) as any;
+    } else if (nameFlag === 2) {
+      setLocalFormState({ ...localFormState, lastName: inputData }) as any;
+      setLocalErrors({ ...localErrors, errorLastName: error }) as any;
+    } else {
+      setLocalFormState({ ...localFormState, userName: inputData }) as any;
+      setLocalErrors({ ...localErrors, errorUserName: error }) as any;
     }
   };
 
   const validatePassword = (inputData: string) => {
     if (inputData.length < 4) {
-      localErrors.errorPassword = "Make sure that your password contain more than 4 charecters."
+      localErrors.errorPassword =
+        "Make sure that your password contain more than 4 charecters.";
     } else {
-      localErrors.errorPassword =""
+      localErrors.errorPassword = "";
     }
 
-    setLocalFormState({ ...localFormState, password: inputData}) as any;
-    setLocalErrors({ ...localErrors, errorPassword: localErrors.errorPassword, }) as any;
+    setLocalFormState({ ...localFormState, password: inputData }) as any;
+    setLocalErrors({
+      ...localErrors,
+      errorPassword: localErrors.errorPassword,
+    }) as any;
   };
 
   const validateDateOfBirth = (inputData: string) => {
-    const dateFormatPattern = /^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+    const dateFormatPattern =
+      /^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
     if (!dateFormatPattern.test(inputData)) {
-      localErrors.errorDateOfBirth = "Check that you entered the right birthdate and in this format: YYYY-MM-DD";
+      localErrors.errorDateOfBirth =
+        "Check that you entered the right birthdate and in this format: YYYY-MM-DD";
     } else {
       localErrors.errorDateOfBirth = "";
     }
-    setLocalErrors({ ...localErrors, errorDateOfBirth: localErrors.errorDateOfBirth }) as any;
+    setLocalErrors({
+      ...localErrors,
+      errorDateOfBirth: localErrors.errorDateOfBirth,
+    }) as any;
     setLocalFormState({ ...localFormState, dateOfBirth: inputData }) as any;
-  }
+  };
 
-  
   const validateNumber = (inputData: string) => {
     if (inputData.length < 10) {
       localErrors.errorPhone = "Phone Number Must be of 10 digits";
@@ -231,7 +246,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
 
   const validateEmail = (inputData: string) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.com$/;
-                        // /^[^\s@]+@[^\s@]+\.com$/
+    // /^[^\s@]+@[^\s@]+\.com$/
     if (!emailPattern.test(inputData)) {
       localErrors.errorEmail = "Invalid email format";
     } else {
@@ -309,12 +324,11 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
           dispatch(formActions.setIsEdit(!isEditForm));
         } else {
           await dispatch(addDoctor(data) as any);
-          await dispatch(getDoctors()as any)
+          await dispatch(getDoctors() as any);
           dispatch(formActions.setFormVisibility(!isVisible));
         }
       } catch (error) {
-
-        console.log("erorrrrrrrrrr",error)
+        console.log("erorrrrrrrrrr", error);
         console.error("Error while dispatching editDoctor/addDoctor:", error);
       }
     } else {
@@ -329,7 +343,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     const inputData = e.target.value;
     switch (nameCheck) {
       case "firstName":
-        validateName(inputData, 1,nameCheck);
+        validateName(inputData, 1, nameCheck);
         break;
       case "lastName":
         validateName(inputData, 2, nameCheck);
@@ -349,15 +363,15 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
         console.log(inputData);
         break;
       case "password":
-        validatePassword(inputData)
+        validatePassword(inputData);
         console.log(inputData);
         break;
       case "dateOfBirth":
-        validateDateOfBirth(inputData)
+        validateDateOfBirth(inputData);
         console.log(inputData);
         break;
       case "gender":
-        validateGender(inputData)
+        validateGender(inputData);
         console.log(inputData);
         break;
       case "SSN":
@@ -370,6 +384,14 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     isFormVisible && (
       <div className={styles.formContainer}>
         <form onSubmit={(e) => handleOnSubmit(e)}>
+          <div className={styles.closeIcon}>
+            <CloseIcon
+              onClick={() => {
+                dispatch(formActions.setFormVisibility(!isVisible));
+                dispatch(formActions.setIsEdit(!isEditForm));
+              }}
+            />
+          </div>
           <h2 className={classes.textElement}>{formTitle}</h2>
 
           <div className={styles.formRow}>
@@ -390,12 +412,13 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
 
             <div className={styles.column}>
               <label className={styles.labelElement}>Last Name</label>
-              <TextField value={localFormState.lastName || ""} 
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleOnChange(e, "lastName");
-              }}
-            />
-            {localErrors.errorLastName && (
+              <TextField
+                value={localFormState.lastName || ""}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "lastName");
+                }}
+              />
+              {localErrors.errorLastName && (
                 <label className={styles.errorLabel}>
                   {localErrors.errorLastName}
                 </label>
@@ -437,10 +460,11 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
           <div className={styles.formRow}>
             <div className={styles.column}>
               <label className={styles.labelElement}>Date of Birth</label>
-              <TextField value={localFormState.dateOfBirth || ""} 
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleOnChange(e, "dateOfBirth");
-              }}
+              <TextField
+                value={localFormState.dateOfBirth || ""}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "dateOfBirth");
+                }}
               />
               {localErrors.errorDateOfBirth && (
                 <label className={styles.errorLabel}>
@@ -451,10 +475,12 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
 
             <div className={styles.column}>
               <label className={styles.labelElement}>User Name</label>
-              <TextField value={localFormState.userName || ""} 
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleOnChange(e, "userName");
-              }}/>
+              <TextField
+                value={localFormState.userName || ""}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "userName");
+                }}
+              />
               {localErrors.errorUserName && (
                 <label className={styles.errorLabel}>
                   {localErrors.errorUserName}
@@ -466,10 +492,12 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
           <div className={styles.formRow}>
             <div className={styles.column}>
               <label className={styles.labelElement}>Password</label>
-              <TextField value={localFormState.password || ""} 
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleOnChange(e, "password");
-              }}/>
+              <TextField
+                value={localFormState.password || ""}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "password");
+                }}
+              />
               {localErrors.errorPassword && (
                 <label className={styles.errorLabel}>
                   {localErrors.errorPassword}
@@ -479,23 +507,25 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
 
             <div className={styles.column}>
               <label className={styles.labelElement}>SSN</label>
-              <TextField value={localFormState.ssn || ""} 
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleOnChange(e, "SSN");
-              }}/>
+              <TextField
+                value={localFormState.ssn || ""}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "SSN");
+                }}
+              />
               {localErrors.errorSSN && (
                 <label className={styles.errorLabel}>
                   {localErrors.errorSSN}
                 </label>
               )}
             </div>
-            </div>
+          </div>
 
-            {/* <div className={styles.column}>
+          {/* <div className={styles.column}>
               <label className={styles.labelElement}>Gender</label>
               <TextField value={localFormState.gender || ""} />
             </div> */}
-            <div className={styles.formRow}>
+          <div className={styles.formRow}>
             <label className={styles.labelElement}>Gender</label>
             <TextField
               className={styles.specialtyField}
@@ -522,9 +552,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
               </label>
             )}
           </div>
-          
 
-          
           <div className={styles.formRow}>
             <label className={styles.labelElement}>Specialty</label>
             <TextField
