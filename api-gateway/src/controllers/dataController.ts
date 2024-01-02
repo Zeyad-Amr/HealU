@@ -2,6 +2,45 @@ import axios from 'axios';
 import { Request, Response } from 'express';
 import { errorHandler } from '../services';
 
+interface CustomRequest extends Request {
+    user: {
+        sub: string
+    }
+}
+
+
+export const get_doctor_slots = async (req: Request, res: Response) => {
+    try {
+        const { date } = req.params
+        const doctorId = (req as CustomRequest).user.sub
+
+        let slots = (await axios.get(`${process.env.Appointment_URL}/slots/doctor/${doctorId}/date/${date}`)).data
+
+        for await (const slot of slots) {
+            if (Object.keys(slot.appointmentObject).length !== 0) {
+                const patient = await axios.get(`${process.env.Registration_URL}/patient/${parseInt(slot.appointmentObject.patientId)}`)
+                    .then((res) => {
+                        if (!res.data.data.userId) throw { statusCode: 503, msg: res.data.data }
+                        return res.data.data
+                    }).catch((err) => {
+                        console.log(err);
+
+                        throw err
+                    })
+                slot.appointmentObject.patient = patient
+            }
+
+        }
+
+        return res.status(200).json({
+            slots
+        })
+    } catch (error: any) {
+        const err = errorHandler(error)
+
+        res.status(err?.statusCode ?? 500).json(err)
+    }
+}
 
 export const get_appointment_data = async (req: Request, res: Response) => {
     try {
