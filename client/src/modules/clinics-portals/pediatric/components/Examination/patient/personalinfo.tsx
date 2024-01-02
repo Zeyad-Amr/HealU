@@ -7,7 +7,10 @@ const PresonalInfo = (props: any) => {
     <>
       <div>
         <h1 className="label">Name : </h1>
-        <p className="data"> {props.name}</p>
+        {props.name === undefined ||
+        props.name == "undefined undefined" ? null : (
+          <p className="data"> {props.name}</p>
+        )}
       </div>
       <div>
         <h1 className="label">Weight : </h1>

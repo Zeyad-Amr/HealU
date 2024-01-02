@@ -11,6 +11,16 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../../../../core/store";
+import {
+  SlotsState,
+  fetchSlotsData,
+  thunkData,
+  Slot,
+  AllSlots,
+  deleteSlot,
+} from "../../slices/slots-slice";
+import { useSelector } from "react-redux";
 import "./grid.css";
 import {
   GridRowsProp,
@@ -26,6 +36,13 @@ import {
 } from "@mui/x-data-grid";
 
 let id: string = "";
+const convertDate = (date: string) => {
+  const [hours, minutes] = date.split(":").map(Number);
+  const d = new Date();
+  d.setHours(hours);
+  d.setMinutes(minutes);
+  return d;
+};
 const initialRows: GridRowsProp = [
   {
     Slot: new Date(2023, 11, 10, 10, 30, 0, 0),
@@ -43,6 +60,10 @@ const initialRows: GridRowsProp = [
     id: "150",
   },
 ];
+const thunkdata: thunkData = {
+  doctorId: 1,
+  date: "2024-01-07",
+};
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -98,9 +119,33 @@ function EditToolbar(props: EditToolbarProps) {
 }
 
 export default function ScheduleViwer(props: any) {
+  const dispatch = useAppDispatch();
+  const slotsState = useSelector((state: any) => state.slots);
+  useEffect(() => {
+    dispatch(fetchSlotsData(thunkdata));
+  }, []);
+
   const [ApointmentDate, setApointmentDate] = React.useState<Dayjs>(dayjs());
-  const [allrows, setAllRows] = useState(initialRows);
-  const [rows, setRows] = React.useState(initialRows);
+  const [allrows, setAllRows] = useState<GridRowsProp>(
+    slotsState.allSlots.map((item: AllSlots) => {
+      return {
+        Slot: null,
+        Name: "",
+        id: item.slot._id,
+        appointmentId: item.appointmentObject._id,
+      };
+    })
+  );
+  const [rows, setRows] = React.useState(
+    slotsState.allSlots.map((item: AllSlots) => {
+      return {
+        Slot: null,
+        Name: "",
+        id: item.slot._id,
+        appointmentId: item.appointmentObject._id,
+      };
+    })
+  );
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
@@ -133,7 +178,8 @@ export default function ScheduleViwer(props: any) {
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row) => row.id !== id));
+    dispatch(deleteSlot(id as string));
+    setRows(rows.filter((row: GridRowModel) => row.id !== id));
     setAllRows(allrows.filter((row) => row.id !== id));
   };
 
@@ -143,15 +189,17 @@ export default function ScheduleViwer(props: any) {
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
-    const editedRow = rows.find((row) => row.id === id);
+    const editedRow = rows.find((row: GridRowModel) => row.id === id);
     if (editedRow!.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
+      setRows(rows.filter((row: GridRowModel) => row.id !== id));
     }
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    setRows(
+      rows.map((row: GridRowModel) => (row.id === newRow.id ? updatedRow : row))
+    );
     setAllRows(allrows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
@@ -159,11 +207,40 @@ export default function ScheduleViwer(props: any) {
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
+  const handelShowAll = () => {
+    console.log(slotsState.allSlots);
+    setAllRows(
+      slotsState.allSlots.map((item: AllSlots) => {
+        return {
+          Slot: convertDate(item.slot.time as string),
+          Name: "",
+          id: item.slot._id,
+          appointmentId: item.appointmentObject._id,
+        };
+      })
+    );
+    setRows(
+      slotsState.allSlots.map((item: AllSlots) => {
+        return {
+          Slot: convertDate(item.slot.time as string),
+          Name: "",
+          id: item.slot._id,
+          appointmentId: item.appointmentObject._id,
+        };
+      })
+    );
+  };
 
+  const getAppointmentId = (id: string) => {
+    const appointment = slotsState.allSlots.find(
+      (item: AllSlots) => item.slot._id === id
+    );
+    return appointment?.appointmentObject._id;
+  };
   const columns: GridColDef[] = [
     {
       field: "Slot",
-      width: 180,
+      width: 190,
       editable: true,
       cellClassName: "Slot",
       type: "dateTime",
@@ -174,7 +251,7 @@ export default function ScheduleViwer(props: any) {
 
     {
       field: "Name",
-      width: 500,
+      width: 550,
       editable: true,
       type: "string",
       cellClassName: "Name",
@@ -240,6 +317,14 @@ export default function ScheduleViwer(props: any) {
           },
         }}
       >
+        <Button
+          className="showBtn"
+          variant="contained"
+          color="primary"
+          onClick={handelShowAll}
+        >
+          show all
+        </Button>
         <DataGrid
           className="grid"
           rows={rows}
@@ -252,7 +337,9 @@ export default function ScheduleViwer(props: any) {
           onCellDoubleClick={(params, event) => {
             if (params.field === "Name") {
               props.setValueOfScreen(2);
-              props.setValueOfappointmentID(params.id);
+              props.setValueOfappointmentID(
+                getAppointmentId(params.id as string)
+              );
             }
           }}
           hideFooter

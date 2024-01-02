@@ -37,5 +37,8 @@
 .Donebtn {
   width: 50px;
   position: relative;
-  left: calc(100% - 75px);
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  left: 91%;
 }

@@ -134,6 +134,9 @@ const ExaminationScreen = (props: any) => {
     dispatch(AddPrescreptions(prescreptionData));
     // console.log(props.appointmentID);
   };
+  const handleSubmitClick = () => {
+    console.log("submit");
+  };
 
   const [isPrescriptionModalOpen, setPrescriptionModalOpen] = useState(false);
   const [isTestsModalOpen, setTestsModalOpen] = useState(false);
@@ -216,6 +219,9 @@ const ExaminationScreen = (props: any) => {
       <div className="Donebtn">
         <Button variant="contained" onClick={handleDoneClick}>
           Done
+        </Button>
+        <Button variant="contained" onClick={handleSubmitClick}>
+          Submit
         </Button>
       </div>
     </Container>
