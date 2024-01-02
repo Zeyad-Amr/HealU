@@ -92,10 +92,10 @@ export const createStaff = async (req: Request, res: Response) => {
       !userData.phoneNumber||!userData.role||!userData.password||!userData.userName) {
       throw new Error('Missing required data');
     }
-    else if(!validate.clinicIdValidation(userData.clinicId))
-    {
-      throw new Error('clinicId musnt be from 1 to 5');
-    }
+    // else if(!validate.clinicIdValidation(userData.clinicId))
+    // {
+    //   throw new Error('clinicId musnt be from 1 to 5');
+    // }
     else{
       await validation.validateUsertData(userData);
       const newUser = await prisma.user.create({
