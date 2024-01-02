@@ -1,10 +1,6 @@
 import React, { useState, useRef, SetStateAction } from "react"
 
 
-
-
-
-
 import './Form.module.css'; // Import the CSS file
 
 interface FormProps {

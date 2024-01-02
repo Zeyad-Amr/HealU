@@ -8,6 +8,7 @@ import { addSlotActions } from "../../slices/addSlotsSlice";
 import classes from "./pateint.module.css";
 import BlockContainer from "../../components/block/blockContainer";
 import { useParams } from "react-router-dom";
+import SimpleForm from "../../components/form2/Form";
 
 const Patient = () => {
   const { id } = useParams();
@@ -62,7 +63,8 @@ const Patient = () => {
           fontSize="32px"
         />
       </div>
-      <AddSlotForm
+      <SimpleForm formHeading="Tests" labelFieldName="yyy"/>
+      {/* <AddSlotForm
         isFormVisible={isVisible}
         formTitle="Prescription"
         label1="Drug Name"
@@ -74,7 +76,8 @@ const Patient = () => {
         submitButtonStyle="submitButton"
         inputType="text"
         isIncluded={true}
-      />
+      /> */}
+
     </div>
   );
 };
