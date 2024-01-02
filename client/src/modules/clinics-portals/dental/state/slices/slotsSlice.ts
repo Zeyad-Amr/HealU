@@ -4,13 +4,12 @@ import axios from "axios";
 import { Appointment } from "./appointmentSlice";
 import dayjs from "dayjs";
 
-let doctorId: number = 13,
-  clinicId: number = 5;
+let doctorId: number = 1;
 
 export interface Slot {
   _id?: string;
   doctorId: number;
-  clinicId: number;
+  clinicId?: number;
   time: string;
   weekDay: string;
   appointment?: Appointment;
@@ -70,15 +69,17 @@ export const fetchSlotsForDoctor = createAsyncThunk(
 // Create an async thunk for creating a new slot for the doctor
 export const createSlotForDoctor = createAsyncThunk(
   "slot/createSlot",
-  async (newSlot: Slot) => {
+  async ({ time, weekDay }: { time: string; weekDay: string }) => {
     try {
-      await axios.post(`https://appointment-service-y30u.onrender.com/slots/`, {
-        doctorId: newSlot.doctorId,
-        clinicId: newSlot.clinicId,
-        time: newSlot.time,
-        weekDay: newSlot.weekDay,
-      });
-      return newSlot;
+      const res = await axios.post(
+        `https://appointment-service-y30u.onrender.com/slots/`,
+        {
+          doctorId: doctorId,
+          time: time,
+          weekDay: weekDay,
+        }
+      );
+      return res.data["newSlot"];
     } catch (error) {
       throw error;
     }
@@ -104,8 +105,7 @@ export const deleteSlot = createAsyncThunk(
 const slotSlice = createSlice({
   name: "slots",
   initialState,
-  reducers: {
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchSlots.pending, (state, action) => {
@@ -114,10 +114,7 @@ const slotSlice = createSlice({
       .addCase(fetchSlots.fulfilled, (state, action) => {
         state.loading = false;
         state.slots = action.payload;
-        state.slots = state.slots.filter(
-          (slot) => slot.doctorId === doctorId && slot.clinicId === clinicId
-        );
-        
+        state.slots = state.slots.filter((slot) => slot.doctorId === doctorId);
       })
       .addCase(fetchSlots.rejected, (state, action) => {
         state.loading = false;

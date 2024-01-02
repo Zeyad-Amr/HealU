@@ -60,8 +60,6 @@ const CreateSlotModal: React.FC<CreateSlotModalProps> = ({ open, onClose }) => {
   const createSlot = async (weekDay: string, time: string) => {
     await dispatch(
       createSlotForDoctor({
-        doctorId: 13,
-        clinicId: 5,
         time: time,
         weekDay: weekDay,
       })

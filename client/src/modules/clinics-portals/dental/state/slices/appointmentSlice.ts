@@ -3,6 +3,8 @@ import axios from "axios";
 // import axios from "../../../../../core/api/api";
 import dayjs from "dayjs";
 
+let doctorId: number = 1;
+
 export interface Appointment {
   _id: string;
   slotId: string;
@@ -93,7 +95,7 @@ const appointmentSlice = createSlice({
           return (
             appointmentDate.isAfter(currentDate) &&
             appointmentDate.isBefore(nextWeekDate) &&
-            appointment.doctorId === 13
+            appointment.doctorId === doctorId
           );
         });
 

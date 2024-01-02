@@ -13,7 +13,7 @@ class AppRoutes {
   static readonly patientPortalPreviousAppointments = "/patient/previous-appointments";
  // dental routes 
   static readonly DentalAppointmentsDashboard = "/clinic/dental/dashboard";
-  static readonly clinicDentalExamination = "/clinic/dental/examination";
+  static readonly clinicDentalExamination = "/clinic/dental/examination/:patientId";
 }
 
 export default AppRoutes;

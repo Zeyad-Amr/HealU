@@ -28,6 +28,8 @@ function SlotsTable(props: {
   );
 
   const handleDeleteSlot = async (slotId: string) => {
+    console.log("SlotID: ", slotId);
+    console.log("Slots ", props.slots);
     await dispatch(deleteSlot(slotId)).then((resultAction) => {
       dispatch(
         openSnackbar({
@@ -68,7 +70,7 @@ function SlotsTable(props: {
 
   return (
     <>
-      <Table className={styles.table}>
+      <Table key={"SlotsTable"} className={styles.table}>
         <TableBody>
           {props.slots.map((slot) => (
             <TableRow key={slot._id}>

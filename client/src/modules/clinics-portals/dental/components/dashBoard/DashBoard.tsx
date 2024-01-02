@@ -21,6 +21,7 @@ import {
 import AppointmentModal from "./AppointmentModal";
 import dayjs from "dayjs";
 import SlotsTable from "./SlotsTable";
+import { useNavigate } from "react-router-dom";
 
 interface DashBoardProps {
   // Other props if needed
@@ -46,7 +47,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const selectedWeekday = dayjs(getCuurentWeekDates()[selectedDate]).format(
+    const selectedWeekday = dayjs(getCurrentWeekDates()[selectedDate]).format(
       "dddd"
     );
     setSlots(
@@ -62,7 +63,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
 
   ///////////////////////////////////////////////////
 
-  function getCuurentWeekDates() {
+  function getCurrentWeekDates() {
     const today = dayjs();
     const weekDates = [];
     for (let i = 0; i < 7; i++) {
@@ -75,11 +76,13 @@ const DashBoard: React.FC<DashBoardProps> = () => {
 
   ///////////////////////////////////////////////////
 
+  const navigate = useNavigate();
   const handleAppointmenClick = (
     selectedAppointment: Appointment | undefined
   ) => {
     if (selectedAppointment === undefined) return;
-    setSelectedAppointment(selectedAppointment);
+    // setSelectedAppointment(selectedAppointment);
+    navigate(`/clinic/dental/examination/${selectedAppointment.patientId}`);
   };
 
   const handleCloseModal = () => {
@@ -103,7 +106,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   };
 
   const handleDateChange = (date: string) => {
-    setSelectedDate(getCuurentWeekDates().indexOf(date));
+    setSelectedDate(getCurrentWeekDates().indexOf(date));
     handleMenuClose();
   };
 
@@ -119,7 +122,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
           >
             {/* Customized Date Selection */}
             <div className={styles.dateSelection} onClick={handleMenuOpen}>
-              {getCuurentWeekDates()[selectedDate].toString()}
+              {getCurrentWeekDates()[selectedDate].toString()}
             </div>
             <Menu
               anchorEl={menuAnchor}
@@ -127,7 +130,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
               onClose={handleMenuClose}
               className={styles.menu}
             >
-              {getCuurentWeekDates().map((date) => (
+              {getCurrentWeekDates().map((date) => (
                 <MenuItem
                   key={date.toString()}
                   value={date}
