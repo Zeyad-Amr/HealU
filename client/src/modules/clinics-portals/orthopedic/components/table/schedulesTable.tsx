@@ -32,7 +32,6 @@ const useStyles = makeStyles({
   },
 });
 
-
 const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
   const params = useParams();
   const navigate = useNavigate();
@@ -49,12 +48,11 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
     console.log("Preview");
   };
 
-
   // merge conflict:
   // await dispatch(updateSlot(parseInt(dateId)) as any);
   // dispatch(getSlots(date) as any);
   // useEffect(() => {
-    // dispatch(getSlots() as any);
+  // dispatch(getSlots() as any);
   // }, [dispatch,slots]);
 
   return (
@@ -80,14 +78,18 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                   key={`${rowIndex}-column2`}
                   className={styles.column2}
                 >
-                  <div>{row.patient?.patientName}</div>
+                  <div>{row.patientId}</div>
                 </TableCell>
                 <TableCell
                   key={`${rowIndex}-column3`}
                   className={styles.column3}
                 >
                   <div
-                    onClick={() =>{ if(row._id) {handleClearAppoinment(row._id, row.weekDay)}}}
+                    onClick={() => {
+                      if (row._id) {
+                        handleClearAppoinment(row._id, row.weekDay);
+                      }
+                    }}
                     className={styles.addIcon}
                     style={{ justifyContent: "center", display: "flex" }}
                   >
@@ -118,7 +120,9 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                   <div
                     onClick={() => {
                       if (row.time !== null) {
-                        navigate(`/ExaminationScreen/${row.patient?.patientId}`);
+                        navigate(
+                          `/ExaminationScreen/${row.patientId}`
+                        );
                       }
                     }}
                     className={styles.addIcon}

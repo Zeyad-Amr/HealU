@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY"
+const authToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY";
 
 export interface Doctor {
   userId?: number | undefined;
@@ -32,12 +33,17 @@ export const getDoctors = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .get<any>("https://healu-api-gateway.onrender.com/api/registration/staff", {
-        headers: {
-          "auth-token": authToken,
-        },
-      })
-      .then((res) => res.data.data.filter((item:any) => item.role === 'Doctor'))
+      .get<any>(
+        "https://healu-api-gateway.onrender.com/api/registration/staff",
+        {
+          headers: {
+            "auth-token": authToken,
+          },
+        }
+      )
+      .then((res) =>
+        res.data.data.filter((item: any) => item.role === "Doctor")
+      )
       .catch((error) => {
         rejectWithValue(error.message);
       });
@@ -49,12 +55,15 @@ export const addDoctor = createAsyncThunk(
   async (data: Doctor, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .post<Doctor>("https://healu-api-gateway.onrender.com/api/registration/staff", data, {
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": authToken,
+      .post<Doctor>(
+        "https://healu-api-gateway.onrender.com/api/registration/staff",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
         }
-        },
       )
       .then((res) => res.data)
       .catch((error) => {
@@ -68,12 +77,14 @@ export const getDoctorById = createAsyncThunk(
   async (id: number | undefined, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .get<Doctor>(`https://healu-api-gateway.onrender.com/api/registration/staff/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": authToken,
+      .get<Doctor>(
+        `https://healu-api-gateway.onrender.com/api/registration/staff/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
         }
-        },
       )
       .then((res) => res.data)
       .catch((error) => {
@@ -87,12 +98,14 @@ export const deleteDoctor = createAsyncThunk(
   async (id: number | undefined, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .delete<Doctor>(`https://healu-api-gateway.onrender.com/api/registration/staff/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": authToken,
+      .delete<Doctor>(
+        `https://healu-api-gateway.onrender.com/api/registration/staff/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
         }
-        },
       )
       .then((res) => res.data)
       .catch((error) => {
@@ -111,12 +124,16 @@ export const editDoctor = createAsyncThunk(
     const { doctorId, updatedData } = data;
 
     return axios
-      .put<Doctor>(`https://healu-api-gateway.onrender.com/api/registration/staff/${doctorId}`, updatedData, {
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": authToken,
-        },
-      })
+      .put<Doctor>(
+        `https://healu-api-gateway.onrender.com/api/registration/staff/${doctorId}`,
+        updatedData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
+      )
       .then((res) => res.data)
       .catch((error) => {
         rejectWithValue(error.message);
@@ -130,7 +147,7 @@ const doctorSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getDoctors.fulfilled, (state, action) => {
-      state.doctors = action.payload as any || [];
+      state.doctors = (action.payload as any) || [];
     });
     builder.addCase(addDoctor.fulfilled, (state, action) => {
       state.doctors.push(action.payload as Doctor);
@@ -153,7 +170,7 @@ const doctorSlice = createSlice({
     });
     builder.addCase(getDoctorById.fulfilled, (state, action) => {
       const getDoctor = action.payload as Doctor | undefined;
-      console.log(getDoctor)
+      console.log(getDoctor);
       if (getDoctor !== undefined) {
         state.doctors = state.doctors.map((doctor) =>
           doctor.userId === getDoctor.userId ? getDoctor : doctor

@@ -10,7 +10,7 @@ export default interface Slot {
   _id?: string;
   doctorId: number;
   clinicId: number;
-  patient?: Patient;
+  patientId?: number;
   weekDay: string;
   time: string | null;
 }
@@ -35,6 +35,22 @@ const initialStateSlots: SlotsState = {
   slotsLength: 0,
   isVisible: false,
 };
+
+export const updateSlotStatus = createAsyncThunk(
+  "slots/updateSlotStatus",
+  async (id: number, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    return axios
+      .patch<Slot>(
+        `https://healu-api-gateway.onrender.com/api/appointment/:appointmentId`,
+        {
+          status: 1,
+        }
+      )
+      .then((res) => res.data)
+      .catch((error) => rejectWithValue(error.message));
+  }
+);
 
 export const addSlot = createAsyncThunk(
   "slots/addSlot",
@@ -88,7 +104,7 @@ export const getSlots = createAsyncThunk(
   async (selectedDate: string | void, thunkAPI) => {
     try {
       const response = await axios.get<Slot[]>(
-        `http://localhost:3003/slots?doctorId=13`,
+        `https://healu-api-gateway.onrender.com/api/appointment/doctor/57`,
         {
           headers: {
             "auth-token": authToken,
@@ -96,7 +112,7 @@ export const getSlots = createAsyncThunk(
         }
       );
       return response.data.filter((item: any) => {
-        const dateValue = new Date(item[0].date);
+        const dateValue = new Date(item.date);
 
         // Check if dateValue is a valid date
         if (isNaN(dateValue.getTime())) {

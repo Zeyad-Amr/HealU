@@ -117,7 +117,6 @@ const AddSlotForm = ({
       return;
     }
     const data: Slot = {
-      _id: "2389",
       doctorId: 20,
       clinicId: 2,
       weekDay,
@@ -188,7 +187,7 @@ const AddSlotForm = ({
       time: `${time}`,
       weekDay: selectedDay,
       clinicId: orthoId,
-      doctorId: doctorId
+      doctorId: doctorId,
     };
     if (selectedDay === "" || time === null || period === null) {
       setError({
@@ -211,7 +210,7 @@ const AddSlotForm = ({
 
   return isVisible ? (
     <form className={styles[formStyle as string]} onSubmit={handleSubmit}>
-            <div className={styles.closeIcon}>
+      <div className={styles.closeIcon}>
         <CloseIcon
           onClick={() => dispatch(addSlotActions.setFormVisibility(false))}
           style={{ width: "30px", height: "30px" }}
