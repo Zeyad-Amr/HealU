@@ -3,11 +3,40 @@ import { useLoading } from "../services/loading-service";
 import { Box, Typography } from "@mui/material";
 import PulseLoader from "react-spinners/PulseLoader";
 import axios from "axios";
-
+import api from "../api/api";
 const LoadingOverlay = () => {
   const { loading, setLoadingState } = useLoading();
 
   useEffect(() => {
+    const requestInterceptorCustomAxios = api.interceptors.request.use(
+      (config) => {
+        setLoadingState(true);
+        const token: string =
+          localStorage.getItem("token") ??
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY";
+
+        if (token.length > 0) {
+          config.headers["auth-token"] = token;
+        }
+
+        return config;
+      },
+      (error) => {
+        setLoadingState(false);
+        return Promise.reject(error);
+      }
+    );
+    const responseInterceptorCustomAxios = api.interceptors.response.use(
+      (response: any) => {
+        setLoadingState(false);
+        return response;
+      },
+      (error: any) => {
+        setLoadingState(false);
+        return Promise.reject(error);
+      }
+    );
+
     const requestInterceptor = axios.interceptors.request.use(
       (config) => {
         setLoadingState(true);
@@ -31,6 +60,8 @@ const LoadingOverlay = () => {
     );
 
     return () => {
+      api.interceptors.request.eject(requestInterceptorCustomAxios);
+      api.interceptors.response.eject(responseInterceptorCustomAxios);
       axios.interceptors.request.eject(requestInterceptor);
       axios.interceptors.response.eject(responseInterceptor);
     };
