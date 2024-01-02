@@ -1,4 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
+import api from "../../../core/api/api";
+
 const LandingPage = () => {
+  useEffect(() => {
+    api.get("/appointment");
+  }, []);
+
   return (
     <div
       style={{
@@ -8,7 +16,14 @@ const LandingPage = () => {
         height: "90vh",
       }}
     >
-      <h1>Landing Page</h1>
+      <h1
+        onClick={() => {
+          console.log("clicked");
+          api.get("/appointment");
+        }}
+      >
+        Landing Page
+      </h1>
     </div>
   );
 };
