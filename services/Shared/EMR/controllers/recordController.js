@@ -101,8 +101,8 @@ async function createRecord(req, res) {
       if (NutritionData != null && Object.keys(NutritionData).length !== 0) {
         insertNutrition(insertedRecordID, NutritionData, () => {});
       }
-      console.log(`New Record is created successfully with ClinicID  ${ClinicID}`);
-      res.status(201).json({ message: `New Record is created successfully with ClinicID ${ClinicID}`});
+      console.log(`New Record (RecordID: ${insertedRecordID}) is created successfully with ClinicID  ${ClinicID}`);
+      res.status(201).json({ message: `New Record (RecordID: ${insertedRecordID}) is created successfully with ClinicID ${ClinicID}`});
 
     });
     // Rest of your existing code
@@ -224,7 +224,7 @@ function processQueryResult(result) {          //Function to process the query r
 
     if (ID != null && !uniqueIDs.has(ID)) {        // Check if ID is not null 
       uniqueIDs.add(ID);
-      recordMap[RecordID].MedicalTests.push({ TestID: row.TestID, TestDescription: row.TestDescription });
+      recordMap[RecordID].MedicalTests.push({ ID : row.ID, TestID: row.TestID, TestDescription: row.TestDescription });
     }
 
     if (VitalID != null && !uniqueVitalIDs.has(VitalID)) {        // Check if VitalID is not null 
