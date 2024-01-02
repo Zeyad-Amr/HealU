@@ -37,14 +37,23 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
   const classesX = useStyles();
   const slots = useSelector((state: RootState) => state.slots.slots);
   const dispatch = useDispatch();
-  const handleDelete = async (dateId: number, date: string) => {
-    dispatch(deleteSlot(dateId) as any);
+  const handleDelete = async (dateId: string, date?: string) => {
+    dispatch(deleteSlot(parseInt(dateId)) as any);
   };
   const handleClearAppoinment = async (dateId: string, date: string) => {
-    await dispatch(updateSlot(parseInt(dateId)) as any);
-    dispatch(getSlots(date) as any);
+    dispatch(updateSlot(parseInt(dateId)) as any);
   };
-  
+  const handlePreview = () => {
+    console.log("Preview");
+  };
+
+
+  // merge conflict:
+  // await dispatch(updateSlot(parseInt(dateId)) as any);
+  // dispatch(getSlots(date) as any);
+  // useEffect(() => {
+    // dispatch(getSlots() as any);
+  // }, [dispatch,slots]);
 
   return (
     <Paper
@@ -75,8 +84,12 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                   key={`${rowIndex}-column3`}
                   className={styles.column3}
                 >
-                  <div onClick={() => handleClearAppoinment(row.id, row.date)}>
-                    <ClearIcon className={styles.addIcon} />
+                  <div
+                    onClick={() =>{ if(row._id) {handleClearAppoinment(row._id, row.weekDay)}}}
+                    className={styles.addIcon}
+                    style={{ justifyContent: "center", display: "flex" }}
+                  >
+                    <ClearIcon style={{ width: "38px", height: "38px" }} />
                   </div>
                   {/* <div>{row.date}</div> */}
                 </TableCell>
@@ -86,7 +99,7 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                 >
                   <div
                     onClick={() => {
-                      if (row.time !== null) {
+                      if (row.time !== null && row._id) {
                         handleDelete(row._id, row.weekDay);
                       }
                     }}
