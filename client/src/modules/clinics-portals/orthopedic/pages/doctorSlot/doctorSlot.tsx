@@ -34,7 +34,6 @@ const DoctorsSlot = () => {
       <SchedulesTable schedules={slots} />
       <AddSlotForm
         isFormVisible={isVisible}
-        // toggleFormVisibility={toggleFormVisibility}
         formTitle="Create New Slot"
         label1="Date"
         formStyle="addSlotForm_formContainer"

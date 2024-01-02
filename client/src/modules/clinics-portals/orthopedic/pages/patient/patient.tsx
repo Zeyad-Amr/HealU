@@ -7,8 +7,6 @@ import { addSlotActions } from "../../slices/addSlotsSlice";
 import classes from "./pateint.module.css";
 import BlockContainer from "../../components/block/blockContainer";
 
-
-
 const Patient = () => {
   const isVisible = useSelector((state: RootState) => state.slots.isVisible);
   const dispatch = useDispatch();
@@ -16,21 +14,22 @@ const Patient = () => {
     dispatch(addSlotActions.setFormVisibility(true));
   };
 
-
   return (
     <div className={classes.pageContainer}>
       <div className={classes.flexContainer}>
         <BlockContainer headerContent={"Personal Data"} classStyle="block" />
         <BlockContainer headerContent={"History"} classStyle=" " />
       </div>
-      <div className={classes.container}>
-        <BlockContainer headerContent={"Diagnoses"} classStyle="block3" />
+
+      <BlockContainer headerContent={"Diagnoses"} classStyle="block3" />
+      <div style={{ marginLeft: "-72.5px", marginTop: "20px" }}>
         <ButtonComponent
           classStyle="buttonPrescription"
           textStyle="text"
           text="Prescription"
           onClick={() => handleButtonClick()}
           backgroundColor="#C3C3C3"
+          marginRight="25px"
         />
         <ButtonComponent
           classStyle="buttonPrescription"
@@ -38,6 +37,7 @@ const Patient = () => {
           textStyle="text"
           onClick={() => handleButtonClick()}
           backgroundColor="#C3C3C3"
+          marginRight="25px"
         />
         <ButtonComponent
           type="button"
@@ -46,10 +46,16 @@ const Patient = () => {
           textStyle="text"
           onClick={() => handleButtonClick()}
           backgroundColor="#C3C3C3"
+          marginRight="25px"
         />
       </div>
-      <div>
-        <ButtonComponent classStyle="buttonDone" text="Done" />
+      <div style={{ marginTop: "20px", marginLeft:"330px" }}>
+        <ButtonComponent
+          classStyle="buttonDone"
+          text="Done"
+          color="white"
+          fontSize="32px"
+        />
       </div>
       <AddSlotForm
         isFormVisible={isVisible}

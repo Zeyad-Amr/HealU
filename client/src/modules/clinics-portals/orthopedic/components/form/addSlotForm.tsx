@@ -65,7 +65,6 @@ const AddSlotForm = ({
   div4Style,
 }: {
   isFormVisible: boolean;
-  // toggleFormVisibility: Dispatch<SetStateAction<boolean>>;
   classStyle?: string;
   formTitle: string;
   label1: string;
@@ -232,6 +231,7 @@ const AddSlotForm = ({
             />
           )}
         </div>
+        <div className={styles.prescriptionForm_div}>
         {isIncluded && (
           <div className={styles[div3Style as string]}>
             <label className={styles.labelElement}>Dose</label>
@@ -258,6 +258,7 @@ const AddSlotForm = ({
               classes={{ root: classesM.menuItem }}
               helperText={error.time}
             >
+
               {timeOptions.map((option) => (
                 <MenuItem
                   key={`${option.value}-${option.period}`}
@@ -287,6 +288,7 @@ const AddSlotForm = ({
               value={time || ""}
             />
           )}
+          </div>
           {inputType === "select" && (
             <TextField
               classes={{ root: classesM.menuItem }}
@@ -332,6 +334,8 @@ const AddSlotForm = ({
           type="submit"
           classStyle="ButtonComponent"
           text="Create"
+          color="white"
+          fontSize="32px"
         />
       </div>
     </form>

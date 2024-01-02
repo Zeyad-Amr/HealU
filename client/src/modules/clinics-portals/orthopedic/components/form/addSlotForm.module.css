@@ -11,6 +11,7 @@
   box-shadow: 0px 0px 26px 0px #00000040;
   z-index: 2;
 }
+
 .addSlotForm_div1 {
   width: 585px;
   height: 126px;
@@ -38,7 +39,12 @@
   box-shadow: 0px 0px 26px 0px #00000040;
   z-index: 2;
 }
-
+.prescriptionForm_div{
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  color: #8b8b8b;
+}
 .prescriptionForm_div1 {
   height: 126px;
   position: absolute;
@@ -62,7 +68,7 @@
   height: 126px;
   position: absolute;
   top: calc(10.6% + 126px);
-  left: calc(57% - 351.4px);
+  left: calc(58.5% - 351.4px);
   display: inline-block;
 }
 

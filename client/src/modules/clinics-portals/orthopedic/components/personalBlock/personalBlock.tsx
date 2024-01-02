@@ -1,5 +1,6 @@
 // PersonalDataBlock.tsx
 import React from "react";
+import classes from "./personalBlock.module.css";
 
 interface PersonalDataBlockProps {
   headerContent: string;
@@ -8,18 +9,18 @@ interface PersonalDataBlockProps {
 const PersonalDataBlock: React.FC<PersonalDataBlockProps> = ({ headerContent }) => {
   return (
     <div>
-      <h2>{headerContent}</h2>
+      <h2 style={{fontSize:"32px"}}>{headerContent}</h2>
       <div>
-        <label>Name:</label>
+        <label className={classes.label}>Name:</label>
       </div>
       <div>
-        <label>Weight:</label>
+        <label className={classes.label}>Weight:</label>
       </div>
       <div>
-        <label>Height:</label>
+        <label className={classes.label}>Height:</label>
       </div>
       <div>
-        <label>Age:</label>
+        <label className={classes.label}>Age:</label>
       </div>
     </div>
   );

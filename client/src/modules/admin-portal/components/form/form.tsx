@@ -386,6 +386,8 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
               type="submit"
               text="Submit"
               classStyle="ButtonComponent"
+              fontSize="32px"
+              color="white"
             />
           </div>
         </form>
