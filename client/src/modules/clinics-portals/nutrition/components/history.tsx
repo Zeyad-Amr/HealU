@@ -4,6 +4,25 @@ import { Container, Grid, Card, CardContent, Typography } from "@mui/material";
 
 interface HistoryProps {}
 
+const historySections = [
+  {
+    title: "Drugs",
+    items: ["Vitamin D3 250 mcg", "Centrum Multi-Vitamin"],
+  },
+  {
+    title: "Illnesses",
+    items: ["Heart Diseases", "Chest Diseases"],
+  },
+  {
+    title: "Medical Tests",
+    items: ["Vitamin D Test", "CBC Test"],
+  },
+  {
+    title: "Allergies",
+    items: ["Nuts Allergy", "Lactose Intolerance"],
+  },
+];
+
 const ContainerWrapper = styled(Container)(({ theme }: { theme: Theme }) => ({
   marginTop: "20px",
   backgroundImage:
@@ -37,25 +56,6 @@ const CardTitle = styled(Typography)(({ theme }: { theme: Theme }) => ({
   fontWeight: "bold",
   marginBottom: "10px",
 }));
-
-const historySections = [
-  {
-    title: "Drugs",
-    items: ["Vitamin D3 250 mcg", "Centrum Multi-Vitamin"],
-  },
-  {
-    title: "Illnesses",
-    items: ["Heart Diseases", "Chest Diseases"],
-  },
-  {
-    title: "Medical Tests",
-    items: ["Vitamin D Test", "CBC Test"],
-  },
-  {
-    title: "Allergies",
-    items: ["Nuts Allergy", "Lactose Intolerance"],
-  },
-];
 
 const History: React.FC<HistoryProps> = () => {
   return (

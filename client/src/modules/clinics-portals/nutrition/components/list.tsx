@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { styled, Theme } from "@mui/material/styles";
-import { Typography } from "@mui/material";
+import { Typography, TextField, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import MultiSelect from "./multiSelect";
-import Modal from "./ModalTrial";
+import Modal from "./modal";
 import Dropdown from "./dropDown";
 
 interface ListProps {
@@ -12,19 +12,14 @@ interface ListProps {
   Content1: string;
   Content2: string;
 }
-const LabelWrapper = styled("label")(({ theme }: { theme: Theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  marginBottom: "10px",
-  color: "#757575",
-}));
+
 const prescriptionField = [
   { label: "Drug Name", name: "drugName" },
   { label: "Dose", name: "dose" },
   { label: "Notes", name: "notes" },
 ];
 
-const initialPrescriptionData = {
+const initialPrescriptionData: { [key: string]: string } = {
   drugName: "Cometrex",
   dose: "30 ML",
   notes: "Test",
@@ -38,28 +33,18 @@ const dietFields = [
   { label: "Snacks", name: "snacks" },
 ];
 
-const initialDietData = {
+const initialDietData: { [key: string]: string } = {
   breakfast: "Brown Toast with low fat cheese",
   lunch: "Seafood",
   dinner: "Youghurt",
   snacks: "Apple",
 };
-
-const testAdditionalElements = [
-  <>
-    <LabelWrapper>Test Name</LabelWrapper>
-    <Dropdown />
-  </>,
-];
-
-const prescriptionAdditionalElements = [
-  <>
-    <LabelWrapper>
-      Time
-      <MultiSelect />
-    </LabelWrapper>
-  </>,
-];
+const LabelWrapper = styled("label")(({ theme }: { theme: Theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  marginBottom: "10px",
+  color: "#757575",
+}));
 
 const Container = styled("div")(({ visible }: { visible: boolean }) => ({
   display: "flex",
@@ -67,28 +52,65 @@ const Container = styled("div")(({ visible }: { visible: boolean }) => ({
   alignItems: "center",
   width: "100%",
   maxWidth: "500px",
-  margin: "0 auto",
+  justifyContent: "space-between",
   boxSizing: "border-box",
-  marginLeft: "10px",
 }));
 const IconButton = styled("div")({
   backgroundColor: "transparent",
   border: "none",
   cursor: "pointer",
-  marginLeft: "390px",
+  marginLeft: "260px",
   marginTop: "10px",
 });
 
 const Card = styled("div")(({ theme }: { theme: Theme }) => ({
   backgroundColor: "#ffffff",
-  marginLeft: "40px",
-  marginTop: "-24px",
+  marginLeft: "57px",
+  marginRight: "-19px",
+  marginTop: "-5px",
   borderBottomLeftRadius: "10px",
   borderBottomRightRadius: "10px",
   boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-  width: "424px",
+  width: "304px",
   padding: theme.spacing(1),
   boxSizing: "border-box",
+}));
+
+const StyledButton = styled(Button)(({ theme }: { theme: Theme }) => ({
+  alignSelf: "center",
+  marginTop: "20px",
+  marginBottom: "5px",
+  width: "150px",
+  fontFamily: theme.typography.fontFamily,
+  fontSize: 16,
+  fontWeight: "bold",
+  color: "#fff",
+  backgroundImage:
+    "linear-gradient(90deg, hsla(183, 85%, 47%, 1) 0%, hsla(180, 99%, 36%, 1) 100%)",
+  border: "none",
+  borderRadius: "10px",
+  padding: "12px 24px",
+  cursor: "pointer",
+  textAlign: "center",
+  textDecoration: "none",
+  transition: "background-color 0.3s ease",
+  "&:hover": {
+    backgroundColor: "#0056b3",
+  },
+  "&:active": {
+    backgroundColor: "#004085",
+    transform: "translateY(4px)",
+  },
+}));
+const InputWrapper = styled(TextField)(({ theme }: { theme: Theme }) => ({
+  marginTop: "5px",
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      border: "none",
+    },
+  },
+  backgroundColor: "#F5F5F5",
+  borderRadius: "10px",
 }));
 
 const Title = styled(Typography)(({ theme }: { theme: Theme }) => ({
@@ -135,30 +157,65 @@ const List: React.FC<ListProps> = ({
           <Modal
             onClose={handleCloseModal}
             handleShowCard={handleShowCard}
-            additionalElements={prescriptionAdditionalElements}
-            modals={prescriptionField}
-            initialData={initialPrescriptionData}
             modalTitle="Prescription"
-          />
+          >
+            {prescriptionField.map((field) => (
+              <LabelWrapper key={field.name}>
+                {field.label}
+                <InputWrapper
+                  type="text"
+                  name={field.name}
+                  defaultValue={initialPrescriptionData[field.name]}
+                  variant="outlined"
+                />
+              </LabelWrapper>
+            ))}
+            <LabelWrapper>
+              Time
+              <MultiSelect />
+            </LabelWrapper>
+
+            <StyledButton type="submit" onClick={handleShowCard}>
+              Save
+            </StyledButton>
+          </Modal>
         );
       case "dietPlan":
         return (
           <Modal
             onClose={handleCloseModal}
             handleShowCard={handleShowCard}
-            modals={dietFields}
-            initialData={initialDietData}
             modalTitle="Diet Plan"
-          />
+          >
+            {dietFields.map((field) => (
+              <LabelWrapper key={field.name}>
+                {field.label}
+                <InputWrapper
+                  type="text"
+                  name={field.name}
+                  defaultValue={initialDietData[field.name]}
+                  variant="outlined"
+                />
+              </LabelWrapper>
+            ))}
+            <StyledButton type="submit" onClick={handleShowCard}>
+              Save
+            </StyledButton>
+          </Modal>
         );
       case "test":
         return (
           <Modal
             onClose={handleCloseModal}
             handleShowCard={handleShowCard}
-            additionalElements={testAdditionalElements}
             modalTitle="Tests"
-          />
+          >
+            <Dropdown />
+
+            <StyledButton type="submit" onClick={handleShowCard}>
+              Save
+            </StyledButton>
+          </Modal>
         );
       default:
         return null;

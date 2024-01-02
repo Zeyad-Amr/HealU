@@ -33,7 +33,11 @@ const NutritionDashBoard = () => {
       component: <Add title="Diet Plan" modalType="dietPlan" />,
       key: "dietPlan",
     },
-    { component: <Add title="Test" modalType="test" />, key: "tests" },
+    { component: <Add title="Tests" modalType="test" />, key: "tests" },
+    {
+      component: <Add title="Services" modalType="services" />,
+      key: "services",
+    },
   ];
   const listComponents = [
     {
@@ -46,6 +50,11 @@ const NutritionDashBoard = () => {
       modalType: "dietPlan" as const,
       Content1: "BreakFast",
       Content2: "Lunch",
+    },
+    {
+      modalType: "test" as const,
+      Content1: "CBC",
+      Content2: "Vitamin D",
     },
     {
       modalType: "test" as const,
