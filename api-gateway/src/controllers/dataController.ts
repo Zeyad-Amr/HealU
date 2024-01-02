@@ -14,8 +14,23 @@ export const get_doctor_slots = async (req: Request, res: Response) => {
         const { date } = req.params
         const doctorId = (req as CustomRequest).user.sub
 
-        const slots = (await axios.get(`${process.env.Appointment_URL}/slots/doctor/${doctorId}/date/${date}`)).data
+        let slots = (await axios.get(`${process.env.Appointment_URL}/slots/doctor/${doctorId}/date/${date}`)).data
 
+        for await (const slot of slots) {
+            if (Object.keys(slot.appointmentObject).length !== 0) {
+                const patient = await axios.get(`${process.env.Registration_URL}/patient/${parseInt(slot.appointmentObject.patientId)}`)
+                    .then((res) => {
+                        if (!res.data.data.userId) throw { statusCode: 503, msg: res.data.data }
+                        return res.data.data
+                    }).catch((err) => {
+                        console.log(err);
+
+                        throw err
+                    })
+                slot.appointmentObject.patient = patient
+            }
+
+        }
 
         return res.status(200).json({
             slots
