@@ -7,10 +7,17 @@
   .container {
     width: 100%;
     display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    position: relative;
+    flex-direction: column;
+    height: 82px;
+    left: 10%;
+    /* margin: 20px; */
   }
-  body {
-    overflow-x: hidden;
+  /* Add a media query for smaller screens */
+@media screen and (max-width: 600px) {
+  .container {
+    height: auto; /* Adjust height for smaller screens */
+     position: static
   }
+  } 
   

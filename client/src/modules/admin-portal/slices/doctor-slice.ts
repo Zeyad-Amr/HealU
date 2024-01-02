@@ -67,6 +67,8 @@ export const addDoctor = createAsyncThunk(
       )
       .then((res) => res.data)
       .catch((error) => {
+        console.log(error);
+        alert(error.response.data.error);
         rejectWithValue(error.message);
       });
   }

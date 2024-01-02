@@ -52,7 +52,7 @@ const AddDoctor = () => {
 
   return (
     <div className={styles.mainContainer} style={{ display: "flex" }}>
-      <div className={classes.parent} style={{ marginLeft: "1850px" }}>
+      <div className={classes.parent}>
         <ButtonComponent
           onClick={handleButtonClick}
           text="Add Doctor"

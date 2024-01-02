@@ -3,7 +3,7 @@
 .formContainer {
   width: 100%;
   max-width: 700px;
-  height: 700px;
+  height: 750px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -36,7 +36,7 @@
 }
 
 .specialtyField {
-  width: 100%; /* Make Specialty field take full width */
+  width: 50%; /* Make Specialty field take full width */
 }
 
 .column {
