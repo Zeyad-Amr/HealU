@@ -4,19 +4,22 @@ import CustomTextField from "../../../core/components/CustomTextField";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import PrimaaryBtn from "../../../core/components/PrimaaryBtn";
+import { useAppDispatch } from "../../../core/store";
+import { useSelector } from "react-redux";
+import { AuthState, login } from "../slices/auth-slice";
+import authModel from "../models/auth-model";
 
 const Login = () => {
-  const initialValues = {
-    userName: "",
-    password: "",
-  };
+  const dispatch = useAppDispatch();
+  const authState: AuthState = useSelector((state: any) => state.auth);
 
   const formSubmit = useRef<any>();
 
   const handleFormSchema = Yup.object({
-    userName: Yup.string().required("Username Should be entered"),
+    username: Yup.string().required("Username Should be entered"),
     password: Yup.string().required("Password Should be entered"),
   });
+
   return (
     <>
       <Box sx={{ overflow: "hidden" }}>
@@ -59,10 +62,11 @@ const Login = () => {
           </Typography>
           <Box sx={{ padding: "3rem 0" }}>
             <Formik
-              initialValues={initialValues}
+              initialValues={authState.auth}
               validationSchema={handleFormSchema}
-              onSubmit={(values) => {
+              onSubmit={(values: authModel) => {
                 console.log(values);
+                dispatch(login(values));
               }}
             >
               {({
@@ -77,13 +81,13 @@ const Login = () => {
                   <CustomTextField
                     enable={true}
                     isRequired
-                    name="userName"
+                    name="username"
                     label="Usersame"
-                    value={values.userName}
+                    value={values.username}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={errors.userName}
-                    touched={touched.userName}
+                    error={errors.username}
+                    touched={touched.username}
                     width="100%"
                     props={{
                       type: "text",
@@ -118,9 +122,13 @@ const Login = () => {
           <PrimaaryBtn
             title="log in"
             Func={() => formSubmit.current.click()}
-            sx={{ width: "70%", margin:"0 auto 1rem" }}
+            sx={{ width: "70%", margin: "0 auto 1rem" }}
           />
-          <Typography sx={{width:'100%', textAlign:'center',  cursor:'pointer'}}>Don't have an account?</Typography>
+          <Typography
+            sx={{ width: "100%", textAlign: "center", cursor: "pointer" }}
+          >
+            Don't have an account?
+          </Typography>
         </Box>
       </Box>
     </>

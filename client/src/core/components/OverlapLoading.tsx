@@ -4,20 +4,15 @@ import { Box, Typography } from "@mui/material";
 import PulseLoader from "react-spinners/PulseLoader";
 import axios from "axios";
 import api from "../api/api";
+// import { useAppDispatch } from "../store";
 const LoadingOverlay = () => {
   const { loading, setLoadingState } = useLoading();
+  // const dispatch = useAppDispatch();
 
   useEffect(() => {
     const requestInterceptorCustomAxios = api.interceptors.request.use(
       (config) => {
         setLoadingState(true);
-        const token: string =
-          localStorage.getItem("auth-token") ??
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY";
-        console.log(token);
-        if (token.length > 0) {
-          config.headers["auth-token"] = token;
-        }
         return config;
       },
       (error) => {
@@ -25,6 +20,7 @@ const LoadingOverlay = () => {
         return Promise.reject(error);
       }
     );
+
     const responseInterceptorCustomAxios = api.interceptors.response.use(
       (response: any) => {
         setLoadingState(false);
