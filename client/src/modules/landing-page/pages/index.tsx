@@ -8,7 +8,14 @@ const LandingPage = () => {
         height: "90vh",
       }}
     >
-      <h1>Landing Page</h1>
+      <h1
+        onClick={() => {
+          console.log("clicked");
+          // api.get("/appointment");
+        }}
+      >
+        Landing Page
+      </h1>
     </div>
   );
 };

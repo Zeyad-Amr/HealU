@@ -7,8 +7,11 @@ import prescreption from "../../modules/clinics-portals/pediatric/slices/prescre
 import record from "../../modules/clinics-portals/pediatric/slices/record-slice";
 import appointment from "../../modules/clinics-portals/pediatric/slices/appointment-slice";
 import slots from "../../modules/clinics-portals/pediatric/slices/slots-slice";
+import auth from "../../modules/auth/slices/auth-slice";
+
 export const store = configureStore({
   reducer: {
+    auth,
     devices,
     schedules,
     patients,

@@ -10,6 +10,10 @@ import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmolo
 import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages";
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
+import Login from "../../modules/auth/pages";
+import Signup from "../../modules/patient-portal/components/signup/SignUp";
+import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
+import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -38,12 +42,28 @@ class Router {
       element: <PediatricClinicPortal />,
     },
     {
-      path: AppRoutes.patientPortal,
+      path: AppRoutes.patientPortalProfile,
       element: <PatientPortal />,
+    },
+    {
+      path: AppRoutes.patientPortalAppointments,
+      element: <AppointmentsPage />,
+    },
+    {
+      path: AppRoutes.patientPortalPreviousAppointments,
+      element: <PreviousAppointments />,
     },
     {
       path: AppRoutes.adminPortal,
       element: <AdminPortal />,
+    },
+    {
+      path: AppRoutes.login,
+      element: <Login />,
+    },
+    {
+      path: AppRoutes.signup,
+      element: <Signup />,
     },
   ];
 
