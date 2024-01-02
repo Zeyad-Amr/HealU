@@ -79,17 +79,20 @@ const OphthalmologyForm = () => {
   const [editTestIndex, setEditTestIndex] = useState(null);
   
   
+ 
   const handleTestSubmit = () => {
     if (testName) {
+      const newTests = testName.split(',').map((test) => test.trim()); // Split by comma and trim whitespace
+      
       if (editTestIndex !== null) {
         // If an edit is in progress, update the existing test
         const updatedTests:any = [...tests];
-        updatedTests[editTestIndex] = testName;
+        updatedTests.splice(editTestIndex, 1, ...newTests); // Replace at index with new tests
         setTests(updatedTests);
         setEditTestIndex(null);
       } else {
-        // If not editing, add a new test
-        const updatedTests:any = [...tests, testName];
+        // If not editing, add new tests individually
+        const updatedTests:any = [...tests, ...newTests];
         setTests(updatedTests);
       }
       setOpenPopup((prevState) => ({ ...prevState, tests: false }));
@@ -140,8 +143,15 @@ const OphthalmologyForm = () => {
 
   const handleCloseServices = () => {
     if (selectedService) {
-      setTestCard(`Selected Service: ${selectedService}`);
+      setTestCard((prevTestCard) => {
+        // Check if the testCard already has content
+        const separator = prevTestCard ? ', ' : ''; // Separator between services
+        
+        // Append the selected service to the existing content
+        return prevTestCard + separator + `Selected Service: ${selectedService}`;
+      });
     }
+    setSelectedService(''); // Clear the selected service for the next selection
     setShowServiceModal(false);
   };
 
@@ -363,7 +373,7 @@ const OphthalmologyForm = () => {
                 ))}
               </Select>
               <Button variant="contained" color="primary" onClick={handleCloseServices}>
-                Close
+                Save
               </Button>
             </Paper>
           </Modal>
