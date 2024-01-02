@@ -23,7 +23,7 @@ import { formActions } from "../../slices/form-slice";
 export const useStyles = makeStyles({
   box: {
     "& table ": {
-      width: "80%",
+      width: "100%",
     },
   },
   containerA: {
@@ -97,14 +97,14 @@ const TableComponent = () => {
   };
   return (
     <Paper
-      sx={{ width: "2020px", overflow: "hidden", marginLeft: "200px" }}
+      sx={{ width: "78%", overflow: "hidden" }}
       classes={{ root: classesX.containerA }}
     >
       <TableContainer
         className={styles.customTableContainer}
         classes={{ root: classesX.box }}
       >
-        <Table style={{ width: "2020px" }}>
+        <Table style={{ width: "100%" }}>
           {doctors && (
             <TableBody>
               {doctors.map((row: Doctor, rowIndex: number) => (
@@ -125,13 +125,13 @@ const TableComponent = () => {
 
                   <TableCell
                     key={`${rowIndex}-column3`}
-                    className={styles.column2}
+                    className={styles.column3}
                   >
                     {row.firstName}
                   </TableCell>
                   <TableCell
                     key={`${rowIndex}-column4`}
-                    className={styles.column2}
+                    className={styles.column3}
                   >
                     {row.lastName}
                   </TableCell>
@@ -143,13 +143,13 @@ const TableComponent = () => {
                   </TableCell>
                   <TableCell
                     key={`${rowIndex}-column6`}
-                    className={styles.column4}
+                    className={styles.column3}
                   >
                     {row.phoneNumber}
                   </TableCell>
                   <TableCell
                     key={`${rowIndex}-column7`}
-                    className={styles.column4}
+                    className={styles.column3}
                   >
                     {row.email}
                   </TableCell>

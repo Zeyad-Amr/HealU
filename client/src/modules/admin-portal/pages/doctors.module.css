@@ -1,1 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.AddDoctor-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left:  "1850px" ;
+ }
+ @media (max-width: 500px) {
+    .AddDoctorcontainer {
+       flex-direction: column;
+    }
+    .AddDocotor-button {
+       font-size: 16px;
+       margin-bottom: 10px;
+       padding: 8px 16px;
+       border-width: 1px;
+    }
+ }

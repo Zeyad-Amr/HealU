@@ -37,7 +37,9 @@ export const getDoctors = createAsyncThunk(
           "auth-token": authToken,
         },
       })
-      .then((res) => res.data.data.filter((item:any) => item.role === 'Doctor'))
+      .then((res) => res.data.data.filter((item:any) => item.role === 'Doctor')
+
+      )
       .catch((error) => {
         rejectWithValue(error.message);
       });
@@ -56,9 +58,14 @@ export const addDoctor = createAsyncThunk(
         }
         },
       )
-      .then((res) => res.data)
+      .then((res) =>
+        res.data      
+      )
       .catch((error) => {
+       console.log(error);
+        alert(error.response.data.error);
         rejectWithValue(error.message);
+
       });
   }
 );

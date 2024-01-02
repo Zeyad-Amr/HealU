@@ -18,6 +18,7 @@ import { FormState } from "../../slices/form-slice";
 import ButtonComponent from "../../../clinics-portals/orthopedic/components/button/button";
 import CloseIcon from "@mui/icons-material/Close";
 import { stat } from "fs";
+import { error } from "console";
 // import { handleEdit } from "../table/table";
 
 const specialties: string[] = [
@@ -323,8 +324,21 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
           dispatch(formActions.setFormVisibility(!isVisible));
           dispatch(formActions.setIsEdit(!isEditForm));
         } else {
-          await dispatch(addDoctor(data) as any);
-          await dispatch(getDoctors() as any);
+        
+            const resultAction = await dispatch(addDoctor(data) as any);
+            await dispatch(getDoctors() as any);
+            // console.log(resultAction);
+            // // Check if the action returned an error
+            // if (resultAction.payload===undefined) {
+            //   // Handle the error, if needed
+            //   console.log("Error adding doctor:", resultAction.error);
+            // } else {
+            //   // Handle the success case, if needed
+            //   console.log("Doctor added successfully");
+              // await dispatch(getDoctors() as any);
+            // }
+          
+         
           dispatch(formActions.setFormVisibility(!isVisible));
         }
       } catch (error) {
@@ -504,7 +518,6 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
                 </label>
               )}
             </div>
-
             <div className={styles.column}>
               <label className={styles.labelElement}>SSN</label>
               <TextField
@@ -526,7 +539,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
               <TextField value={localFormState.gender || ""} />
             </div> */}
           <div className={styles.formRow}>
-            <label className={styles.labelElement}>Gender</label>
+            <label className={styles.labelElement}>Gender  </label>
             <TextField
               className={styles.specialtyField}
               select
