@@ -1,0 +1,43 @@
+/* CreateSlotModal.module.css */
+.modalContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #fff; /* Set your background color */
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  border-radius: 8px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CreateSlotModal.module.css */
+.createSlotHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.createSlotText {
+  font-weight: 600;
+  font-size: large;
+  font-family: "Roboto";
+  color: rgba(0, 0, 0, 1);
+}
+
+.close_btn {
+  color: rgba(0, 0, 0, 1) !important;
+}
+
+.timePicker {
+  background-color: rgba(244, 244, 244, 1);
+}
+
+/* Add more styles as needed */
