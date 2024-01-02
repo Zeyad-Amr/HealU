@@ -11,7 +11,7 @@ import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
 import Login from "../../modules/auth/pages";
-import Signup from "../../modules/patient-portal/components/signup/SignUp";
+import Signup from "../../modules/user/pages/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 
@@ -65,12 +65,44 @@ class Router {
       path: AppRoutes.signup,
       element: <Signup />,
     },
+
+    // Eample on children
+    // {
+    //   path: AppRoutes.dashboardLayout,
+    //   element: <DashboardLayout />,
+    //   isPrivate: true,
+    //   children: [
+    //     { path: AppRoutes.dashboard, element: <Dashboard /> },
+    //     { path: AppRoutes.dashboard, element: <Dashboard /> },
+    //     { path: AppRoutes.dashboard, element: <Dashboard /> },
+    //   ],
+    // },
   ];
 
   static getRoutes(): ReactElement[] {
-    return Router.routes.map((route: RouteModel) => (
-      <Route key={route.path} path={route.path} element={route.element} />
-    ));
+    return Router.routes.map((route: RouteModel) => {
+      return Router.handelRoutes(route);
+    });
+  }
+
+  private static handelRoutes(route: RouteModel): ReactElement {
+    // check if route has children
+    if (route.children) {
+      return (
+        // return route with children
+        <Route key={route.path} path={route.path} element={route.element}>
+          {route.children.map((child: RouteModel) => {
+            // check if child has children
+            return Router.handelRoutes(child);
+          })}
+        </Route>
+      );
+    } else {
+      return (
+        // return route without children
+        <Route key={route.path} path={route.path} element={route.element} />
+      );
+    }
   }
 }
 
