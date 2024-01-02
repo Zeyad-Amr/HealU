@@ -10,28 +10,21 @@ import Paper from "@mui/material/Paper";
 import React, { useState } from "react";
 import ModalPopUp from "./elements/ModalPopUp";
 import CustomTextArea from "../examination/elements/CustomTextArea";
-import { CustomMultiSelect } from "../form";
+import CustomMultiSelect from "../examination/elements/CustomMultiSelect";
+import DrugList from "./elements/ItemList";
+import ItemList from "./elements/Item";
 
 const dentalServices = [
   { label: "Teeth Whitening", value: 1 },
   { label: "Teeth Cleaning", value: 2 },
-  { label: "Dental Implants", value: 3 },
-  { label: "Dental Fillings", value: 4 },
-  { label: "Dental Crowns", value: 5 },
-  { label: "Dental Bridges", value: 6 },
-  { label: "Dental Veneers", value: 7 },
-  { label: "Dentures", value: 8 },
-  { label: "Root Canal Treatment", value: 9 },
-  { label: "Tooth Extraction", value: 10 },
-  { label: "Braces", value: 11 },
-  { label: "Invisalign", value: 12 },
-  { label: "Sleep Apnea", value: 13 },
-  { label: "TMJ Disorder", value: 14 },
-  { label: "Wisdom Teeth Removal", value: 15 },
-  { label: "Gum Surgery", value: 16 },
-  { label: "Oral Cancer Screening", value: 17 },
-  { label: "Dental Emergency", value: 18 },
-  { label: "Other", value: 19 },
+  { label: "Teeth Extraction", value: 3 },
+  { label: "Veneers", value: 4 },
+  { label: "Fillings", value: 5 },
+  { label: "Crowns", value: 6 },
+  { label: "Root Canal", value: 7 },
+  { label: "Braces", value: 8 },
+  { label: "Bonding", value: 9 },
+  { label: "Dentures", value: 10 },
 ];
 const dentalTests = [
   { label: "X-ray", value: 1 },
@@ -51,6 +44,10 @@ const PatientExamination: React.FC = () => {
   const handleCloseModal = () => {
     setModalContent(null);
     setIsModalOpen(false);
+  };
+
+  const handleSubmitPrescription = () => {
+    handleCloseModal();
   };
 
   // Popup for prescription
@@ -93,7 +90,7 @@ const PatientExamination: React.FC = () => {
             ></CustomTextArea>
           </Box>
           <Box gridColumn="span 12" className={styles.input}>
-            <SubmitButton label="Save" />
+            <SubmitButton label="Save" onClick={handleSubmitPrescription} />
           </Box>
         </Box>
       </div>
@@ -120,7 +117,7 @@ const PatientExamination: React.FC = () => {
             ></CustomMultiSelect>
           </Box>
           <Box gridColumn="span 12" className={styles.input}>
-            <SubmitButton label="Save" />
+            <SubmitButton label="Save" onClick={handleCloseModal} />
           </Box>
         </Box>
       </div>
@@ -128,10 +125,12 @@ const PatientExamination: React.FC = () => {
   };
 
   // handling services select state
-  const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const handleServiceChange = (event: any) => {
-    setSelectedServices(event.target.value);
+    const selectedValues = event.target.value as string[];
+    setSelectedServices(selectedValues);
   };
+
   // Popup for services
   const handleAddServices = () => {
     openModal(
@@ -147,12 +146,20 @@ const PatientExamination: React.FC = () => {
             ></CustomMultiSelect>
           </Box>
           <Box gridColumn="span 12" className={styles.input}>
-            <SubmitButton label="Save" />
+            <SubmitButton label="Save" onClick={handleCloseModal} />
           </Box>
         </Box>
       </div>
     );
   };
+
+  // prescriptions drug items
+  const drugs = [
+    { name: "Drug 1", dosage: "1", time: "1" },
+    { name: "Drug 2", dosage: "2", time: "2" },
+  ];
+
+  //
 
   return (
     <div>
@@ -165,7 +172,15 @@ const PatientExamination: React.FC = () => {
         <PopUpDropListButton label="Tests" onClick={handleAddTest} />
         <PopUpDropListButton label="Services" onClick={handleAddServices} />
       </div>
-      <SubmitButton label="Done" />
+      <div className={styles.row}>
+        <DrugList drugs={drugs}></DrugList>
+        <DrugList drugs={drugs}></DrugList>
+        <DrugList drugs={drugs}></DrugList>
+      </div>
+      <SubmitButton
+        label="Done"
+        onClick={() => console.log("Sending report...")}
+      />
 
       <ModalPopUp isOpen={isModalOpen} onClose={handleCloseModal}>
         {modalContent}
