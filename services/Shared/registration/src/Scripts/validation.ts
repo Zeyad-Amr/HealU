@@ -43,7 +43,7 @@ export function ssnValidation(inputSSN: string) :boolean {
 //-----------------------clinicId Validation-------------------------------
 export function clinicIdValidation(clinicId: number):boolean {
   // Check if clinicId is a number and within the range 13 to 18
-  return clinicId >= 13 && clinicId <= 15;
+  return clinicId >= 13 && clinicId <= 18;
 }
 
 //-----------------------Date Format Validation--------------------------------
@@ -89,7 +89,7 @@ const validateUsertData = async (userData: any) => {
 
   else if(userData.clinicId && !clinicIdValidation(userData.clinicId) && userData.role =="Doctor")
   {
-    throw new Error('clinicId musnt be from 1 to 5');
+    throw new Error('clinicId must be from 13 to 18');
   }
 
   else if(userData.email && !emailValidation(userData.email)){
