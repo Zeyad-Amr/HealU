@@ -11,8 +11,8 @@ import {
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CreateSlotModal from "./popUP/CreateSlotModal";
 import styles from "./DashBoard.module.css"; // Import the CSS module
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../state/store";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../../../../core/store";
 import { Slot, fetchSlots } from "../../state/slices/slotsSlice";
 import {
   Appointment,
@@ -27,8 +27,8 @@ interface DashBoardProps {
 }
 
 const DashBoard: React.FC<DashBoardProps> = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const SlotsState = useSelector((state: RootState) => state.slots);
+  const dispatch = useAppDispatch();
+  const SlotsState = useSelector((state: RootState) => state.slotReducer);
 
   const [selectedDate, setSelectedDate] = useState<number>(0);
   const [selectedAppointment, setSelectedAppointment] =
@@ -63,7 +63,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   ///////////////////////////////////////////////////
 
   function getCuurentWeekDates() {
-    const today = dayjs().add(1, "day");
+    const today = dayjs();
     const weekDates = [];
     for (let i = 0; i < 7; i++) {
       const daysUntilNextSelectedDay = (i - today.day() + 7) % 7;

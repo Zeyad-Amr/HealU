@@ -1,15 +1,14 @@
 import { Snackbar, Alert, AlertColor } from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../state/store";
 import { closeSnackbar } from "../../state/slices/snackbarSlice";
+import { useAppDispatch } from "../../../../../core/store";
 
 export default function CustomizedSnackbar(props: {
   message: string;
   messageType: AlertColor;
   open: boolean;
 }) {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   return (
     <Snackbar

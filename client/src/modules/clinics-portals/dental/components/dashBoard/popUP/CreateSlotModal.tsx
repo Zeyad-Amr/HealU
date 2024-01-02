@@ -7,8 +7,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import styles from "./CreateSlotModal.module.css"; // Import the CSS module
 import { openSnackbar } from "../../../state/slices/snackbarSlice";
 import { createSlotForDoctor } from "../../../state/slices/slotsSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../state/store";
+import { useAppDispatch } from "../../../../../../core/store";
 
 interface CreateSlotModalProps {
   open: boolean;
@@ -44,7 +43,7 @@ const formatTime = (timeObject: TimeObject) => {
 };
 
 const CreateSlotModal: React.FC<CreateSlotModalProps> = ({ open, onClose }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const [selectedDay, setSelectedDay] = useState<number>(0);
   const [selectedTime, setSelectedTime] = useState<string>("10:00");

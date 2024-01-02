@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../../state/store";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../../../../core/store";
 import { Slot, deleteSlot } from "../../state/slices/slotsSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -22,9 +22,9 @@ function SlotsTable(props: {
   slots: Slot[];
   handleAppointmentClick: (appointment: Appointment | undefined) => void;
 }) {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const AppointmentState = useSelector(
-    (state: RootState) => state.appointments
+    (state: RootState) => state.appointmentReducer
   );
 
   const handleDeleteSlot = async (slotId: string) => {

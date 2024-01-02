@@ -13,8 +13,9 @@ import AdminPortal from "../../modules/admin-portal";
 import Login from "../../modules/login/pages";
 import Signup from "../../modules/patient-portal/components/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
-import DashBoardPage from "../../modules/clinics-portals/dental/pages/Dashboard Page/DashboardPage";
-import ExaminationPage from "../../modules/clinics-portals/dental/pages/ExaminationPage/ExaminationPage";
+
+import ExaminationPage from "../../modules/clinics-portals/dental/pages/ExaminationPage";
+import DashBoardPage from "../../modules/clinics-portals/dental/pages/DashboardPage";
 
 class Router {
   static readonly routes: RouteModel[] = [

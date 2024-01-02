@@ -1,5 +1,4 @@
 import { InputLabel, MenuItem, Select } from "@mui/material";
-import dayjs from "dayjs";
 
 const weekdaysMap = [
   { label: "Sunday", value: 0 },
