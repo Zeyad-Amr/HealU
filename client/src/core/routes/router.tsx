@@ -13,6 +13,7 @@ import AdminPortal from "../../modules/admin-portal";
 import Login from "../../modules/login/pages";
 import Signup from "../../modules/patient-portal/components/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
+import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -47,6 +48,10 @@ class Router {
     {
       path: AppRoutes.patientPortalAppointments,
       element: <AppointmentsPage />,
+    },
+    {
+      path: AppRoutes.patientPortalPreviousAppointments,
+      element: <PreviousAppointments />,
     },
     {
       path: AppRoutes.adminPortal,

@@ -12,9 +12,10 @@ import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import { useState } from "react";
 import React, { Dispatch, SetStateAction } from 'react';
 import AppointmentsBill from "../appointments-bill/AppointmentsBill";
+import ApptBillDialog from "../appointments-bill/AppointmentDialog";
 
 interface AppointmentsFilterResultsPropsI {
-  resultData : any[];
+  resultData: any[];
 }
 
 const AppointmentsFilterResults = ({
@@ -29,13 +30,13 @@ const AppointmentsFilterResults = ({
     return initials.join("");
   }
 
- const onOpenDialog = () => {
-  setOpen(true)
- }
+  const onOpenDialog = () => {
+    setOpen(true)
+  }
 
- const onCloseDialog = () => {
-  setOpen(false)
- }
+  const onCloseDialog = () => {
+    setOpen(false)
+  }
 
   function getRandomColor() {
     const letters = "0123456789ABCDEF";
@@ -266,15 +267,15 @@ const AppointmentsFilterResults = ({
                   }
                   title={'Dr. ' + slot.doctor.name}
                   subheader={slot.clinic.name}
-                  
+
                 />
-                <CardContent sx={{ paddingBottom :"10px !important", paddingTop :"2px !important"}}>
-                  <Box sx={{ display: "flex", justifyContent: "space-between" , alignItems : "center" }}>
-                  <Typography variant="h6" color="text.secondary">
-                    {formatDate(slot.date).formattedDate}
-                    <br />
-                    {formatDate(slot.date).formattedTime}
-                  </Typography>
+                <CardContent sx={{ paddingBottom: "10px !important", paddingTop: "2px !important" }}>
+                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography variant="h6" color="text.secondary">
+                      {formatDate(slot.date).formattedDate}
+                      <br />
+                      {formatDate(slot.date).formattedTime}
+                    </Typography>
                     <Button
                       onClick={onOpenDialog}
                       sx={{
@@ -287,7 +288,7 @@ const AppointmentsFilterResults = ({
                         textAlign: "center",
                         padding: "0.2rem",
                         color: "secondary.main",
-                        cursor : "pointer"
+                        cursor: "pointer"
                       }}
                     >
                       Book
@@ -299,7 +300,8 @@ const AppointmentsFilterResults = ({
           );
         })}
       </Grid>
-      <AppointmentsBill open={open} handleClose={onCloseDialog} />
+      <ApptBillDialog open={open} handleClose={onCloseDialog} />
+      {/* <AppointmentsBill open={open} handleClose={onCloseDialog} /> */}
     </Box>
   );
 };
