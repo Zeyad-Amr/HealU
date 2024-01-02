@@ -24,7 +24,7 @@ Object.keys(proxies).forEach((path) => {
 
 
 app.use('/api', express.json(), authRouter)
-app.use('/api', express.json(), dataRouter)
+app.use('/api', [express.json(), protect], dataRouter)
 
 const PORT = process.env.PORT ?? 4000;
 
