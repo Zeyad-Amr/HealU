@@ -6,7 +6,8 @@
   height: 82px;
   top: 7%;
   left: 35%;
-  /*margin-left: 850px;*/
+  flex-direction: column;
+  /* margin-left: 850px; */
   justify-content: center;
   align-items: center;
   border-radius: 15px;
@@ -20,7 +21,7 @@
   font-weight: 600;
   line-height: 38px;
   letter-spacing: 0em;
-  color: white;
+  color: rgb(255, 255, 255);
   text-transform: none;
 }
 
@@ -99,6 +100,8 @@
 @media (max-width: 500px) {
   .parent  {
      flex-direction: column;
+     height: auto; /* Adjust height for smaller screens */
+     position: static
   }
   .ButtonComponent {
     flex-direction: column;

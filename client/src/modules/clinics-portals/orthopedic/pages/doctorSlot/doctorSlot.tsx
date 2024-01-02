@@ -19,9 +19,9 @@ const DoctorsSlot = () => {
 
   return (
     <div className={ClassNames.mainContainer}>
-      <div className={ClassNames.container}>
-        <DateComponent />
-        <div className={classes.parent}>
+     < div className={ClassNames.container}>
+        <DateComponent /> 
+        <div className={classes.parent} style={{ left:'70%' ,top:"-70%"  }}>
           <ButtonComponent
             onClick={handleButtonClick}
             text="Create New Slot"
@@ -30,9 +30,8 @@ const DoctorsSlot = () => {
             color="white"
             fontSize="32px"
           />
-        </div>
+          </div>  
       </div>
-
       <SchedulesTable schedules={slots} />
       <AddSlotForm
         isFormVisible={isVisible}
@@ -46,7 +45,7 @@ const DoctorsSlot = () => {
         isIncluded={false}
         onAddSlot={true}
       />
-    </div>
+       </div>
   );
 };
 export default DoctorsSlot;
