@@ -11,8 +11,8 @@ import { Box, Slide } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import DrugTable from './drug-table/DrugTable';
-import VitalsTable from './vitals-table/VitalsTable';
-import EyesTable from './eye-measurments-table/EyesTable';
+import SingleTable from './single-table/SingleTable';
+import TestsTable from './tests-table/TestsTable';
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -109,12 +109,43 @@ export default function CustomizedDialogs({ handleClose, open, appointment }: ID
                             {"Vitals"}
                         </Typography>
                         <Divider />
-                        <Typography variant='body1'>
-                            <VitalsTable vitals={appointment?.medicalRecord?.vitals} />
-                        </Typography>
+                        {appointment?.medicalRecord?.EyeMeasurement && Object.keys(appointment?.medicalRecord?.EyeMeasurement).length !== 0 ?
+                            <Typography variant='body1'>
+                                <SingleTable
+                                    data={appointment?.medicalRecord?.vitals}
+                                    labels={{
+                                        BloodPressure: "Blood Pressure",
+                                        RespirationRate: "Respiration Rate",
+                                        HeartRate: "Heart Rate",
+                                        DiabeticTest: "Diabetic Test",
+                                        SPO2: "SpO2",
+                                    }}
+                                />
+                            </Typography>
+                            :
+                            <Typography variant='body1'>
+                                No vitals found
+                            </Typography>
+                        }
 
+                        {appointment?.medicalTests && appointment?.medicalTests.length !== 0 ?
 
-                        {true ?
+                            <Box>
+
+                                <Typography mt={2} variant='h4' color={"text.primary"}>
+                                    {"Medical Tests"}
+                                </Typography>
+                                <Divider />
+
+                                <Typography variant='body1'>
+                                    <TestsTable tests={appointment?.medicalTests} />
+                                </Typography>
+                            </Box>
+                            :
+                            null
+                        }
+
+                        {appointment?.medicalRecord?.EyeMeasurement && Object.keys(appointment?.medicalRecord?.EyeMeasurement).length !== 0 ?
                             <Box>
                                 <Typography mt={2} variant='h4' color={"text.primary"}>
                                     {"Eye Measurements"}
@@ -122,14 +153,20 @@ export default function CustomizedDialogs({ handleClose, open, appointment }: ID
                                 <Divider />
 
                                 <Typography variant='body1'>
-                                    <EyesTable eyeMeasurements={appointment?.medicalRecord?.EyeMeasurement} />
+                                    <SingleTable
+                                        data={appointment?.medicalRecord?.EyeMeasurement}
+                                        tableCellProps={{ align: "center" }}
+                                        labels={{
+                                            LeftEye: "Left eye",
+                                            RightEye: "Right eye"
+                                        }}
+                                    />
                                 </Typography>
                             </Box>
                             :
                             null
                         }
-
-                        {true ?
+                        {appointment?.medicalRecord?.Nutrition && Object.keys(appointment?.medicalRecord?.Nutrition).length !== 0 ?
                             <Box>
                                 <Typography mt={2} variant='h4' color={"text.primary"}>
                                     {"Nutrition"}
@@ -137,7 +174,14 @@ export default function CustomizedDialogs({ handleClose, open, appointment }: ID
                                 <Divider />
 
                                 <Typography variant='body1'>
-                                    <EyesTable eyeMeasurements={appointment?.medicalRecord?.EyeMeasurement} />
+                                    <SingleTable
+                                        data={appointment?.medicalRecord?.Nutrition}
+                                        tableCellProps={{ width: "50%" }}
+                                        labels={{
+                                            DietPlan: "Diet Plan",
+                                            Inbody: "InBody Test"
+                                        }}
+                                    />
                                 </Typography>
                             </Box>
                             :

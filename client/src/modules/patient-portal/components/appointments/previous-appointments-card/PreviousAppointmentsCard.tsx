@@ -104,11 +104,6 @@ const appointmentsData = [
         LeftEye: "5.95",
         RightEye: "5.2"
       }
-      ,
-      Nutrition: {
-        DietPlan: "Inblanace",
-        Inbody: "110"
-      }
     },
     medicalTests: [
       {
@@ -148,6 +143,12 @@ const appointmentsData = [
       id: 5,
       name: "OrthoCare Center",
       description: "Orthopedic specialists for bone and joint health"
+    },
+    medicalRecord: {
+      Nutrition: {
+        DietPlan: "Inblanace lorem mal omega mass mass mass mass mass mass mass mass mass mass mass mass mass mass mass mass mass",
+        Inbody: "110"
+      }
     },
     prescription: {
       PrescriptionID: 8,

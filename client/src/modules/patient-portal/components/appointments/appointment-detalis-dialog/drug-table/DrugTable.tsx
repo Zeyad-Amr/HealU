@@ -8,7 +8,7 @@ export default function DrugTable({ drugs }: IDrugTableProps) {
 
     return (
 
-        <TableContainer component={Paper} sx={{ overflowY: "scroll", maxHeight: "12rem" }} >
+        <TableContainer component={Paper} sx={{ overflowY: "scroll", maxHeight: "8rem" }} >
             <Table aria-label="simple table" stickyHeader size='small'>
                 <TableHead>
                     <TableRow>
