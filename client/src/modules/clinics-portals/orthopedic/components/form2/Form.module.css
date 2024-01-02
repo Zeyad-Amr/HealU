@@ -1,23 +1,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
 .my-form-container {
-  width: 810px;
-  height: 451px;
-  top: 675px;
-  left: 555px;
+  position: absolute;
+  width: 410px;
+  height: 251px;
+  top: 50%;
+  left: 35%;
   border-radius: 24px;
   background: #FFFFFF;
   box-shadow: 0px 0px 26px 0px #00000040;
+  text-align: center;
 
 
 }
 
+.header{
+  display: flex;
+  justify-content: space-between;
+
+}
+.closeButton{
+  background-color: white;
+  border: none;
+  height: 38px;
+  font-family: Roboto;
+  font-size: 32px;
+  margin-right: 30px;
+  margin-top: 20px;
+}
+
 /* Style for the form heading */
 .my-form-heading {
+  
   width: 80px;
   height: 38px;
-  top: 730px;
-  left: 599px;
+  
+  margin-left: 40px;
 
 
   font-family: Roboto;
@@ -27,33 +45,33 @@
   letter-spacing: 0em;
   text-align: left;
 
-  background: #000000;
+  
 }
 
 /* Style for the form label */
 .my-form-label {
-  width: 198.43px;
+  width: 78.43px;
   height: 38px;
+  margin-left: 60px;
   top: 815px;
-  left: 628px;
   font-family: Roboto;
   font-size: 32px;
   font-weight: 400;
   line-height: 38px;
   letter-spacing: 0em;
   text-align: left;
-  background: #8B8B8B;
-
-
+  color:#8B8B8B;
+  ;
   
 }
 
 /* Style for the form input */
 .my-form-input {
-  width: 721px;
-  height: 82px;
-  top: 859px;
-  left: 599px;
+  
+  width: 321px;
+  height: 42px;
+  margin-left: 40px;
+  margin-top: 1px;
   background: #F4F4F4;
 
 
@@ -62,18 +80,29 @@
 
 /* Style for the form submit button */
 .my-form-button {
+  /*position: absolute;*/
   width: 70px;
   height: 38px;
-  top: 1009px;
-  left: 925px;
+  /*margin-top: 109px;*/
+  /*left: 325px;*/
+
   background: linear-gradient(285.17deg, #01B6B6 10.66%, #13D2DE 102.7%);
   color: #fff;
   padding: 10px 15px;
   border: none;
   cursor: pointer;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 15px;
+
+  display:block;
 }
 
 /* Hover effect for the form submit button */
 .my-form-button:hover {
   /*background-color: #45a049;*/
+}
+label{
+  color:#8B8B8B;
 }
