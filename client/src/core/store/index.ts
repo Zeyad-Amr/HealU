@@ -7,11 +7,9 @@ import patients from "../../modules/clinics-portals/pediatric/slices/patient-sli
 import slotReducer from "../../modules/clinics-portals/dental/state/slices/slotsSlice";
 import appointmentReducer from "../../modules/clinics-portals/dental/state/slices/appointmentSlice";
 import snackbarReducer from "../../modules/clinics-portals/dental/state/slices/snackbarSlice";
-import patientReducer from "../../modules/clinics-portals/dental/state/slices/patientSlice";
-import historyReducer from "../../modules/clinics-portals/dental/state/slices/historySlice";
 import prescriptionReducer from "../../modules/clinics-portals/dental/state/slices/prescriptionSlice";
-import dentalRecordReducer from "../../modules/clinics-portals/dental/state/slices/recordSlice";
 import examinationReducer from "../../modules/clinics-portals/dental/state/slices/examinationSlice";
+import patientReducer from "../../modules/clinics-portals/dental/state/slices/patientSlice";
 
 export const store = configureStore({
   reducer: {
@@ -23,11 +21,9 @@ export const store = configureStore({
     slotReducer,
     appointmentReducer,
     snackbarReducer,
-    patientReducer,
-    historyReducer,
     prescriptionReducer,
-    dentalRecordReducer,
-    examinationReducer
+    examinationReducer,
+    patientReducer,
   },
 });
 

@@ -23,6 +23,7 @@ import dayjs from "dayjs";
 import SlotsTable from "./SlotsTable";
 import { useNavigate } from "react-router-dom";
 import { fetchExaminationByAppointmentID } from "../../state/slices/examinationSlice";
+import { fetchPatients } from "../../state/slices/patientSlice";
 
 interface DashBoardProps {
   // Other props if needed
@@ -45,6 +46,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   useEffect(() => {
     dispatch(fetchSlots());
     dispatch(fetchAppointments());
+    dispatch(fetchPatients());
   }, [dispatch]);
 
   useEffect(() => {

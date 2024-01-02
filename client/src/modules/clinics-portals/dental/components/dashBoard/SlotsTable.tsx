@@ -26,6 +26,7 @@ function SlotsTable(props: {
   const AppointmentState = useSelector(
     (state: RootState) => state.appointmentReducer
   );
+  const PatientsState = useSelector((state: RootState) => state.patientReducer);
 
   const handleDeleteSlot = async (slotId: string) => {
     console.log("SlotID: ", slotId);
@@ -96,11 +97,20 @@ function SlotsTable(props: {
                       )
                     }
                   >
-                    {
-                      AppointmentState.appointments.find(
+                    {(() => {
+                      const appointment = AppointmentState.appointments.find(
                         (appointment) => appointment.slotId === slot._id
-                      )?.patientId
-                    }
+                      );
+
+                      const patient = PatientsState.patients.find(
+                        (patient) => patient.userId === appointment?.patientId
+                      );
+
+                      const firstName = patient?.firstName ?? "";
+                      const lastName = patient?.lastName ?? "";
+
+                      return `${firstName} ${lastName}`;
+                    })()}
                   </Typography>
 
                   <IconButton

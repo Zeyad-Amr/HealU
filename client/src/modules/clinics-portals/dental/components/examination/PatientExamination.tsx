@@ -2,15 +2,12 @@ import DiagnosisForm from "./diagnosis/DiagnosisForm";
 import PopUpDropListButton from "./elements/PopUpDropListButton";
 import styles from "../examination/examination.module.css";
 import SubmitButton from "./elements/SubmitButton";
-
 import Box from "@mui/material/Box";
-
 import React, { useState } from "react";
 import ModalPopUp from "./elements/ModalPopUp";
 import CustomTextArea from "../examination/elements/CustomTextArea";
 import CustomMultiSelect from "../examination/elements/CustomMultiSelect";
 import DrugList from "./elements/ItemList";
-import ItemList from "./elements/Item";
 
 const dentalServices = [
   { label: "Teeth Whitening", value: 1 },
@@ -28,6 +25,7 @@ const dentalTests = [
   { label: "X-ray", value: 1 },
   { label: "Panorama", value: 2 },
 ];
+
 const PatientExamination: React.FC = () => {
   const [modalContent, setModalContent] = useState<React.ReactNode | null>(
     null

@@ -1,76 +1,69 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../../../../core/api/api";
 
-// show the name, age in patient info box
 export interface Patient {
-  // patient information
-  patientId: number;
+  userId: number;
+  gender: string;
   firstName: string;
   lastName: string;
-  dateOfBirth: string; // use it to calculate age
-  ////////////////////////////////
-  // not used
-  gender: string;
+  dateOfBirth: string;
   email: string;
-  phoneNumber: string;
-  role?: string;
-  ssn: string;
+  phoneNumber: number;
+  role: string;
+  ssn: number;
   password: string;
   userName: string;
   insurancePersentage: number;
   emergencyContactName: string;
-  emergencyContactNumber: string;
+  emergencyContactNumber: number;
+  specialization: null;
+  clinicId: null;
 }
 
 export interface PatientState {
-  patient: Patient | null;
+  patients: Patient[];
   loading: boolean;
   error: string;
 }
 
 const initialState: PatientState = {
-  patient: null,
+  patients: [],
   loading: false,
   error: "",
 };
 
-// Create an async thunk for fetch patient for the patient info box
-export const fetchPatientByID = createAsyncThunk(
-  "patient/fetchPatientByID",
-  async (patientId: number) => {
+// Create an async thunk for fetching appointments
+export const fetchPatients = createAsyncThunk(
+  "patient/fetchPatients",
+  async () => {
     try {
-      const response = await axios.get(
-        // `https://healu-api-gateway.onrender.com/api/registration/patient/${patientId}`
-        `https://registration-zf9n.onrender.com${patientId}`
-      );
-      return response.data;
+      const response = await axios.get(`/registration/user`);
+      return response.data["data"];
     } catch (error) {
       throw error;
     }
   }
 );
 
-
-
-const patientSlice = createSlice({
+const PatientSlice = createSlice({
   name: "patient",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPatientByID.pending, (state) => {
+      .addCase(fetchPatients.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchPatientByID.fulfilled, (state, action) => {
+      .addCase(fetchPatients.fulfilled, (state, action) => {
         state.loading = false;
-        state.patient = action.payload;
+        state.patients = action.payload;
       })
-      .addCase(fetchPatientByID.rejected, (state, action) => {
+      .addCase(fetchPatients.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || `Error fetching fetchPatientByID`; // return error message from server or default error message
+        state.error =
+          action.error.message || "Failed to fetch examination data";
       });
   },
 });
 
-// Export the reducer
-export default patientSlice.reducer;
+export default PatientSlice.reducer;

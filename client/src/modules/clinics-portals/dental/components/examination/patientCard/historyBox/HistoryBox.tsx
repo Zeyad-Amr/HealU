@@ -6,22 +6,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../../../../core/store";
 
 const HistoryBox = () => {
-  // // Sample data for drugs, illnesses, and medical tests
-  // const initialDrugs = ["Aspirin", "Ibuprofen", "Paracetamol"];
-  // const initialIllnesses = ["Flu", "Common Cold", "Allergies"];
-  // const initialMedicalTests = ["Blood Test", "X-Ray", "MRI"];
-  // const initialOperations = [
-  //   "Appendectomy",
-  //   "Knee Replacement",
-  //   "Cataract Surgery",
-  // ];
-
-  // // State to hold the data
-  // const [drugs, setDrugs] = useState(initialDrugs);
-  // const [illnesses, setIllnesses] = useState(initialIllnesses);
-  // const [medicalTests, setMedicalTests] = useState(initialMedicalTests);
-  // const [operations, setOperations] = useState(initialOperations);
-
   const ExamState = useSelector(
     (state: RootState) => state.examinationReducer.examination.medicalHistory
   );
