@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 ENV_BASE_DIR = Path(__file__).resolve().parent.parent
 import environ
+import dj_database_url
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
@@ -29,7 +30,8 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+#ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS=os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -82,15 +84,21 @@ WSGI_APPLICATION = 'billing.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": env("DB_NAME"),
+#         "USER": env("DB_USER"),
+#         "PASSWORD": env("DB_PASSWORD"),
+#         "HOST": "127.0.0.1",
+#         "PORT": "",
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DB_NAME"),
-        "USER": env("DB_USER"),
-        "PASSWORD": env("DB_PASSWORD"),
-        "HOST": "127.0.0.1",
-        "PORT": "",
-    }
+    'default': dj_database_url.config(
+        default=env("db_url")
+    )
 }
 
 # Password validation
