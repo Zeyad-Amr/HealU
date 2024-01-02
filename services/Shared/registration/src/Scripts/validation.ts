@@ -34,21 +34,18 @@ export function hasCapitalizedCharacter(inputString:string):boolean {
 }*/
 export function ssnValidation(inputSSN: string) :boolean {
   const ssnFormat = /^\d{14}$/
-  console.log('Input:', inputSSN);
-
-  if (inputSSN && inputSSN.length === 14 && ssnFormat.test(inputSSN)) {
-    console.log('Validation passed');
-    return true;
-  } else {
-    console.log('Validation failed');
-    return false;
-}}
+  if (inputSSN && inputSSN.length === 14 && ssnFormat.test(inputSSN))
+    return true
+  else
+    return false
+}
 
 //-----------------------clinicId Validation-------------------------------
 export function clinicIdValidation(clinicId: number):boolean {
-  // Check if clinicId is a number and within the range 1 to 5
+  // Check if clinicId is a number and within the range 13 to 18
   return clinicId >= 13 && clinicId <= 15;
 }
+
 //-----------------------Date Format Validation--------------------------------
 export function dateFormatValidation(inputDate: string): boolean {
   const dateFormatPattern = /^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
@@ -57,8 +54,6 @@ export function dateFormatValidation(inputDate: string): boolean {
 
 //-----------------------Email Validation--------------------------------
 export function emailValidation(email: string): boolean {
-  // const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)?\.com$/;
-  // return emailPattern.test(email);
   const emailPattern = /^[^\s@]+@[^\s@]+\.com$/;
   return emailPattern.test(email);
 }
@@ -92,7 +87,7 @@ const validateUsertData = async (userData: any) => {
     throw new Error('Check that you entered the right birthdate and in this format: YYYY-MM-DD');
   } 
 
-  else if(userData.clinicId && !clinicIdValidation(userData.clinicId))
+  else if(userData.clinicId && !clinicIdValidation(userData.clinicId) && userData.role =="Doctor")
   {
     throw new Error('clinicId musnt be from 1 to 5');
   }
