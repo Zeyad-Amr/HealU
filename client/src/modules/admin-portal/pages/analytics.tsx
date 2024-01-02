@@ -10,41 +10,59 @@ import { useAppDispatch } from "../../../core/store/index";
 import { fetchAnalytics } from "../slices/analytics-slice";
 import { analyticsState } from "../slices/analytics-slice";
 import { TotalRevenue } from "../slices/analytics-slice";
+import { analyticsMedicalRecords } from "../slices/analytics-slice";
 import { on } from "events";
 
 const dataset = [
   {
-    diagnostic_reports: 59,
-    prescriptions: 57,
+    recordsAdded: 59,
+    prescriptionsAdded: 57,
+    medicalHistoryAdded: 57,
     clinc: "clinc 1",
   },
   {
-    diagnostic_reports: 59,
-    prescriptions: 57,
+    recordsAdded: 59,
+    prescriptionsAdded: 57,
+    medicalHistoryAdded: 57,
     clinc: "clinc 2",
   },
   {
-    diagnostic_reports: 59,
-    prescriptions: 57,
+    recordsAdded: 59,
+    prescriptionsAdded: 57,
+    medicalHistoryAdded: 57,
     clinc: "clinc 3",
   },
   {
-    diagnostic_reports: 59,
-    prescriptions: 57,
+    recordsAdded: 59,
+    prescriptionsAdded: 57,
+    medicalHistoryAdded: 57,
     clinc: "clinc 4",
   },
   {
-    diagnostic_reports: 59,
-    prescriptions: 57,
+    recordsAdded: 59,
+    prescriptionsAdded: 57,
+    medicalHistoryAdded: 57,
     clinc: "clinc 5",
   },
   {
-    diagnostic_reports: 59,
-    prescriptions: 57,
+    recordsAdded: 59,
+    prescriptionsAdded: 57,
+    medicalHistoryAdded: 57,
     clinc: "clinc 6",
   },
 ];
+interface GenderDistributionData {
+  [key: string]: {
+    male: number;
+    female: number;
+  };
+}
 
+interface ConvertedDataItem {
+  male: number;
+  female: number;
+  clinic: string;
+}
 interface ConvertedData {
   data: { value: number; label: string }[];
 }
@@ -52,6 +70,46 @@ interface analyticsToConvert {
   [key: string]: number;
 }
 
+interface ConvertedMedicalItem {
+  recordsAdded: number;
+  prescriptionsAdded: number;
+  medicalHistoryAdded: number;
+  clinic: string;
+}
+
+function convertMedicalRecordsToDataset(
+  medicalRecords: analyticsMedicalRecords
+): ConvertedMedicalItem[] {
+  const clinics = Object.keys(medicalRecords.recordsAdded);
+
+  return clinics
+    .map((clinic) => ({
+      recordsAdded: medicalRecords.recordsAdded[clinic],
+      prescriptionsAdded: medicalRecords.prescriptionsAdded[clinic],
+      medicalHistoryAdded: medicalRecords.medicalHistoryAdded[clinic],
+      clinic: `Clinic ${clinic}`,
+    }))
+    .filter(
+      (item) =>
+        item.clinic !== "Clinic total" &&
+        item.clinic !== "Clinic averageAllClinics"
+    );
+}
+function convertGenderDistributionToDataset(
+  genderDistribution: GenderDistributionData
+): ConvertedDataItem[] {
+  return Object.entries(genderDistribution)
+    .map(([key, data]) => ({
+      male: data.male,
+      female: data.female,
+      clinic: `Clinic ${key}`,
+    }))
+    .filter(
+      (item) =>
+        item.clinic !== "Clinic total" &&
+        item.clinic !== "Clinic averageAllClinics"
+    );
+}
 function convertToData(analyticsToConvert: analyticsToConvert): ConvertedData {
   return {
     data: Object.entries(analyticsToConvert)
@@ -128,12 +186,16 @@ export default function Analytics() {
             TotalAppointmentsData={convertToData(
               analyticsState.allAnalytics.analytics.numberOfAppointments
             )}
-            TotalRecordsData={convertToData(
-              analyticsState.allAnalytics.analytics.medicalRecords
-                .medicalHistoryAdded
+            TotalServicesData={convertToData(
+              analyticsState.allAnalytics.analytics.numberOfServicesUsed
             )}
-            TypesOfRecords={dataset}
-            GenderDistribution={dataset}
+            TypesOfRecords={convertMedicalRecordsToDataset(
+              analyticsState.allAnalytics.analytics?.medicalRecords
+            )}
+            GenderDistribution={convertGenderDistributionToDataset(
+              analyticsState.allAnalytics.analytics.patientDemographics
+                ?.genderDistribution
+            )}
           ></Display>
         )}
       {value === 1 && (
@@ -144,12 +206,16 @@ export default function Analytics() {
           TotalAppointmentsData={convertToData(
             analyticsState.allAnalytics.analytics.numberOfAppointments
           )}
-          TotalRecordsData={convertToData(
-            analyticsState.allAnalytics.analytics.medicalRecords
-              .medicalHistoryAdded
+          TotalServicesData={convertToData(
+            analyticsState.allAnalytics.analytics.numberOfServicesUsed
           )}
-          TypesOfRecords={dataset}
-          GenderDistribution={dataset}
+          TypesOfRecords={convertMedicalRecordsToDataset(
+            analyticsState.allAnalytics.analytics?.medicalRecords
+          )}
+          GenderDistribution={convertGenderDistributionToDataset(
+            analyticsState.allAnalytics.analytics.patientDemographics
+              ?.genderDistribution
+          )}
         ></Display>
       )}
       {value === 2 && (
@@ -160,12 +226,16 @@ export default function Analytics() {
           TotalAppointmentsData={convertToData(
             analyticsState.allAnalytics.analytics.numberOfAppointments
           )}
-          TotalRecordsData={convertToData(
-            analyticsState.allAnalytics.analytics.medicalRecords
-              .medicalHistoryAdded
+          TotalServicesData={convertToData(
+            analyticsState.allAnalytics.analytics.numberOfServicesUsed
           )}
-          TypesOfRecords={dataset}
-          GenderDistribution={dataset}
+          TypesOfRecords={convertMedicalRecordsToDataset(
+            analyticsState.allAnalytics.analytics?.medicalRecords
+          )}
+          GenderDistribution={convertGenderDistributionToDataset(
+            analyticsState.allAnalytics.analytics.patientDemographics
+              ?.genderDistribution
+          )}
         ></Display>
       )}
       {value === 3 && (
@@ -176,12 +246,16 @@ export default function Analytics() {
           TotalAppointmentsData={convertToData(
             analyticsState.allAnalytics.analytics.numberOfAppointments
           )}
-          TotalRecordsData={convertToData(
-            analyticsState.allAnalytics.analytics.medicalRecords
-              .medicalHistoryAdded
+          TotalServicesData={convertToData(
+            analyticsState.allAnalytics.analytics.numberOfServicesUsed
           )}
-          TypesOfRecords={dataset}
-          GenderDistribution={dataset}
+          TypesOfRecords={convertMedicalRecordsToDataset(
+            analyticsState.allAnalytics.analytics?.medicalRecords
+          )}
+          GenderDistribution={convertGenderDistributionToDataset(
+            analyticsState.allAnalytics.analytics.patientDemographics
+              ?.genderDistribution
+          )}
         ></Display>
       )}
     </>

@@ -44,12 +44,13 @@ export interface analyticsAgeDistribution {
 }
 
 export interface analyticsGenderDistribution {
+  [key: string]: number;
   male: number;
   female: number;
 }
 
 export interface PatientDemographics {
-  ageDistribution: Record<string, analyticsAgeDistribution>;
+  ageDistribution: analyticsAgeDistribution;
   genderDistribution: Record<string, analyticsGenderDistribution>;
 }
 

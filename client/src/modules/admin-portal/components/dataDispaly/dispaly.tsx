@@ -7,7 +7,7 @@ import { BarChart } from "@mui/x-charts/BarChart";
 
 export interface DisplayProps {
   TotalRevenueData: any;
-  TotalRecordsData: any;
+  TotalServicesData: any;
   TotalAppointmentsData: any;
   TypesOfRecords: any;
   GenderDistribution: any;
@@ -34,10 +34,10 @@ const Display = (props: DisplayProps) => {
         </Grid>
         <Grid item xs={5}>
           <Box flexGrow={1} textAlign={"center"}>
-            <Typography>total records</Typography>
+            <Typography>total services</Typography>
             <PieChart
               title="total records"
-              series={[props.TotalRecordsData]}
+              series={[props.TotalServicesData]}
               height={200}
             />
           </Box>
@@ -55,10 +55,11 @@ const Display = (props: DisplayProps) => {
         <Grid item xs={8}>
           <BarChart
             dataset={props.TypesOfRecords}
-            xAxis={[{ scaleType: "band", dataKey: "clinc" }]}
+            xAxis={[{ scaleType: "band", dataKey: "clinic" }]}
             series={[
-              { dataKey: "diagnostic_reports", label: "reports" },
-              { dataKey: "prescriptions", label: "prescriptions" },
+              { dataKey: "recordsAdded", label: "Records" },
+              { dataKey: "prescriptionsAdded", label: "prescriptions" },
+              { dataKey: "medicalHistoryAdded", label: "Medical history" },
             ]}
             height={300}
           />
@@ -66,10 +67,10 @@ const Display = (props: DisplayProps) => {
         <Grid item xs={7}>
           <BarChart
             dataset={props.GenderDistribution}
-            xAxis={[{ scaleType: "band", dataKey: "clinc" }]}
+            xAxis={[{ scaleType: "band", dataKey: "clinic" }]}
             series={[
-              { dataKey: "diagnostic_reports", label: "reports" },
-              { dataKey: "prescriptions", label: "prescriptions" },
+              { dataKey: "male", label: "male" },
+              { dataKey: "female", label: "female" },
             ]}
             height={300}
           />
