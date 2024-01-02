@@ -22,6 +22,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CustomHeader from "../../../../core/components/CustomHeader";
 import AppointmentsFilterResults from "./appointments-results/AppointmentsFilterResults";
+import AppointmentsBill from "./appointments-bill/AppointmentsBill";
 
 const api_URL = "https://healu-api-gateway.onrender.com";
 
@@ -38,9 +39,9 @@ const Appointments = () => {
 
   // useRef
 
-  // useEffect(() => {
-  //   loadAllClinics();
-  // }, []);
+  useEffect(() => {
+    loadAllClinics();
+  }, []);
 
   const loadAllClinics = () => {
     axios
@@ -56,7 +57,7 @@ const Appointments = () => {
         setAllClinicsData(res.data.data.clinics);
         setClinicIdData(res.data.data.clinics[0].id);
         loadAllDoctorsByClinicId(res.data.data.clinics[0].id);
-        // onSearch(doctorIdData, clinicIdData, selectedFromDate, selectedToDate);
+        onSearch(doctorIdData, clinicIdData, selectedFromDate, selectedToDate);
       })
       .catch((err: any) => {
         console.log(err);
@@ -110,6 +111,7 @@ const Appointments = () => {
       )
       .then((res: any) => {
         console.log(res);
+        console.log(res.data);
         console.log(res.data.slots);
         setFilterResults(res.data.slots);
       })
@@ -126,6 +128,12 @@ const Appointments = () => {
       });
     } else {
       setSelectedFromDate(fromDate);
+      onSearch(
+        doctorIdData,
+        clinicIdData,
+        fromDate,
+        selectedToDate
+      );
     }
   };
 
@@ -137,6 +145,12 @@ const Appointments = () => {
       });
     } else {
       setSelectedToDate(toDate);
+      onSearch(
+        doctorIdData,
+        clinicIdData,
+        selectedFromDate,
+        toDate
+      );
     }
   };
 
@@ -151,12 +165,24 @@ const Appointments = () => {
 
   const onChangeDoctors = (event: any) => {
     setDoctorIdData(event.target.value);
+    onSearch(
+      event.target.value,
+      clinicIdData,
+      selectedFromDate,
+      selectedToDate
+    );
     console.log(event.target.value);
   };
 
   const onChangeClinics = (event: any) => {
     setClinicIdData(event.target.value);
     loadAllDoctorsByClinicId(event.target.value);
+    onSearch(
+      doctorIdData,
+      event.target.value,
+      selectedFromDate,
+      selectedToDate
+    );
   };
 
   const onClear = () => {
@@ -165,7 +191,7 @@ const Appointments = () => {
     loadAllDoctorsByClinicId(allClinicsData[0].id);
     setSelectedFromDate(today);
     setSelectedToDate(dateAfterWeek);
-    // onSearch(doctorIdData,clinicIdData,selectedFromDate,selectedToDate)
+    onSearch(doctorIdData,clinicIdData,selectedFromDate,selectedToDate)
   };
 
   console.log(allClinicsData);
@@ -248,7 +274,7 @@ const Appointments = () => {
             marginBottom: "1rem",
           }}
         >
-          <Box
+          {/* <Box
             sx={{
               width: "4.5rem",
               backgroundColor: "primary.main",
@@ -269,7 +295,7 @@ const Appointments = () => {
             }}
           >
             Search
-          </Box>
+          </Box> */}
           <Box
             sx={{
               width: "4.5rem",
@@ -289,7 +315,7 @@ const Appointments = () => {
             Clear
           </Box>
         </Box>
-        <AppointmentsFilterResults />
+        <AppointmentsFilterResults resultData={filterResults} />
       </Box>
     </>
   );

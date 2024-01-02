@@ -197,9 +197,19 @@ export const get_all_slots = async (req: Request, res: Response) => {
         const doctorIds = slotsWithDates.map((slot: any) => (slot.doctorId))
         let doctors: any[] = [];
 
+        const errors = []
         const clinic = (await axios.get(`${process.env.Admin_URL}/api/v1/clinic/${clinicIds[0]}`)).data.data.clinic
         for await (const doctorId of new Set(doctorIds)) {
-            const doctor = (await axios.get(`${process.env.Registration_URL}/staff/${doctorId}`)).data.data
+            const [doctorRes] = await Promise.allSettled([
+                axios.get(`${process.env.Registration_URL}/staff/${doctorId}`)
+            ])
+            let doctor;
+            if (doctorRes.status === 'fulfilled') {
+                doctor = doctorRes.value.data.data
+            } else {
+                errors.push(doctorRes.reason)
+            }
+
             doctors.push(doctor)
         }
 
@@ -225,6 +235,7 @@ export const get_all_slots = async (req: Request, res: Response) => {
 
         return res.status(200).json({
             slots: slotsWithDates,
+            errors
         })
 
     } catch (error: any) {
@@ -251,3 +262,60 @@ export const post_examination = async (req: Request, res: Response) => {
         res.status(err?.statusCode ?? 500).json(err)
     }
 }
+
+/*
+appt
+cardData
+
+create appt
+create invoice
+amount-> bill
+create bill
+    success: Done
+    Fail: delete appt
+        delete invoice
+*/
+
+/*
+{
+    appointment:{
+        slotId: number,
+        date:"YYYY-MM-dd",
+        patientId: number
+    },
+    bill:{
+        "invoiceId": 5, //int
+        "paymentMethod": "card", //could be card, paypal, or offline
+        "paymentSource":  //payment method details
+        {
+            "card": {
+                "number": "4111111111111111",
+                "expiry": "2027-02",
+                "name": "John Doe",
+                "cvv": 111
+            }
+        }
+    }
+}
+*/
+
+export const book_appt = async (req: Request, res: Response) => {
+    try {
+        const { appointment, bill } = req.body
+
+        // create appointment 
+        const appt = await axios.post(`${process.env.Appointment_URL}`)
+
+
+
+        return res.status(200).json({
+
+        })
+
+    } catch (error: any) {
+        const err = errorHandler(error)
+
+        res.status(err?.statusCode ?? 500).json(err)
+    }
+}
+

@@ -23,7 +23,7 @@ const Clinic = sequelize.define('Clinic', {
         type: DataTypes.ARRAY(DataTypes.STRING)
     },
 }, {
-    timestamps: false,
+    timestamps: true,
 });
 
 export default Clinic;

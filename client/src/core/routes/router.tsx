@@ -13,6 +13,7 @@ import AdminPortal from "../../modules/admin-portal";
 import Login from "../../modules/login/pages";
 import Signup from "../../modules/patient-portal/components/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
+import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 
 import ExaminationPage from "../../modules/clinics-portals/dental/pages/ExaminationPage";
 import DashBoardPage from "../../modules/clinics-portals/dental/pages/DashboardPage";
@@ -58,6 +59,10 @@ class Router {
     {
       path: AppRoutes.patientPortalAppointments,
       element: <AppointmentsPage />,
+    },
+    {
+      path: AppRoutes.patientPortalPreviousAppointments,
+      element: <PreviousAppointments />,
     },
     {
       path: AppRoutes.adminPortal,

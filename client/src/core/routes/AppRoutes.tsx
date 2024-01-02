@@ -10,7 +10,6 @@ class AppRoutes {
   static readonly signup = "/signup";
   static readonly patientPortalProfile = "/patient/profile";
   static readonly patientPortalAppointments = "/patient/appointments";
-
   static readonly appointmentsDashboard = "/clinic/dental/dashboard";
   static readonly clinicDentalExamination = "/clinic/dental/examination";
 }
