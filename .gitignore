@@ -2,5 +2,6 @@
 .env
 node_modules
 prisma/migrations
-
-
+.venv
+node_modules
+__pycache__
