@@ -10,7 +10,7 @@ from django.http import JsonResponse, Http404
 import json
 from django.views.decorators.http import require_http_methods
 import environ
-from .serializers import invoice_serializer, BillSerializer
+from .serializers import InvoiceSerializer, BillSerializer
 env=environ.Env()
 
 def get_services_data(services_ids):
@@ -71,12 +71,6 @@ def get_patient_from_appointment(appointment_id):
      return patient_response
 
 def get_insurance_percentage(patient_id):
-     # change appointment to reg api
-     #api_url = f'https://dwl9v.wiremockapi.cloud/registeration/:{patient_id}'
-     #headers={"auth":env("auth_data")}
-     #response=requests.get(api_url,headers=headers)
-     #registration_response=response.json()
-     #insurance=registration_response["insurance"]
      registeration_url=f'https://registrationservices.onrender.com/patient/'
      response=requests.get(f'{registeration_url}{patient_id}')
      print(response)
@@ -100,7 +94,7 @@ def get_insurance_percentage(patient_id):
 def get_invoice_by_id(id):
             url = f'http://127.0.0.1:8000/invoice/{id}'
             response=requests.get(url)
-            return response.json()
+            return response
         
 
 
@@ -133,20 +127,30 @@ def handle_invoice(request,id):
                     }
                 return JsonResponse(response,status=404)
             new_services=json.loads(request.body)["servicesIds"]
-            services=invoice.servicesIds
-            # list append
-            for service in new_services:
-                services.append(service)
-            invoice.servicesIds=services
-            invoice.save()
-            response=get_invoice_by_id(invoice.id)
-            return JsonResponse(response)
-                 
+            services_response=get_services_data(new_services)
+            if (services_response["status code"]==200 ):
+                services=invoice.servicesIds
+                # list append
+                for service in new_services:
+                    services.append(service)
+                invoice.servicesIds=services
+                invoice.status-"PN"
+                invoice.save()
+                response=get_invoice_by_id(invoice.id)
+                return JsonResponse(response.json())
+            else:
+                response={
+                    "message": "an error occured in calling services API",
+                    "services API": services_response
+                }
+                return JsonResponse(response,safe=False,status=404)
+                    
         
     elif request.method=="GET":
         try:
             invoice = get_object_or_404(Invoice, id=id)
-        except:
+        except Exception as e:
+            print(e)
             response= { 
                 "message":"invoice not found"
                     }
@@ -159,12 +163,12 @@ def handle_invoice(request,id):
             services_amounts=services_response["services_amounts"]
             insurance_percentage=insurace_response["insurance"]
             amounts_after_insurace=[(1-float(insurance_percentage))* amount for amount in services_amounts]
-            serializer=invoice_serializer(invoice)
+            serializer=InvoiceSerializer(invoice)
             invoice_response = serializer.data
             invoice_details={
                 'servicesNames':services_names,
                 'servicesAmounts':services_amounts,     
-                'amountsTotal': amounts_after_insurace
+                'totalAmounts': amounts_after_insurace
 
             }
             invoice_response.update(invoice_details)
@@ -186,19 +190,24 @@ def new_invoice(request) :
      if request.method == 'POST':
           data=json.loads(request.body.decode("utf-8"))
           patient_response=get_patient_from_appointment(data['appointmentId'])
+          services_response=get_services_data(data['servicesIds'])
           print(patient_response)
-          if(patient_response["status code"]==200):
+          if(patient_response["status code"]==200) and services_response["status code"]==200   :
             patient_id=patient_response["patient_id"]
             new_invoice=Invoice(appointmentId=data['appointmentId'],patientId=patient_id,status="PN",dateTime=timezone.now().isoformat(),servicesIds=data['servicesIds'])
             new_invoice.save()
+            print("new invoice saved with id ",new_invoice.id )
             response=get_invoice_by_id(new_invoice.id)
-            return JsonResponse(response ,safe=False)
+            print(response,response.status_code)
+            return JsonResponse(response.json(),status=response.status_code,safe=False)
+
           else:
             reponse={
-                "message": "could not get patient",
-                "patient_API":patient_response
+                "message": "an error occured during an external API call",
+                "patient_API":patient_response ,
+                "services_API": services_response
                 }
-            return JsonResponse(reponse,status=404)
+            return JsonResponse(reponse,status=404,safe=False)
 
               
         
@@ -206,7 +215,7 @@ def new_invoice(request) :
 @require_http_methods(["GET"])
 def get_all_patient_invoices(requests,patient_id):
      filtered_invoices = Invoice.objects.filter(patientId=patient_id)
-     serializer = invoice_serializer(filtered_invoices,many=True) 
+     serializer = InvoiceSerializer(filtered_invoices,many=True) 
      return JsonResponse(serializer.data,safe=False)
 
 
@@ -214,7 +223,7 @@ def get_all_patient_invoices(requests,patient_id):
 @require_http_methods(["GET"])
 def get_all_invoices(requests):
      invoices = Invoice.objects.all()
-     serializer = invoice_serializer(invoices,many=True) 
+     serializer = InvoiceSerializer(invoices,many=True) 
      if len(invoices)==0:
          return JsonResponse({"message":" no invoices found"},status=404) 
      return JsonResponse(serializer.data,safe=False)
@@ -237,6 +246,8 @@ def new_bill(request):
             if response.status_code == 201:
                 bill = Bill(invoiceId = invoice, amount=body["amount"], paymentMethod = "ON", dateTime = timezone.now().isoformat())
                 bill.save()
+                invoice.status="PD"
+                invoice.save()
                 response = BillSerializer(bill).data
                 return JsonResponse(response, status=201, safe=False)
             else:
