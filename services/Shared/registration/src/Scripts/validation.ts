@@ -29,14 +29,25 @@ export function hasCapitalizedCharacter(inputString:string):boolean {
 }
 
 //-----------------------SSN Validation--------------------------------
-export function ssnValidation(inputSSN: string) :boolean {
+/*export function ssnValidation(inputSSN: string) :boolean {
   return /^\d{14}$/.test(inputSSN);
-}
+}*/
+export function ssnValidation(inputSSN: string) :boolean {
+  const ssnFormat = /^\d{14}$/
+  console.log('Input:', inputSSN);
+
+  if (inputSSN && inputSSN.length === 14 && ssnFormat.test(inputSSN)) {
+    console.log('Validation passed');
+    return true;
+  } else {
+    console.log('Validation failed');
+    return false;
+}}
 
 //-----------------------clinicId Validation-------------------------------
 export function clinicIdValidation(clinicId: number):boolean {
   // Check if clinicId is a number and within the range 1 to 5
-  return clinicId >= 1 && clinicId <= 5;
+  return clinicId >= 13 && clinicId <= 15;
 }
 //-----------------------Date Format Validation--------------------------------
 export function dateFormatValidation(inputDate: string): boolean {

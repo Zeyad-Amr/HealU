@@ -96,6 +96,10 @@ export const createStaff = async (req: Request, res: Response) => {
     {
       throw new Error('clinicId musnt be from 1 to 5');
     }
+    else if(!validate.ssnValidation(userData.ssn))
+    {
+      throw new Error('ssn must be 14 numbers');
+    }
     else{
       await validation.validateUsertData(userData);
       const newUser = await prisma.user.create({
