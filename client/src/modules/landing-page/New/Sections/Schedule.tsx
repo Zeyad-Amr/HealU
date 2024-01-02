@@ -1,3 +1,6 @@
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faClock, faAmbulance, faCalendar, faArrowRightLong} from "@fortawesome/free-solid-svg-icons";
+
 const Schedule = () => {
     return (
         <section className="schedule">
@@ -8,14 +11,15 @@ const Schedule = () => {
                             <div className="single-schedule first">
                                 <div className="inner">
                                     <div className="icon">
-                                        <i className="fa fa-ambulance"></i>
+                                        <i>
+                                            <FontAwesomeIcon icon={faAmbulance}/>
+                                        </i>
                                     </div>
                                     <div className="single-content">
-                                        <span>Lorem Amet</span>
                                         <h4>Emergency Cases</h4>
                                         <p>Lorem ipsum sit amet consectetur adipiscing elit. Vivamus et erat in lacus
                                             convallis sodales.</p>
-                                        <a href="#">LEARN MORE<i className="fa fa-long-arrow-right"></i></a>
+                                        <a href="#">LEARN MORE<i><FontAwesomeIcon icon={faArrowRightLong} /></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -25,17 +29,17 @@ const Schedule = () => {
                             <div className="single-schedule middle">
                                 <div className="inner">
                                     <div className="icon">
-                                        <i className="icofont-ui-clock"></i>
+                                        <i>
+                                            <FontAwesomeIcon icon={faClock}/>
+                                        </i>
                                     </div>
                                     <div className="single-content">
-                                        <span>Donec luctus</span>
                                         <h4>Opening Hours</h4>
                                         <ul className="time-sidual">
-                                            <li className="day">Monday - Fridayp <span>8.00-20.00</span></li>
-                                            <li className="day">Saturday <span>9.00-18.30</span></li>
-                                            <li className="day">Monday - Thusday <span>9.00-15.00</span></li>
+                                            <li className="day">Saturday - Thursday <span>8.00-20.00</span></li>
+                                            <li className="day">Friday <span>9.00-18.30</span></li>
                                         </ul>
-                                        <a href="#">LEARN MORE<i className="fa fa-long-arrow-right"></i></a>
+                                        <a href="#">LEARN MORE<i><FontAwesomeIcon icon={faArrowRightLong} /></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -45,14 +49,14 @@ const Schedule = () => {
                             <div className="single-schedule middle">
                                 <div className="inner">
                                     <div className="icon">
-                                        <i className="icofont-prescription"></i>
+                                        <i>
+                                            <FontAwesomeIcon icon={faCalendar}/>
+                                        </i>
                                     </div>
                                     <div className="single-content">
-                                        <span>Fusce Porttitor</span>
                                         <h4>Doctors Timetable</h4>
-                                        <p>Lorem ipsum sit amet consectetur adipiscing elit. Vivamus et erat in lacus
-                                            convallis sodales.</p>
-                                        <a href="#">LEARN MORE<i className="fa fa-long-arrow-right"></i></a>
+                                        <p>Stay informed about our dedicated doctors' schedules with our comprehensive Doctors Timetable.</p>
+                                        <a href="#">LEARN MORE<i><FontAwesomeIcon icon={faArrowRightLong} /></i></a>
                                     </div>
                                 </div>
                             </div>

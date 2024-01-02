@@ -32,6 +32,7 @@ Version:	1.1
 =========================================
 [End Activation Code]
 =========================================*/
+
 (function($) {
     "use strict";
      $(document).on('ready', function() {
@@ -87,7 +88,7 @@ Version:	1.1
 			autoplayHoverPause:true,
 			items:1,
 			nav:true,
-			navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+			navText: ['<i> <- </i>', '<i> -> </i>'],
 			dots:false,
 		});
 
@@ -275,7 +276,7 @@ Version:	1.1
 			Scroll Up JS
 		=====================*/
 		$.scrollUp({
-			scrollText: '<span><i class="fa fa-angle-up"></i></span>',
+			scrollText: '<span><i>^</i></span>',
 			easingType: 'easeInOutExpo',
 			scrollSpeed: 900,
 			animation: 'fade'

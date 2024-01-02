@@ -5,13 +5,14 @@ const Doctors = () => {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="section-title">
-                            <h2>Keep up with Our Most Recent Medical News.</h2>
+                            <h2>Book from top specialties.</h2>
                             <img src="/img/section-img.png" alt="#"/>
                             <p>Lorem ipsum dolor sit amet consectetur adipiscing elit praesent aliquet.
                                 pretiumts</p>
                         </div>
                     </div>
                 </div>
+
                 <div className="row">
                     <div className="col-lg-4 col-md-6 col-12">
                         <div className="single-news">
@@ -20,8 +21,7 @@ const Doctors = () => {
                             </div>
                             <div className="news-body">
                                 <div className="news-content">
-                                    <div className="date">22 Aug, 2020</div>
-                                    <h2><a href="blog-single.html">We have annnocuced our new product.</a></h2>
+                                    <h2><a href="blog-single.html">Dr Ibrahim Mohamed</a></h2>
                                     <p className="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed
                                         do
                                         eiusmod tempor incididunt sed do incididunt sed.</p>
@@ -36,8 +36,7 @@ const Doctors = () => {
                             </div>
                             <div className="news-body">
                                 <div className="news-content">
-                                    <div className="date">15 Jul, 2020</div>
-                                    <h2><a href="blog-single.html">Top five way for solving teeth problems.</a></h2>
+                                    <h2><a href="blog-single.html">Dr. Mohamed Ismail</a></h2>
                                     <p className="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed
                                         do
                                         eiusmod tempor incididunt sed do incididunt sed.</p>
@@ -52,8 +51,7 @@ const Doctors = () => {
                             </div>
                             <div className="news-body">
                                 <div className="news-content">
-                                    <div className="date">05 Jan, 2020</div>
-                                    <h2><a href="blog-single.html">We provide highly business soliutions.</a></h2>
+                                    <h2><a href="blog-single.html">Dr Mohamed Ibrahim</a></h2>
                                     <p className="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed
                                         do
                                         eiusmod tempor incididunt sed do incididunt sed.</p>
