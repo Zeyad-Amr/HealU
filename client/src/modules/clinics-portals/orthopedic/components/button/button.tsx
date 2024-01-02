@@ -17,6 +17,7 @@ interface ButtonProps {
   backgroundColor?: string;
   color?: string;
   fontSize?: string;
+  marginRight?: string;
 }
 
 const useStyles = makeStyles({
@@ -32,10 +33,11 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   classStyle,
   textStyle,
   type,
+  color,
   backgroundColor,
   includeIcon = false,
-  color,
-  fontSize
+  fontSize,
+  marginRight
 }) => {
   return (
     <Button
@@ -43,7 +45,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
         e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>
       ) => onClick && onClick(e)}
       type={type}
-      style={{ backgroundColor: backgroundColor }}
+      style={{ backgroundColor: backgroundColor, marginRight:`${marginRight}` }}
       className={classes[classStyle as string]}
       startIcon={
         includeIcon && (
@@ -53,7 +55,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
         )
       }
     >
-      <span className={classes[textStyle as string]} style={{textTransform:"none", color:`${color}`, fontSize:`${fontSize}`}}> {text} </span>
+      <span className={classes[textStyle as string]} style={{textTransform:"none", fontSize:`${fontSize}`, color:`${color}`}}> {text} </span>
     </Button>
   );
 };

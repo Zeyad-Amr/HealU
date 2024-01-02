@@ -73,3 +73,14 @@
     #11a0a0 102.7%
   ); /* Change the hover background color */
 }
+
+
+.closeIcon {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 0px;
+  margin-left: 10px;
+  width: 685px;
+  height: 8px;
+  margin-top: 10px;
+}

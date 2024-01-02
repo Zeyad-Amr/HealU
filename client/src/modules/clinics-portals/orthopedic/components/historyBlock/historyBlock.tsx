@@ -1,53 +1,37 @@
 import React from "react";
 import classes from "./history.module.css";
+import { auto } from "@popperjs/core";
+import UnorderedList from "../unorderedList/unorderedList";
 
 interface HistoryBlockProbs {
   headerContent: string;
   classStyle: string;
+  id: number| undefined
 }
+
+const dummyList: string[] = ["Item 1", "Item 2", "Item 3"];
+
 const HistoryBlock: React.FC<HistoryBlockProbs> = ({
   headerContent,
   classStyle,
+  id
 }) => {
   return (
     <div className={classes[classStyle as string]}>
-      <h2>{headerContent}</h2>
+      <h2 style={{ fontSize: "32px" }}>{headerContent}</h2>
+      
       <div className={classes.innerContainer}>
         <div className={classes.customDiv}>
-          <h2 className={classes.Header}>Drugs</h2>
-          <div>
-            <label>tttttt</label>
-          </div>
-          <div>
-            <label>ttttt</label>
-          </div>
-          <div>
-            <label>ttttt</label>
-          </div>
+          <h2 style={{ marginBottom: "0px" }}>Drugs</h2>
+          <UnorderedList list={dummyList} />
         </div>
         <div className={classes.customDiv}>
-          <h2 className={classes.Header}>{"Illnesses"}</h2>
-          <div>
-            <label htmlFor="name"> *</label>
-          </div>
-          <div>
-            <label htmlFor="weight">*</label>
-          </div>
+          <h2 style={{ marginBottom: "0px" }}>Illnesses</h2>
+          <UnorderedList list={dummyList} />
         </div>
         <div className={classes.customDiv}>
-          <h2 className={classes.Header}>{"operations and tests"}</h2>
-          <div>
-            <label htmlFor="name">*</label>
-          </div>
-          <div>
-            <label htmlFor="weight">*</label>
-          </div>
-          <div>
-            <label htmlFor="height">*</label>
-          </div>
-          <div>
-            <label htmlFor="age">*</label>
-          </div>
+          <h2 style={{ marginBottom: "0px" }}>Operations and Tests</h2>
+          <UnorderedList list={dummyList} />
         </div>
       </div>
     </div>

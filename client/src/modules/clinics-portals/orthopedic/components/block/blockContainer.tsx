@@ -12,20 +12,25 @@ import DiagnosisBlock from "../diagnosisBlock/diagnosisBlock";
 const BlockContainer = ({
   headerContent,
   classStyle,
+  id,
 }: {
   headerContent: string;
   classStyle: string;
+  id: number | undefined;
 }) => {
   return (
     <div className={classes[classStyle as string]}>
       {headerContent === "Personal Data" ? (
-          <PersonalDataBlock headerContent={headerContent}/>
+        <PersonalDataBlock headerContent={headerContent} id={id} />
       ) : headerContent === "History" ? (
-        <HistoryBlock classStyle="block2" headerContent={headerContent}/>
-      ) : (
-        null
-        // <DiagnosisBlock headerContent={headerContent} />
-      )}
+        <HistoryBlock
+          classStyle="block2"
+          headerContent={headerContent}
+          id={id}
+        />
+      ) : null
+      // <DiagnosisBlock headerContent={headerContent} />
+      }
     </div>
   );
 };

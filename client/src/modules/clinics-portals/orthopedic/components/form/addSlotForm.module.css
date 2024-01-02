@@ -11,6 +11,7 @@
   box-shadow: 0px 0px 26px 0px #00000040;
   z-index: 2;
 }
+
 .addSlotForm_div1 {
   width: 585px;
   height: 126px;
@@ -38,7 +39,12 @@
   box-shadow: 0px 0px 26px 0px #00000040;
   z-index: 2;
 }
-
+.prescriptionForm_div{
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  color: #8b8b8b;
+}
 .prescriptionForm_div1 {
   height: 126px;
   position: absolute;
@@ -51,7 +57,7 @@
   width: 250px;
   height: 126px;
   position: absolute;
-  top: calc(10.6% + 126px);
+  top: calc(10.6% + 130px);
   left: calc(58% - 101.4px);
   margin-left: 80px;
   display: inline-block;
@@ -61,8 +67,8 @@
   width: 250px;
   height: 126px;
   position: absolute;
-  top: calc(10.6% + 126px);
-  left: calc(57% - 351.4px);
+  top: calc(10.6% + 130px);
+  left: calc(58.5% - 351.4px);
   display: inline-block;
 }
 
@@ -105,6 +111,7 @@
   height: 38px;
   top: 282px;
   left: 667px;
+  padding-bottom: 0px;
   font-family: Roboto;
   font-size: 32px;
   font-weight: 600;
@@ -112,6 +119,8 @@
   letter-spacing: 0em;
   margin-left: 20px;
   text-align: left;
+  margin-top: 0px;
+
 }
 
 .labelElement {
@@ -152,3 +161,14 @@
   letter-spacing: 0em;
   text-align: left;
 }
+
+.closeIcon {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 0px;
+  margin-left: 10px;
+  width: 685px;
+  height: 8px;
+  margin-top: 10px;
+}
+

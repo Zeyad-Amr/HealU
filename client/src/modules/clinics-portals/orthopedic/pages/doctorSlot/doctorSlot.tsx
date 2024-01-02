@@ -27,6 +27,8 @@ const DoctorsSlot = () => {
             text="Create New Slot"
             classStyle="ButtonComponent"
             includeIcon={true}
+            color="white"
+            fontSize="32px"
           />
         </div>
       </div>
@@ -34,7 +36,6 @@ const DoctorsSlot = () => {
       <SchedulesTable schedules={slots} />
       <AddSlotForm
         isFormVisible={isVisible}
-        // toggleFormVisibility={toggleFormVisibility}
         formTitle="Create New Slot"
         label1="Date"
         formStyle="addSlotForm_formContainer"
