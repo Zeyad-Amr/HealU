@@ -17,7 +17,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PreviewIcon from "@mui/icons-material/Preview";
 import { makeStyles } from "@mui/styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
   box: {
@@ -33,9 +33,10 @@ const useStyles = makeStyles({
 });
 
 const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
+  const params = useParams();
   const navigate = useNavigate();
   const classesX = useStyles();
-  const slots = useSelector((state: RootState) => state.slots.slots);
+  // const slots = useSelector((state: RootState) => state.slots.slots);
   const dispatch = useDispatch();
   const handleDelete = async (dateId: string, date?: string) => {
     dispatch(deleteSlot(parseInt(dateId)) as any);
@@ -47,12 +48,11 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
     console.log("Preview");
   };
 
-
   // merge conflict:
   // await dispatch(updateSlot(parseInt(dateId)) as any);
   // dispatch(getSlots(date) as any);
   // useEffect(() => {
-    // dispatch(getSlots() as any);
+  // dispatch(getSlots() as any);
   // }, [dispatch,slots]);
 
   return (
@@ -78,14 +78,18 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                   key={`${rowIndex}-column2`}
                   className={styles.column2}
                 >
-                  <div>{row.patient?.patientName}</div>
+                  <div>{row.patientId}</div>
                 </TableCell>
                 <TableCell
                   key={`${rowIndex}-column3`}
                   className={styles.column3}
                 >
                   <div
-                    onClick={() =>{ if(row._id) {handleClearAppoinment(row._id, row.weekDay)}}}
+                    onClick={() => {
+                      if (row._id) {
+                        handleClearAppoinment(row._id, row.weekDay);
+                      }
+                    }}
                     className={styles.addIcon}
                     style={{ justifyContent: "center", display: "flex" }}
                   >
@@ -116,7 +120,9 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                   <div
                     onClick={() => {
                       if (row.time !== null) {
-                        navigate(`/ExaminationScreen/${row.patient?.patientId}`);
+                        navigate(
+                          `/ExaminationScreen/${row.patientId}`
+                        );
                       }
                     }}
                     className={styles.addIcon}
