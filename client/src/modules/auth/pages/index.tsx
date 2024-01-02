@@ -104,6 +104,8 @@ const Login = () => {
                             break;
                         }
                       }
+                    } else {
+                      alert(res.payload.response.data.error);
                     }
                   },
                   (err: any) => {
