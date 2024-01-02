@@ -29,7 +29,7 @@ class Router {
     //   element: <DentalClinicPortal />,
     // },
     {
-      path: AppRoutes.appointmentsDashboard,
+      path: AppRoutes.DentalAppointmentsDashboard,
       element: <DashBoardPage />,
     },
     {
