@@ -10,6 +10,9 @@ const createWhereClause = (req: Request) => {
         whereClause.clinicId = req.query.clinicId;
     }
 
+    if (req.query.name) {
+        whereClause.name = req.query.name;
+    }
     return whereClause;
 };
 
@@ -65,14 +68,22 @@ const getClinicServiceByServiceId = asyncErrorCatching(async (req: Request, res:
 
 const createClinicService = asyncErrorCatching(async (req: Request, res: Response) => {
     let { name, clinicId, description, price } = req.body;
-    console.log(name, clinicId, description, price)
 
     const clinicService = await ClinicService.create({
         name,
         description,
         price,
         clinicId,
-    });
+    })
+
+    if (!clinicService) {
+        return res
+            .status(404)
+            .json({
+                status: 'fail',
+                message: 'No clinic service found with that ID',
+            });
+    }
 
     res
         .status(201)
@@ -83,6 +94,27 @@ const createClinicService = asyncErrorCatching(async (req: Request, res: Respons
             },
         });
 });
+
+
+const createClinicServices = asyncErrorCatching(async (req: Request, res: Response) => {
+    let {data} = req.body;
+
+    data.forEach(async (clinicService: any) => {
+        await ClinicService.create({
+            name: clinicService.name,
+            description: clinicService.description,
+            price: clinicService.price,
+            clinicId: clinicService.clinicId
+        })
+    })
+
+    res
+        .status(201)
+        .json({
+            status: 'success',
+            data: null,
+        })
+})
 
 const updateClinicService = asyncErrorCatching(async (req: Request, res: Response) => {
     const clinicService = await ClinicService.update(req.body, {
@@ -141,4 +173,5 @@ export default {
     createClinicService,
     updateClinicService,
     deleteClinicService,
+    createClinicServices
 };

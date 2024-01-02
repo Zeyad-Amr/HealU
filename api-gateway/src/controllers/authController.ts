@@ -13,11 +13,13 @@ const login_user = async (req: Request, res: Response) => {
         const user = validate.validate(req.body, validate.loginSchema)
 
         // check if the username is correct
-        const exist = await axios.get(`${process.env.REGISTRATION_URL as string}/user/${user.username}`)
+        const exist = await axios.get(`${process.env.Registration_URL as string}/user/userName/${user.username}`)
             .then((res) => {
                 if (!res.data.data.userId) throw { statusCode: 503, msg: res.data.data }
                 return res.data.data
             }).catch((err) => {
+                console.log(err);
+
                 if (err?.response?.status === 404) throw authError
                 else throw err
             })
@@ -26,7 +28,7 @@ const login_user = async (req: Request, res: Response) => {
         await hashing.compareHashPassword(user.password, exist.password, authError)
 
         const token = jwt.createToken({ sub: exist.userId })
-        return res.status(200).json({ access_token: token })
+        return res.status(200).json({ access_token: token, user: exist })
     } catch (error: any) {
         const err = errorHandler(error)
         res.status(err?.statusCode ?? 500).json(err)

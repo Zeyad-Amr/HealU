@@ -13,4 +13,7 @@ clinicServiceRouter.route("/:serviceId")
             .patch(clinicServiceController.updateClinicService)
             .delete(clinicServiceController.deleteClinicService)
 
+clinicServiceRouter.route("/many")
+            .post(clinicServiceController.createClinicServices)
+
 export default clinicServiceRouter;

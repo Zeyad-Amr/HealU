@@ -10,7 +10,7 @@ export interface ProxyConfig {
         pathRewrite: {
             [key: string]: string;
         };
-    };
+    }
 }
 
 export let proxies: ProxyConfig = {
@@ -21,6 +21,14 @@ export let proxies: ProxyConfig = {
         pathRewrite: {
             '^/api/admin/clinic-service': '/api/v1/clinicService',
             '^/api/admin/clinic': '/api/v1/clinic',
+        }
+    },
+    "/analytics": {
+        isProtected: true,
+        target: process.env.Analytics_URL as string,
+        changeOrigin: true,
+        pathRewrite: {
+            '^/api/analytics': '/analytics'
         }
     },
     "/appointment": {

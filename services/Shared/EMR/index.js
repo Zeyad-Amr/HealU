@@ -19,12 +19,16 @@ EMR_app.use(cors({
   origin: 'http://localhost:3000',
 }));
 
+connectionModule.connect((err) => {
+  if (err){
+    console.error('Error connecting to database:', err);
+    return;
+  }
 
-EMR_app.listen(PORT, () => {
-  console.log(`SERVER: http://localhost:${PORT}`);
-  connectionModule.connect((err) => {
-    if (err) throw err;
-    console.log('DATABASE CONNECTED');
+  console.log('DATABASE CONNECTED');
+  
+  EMR_app.listen(PORT, () => {
+    console.log(`SERVER: http://localhost:${PORT}`);
   });
 });
 //====================================================================

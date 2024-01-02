@@ -1,5 +1,6 @@
 const Slot = require("../models/Slot");
 const Appointment = require("../models/Appointment");
+const axios = require("axios");
 
 // Map weekdays to numeric representation
 const weekdaysMap = {
@@ -14,7 +15,29 @@ const weekdaysMap = {
 
 const createSlot = async (req, res, next) => {
     try {
-        const { doctorId, clinicId, time, weekDay } = req.body;
+        const { doctorId, time, weekDay } = req.body;
+
+        // Assign clinicId to a separate variable
+        let clinicId = 0;
+
+        // Validate patientId using registration service
+        try {
+            const doctorValidationResponse = await axios.get(
+                `https://registration-zf9n.onrender.com/staff/${doctorId}`
+            );
+
+            if (doctorValidationResponse.data.data.role == "Doctor")
+                clinicId = doctorValidationResponse.data.data.clinicId;
+            else
+                return res.status(400).json({
+                    message: "The entered ID is not for a doctor",
+                });
+        } catch (error) {
+            // Handle API request error
+            return res.status(400).json({
+                message: "Error validating doctorId",
+            });
+        }
 
         // Validate the time format using a regular expression
         const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
@@ -72,22 +95,16 @@ const getSlotsByDoctorID = async (req, res, next) => {
         let slots = await Slot.find({ doctorId: doctorId });
         const scheduled = await Appointment.find({ doctorId: doctorId });
 
-        if (slots.length > 0) {
-            if (unscheduled == "true") {
-                // Filter out slots that have corresponding appointments
-                slots = slots.filter((slot) => {
-                    return !scheduled.some(
-                        (appointment) => appointment.slotId == slot._id
-                    );
-                });
-            }
-
-            res.status(200).json(slots);
-        } else {
-            res.status(404).json({
-                message: `No slot found with Doctor ID: ${doctorId}`,
+        if (unscheduled == "true") {
+            // Filter out slots that have corresponding appointments
+            slots = slots.filter((slot) => {
+                return !scheduled.some(
+                    (appointment) => appointment.slotId == slot._id
+                );
             });
         }
+
+        res.status(200).json(slots);
     } catch (error) {
         res
             .status(500)
@@ -105,22 +122,16 @@ const getSlotsByClinicID = async (req, res, next) => {
         let slots = await Slot.find({ clinicId: clinicId });
         const scheduled = await Appointment.find({ clinicId: clinicId });
 
-        if (slots.length > 0) {
-            if (unscheduled == "true") {
-                // Filter out slots that have corresponding appointments
-                slots = slots.filter((slot) => {
-                    return !scheduled.some(
-                        (appointment) => appointment.slotId == slot._id
-                    );
-                });
-            }
-
-            res.status(200).json(slots);
-        } else {
-            res.status(404).json({
-                message: `No slot found with Clinic ID: ${clinicId}`,
+        if (unscheduled == "true") {
+            // Filter out slots that have corresponding appointments
+            slots = slots.filter((slot) => {
+                return !scheduled.some(
+                    (appointment) => appointment.slotId == slot._id
+                );
             });
         }
+
+        res.status(200).json(slots);
     } catch (error) {
         res
             .status(500)
@@ -156,8 +167,6 @@ const getSlotsByDoctorIDandDate = async (req, res, next) => {
                 const isScheduled = scheduled.some(
                     (appointment) => appointment.slotId == slot._id
                 );
-
-                console.log(isScheduled);
 
                 return {
                     slot: slot,
