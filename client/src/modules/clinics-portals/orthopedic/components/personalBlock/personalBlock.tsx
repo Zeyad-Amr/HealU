@@ -4,12 +4,17 @@ import classes from "./personalBlock.module.css";
 
 interface PersonalDataBlockProps {
   headerContent: string;
+  id: number| undefined;
 }
 
-const PersonalDataBlock: React.FC<PersonalDataBlockProps> = ({ headerContent }) => {
+const PersonalDataBlock: React.FC<PersonalDataBlockProps> = ({
+  headerContent,
+  id,
+}) => {
   return (
     <div>
-      <h2 style={{fontSize:"32px"}}>{headerContent}</h2>
+      <h2 style={{ fontSize: "32px" }}>{headerContent}</h2>
+      <h2 style={{ fontSize: "32px" }}>{id}</h2>
       <div>
         <label className={classes.label}>Name:</label>
       </div>

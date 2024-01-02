@@ -26,12 +26,15 @@ const DateComponent = () => {
   };
   const onchange = (date: string | null) => {
     if (date) {
+      const formattedDate = dayjs(date).format("YYYY-MM-DD");
       const dayName = dayjs(date).format("dddd").toString();
+  
       setSelectedDay(dayName);
-      dispatch(getSlots(dayName) as any);
-      dispatch(addSlotActions.setSelectedDate(dayName));
+      dispatch(getSlots(formattedDate) as any);
+      dispatch(addSlotActions.setSelectedDate(formattedDate));
     }
   };
+  
   return (
     <div
       className={classes.datePickerWrapper}

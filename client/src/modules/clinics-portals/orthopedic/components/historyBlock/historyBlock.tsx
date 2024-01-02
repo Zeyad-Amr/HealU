@@ -6,6 +6,7 @@ import UnorderedList from "../unorderedList/unorderedList";
 interface HistoryBlockProbs {
   headerContent: string;
   classStyle: string;
+  id: number| undefined
 }
 
 const dummyList: string[] = ["Item 1", "Item 2", "Item 3"];
@@ -13,10 +14,12 @@ const dummyList: string[] = ["Item 1", "Item 2", "Item 3"];
 const HistoryBlock: React.FC<HistoryBlockProbs> = ({
   headerContent,
   classStyle,
+  id
 }) => {
   return (
     <div className={classes[classStyle as string]}>
       <h2 style={{ fontSize: "32px" }}>{headerContent}</h2>
+      
       <div className={classes.innerContainer}>
         <div className={classes.customDiv}>
           <h2 style={{ marginBottom: "0px" }}>Drugs</h2>

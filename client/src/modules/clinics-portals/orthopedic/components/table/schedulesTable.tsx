@@ -15,8 +15,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import PreviewIcon from "@mui/icons-material/Preview";
 import { makeStyles } from "@mui/styles";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   box: {
@@ -32,22 +33,31 @@ const useStyles = makeStyles({
 });
 
 const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
+  const navigate = useNavigate();
   const classesX = useStyles();
-  // const slots = useSelector((state: RootState) => state.slots.slots);
+  const slots = useSelector((state: RootState) => state.slots.slots);
   const dispatch = useDispatch();
-  const handleDelete = async (dateId: number, date: string) => {
-    await dispatch(deleteSlot(dateId) as any);
-    dispatch(getSlots(date) as any);
+  const handleDelete = async (dateId: string, date?: string) => {
+    dispatch(deleteSlot(parseInt(dateId)) as any);
   };
-  const handleClearAppoinment = async (dateId: number, date: string) => {
-    await dispatch(updateSlot(dateId) as any);
-    dispatch(getSlots(date) as any);
+  const handleClearAppoinment = async (dateId: string, date: string) => {
+    dispatch(updateSlot(parseInt(dateId)) as any);
   };
-  
+  const handlePreview = () => {
+    console.log("Preview");
+  };
+
+
+  // merge conflict:
+  // await dispatch(updateSlot(parseInt(dateId)) as any);
+  // dispatch(getSlots(date) as any);
+  // useEffect(() => {
+    // dispatch(getSlots() as any);
+  // }, [dispatch,slots]);
 
   return (
     <Paper
-      sx={{ width: "1836px", overflow: "hidden" }}
+      sx={{ width: "220vh", overflow: "hidden" }}
       classes={{ root: classesX.containerA }}
     >
       <TableContainer
@@ -74,8 +84,12 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                   key={`${rowIndex}-column3`}
                   className={styles.column3}
                 >
-                  <div onClick={() => handleClearAppoinment(row.id, row.date)}>
-                    <ClearIcon className={styles.addIcon} />
+                  <div
+                    onClick={() =>{ if(row._id) {handleClearAppoinment(row._id, row.weekDay)}}}
+                    className={styles.addIcon}
+                    style={{ justifyContent: "center", display: "flex" }}
+                  >
+                    <ClearIcon style={{ width: "38px", height: "38px" }} />
                   </div>
                   {/* <div>{row.date}</div> */}
                 </TableCell>
@@ -85,12 +99,30 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                 >
                   <div
                     onClick={() => {
-                      if (row.time !== null) {
-                        handleDelete(row.id, row.date);
+                      if (row.time !== null && row._id) {
+                        handleDelete(row._id, row.weekDay);
                       }
                     }}
+                    className={styles.addIcon}
+                    style={{ justifyContent: "center", display: "flex" }}
                   >
-                    <DeleteIcon className={styles.addIcon} />
+                    <DeleteIcon style={{ width: "38px", height: "38px" }} />
+                  </div>
+                </TableCell>
+                <TableCell
+                  key={`${rowIndex}-column5`}
+                  className={styles.column5}
+                >
+                  <div
+                    onClick={() => {
+                      if (row.time !== null) {
+                        navigate(`/ExaminationScreen/${row.patient?.patientId}`);
+                      }
+                    }}
+                    className={styles.addIcon}
+                    style={{ justifyContent: "center", display: "flex" }}
+                  >
+                    <PreviewIcon style={{ width: "38px", height: "38px" }} />
                   </div>
                 </TableCell>
               </TableRow>
