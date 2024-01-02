@@ -13,6 +13,11 @@ import { formActions } from "../../slices/form-slice";
 import { FormState } from "../../slices/form-slice";
 import ButtonComponent from "../../../clinics-portals/orthopedic/components/button/button";
 import { stat } from "fs";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import Input from "react-select/dist/declarations/src/components/Input";
+
+
 // import { handleEdit } from "../table/table";
 
 const specialties: string[] = [
@@ -56,7 +61,8 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   const editedDoctor = useSelector(
     (state: RootState) => state.form.editedDoctor
   );
-
+  const [password, setPassword] = useState("");
+  const [visible, setvisible] = useState(true);
   const [localFormState, setLocalFormState] = useState({
     ssn: "",
     firstName: "",
@@ -68,7 +74,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     // clinicId: NaN,
     email: " ",
     phoneNumber: "",
-    specialization: "",
+    specialization: "",  
   });
   useEffect(() => {
     // Update localFormState if editedDoctor is available
@@ -84,6 +90,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
         dateOfBirth: editedDoctor.dateOfBirth || "",
         userName: editedDoctor.userName || "",
         password: editedDoctor.password || "",
+        
         // clinicId: editedDoctor.clinicId,
       });
     } else {
@@ -343,12 +350,16 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
           </div>
 
           <div className={styles.formRow}>
-            <div className={styles.column}>
-              <label className={styles.labelElement}>Password</label>
-              <TextField value={localFormState.password || " "} />
-            </div>
+              <div className={styles.column}>
+                <label className={styles.labelElement}>Password</label>
+                <TextField 
+                value= {localFormState.password}
+                type = {visible? "text ": "password"}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setPassword (e.target.value)}}   />
+              </div>
 
-            <div className={styles.column}>
+          <div className={styles.column}>
               <label className={styles.labelElement}>Gender</label>
               <TextField value={localFormState.gender || " "} />
             </div>
