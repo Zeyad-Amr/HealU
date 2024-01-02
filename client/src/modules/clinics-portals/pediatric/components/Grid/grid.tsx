@@ -15,7 +15,6 @@ import { useAppDispatch } from "../../../../../core/store";
 import {
   SlotsState,
   fetchSlotsData,
-  thunkData,
   Slot,
   AllSlots,
   deleteSlot,
@@ -60,10 +59,6 @@ const initialRows: GridRowsProp = [
     id: "150",
   },
 ];
-const thunkdata: thunkData = {
-  doctorId: 1,
-  date: "2024-01-07",
-};
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -83,6 +78,7 @@ function EditToolbar(props: EditToolbarProps) {
 
   const handleClick = () => {
     id = Math.random().toString(36).substr(2, 9);
+
     setAllRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRowModesModel((oldModel) => ({
@@ -120,38 +116,48 @@ function EditToolbar(props: EditToolbarProps) {
 
 export default function ScheduleViwer(props: any) {
   const dispatch = useAppDispatch();
-  const slotsState = useSelector((state: any) => state.slots);
-  useEffect(() => {
-    dispatch(fetchSlotsData(thunkdata));
-  }, []);
-
   const [ApointmentDate, setApointmentDate] = React.useState<Dayjs>(dayjs());
-  const [allrows, setAllRows] = useState<GridRowsProp>(
-    slotsState.allSlots.map((item: AllSlots) => {
-      return {
-        Slot: null,
-        Name: "",
-        id: item.slot._id,
-        appointmentId: item.appointmentObject._id,
-      };
-    })
-  );
-  const [rows, setRows] = React.useState(
-    slotsState.allSlots.map((item: AllSlots) => {
-      return {
-        Slot: null,
-        Name: "",
-        id: item.slot._id,
-        appointmentId: item.appointmentObject._id,
-      };
-    })
-  );
+  const [allrows, setAllRows] = useState<GridRowsProp>({} as GridRowsProp);
+  const [rows, setRows] = React.useState<GridRowsProp>({} as GridRowsProp);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
+  const slotsState = useSelector((state: any) => state.slots);
+  useEffect(() => {
+    dispatch(fetchSlotsData(ApointmentDate.format("YYYY-MM-DD"))).then(
+      (res: any) => {
+        console.log(res.payload.slots);
+        if (res.payload.slots === undefined) {
+          setAllRows([]);
+          setRows([]);
+          return;
+        }
+        setAllRows(
+          res.payload.slots?.map((item: AllSlots) => {
+            return {
+              Slot: convertDate(item.slot.time as string),
+              Name: item.appointmentObject.patient?.firstName,
+              id: item.slot._id,
+              appointmentId: item.appointmentObject._id,
+            };
+          })
+        );
+        setRows(
+          res.payload.slots?.map((item: AllSlots) => {
+            return {
+              Slot: convertDate(item.slot.time as string),
+              Name: item.appointmentObject.patient?.firstName,
+              id: item.slot._id,
+              appointmentId: item.appointmentObject._id,
+            };
+          })
+        );
+      }
+    );
+  }, [ApointmentDate]);
+
   const handelApointmentDateGlobal = (newValue: Dayjs) => {
     setApointmentDate(newValue);
-    setRows(filterRowsByDay(allrows, newValue));
   };
 
   const filterRowsByDay = (rows: GridRowsProp, targetDay: dayjs.Dayjs) => {
@@ -207,32 +213,9 @@ export default function ScheduleViwer(props: any) {
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
-  const handelShowAll = () => {
-    console.log(slotsState.allSlots);
-    setAllRows(
-      slotsState.allSlots.map((item: AllSlots) => {
-        return {
-          Slot: convertDate(item.slot.time as string),
-          Name: "",
-          id: item.slot._id,
-          appointmentId: item.appointmentObject._id,
-        };
-      })
-    );
-    setRows(
-      slotsState.allSlots.map((item: AllSlots) => {
-        return {
-          Slot: convertDate(item.slot.time as string),
-          Name: "",
-          id: item.slot._id,
-          appointmentId: item.appointmentObject._id,
-        };
-      })
-    );
-  };
 
   const getAppointmentId = (id: string) => {
-    const appointment = slotsState.allSlots.find(
+    const appointment = slotsState.allSlots.slots.find(
       (item: AllSlots) => item.slot._id === id
     );
     return appointment?.appointmentObject._id;
@@ -317,14 +300,6 @@ export default function ScheduleViwer(props: any) {
           },
         }}
       >
-        <Button
-          className="showBtn"
-          variant="contained"
-          color="primary"
-          onClick={handelShowAll}
-        >
-          show all
-        </Button>
         <DataGrid
           className="grid"
           rows={rows}

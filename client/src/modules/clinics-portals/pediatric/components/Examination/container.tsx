@@ -25,7 +25,12 @@ import {
   getAllAppointmentData,
   appointmentState,
 } from "../../slices/appointment-slice";
+
 import { useSelector } from "react-redux";
+import {
+  addExaminationRecord,
+  ExaminationRecord,
+} from "../../slices/examination-slice";
 
 const ExaminationScreen = (props: any) => {
   const dispatch = useAppDispatch();
@@ -35,8 +40,6 @@ const ExaminationScreen = (props: any) => {
 
   useEffect(() => {
     dispatch(getAllAppointmentData(props.appointmentID));
-    // setAppointmentData(appointmentState.appointment);
-    console.log(appointmentState);
   }, []);
   const [prescreptionData, setPrescreptionData] = useState<prescreptionData>({
     AppointmentID: props.appointmentID,
@@ -125,14 +128,8 @@ const ExaminationScreen = (props: any) => {
     setDataFromTests(data);
   };
   const handleDoneClick = () => {
-    // Process data or send it wherever needed
-    // console.log("Diagnosis Data:", dataFromDiagnosis);
-    // console.log("Prescription Data:", dataFromPrescreption);
-    // console.log("Tests Data:", dataFromTests);
-    // console.log("Services Data:", dataFromServices);
     dispatch(AddRecord(recordData));
     dispatch(AddPrescreptions(prescreptionData));
-    // console.log(props.appointmentID);
   };
   const handleSubmitClick = () => {
     console.log("submit");
