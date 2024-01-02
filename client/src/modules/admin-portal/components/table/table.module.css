@@ -7,13 +7,14 @@
   align-items: center;
   border-radius: 24px 24px 0 0;
   height: auto;
+  size: auto;
 }
 
 .customTable { 
   width: 100%;
   border-collapse: separate;
   border-radius: 0 0 20px 20px;
-  padding: 0 10px 10px;
+  /* padding: 0 10px px; */
   margin-top: 0;
   z-index: 1;
   box-sizing: border-box;

@@ -15,13 +15,14 @@ import { addSlot } from "../../slices/addSlotsSlice";
 import { makeStyles } from "@mui/styles";
 import CloseIcon from "@mui/icons-material/Close";
 
+
 const orthoId = 2;
 const doctorId = 27;
 
 export const useStyles = makeStyles({
   textField: {
-    width: "591px",
-    height: "215px",
+    width: "59%",
+    height: "215%",
     "& input": {
       width: "591px",
       height: "200px",
@@ -30,7 +31,7 @@ export const useStyles = makeStyles({
     },
   },
   menuItem: {
-    fontSize: "40px",
+    fontSize: "10%",
     "& div": {
       backgroundColor: " #F4F4F4 ",
       fontFamily: "Roboto !important",
@@ -214,11 +215,11 @@ const AddSlotForm = ({
             <div className={styles.closeIcon}>
         <CloseIcon
           onClick={() => dispatch(addSlotActions.setFormVisibility(false))}
-          style={{ width: "30px", height: "30px" }}
+          style={{ width: "30px", height: "30px", position:"relative", left: "-80px" }}
         />
       </div>
       <h2 className={styles.textElement}>{formTitle}</h2>
-      <Box>
+      <Box> 
         <div className={styles[div1Style as string]}>
           <label className={styles.labelElement}>{label1}</label>
           {inputType === "select" ? (
@@ -232,7 +233,7 @@ const AddSlotForm = ({
               classes={{ root: classesM.menuItem }}
               value={selectedDay}
               helperText={error.date}
-            >
+            > 
               {weekdays.map((date) => (
                 <MenuItem key={date} value={date} className={styles.menuItem}>
                   {date}
@@ -320,9 +321,9 @@ const AddSlotForm = ({
               select
               onChange={handlePeriodChange}
               style={{
-                width: "170px",
+                width: "30%",
                 backgroundColor: " #F4F4F4 ",
-                marginTop: "-80px",
+                marginTop: "30px",
                 marginLeft: "60px",
                 left: "calc(351.4px)",
                 fontSize: "40px",

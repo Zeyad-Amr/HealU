@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@date-io/date-fns": "^2.17.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -62,7 +63,7 @@
     ]
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.7",
-    "@types/react-redux": "^7.1.33"
+    "@types/react-redux": "^7.1.33",
+    "@types/uuid": "^9.0.7"
   }
 }

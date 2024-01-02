@@ -20,24 +20,27 @@ import CloseIcon from "@mui/icons-material/Close";
 import { stat } from "fs";
 import { error } from "console";
 // import { handleEdit } from "../table/table";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 const specialties: string[] = [
   " ",
+  "Dental",
   "Nutrition",
+  "Ophthalmology",
   "Orthopedics",
   "Pediatrics",
-  "Dermatology",
-  "Ophthalmology",
+ 
 ];
 
 const gender: string[] = [" ", "Male", "Female"];
 
 const clinics = [
-  { clinicName: "Nutrition", clinicId: 1 },
-  { clinicName: "Orthopedics", clinicId: 2 },
-  { clinicName: "Pediatrics", clinicId: 3 },
-  { clinicName: "Dermatology", clinicId: 4 },
-  { clinicName: "Ophthalmology", clinicId: 5 },
+  { clinicName: "Dental", clinicId: 13 },
+  { clinicName: "Nutrition", clinicId: 14 },
+  { clinicName: "Ophthalmology", clinicId: 15 },
+  { clinicName: "Orthopedics", clinicId: 16 },
+  { clinicName: "Pediatrics", clinicId: 17 },
+
 ];
 
 const formStyles = makeStyles({
@@ -67,7 +70,8 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   const editedDoctor = useSelector(
     (state: RootState) => state.form.editedDoctor
   );
-
+  const [password, setPassword] = useState("");
+  const [visible, setvisible] = useState(true);
   const [localFormState, setLocalFormState] = useState({
     ssn: "",
     firstName: "",
@@ -335,7 +339,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
             // } else {
             //   // Handle the success case, if needed
             //   console.log("Doctor added successfully");
-              // await dispatch(getDoctors() as any);
+            //   await dispatch(getDoctors() as any);
             // }
           
          
@@ -506,12 +510,20 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
           <div className={styles.formRow}>
             <div className={styles.column}>
               <label className={styles.labelElement}>Password</label>
+              <div  style={{display:"flex"  }}>
               <TextField
-                value={localFormState.password || ""}
+                value= {localFormState.password|| ""}
+                type = {visible? "text ": "password"}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   handleOnChange(e, "password");
-                }}
-              />
+                  setPassword (e.target.value)}} /> 
+                <div 
+                onClick={()=>setvisible(!visible)}>
+                  {
+                    visible ? <EyeOutlined/> : <EyeInvisibleOutlined/>
+                  }
+                </div>
+                </div>
               {localErrors.errorPassword && (
                 <label className={styles.errorLabel}>
                   {localErrors.errorPassword}

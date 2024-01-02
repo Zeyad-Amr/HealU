@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles({
   box: {
     "& table ": {
-      width: "80%",
+      width: "100%",
     },
   },
   containerA: {
@@ -57,14 +57,14 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
 
   return (
     <Paper
-      sx={{ width: "220vh", overflow: "hidden" }}
+      sx={{ width: "70%", overflow: "hidden" }}
       classes={{ root: classesX.containerA }}
     >
       <TableContainer
         className={styles.customTableContainer}
         classes={{ root: classesX.box }}
       >
-        <Table>
+        <Table  style={{ width: "100%" }}>
           <TableBody>
             {schedules.map((row, rowIndex) => (
               <TableRow key={rowIndex}>

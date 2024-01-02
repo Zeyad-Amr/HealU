@@ -3,8 +3,8 @@
 .AddDoctor-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-left:  "1850px" ;
+    /* align-items: center; */
+    /* margin-left:  "1850px" ; */
  }
  @media (max-width: 500px) {
     .AddDoctorcontainer {

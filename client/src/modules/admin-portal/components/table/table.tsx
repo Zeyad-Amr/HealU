@@ -97,7 +97,7 @@ const TableComponent = () => {
   };
   return (
     <Paper
-      sx={{ width: "78%", overflow: "hidden" }}
+      sx={{ width: "90%", overflow: "hidden" }}
       classes={{ root: classesX.containerA }}
     >
       <TableContainer
