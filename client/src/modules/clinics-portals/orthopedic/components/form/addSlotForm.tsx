@@ -95,17 +95,19 @@ const AddSlotForm = ({
   const [error, setError] = useState({ date: "", time: "", period: "" });
   const [time, setTime] = useState<string | null>(null);
   const [period, setPeriod] = useState<string | null>(null);
-  const slots = useSelector((state: RootState) => state.slots.slots);
+  const slots = useSelector((state: any) => state.rootReducer.slots.slots);
   const selectedDate = useSelector(
-    (state: RootState) => state.slots.selectedDate
+    (state: any) => state.rootReducer.slots.selectedDate
   );
-  const isVisible = useSelector((state: RootState) => state.slots.isVisible);
+  const isVisible = useSelector(
+    (state: any) => state.rootReducer.slots.slots.isVisible
+  );
   const add = (weekDay: string) => {
     let generatedId = slots.length + 1;
     const existingSlot = slots.find(
-      (slot) => slot.weekDay === weekDay && slot.time === time
+      (slot: any) => slot.weekDay === weekDay && slot.time === time
     );
-    const isIdExists = slots.some((slot) => slot._id);
+    const isIdExists = slots.some((slot: any) => slot._id);
     if (isIdExists) {
       generatedId = generatedId + 1;
     }

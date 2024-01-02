@@ -10,6 +10,7 @@ import { getSlots } from "../../slices/addSlotsSlice";
 import { addSlotActions } from "../../slices/addSlotsSlice";
 import { RootState } from "../../slices/combineReducers";
 import { useSelector } from "react-redux";
+import { AppDispatch } from "../../../../../core/store";
 
 // interface DateComponentProps {
 //   isFormVisible: boolean;
@@ -17,7 +18,7 @@ import { useSelector } from "react-redux";
 
 const DateComponent = () => {
   const [selectedDay, setSelectedDay] = React.useState<string | null>(null);
-  const isVisible = useSelector((state: RootState) => state.slots.isVisible);
+  const isVisible = useSelector((state: any) => state.rootReducer.isVisible);
   const dispatch = useDispatch();
   const toggleFormVisibility = () => {
     if (isVisible) {

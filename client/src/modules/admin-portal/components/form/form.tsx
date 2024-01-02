@@ -5,21 +5,12 @@ import styles from "./form.module.css";
 import classes from "../../../clinics-portals/orthopedic/components/form/addSlotForm.module.css";
 import { TextField, MenuItem } from "@mui/material";
 import { makeStyles } from "@mui/styles"; // Add this import
-import {
-  doctorSliceActions,
-  editDoctor,
-  getDoctors,
-} from "../../slices/doctor-slice";
+import { editDoctor, getDoctors } from "../../slices/doctor-slice";
 import { addDoctor } from "../../slices/doctor-slice";
-import { useRef } from "react";
 import { MouseEvent, FormEvent } from "react";
 import { formActions } from "../../slices/form-slice";
-import { FormState } from "../../slices/form-slice";
 import ButtonComponent from "../../../clinics-portals/orthopedic/components/button/button";
 import CloseIcon from "@mui/icons-material/Close";
-import { stat } from "fs";
-import { error } from "console";
-// import { handleEdit } from "../table/table";
 
 const specialties: string[] = [
   " ",
@@ -56,7 +47,7 @@ const formStyles = makeStyles({
 });
 
 interface FormProps {
-  formTitle: string;
+  formTitle?: string;
 }
 
 export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
@@ -76,13 +67,12 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     gender: "",
     userName: "",
     password: "",
-    // clinicId: NaN,
     email: "",
     phoneNumber: "",
     specialization: "",
   });
+
   useEffect(() => {
-    // Update localFormState if editedDoctor is available
     if (isEditForm && editedDoctor) {
       setLocalFormState({
         ssn: editedDoctor.ssn || "",
@@ -95,10 +85,8 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
         dateOfBirth: editedDoctor.dateOfBirth || "",
         userName: editedDoctor.userName || "",
         password: editedDoctor.password || "",
-        // clinicId: editedDoctor.clinicId,
       });
     } else {
-      // Reset localFormState to default values
       setLocalFormState({
         ssn: "",
         firstName: "",
@@ -110,7 +98,6 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
         dateOfBirth: "",
         userName: "",
         password: "",
-        // clinicId: "",
       });
     }
   }, [isEditForm, editedDoctor]);
@@ -324,21 +311,19 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
           dispatch(formActions.setFormVisibility(!isVisible));
           dispatch(formActions.setIsEdit(!isEditForm));
         } else {
-        
-            const resultAction = await dispatch(addDoctor(data) as any);
-            await dispatch(getDoctors() as any);
-            // console.log(resultAction);
-            // // Check if the action returned an error
-            // if (resultAction.payload===undefined) {
-            //   // Handle the error, if needed
-            //   console.log("Error adding doctor:", resultAction.error);
-            // } else {
-            //   // Handle the success case, if needed
-            //   console.log("Doctor added successfully");
-              // await dispatch(getDoctors() as any);
-            // }
-          
-         
+          const resultAction = await dispatch(addDoctor(data) as any);
+          await dispatch(getDoctors() as any);
+          // console.log(resultAction);
+          // // Check if the action returned an error
+          // if (resultAction.payload===undefined) {
+          //   // Handle the error, if needed
+          //   console.log("Error adding doctor:", resultAction.error);
+          // } else {
+          //   // Handle the success case, if needed
+          //   console.log("Doctor added successfully");
+          // await dispatch(getDoctors() as any);
+          // }
+
           dispatch(formActions.setFormVisibility(!isVisible));
         }
       } catch (error) {
@@ -395,216 +380,218 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   };
 
   return (
-    isFormVisible && (
-      <div className={styles.formContainer}>
-        <form onSubmit={(e) => handleOnSubmit(e)}>
-          <div className={styles.closeIcon}>
-            <CloseIcon
-              onClick={() => {
-                dispatch(formActions.setFormVisibility(!isVisible));
-                dispatch(formActions.setIsEdit(!isEditForm));
-              }}
-            />
-          </div>
-          <h2 className={classes.textElement}>{formTitle}</h2>
-
-          <div className={styles.formRow}>
-            <div className={styles.column}>
-              <label className={styles.labelElement}>First Name</label>
-              <TextField
-                value={localFormState.firstName || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "firstName");
+    <div>
+      {isFormVisible && (
+        <div className={styles.formContainer}>
+          <form onSubmit={(e) => handleOnSubmit(e)}>
+            <div className={styles.closeIcon}>
+              <CloseIcon
+                onClick={() => {
+                  dispatch(formActions.setFormVisibility(!isVisible));
+                  dispatch(formActions.setIsEdit(!isEditForm));
                 }}
               />
-              {localErrors.errorFirstName && (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorFirstName}
-                </label>
-              )}
             </div>
+            <h2 className={classes.textElement}>{formTitle}</h2>
 
-            <div className={styles.column}>
-              <label className={styles.labelElement}>Last Name</label>
-              <TextField
-                value={localFormState.lastName || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "lastName");
-                }}
-              />
-              {localErrors.errorLastName && (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorLastName}
-                </label>
-              )}
-            </div>
-          </div>
+            <div className={styles.formRow}>
+              <div className={styles.column}>
+                <label className={styles.labelElement}>First Name</label>
+                <TextField
+                  value={localFormState.firstName || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handleOnChange(e, "firstName");
+                  }}
+                />
+                {localErrors.errorFirstName && (
+                  <label className={styles.errorLabel}>
+                    {localErrors.errorFirstName}
+                  </label>
+                )}
+              </div>
 
-          <div className={styles.formRow}>
-            <div className={styles.column}>
-              <label className={styles.labelElement}>Phone</label>
-              <TextField
-                value={localFormState.phoneNumber || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "phone");
-                }}
-              />
-              {localErrors.errorPhone && (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorPhone}
-                </label>
-              )}
-            </div>
-            <div className={styles.column}>
-              <label className={styles.labelElement}>Email</label>
-              <TextField
-                value={localFormState.email || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "email");
-                }}
-              />
-              {localErrors.errorEmail && (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorEmail}
-                </label>
-              )}
-            </div>
-          </div>
-
-          <div className={styles.formRow}>
-            <div className={styles.column}>
-              <label className={styles.labelElement}>Date of Birth</label>
-              <TextField
-                value={localFormState.dateOfBirth || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "dateOfBirth");
-                }}
-              />
-              {localErrors.errorDateOfBirth && (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorDateOfBirth}
-                </label>
-              )}
+              <div className={styles.column}>
+                <label className={styles.labelElement}>Last Name</label>
+                <TextField
+                  value={localFormState.lastName || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handleOnChange(e, "lastName");
+                  }}
+                />
+                {localErrors.errorLastName && (
+                  <label className={styles.errorLabel}>
+                    {localErrors.errorLastName}
+                  </label>
+                )}
+              </div>
             </div>
 
-            <div className={styles.column}>
-              <label className={styles.labelElement}>User Name</label>
-              <TextField
-                value={localFormState.userName || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "userName");
-                }}
-              />
-              {localErrors.errorUserName && (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorUserName}
-                </label>
-              )}
+            <div className={styles.formRow}>
+              <div className={styles.column}>
+                <label className={styles.labelElement}>Phone</label>
+                <TextField
+                  value={localFormState.phoneNumber || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handleOnChange(e, "phone");
+                  }}
+                />
+                {localErrors.errorPhone && (
+                  <label className={styles.errorLabel}>
+                    {localErrors.errorPhone}
+                  </label>
+                )}
+              </div>
+              <div className={styles.column}>
+                <label className={styles.labelElement}>Email</label>
+                <TextField
+                  value={localFormState.email || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handleOnChange(e, "email");
+                  }}
+                />
+                {localErrors.errorEmail && (
+                  <label className={styles.errorLabel}>
+                    {localErrors.errorEmail}
+                  </label>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className={styles.formRow}>
-            <div className={styles.column}>
-              <label className={styles.labelElement}>Password</label>
-              <TextField
-                value={localFormState.password || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "password");
-                }}
-              />
-              {localErrors.errorPassword && (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorPassword}
-                </label>
-              )}
-            </div>
-            <div className={styles.column}>
-              <label className={styles.labelElement}>SSN</label>
-              <TextField
-                value={localFormState.ssn || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleOnChange(e, "SSN");
-                }}
-              />
-              {localErrors.errorSSN && (
-                <label className={styles.errorLabel}>
-                  {localErrors.errorSSN}
-                </label>
-              )}
-            </div>
-          </div>
+            <div className={styles.formRow}>
+              <div className={styles.column}>
+                <label className={styles.labelElement}>Date of Birth</label>
+                <TextField
+                  value={localFormState.dateOfBirth || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handleOnChange(e, "dateOfBirth");
+                  }}
+                />
+                {localErrors.errorDateOfBirth && (
+                  <label className={styles.errorLabel}>
+                    {localErrors.errorDateOfBirth}
+                  </label>
+                )}
+              </div>
 
-          {/* <div className={styles.column}>
+              <div className={styles.column}>
+                <label className={styles.labelElement}>User Name</label>
+                <TextField
+                  value={localFormState.userName || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handleOnChange(e, "userName");
+                  }}
+                />
+                {localErrors.errorUserName && (
+                  <label className={styles.errorLabel}>
+                    {localErrors.errorUserName}
+                  </label>
+                )}
+              </div>
+            </div>
+
+            <div className={styles.formRow}>
+              <div className={styles.column}>
+                <label className={styles.labelElement}>Password</label>
+                <TextField
+                  value={localFormState.password || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handleOnChange(e, "password");
+                  }}
+                />
+                {localErrors.errorPassword && (
+                  <label className={styles.errorLabel}>
+                    {localErrors.errorPassword}
+                  </label>
+                )}
+              </div>
+              <div className={styles.column}>
+                <label className={styles.labelElement}>SSN</label>
+                <TextField
+                  value={localFormState.ssn || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handleOnChange(e, "SSN");
+                  }}
+                />
+                {localErrors.errorSSN && (
+                  <label className={styles.errorLabel}>
+                    {localErrors.errorSSN}
+                  </label>
+                )}
+              </div>
+            </div>
+
+            {/* <div className={styles.column}>
               <label className={styles.labelElement}>Gender</label>
               <TextField value={localFormState.gender || ""} />
             </div> */}
-          <div className={styles.formRow}>
-            <label className={styles.labelElement}>Gender  </label>
-            <TextField
-              className={styles.specialtyField}
-              select
-              classes={{ root: classesUI.menuItem }}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleOnChange(e, "gender");
-              }}
-              value={localFormState.gender || ""}
-            >
-              {gender.map((gender, index) => (
-                <MenuItem
-                  key={index}
-                  value={gender || " "}
-                  className={classesUI.menuItem}
-                >
-                  {gender}
-                </MenuItem>
-              ))}
-            </TextField>
-            {localErrors.errorGender && (
-              <label className={styles.errorLabel}>
-                {localErrors.errorGender}
-              </label>
-            )}
-          </div>
+            <div className={styles.formRow}>
+              <label className={styles.labelElement}>Gender </label>
+              <TextField
+                className={styles.specialtyField}
+                select
+                classes={{ root: classesUI.menuItem }}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "gender");
+                }}
+                value={localFormState.gender || ""}
+              >
+                {gender.map((gender, index) => (
+                  <MenuItem
+                    key={index}
+                    value={gender || " "}
+                    className={classesUI.menuItem}
+                  >
+                    {gender}
+                  </MenuItem>
+                ))}
+              </TextField>
+              {localErrors.errorGender && (
+                <label className={styles.errorLabel}>
+                  {localErrors.errorGender}
+                </label>
+              )}
+            </div>
 
-          <div className={styles.formRow}>
-            <label className={styles.labelElement}>Specialty</label>
-            <TextField
-              className={styles.specialtyField}
-              select
-              classes={{ root: classesUI.menuItem }}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleOnChange(e, "speciality");
-              }}
-              value={localFormState.specialization || ""}
-            >
-              {specialties.map((specialty, index) => (
-                <MenuItem
-                  key={index}
-                  value={specialty || " "}
-                  className={classesUI.menuItem}
-                >
-                  {specialty}
-                </MenuItem>
-              ))}
-            </TextField>
-            {localErrors.errorSpeciality && (
-              <label className={styles.errorLabel}>
-                {localErrors.errorSpeciality}
-              </label>
-            )}
-          </div>
-          <div className={styles.submitButton}>
-            <ButtonComponent
-              type="submit"
-              text="Submit"
-              classStyle="ButtonComponent"
-              color="white"
-              fontSize="32px"
-            />
-          </div>
-        </form>
-      </div>
-    )
+            <div className={styles.formRow}>
+              <label className={styles.labelElement}>Specialty</label>
+              <TextField
+                className={styles.specialtyField}
+                select
+                classes={{ root: classesUI.menuItem }}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleOnChange(e, "speciality");
+                }}
+                value={localFormState.specialization || ""}
+              >
+                {specialties.map((specialty, index) => (
+                  <MenuItem
+                    key={index}
+                    value={specialty || " "}
+                    className={classesUI.menuItem}
+                  >
+                    {specialty}
+                  </MenuItem>
+                ))}
+              </TextField>
+              {localErrors.errorSpeciality && (
+                <label className={styles.errorLabel}>
+                  {localErrors.errorSpeciality}
+                </label>
+              )}
+            </div>
+            <div className={styles.submitButton}>
+              <ButtonComponent
+                type="submit"
+                text="Submit"
+                classStyle="ButtonComponent"
+                color="white"
+                fontSize="32px"
+              />
+            </div>
+          </form>
+        </div>
+      )}
+    </div>
   );
 };
 
