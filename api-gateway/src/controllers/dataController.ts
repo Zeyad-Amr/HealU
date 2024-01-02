@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
-import { errorHandler } from '../services';
+import { errorHandler, validate, } from '../services';
 
 interface CustomRequest extends Request {
     user: {
@@ -47,6 +47,7 @@ export const get_appointment_data = async (req: Request, res: Response) => {
         const { appointmentId } = req.params
 
         const appointment = (await axios.get(`${process.env.Appointment_URL}/appointments/${appointmentId}`)).data
+        console.log(appointment);
 
         let errors: any[] = []
         const [doctorRes, patientRes, recordRes, medicalHistoryRes] = await Promise.allSettled([
@@ -287,7 +288,6 @@ export const get_all_slots = async (req: Request, res: Response) => {
 
 export const post_examination = async (req: Request, res: Response) => {
     try {
-
         const data = req.body
 
         const prescriptions = data.prescription
@@ -379,21 +379,67 @@ create bill
 }
 */
 
+
+
 export const book_appt = async (req: Request, res: Response) => {
     try {
-        const { appointment, bill } = req.body
+        const { appointment, card } = validate.validate(req.body, validate.bookApptSchema)
+
 
         // create appointment 
-        const appt = await axios.post(`${process.env.Appointment_URL}`)
-        // const invoice/
+        const appt = (await axios.post(`${process.env.Appointment_URL}/appointments`, appointment)).data.appointment
 
+        const clinic = await axios.get(`${process.env.Admin_URL}/api/v1/clinic/${appt.clinicId}`)
+            .then((res) => {
+                return res.data.data.clinic
+            }).catch(async (err) => {
+                await axios.delete(`${process.env.Appointment_URL}/appointments/${appt._id}`)
+                throw err
+            })
+
+        const invoiceData = {
+            servicesIds: [clinic.defaultServiceId],
+            appointmentId: appt._id
+        }
+        console.log(clinic);
+        console.log(invoiceData);
+
+
+        const invoice = await axios.post(`${process.env.Bill_URL}/invoice`, invoiceData).then((res) => {
+            return res.data
+        }).catch(async (err) => {
+            await axios.delete(`${process.env.Appointment_URL}/appointments/${appt._id}`)
+            console.log(err);
+
+            throw err
+        })
+
+        const bill = await axios.post(`${process.env.Bill_URL}/bill`, {
+            invoiceId: invoice.id,
+            paymentMethod: "card",
+            paymentSource:
+            {
+                card
+            }
+        })
+            .then((res) => {
+                if (res.status == 201) {
+                    return res.data;
+                }
+            })
+            .catch(async (err) => {
+                await axios.delete(`${process.env.Appointment_URL}/appointments/${appt._id}`)
+                await axios.delete(`${process.env.Bill_URL}/invoice/${appt._id}`)
+                throw err
+            })
 
 
         return res.status(200).json({
-
+            message: "appointment created successfully"
         })
 
     } catch (error: any) {
+
         const err = errorHandler(error)
 
         res.status(err?.statusCode ?? 500).json(err)
@@ -404,7 +450,7 @@ export const book_appt = async (req: Request, res: Response) => {
 
 /*
     POST book appointment
-    POST add examination
+    POST add examination ✅
 
     GET previous appts
     GET upcoming appts

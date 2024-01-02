@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { get_all_slots, get_appointment_data, get_doctor_slots, get_previous_appointments, post_examination } from "../controllers/dataController";
+import { book_appt, get_all_slots, get_appointment_data, get_doctor_slots, get_previous_appointments, post_examination } from "../controllers/dataController";
 
 const router = Router();
 
@@ -19,6 +19,9 @@ router.get('/data/slots/:date', get_doctor_slots)
 
 // add examination for patient 
 router.post('/data/examination', post_examination)
+
+// book appointment
+router.post('/data/book-appointment', book_appt)
 
 
 export default router;
