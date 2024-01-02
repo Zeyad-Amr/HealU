@@ -4,6 +4,7 @@ import { FormControl, FormHelperText, Typography } from "@mui/material";
 export interface CustomTextFieldProps {
   onChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: any) => void;
   name: string;
   label: string;
   error: string | undefined;
@@ -20,6 +21,7 @@ export interface CustomTextFieldProps {
 const CustomTextField = ({
   onChange,
   onBlur,
+  onFocus,
   name,
   label,
   error,
@@ -44,7 +46,7 @@ const CustomTextField = ({
 
         <TextField
           type={props?.type ? props.type : "text"}
-
+          onFocus={onFocus}
           disabled={nonEditable || !enable}
           required={isRequired}
           onChange={onChange}

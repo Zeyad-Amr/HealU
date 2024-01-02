@@ -12,7 +12,6 @@ import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import { useState } from "react";
 import React, { Dispatch, SetStateAction } from 'react';
 import AppointmentsBill from "../appointments-bill/AppointmentsBill";
-import ApptBillDialog from "../appointments-bill/AppointmentDialog";
 
 interface AppointmentsFilterResultsPropsI {
   resultData: any[];
@@ -34,9 +33,9 @@ const AppointmentsFilterResults = ({
     setOpen(true)
   }
 
-  const onCloseDialog = () => {
-    setOpen(false)
-  }
+  // const onCloseDialog = () => {
+  //   setOpen(false)
+  // }
 
   function getRandomColor() {
     const letters = "0123456789ABCDEF";
@@ -300,8 +299,9 @@ const AppointmentsFilterResults = ({
           );
         })}
       </Grid>
-      <ApptBillDialog open={open} handleClose={onCloseDialog} />
-      {/* <AppointmentsBill open={open} handleClose={onCloseDialog} /> */}
+      {/* <ApptBillDialog open={open} handleClose={onCloseDialog} /> */}
+      <Button onClick={onOpenDialog}></Button>
+      <AppointmentsBill open={open} setOpen={setOpen} />
     </Box>
   );
 };

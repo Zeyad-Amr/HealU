@@ -14,6 +14,7 @@ import Login from "../../modules/auth/pages";
 import Signup from "../../modules/patient-portal/components/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
+import Test from "../../modules/patient-portal/components/appointments-slots/appointments-bill/Test";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -64,6 +65,10 @@ class Router {
     {
       path: AppRoutes.signup,
       element: <Signup />,
+    },
+    {
+      path: AppRoutes.test,
+      element: <Test />,
     },
   ];
 
