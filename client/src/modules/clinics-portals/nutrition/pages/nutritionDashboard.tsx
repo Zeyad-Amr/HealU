@@ -3,15 +3,17 @@ import { Grid } from "@mui/material";
 import { styled, Theme } from "@mui/material/styles";
 import PatientData from "../components/PatientData";
 import History from "../components/history";
-import CustomContainer from "../components/dietPlan";
+import DietPlan from "../components/dietPlan";
 import ListPrescription from "../components/list";
 import Add from "../components/Add";
 import Button from "../components/Button";
+// import DietPlanModal from "../components/DietPlanModal";
 
 const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
   marginTop: "10px",
   display: "flex",
   justifyContent: "center",
+  marginLeft: "80px",
 }));
 
 const ContentWrapper = styled("div")({});
@@ -24,10 +26,28 @@ const NutritionDashBoard = () => {
   };
 
   const additionalComponents = [
-    { component: <Add title="Prescription" />, key: "prescription" },
-    { component: <Add title="Diet Plan" />, key: "dietPlan" },
-    { component: <Add title="Tests" />, key: "tests" },
+    {
+      component: <Add title="Prescription" modalType="prescription" />,
+      key: "prescription",
+    },
+    {
+      component: <Add title="Diet Plan" modalType="dietPlan" />,
+      key: "dietPlan",
+    },
+    { component: <Add title="Test" modalType="test" />, key: "tests" },
   ];
+
+  // const additionalComponents = [
+  //   {
+  //     component: <Add title="Prescription" />,
+  //     key: "prescription",
+  //   },
+  //   {
+  //     component: <Add title="Diet Plan" />,
+  //     key: "dietPlan",
+  //   },
+  //   { component: <Add title="Test" />, key: "tests" },
+  // ];
 
   return (
     <ContainerWrapper>
@@ -40,7 +60,7 @@ const NutritionDashBoard = () => {
             <History />
           </Grid>
           <Grid item>
-            <CustomContainer />
+            <DietPlan />
             <Grid container spacing={2}>
               {additionalComponents.map((componentData) => (
                 <Grid item key={componentData.key}>

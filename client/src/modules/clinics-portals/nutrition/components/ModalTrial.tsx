@@ -5,20 +5,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid";
 import MultiSelect from "./multiSelect";
 
-interface PrescriptionModalProps {
+interface ModalProps<T> {
   onClose: () => void;
-}
-
-interface PrescriptionField {
-  label: string;
-  name: keyof Prescription;
-}
-
-interface Prescription {
-  drugName: string;
-  dose: string;
-  notes: string;
-  saveTime: string;
+  handleShowCard: () => void;
+  modals?: { label: string; name: string }[];
+  initialData?: T;
+  modalTitle: string;
+  additionalElements?: JSX.Element[];
 }
 
 const ModalWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
@@ -59,7 +52,6 @@ const FormWrapper = styled("form")(({ theme }: { theme: Theme }) => ({
   backgroundColor: "white",
   padding: "20px",
   borderRadius: "5px",
-  marginLeft: "5px",
   marginTop: "20px",
   width: "500px",
 }));
@@ -108,36 +100,31 @@ const StyledButton = styled(Button)(({ theme }: { theme: Theme }) => ({
     transform: "translateY(4px)",
   },
 }));
-const PrescriptionModal: React.FC<PrescriptionModalProps> = ({ onClose }) => {
-  const [prescription, setPrescription] = useState({
-    drugName: "Cometrex",
-    dose: "30 ML",
-    notes: "Test",
-    saveTime: "After Breakfast",
-  });
 
+const Modal = <T extends Record<string, any>>({
+  onClose,
+  handleShowCard,
+  modalTitle,
+  modals = [],
+  initialData = {} as T,
+  additionalElements,
+}: ModalProps<T>) => {
+  const [formData, setFormData] = useState(initialData);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    name: keyof Prescription
+    name: keyof T
   ) => {
     const { value } = e.target;
-    setPrescription((prevPrescription) => ({
-      ...prevPrescription,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(prescription);
+    console.log(formData);
     // Submit logic here
   };
-
-  const prescriptionFields: PrescriptionField[] = [
-    { label: "Drug Name", name: "drugName" },
-    { label: "Dose", name: "dose" },
-    { label: "Notes", name: "notes" },
-  ];
 
   return (
     <ModalWrapper>
@@ -148,32 +135,35 @@ const PrescriptionModal: React.FC<PrescriptionModalProps> = ({ onClose }) => {
           </ExitButton>
         </Grid>
         <Grid item>
-          <ModalTitle>Prescription</ModalTitle>
+          <ModalTitle>{modalTitle}</ModalTitle>
         </Grid>
 
-        {prescriptionFields.map((field) => (
-          <LabelWrapper key={field.name}>
-            {field.label}
+        {modals.map((modal) => (
+          <LabelWrapper key={modal.name as string}>
+            {modal.label}
             <InputWrapper
               type="text"
-              name={field.name}
-              value={prescription[field.name]}
+              name={modal.name as string}
+              value={formData[modal.name]}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleChange(e, field.name)
+                handleChange(e, modal.name)
               }
             />
           </LabelWrapper>
         ))}
 
-        <LabelWrapper>
-          Time
-          <MultiSelect />
-        </LabelWrapper>
-
-        <StyledButton type="submit">Save</StyledButton>
+        {additionalElements &&
+          additionalElements.map((element, index) => (
+            <LabelWrapper key={`additional-element-${index}`}>
+              {element}
+            </LabelWrapper>
+          ))}
+        <StyledButton type="submit" onClick={handleShowCard}>
+          Save
+        </StyledButton>
       </FormWrapper>
     </ModalWrapper>
   );
 };
 
-export default PrescriptionModal;
+export default Modal;

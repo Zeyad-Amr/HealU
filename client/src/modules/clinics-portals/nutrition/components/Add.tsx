@@ -2,11 +2,70 @@ import React, { useState } from "react";
 import { styled, Theme } from "@mui/material/styles";
 import { Typography, Grid, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import PrescriptionModal from "./modal";
+// import PrescriptionModal from "./modal";
+// import DietPlanModal from "./DietPlanModal";
+// import TestModal from "./testModal";
+import Modal from "./ModalTrial";
+import Dropdown from "./dropDown";
+// import TModal from "./Tmodal";
+import MultiSelect from "./multiSelect";
 
 interface AddProps {
   title: string;
+  modalType: "prescription" | "dietPlan" | "test";
 }
+
+const LabelWrapper = styled("label")(({ theme }: { theme: Theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  marginBottom: "10px",
+  color: "#757575",
+}));
+const prescriptionField = [
+  { label: "Drug Name", name: "drugName" },
+  { label: "Dose", name: "dose" },
+  { label: "Notes", name: "notes" },
+];
+
+const initialPrescriptionData = {
+  drugName: "Cometrex",
+  dose: "30 ML",
+  notes: "Test",
+  saveTime: "After Breakfast",
+};
+
+const dietFields = [
+  { label: "Breakfast", name: "breakfast" },
+  { label: "Lunch", name: "lunch" },
+  { label: "Dinner", name: "dinner" },
+  { label: "Snacks", name: "snacks" },
+];
+
+const initialDietData = {
+  breakfast: "Brown Toast with low fat cheese",
+  lunch: "Seafood",
+  dinner: "Youghurt",
+  snacks: "Apple",
+};
+
+const testAdditionalElements = [
+  <>
+    <LabelWrapper>Test Name</LabelWrapper>
+    <Dropdown />
+  </>,
+];
+
+const prescriptionAdditionalElements = [
+  <>
+    <LabelWrapper>
+      Time
+      <MultiSelect />
+    </LabelWrapper>
+  </>,
+];
+
+// const testFields = [{ label: "Test Name", name: "testName" }];
+// const initialTestData = { testName: "" };
 
 const Container = styled("div")(({ theme }: { theme: Theme }) => ({
   display: "flex",
@@ -34,8 +93,9 @@ const Title = styled(Typography)(({ theme }: { theme: Theme }) => ({
   width: "50%",
 }));
 
-const Add: React.FC<AddProps> = ({ title }) => {
+const Add: React.FC<AddProps> = ({ title, modalType }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [cardVisible, setCardVisible] = useState(false);
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -44,6 +104,58 @@ const Add: React.FC<AddProps> = ({ title }) => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
+  const handleShowCard = () => {
+    setCardVisible(true);
+  };
+
+  const renderModal = () => {
+    switch (modalType) {
+      case "prescription":
+        return (
+          // <PrescriptionModal
+          //   onClose={handleCloseModal}
+          //   handleShowCard={handleShowCard}
+          // />
+          <Modal
+            onClose={handleCloseModal}
+            handleShowCard={handleShowCard}
+            additionalElements={prescriptionAdditionalElements}
+            modals={prescriptionField}
+            initialData={initialPrescriptionData}
+            modalTitle="Prescription"
+          />
+        );
+      case "dietPlan":
+        return (
+          <Modal
+            onClose={handleCloseModal}
+            handleShowCard={handleShowCard}
+            modals={dietFields}
+            initialData={initialDietData}
+            modalTitle="Diet Plan"
+          />
+        );
+      case "test":
+        return (
+          // <TestModal
+          //   onClose={handleCloseModal}
+          //   handleShowCard={handleShowCard}
+          // />
+          <Modal
+            onClose={handleCloseModal}
+            handleShowCard={handleShowCard}
+            additionalElements={testAdditionalElements}
+            // modals={testFields}
+            // initialData={initialTestData}
+            modalTitle="Tests"
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Container>
       <Card>
@@ -52,20 +164,20 @@ const Add: React.FC<AddProps> = ({ title }) => {
         </Grid>
         <Grid item>
           {/* <Icon
-            sx={{
-              fontSize: 30,
-              color: "#BDBDBD",
-              backgroundColor: "#000",
-              borderRadius: "50%",
-              marginLeft: "8px",
-            }}
-          >
-            add_circle
-          </Icon> */}
+//             sx={{
+//               fontSize: 30,
+//               color: "#BDBDBD",
+//               backgroundColor: "#000",
+//               borderRadius: "50%",
+//               marginLeft: "8px",
+//             }}
+//           >
+//             add_circle
+//           </Icon> */}
           <IconButton sx={{ color: "black" }} onClick={handleOpenModal}>
             <AddIcon />
           </IconButton>
-          {openModal && <PrescriptionModal onClose={handleCloseModal} />}
+          {openModal && renderModal()}
         </Grid>
       </Card>
     </Container>

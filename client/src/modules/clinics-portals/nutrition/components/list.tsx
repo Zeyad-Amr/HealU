@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { styled, Theme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import PrescriptionModal from "./modal";
+// import PrescriptionModal from "./modal";
 
-const Container = styled("div")(({ theme }: { theme: Theme }) => ({
+const Container = styled("div")(({ visible }: { visible: boolean }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
   maxWidth: "500px",
   margin: "0 auto",
-  padding: theme.spacing(2),
   boxSizing: "border-box",
 }));
 const IconButton = styled("div")({
@@ -52,6 +51,7 @@ const Content = styled(Typography)(({ theme }: { theme: Theme }) => ({
 
 const ListPrescription: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [cardVisible, setCardVisible] = useState(false);
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -61,18 +61,31 @@ const ListPrescription: React.FC = () => {
     setOpenModal(false);
   };
 
+  const handleShowCard = () => {
+    setCardVisible(true);
+  };
+
   return (
-    <Container>
-      <Card>
-        <IconButton aria-label="edit" onClick={handleOpenModal}>
-          <EditIcon fontSize="medium" />
-        </IconButton>
-        {openModal && <PrescriptionModal onClose={handleCloseModal} />}
-        <Title>Vitamin D3 </Title>
-        <Content>250 mcg</Content>
-        <Content>Once A Week</Content>
-      </Card>
-    </Container>
+    <>
+      {cardVisible && (
+        <Container visible={cardVisible}>
+          <Card>
+            <IconButton aria-label="edit" onClick={handleOpenModal}>
+              <EditIcon fontSize="medium" />
+            </IconButton>
+            {/* {openModal && (
+              <PrescriptionModal
+                onClose={handleCloseModal}
+                handleShowCard={handleShowCard}
+              />
+            )} */}
+            <Title>Vitamin D3 </Title>
+            <Content>250 mcg</Content>
+            <Content>Once A Week</Content>
+          </Card>
+        </Container>
+      )}
+    </>
   );
 };
 

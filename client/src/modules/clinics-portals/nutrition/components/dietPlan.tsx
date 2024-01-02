@@ -5,6 +5,35 @@ import PdfDownloader from "./pdfDownloader";
 
 interface DietPlanProps {}
 
+interface Field {
+  title: string;
+  value: string;
+}
+
+interface Section {
+  title: string;
+  component: React.ReactNode;
+}
+
+const fields: Field[] = [
+  { title: "Inbody Score", value: "80/100" },
+  { title: "Current Weight", value: "85 KG" },
+  { title: "Weight Control", value: "+5.0 KG" },
+  { title: "Target Weight", value: "75 KG" },
+  { title: "Fat Control", value: "-3.5 KG" },
+  { title: "Muscle Control", value: "+6.5 KG" },
+];
+
+const sections: Section[] = [
+  {
+    title: "Review Inbody",
+    component: <PdfDownloader />,
+  },
+  {
+    title: "Review Diet Plans",
+    component: <PdfDownloader />,
+  },
+];
 const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
   marginTop: "-100px",
   backgroundColor: "#fff",
@@ -46,35 +75,6 @@ const FieldTitle = styled(Typography)(({ theme }: { theme: Theme }) => ({
   fontWeight: "bold",
 }));
 
-interface Field {
-  title: string;
-  value: string;
-}
-
-const fields: Field[] = [
-  { title: "Inbody Score", value: "80/100" },
-  { title: "Current Weight", value: "85 KG" },
-  { title: "Weight Control", value: "+5.0 KG" },
-  { title: "Target Weight", value: "75 KG" },
-  { title: "Fat Control", value: "-3.5 KG" },
-  { title: "Muscle Control", value: "+6.5 KG" },
-];
-
-interface Section {
-  title: string;
-  component: React.ReactNode;
-}
-
-const sections: Section[] = [
-  {
-    title: "Review Inbody",
-    component: <PdfDownloader />,
-  },
-  {
-    title: "Review Diet Plans",
-    component: <PdfDownloader />,
-  },
-];
 const DietPlan: React.FC<DietPlanProps> = () => {
   return (
     <ContainerWrapper>
