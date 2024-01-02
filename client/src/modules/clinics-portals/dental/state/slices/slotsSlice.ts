@@ -29,9 +29,7 @@ const initialState: SlotState = {
 // Create an async thunk for fetching slots for doctors
 export const fetchSlots = createAsyncThunk("slot/fetchSlots", async () => {
   try {
-    const response = await axios.get(
-      `appointment/slots/`
-    );
+    const response = await axios.get(`appointment/slots/`);
     return response.data;
   } catch (error) {
     throw error;
@@ -70,14 +68,11 @@ export const createSlotForDoctor = createAsyncThunk(
   "slot/createSlot",
   async ({ time, weekDay }: { time: string; weekDay: string }) => {
     try {
-      const res = await axios.post(
-        `appointment/slots/`,
-        {
-          doctorId: doctorId,
-          time: time,
-          weekDay: weekDay,
-        }
-      );
+      const res = await axios.post(`appointment/slots/`, {
+        doctorId: doctorId,
+        time: time,
+        weekDay: weekDay,
+      });
       return res.data["newSlot"];
     } catch (error) {
       throw error;
@@ -90,9 +85,7 @@ export const deleteSlot = createAsyncThunk(
   "slot/deleteSlot",
   async (slotId: string) => {
     try {
-      await axios.delete(
-        `appointment/slots/${slotId}`
-      );
+      await axios.delete(`appointment/slots/${slotId}`);
       return slotId;
     } catch (error) {
       throw error;

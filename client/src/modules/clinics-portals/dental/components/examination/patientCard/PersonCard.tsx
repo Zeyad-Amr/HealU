@@ -4,6 +4,7 @@ import HistoryBox from "./historyBox/HistoryBox";
 import styles from "../examination.module.css";
 
 const PersonCard = () => {
+
   return (
     <Stack direction="row" spacing={1.5} className={styles.container}>
       <PersonalDataBox />

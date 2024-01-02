@@ -1,11 +1,9 @@
-import DiagnosisForm from "../examination/diagnosis/DiagnosisForm";
-import PopUpDropListButton from "../examination/elements/PopUpDropListButton";
+import DiagnosisForm from "./diagnosis/DiagnosisForm";
+import PopUpDropListButton from "./elements/PopUpDropListButton";
 import styles from "../examination/examination.module.css";
-import SubmitButton from "../examination/elements/SubmitButton";
+import SubmitButton from "./elements/SubmitButton";
 
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 
 import React, { useState } from "react";
 import ModalPopUp from "./elements/ModalPopUp";

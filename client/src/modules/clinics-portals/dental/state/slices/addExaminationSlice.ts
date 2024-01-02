@@ -33,7 +33,6 @@ export const submitNewExamination = createAsyncThunk(
     try {
       await axios.post(
         `/data/examination`,
-
         {
           AppointmentId: newAddExamination.AppointmentId,
           Diagnosis: newAddExamination.Diagnosis,

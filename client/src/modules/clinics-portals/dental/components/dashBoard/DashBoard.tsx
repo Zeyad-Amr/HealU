@@ -22,6 +22,7 @@ import AppointmentModal from "./AppointmentModal";
 import dayjs from "dayjs";
 import SlotsTable from "./SlotsTable";
 import { useNavigate } from "react-router-dom";
+import { fetchExaminationByAppointmentID } from "../../state/slices/examinationSlice";
 
 interface DashBoardProps {
   // Other props if needed
@@ -82,7 +83,11 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   ) => {
     if (selectedAppointment === undefined) return;
     // setSelectedAppointment(selectedAppointment);
-    navigate(`/clinic/dental/examination/${selectedAppointment._id}`);
+    dispatch(
+      fetchExaminationByAppointmentID(selectedAppointment._id ?? "")
+    ).then(() => {
+      navigate(`/clinic/dental/examination`);
+    });
   };
 
   const handleCloseModal = () => {

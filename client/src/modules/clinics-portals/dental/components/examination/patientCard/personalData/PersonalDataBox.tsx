@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Stack, Box } from "@mui/material";
 
 import styles from "./PersonalDataBox.module.css";
@@ -14,7 +14,9 @@ const PersonalData: React.FC = () => {
     return age;
   };
 
-  const ExamState = useSelector((state: RootState) => state.examinationReducer);
+  const ExamState = useSelector(
+    (state: RootState) => state.examinationReducer.examination
+  );
 
   return (
     <Box className={styles.box_container}>
@@ -24,25 +26,25 @@ const PersonalData: React.FC = () => {
         <span className={styles.labelText}>
           Name:{" "}
           <span className={styles.parameterText}>
-            {ExamState.examination.patient.userName}
+            {ExamState.patient.firstName}
           </span>
         </span>
         <span className={styles.labelText}>
           Weight:{" "}
           <span className={styles.parameterText}>
-            {ExamState.examination.patientRecord[-1].PatientWeight} kg
+            {ExamState.patientRecord[0].PatientWeight} kg
           </span>
         </span>
         <span className={styles.labelText}>
           Length:{" "}
           <span className={styles.parameterText}>
-            {ExamState.examination.patientRecord[-1].PatientHeight} Cm
+            {ExamState.patientRecord[0].PatientHeight} cm
           </span>
         </span>
         <span className={styles.labelText}>
           Age:{" "}
           <span className={styles.parameterText}>
-            {getAge(ExamState.examination.patient.dateOfBirth)}
+            {getAge(ExamState.patient.dateOfBirth)}
           </span>
         </span>
         {/* Add more personal data fields as needed */}

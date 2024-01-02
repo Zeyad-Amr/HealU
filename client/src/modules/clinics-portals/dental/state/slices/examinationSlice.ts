@@ -63,11 +63,11 @@ interface PatientRecord {
   RecordDate: string;
   CreatedAt: string;
   ////////////////////////////////
-  // our clinical doesn't have them 
-  Vital: { VitalDescription: string }[] |null;
-  Vaccines: { VaccinesDescription: string }[]|null;
-  EyeMeasurement: { EyeMeasurementDescription: string }[]|null;
-  Nutrition: { NutritionDescription: string }[]|null;
+  // our clinical doesn't have them
+  Vital: { VitalDescription: string }[] | null;
+  Vaccines: { VaccinesDescription: string }[] | null;
+  EyeMeasurement: { EyeMeasurementDescription: string }[] | null;
+  Nutrition: { NutritionDescription: string }[] | null;
 }
 
 interface MedicalHistory {
@@ -102,10 +102,9 @@ const initialState: ExaminationState = {
 // Create an async thunk for fetching appointments
 export const fetchExaminationByAppointmentID = createAsyncThunk(
   "examination/fetchExaminationByAppointmentID",
-  async (AppointmentID: string) => {
+  async (appointmentID: string) => {
     try {
-      const response = await axios.get(`/appointment/${AppointmentID}`);
-      console.log(response.data);
+      const response = await axios.get(`/data/appointment/${appointmentID}`);
       return response.data;
     } catch (error) {
       throw error;
