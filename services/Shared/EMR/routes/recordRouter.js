@@ -8,6 +8,7 @@ router.post("/record", RecordController.createRecord);                // POST Ne
 router.get('/record', RecordController.getRecord);                   // GET All Records
 router.get("/record/:recordId", RecordController.getRecordByRecordID);    // GET Record by RecordID
 router.get("/record/:patient/:patientId", RecordController.getRecordByPatientID);    // GET Record by PatientID
+router.put("/record/:medical-tests/:medicaltestId", RecordController.updateMedicalTestByID);   // Update medicaltests
 //===================================================================================================
 
 module.exports =  router;      // Export the 'router' object
