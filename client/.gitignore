@@ -14,6 +14,7 @@
 /build
 
 ../reactjsonserver
+/node_modules
 
 # misc
 .DS_Store
