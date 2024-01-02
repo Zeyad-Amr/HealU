@@ -53,8 +53,9 @@ const ExpItem: FC<ExpItemProps> = ({ item }) => {
 
 const HomeHero: FC = () => {
     return (
-        <Box id="hero" sx={{ backgroundColor: 'background.paper', position: 'relative', pt: 4, pb: { xs: 8, md: 10 } }}>
+        <Box id="hero" sx={{ backgroundColor: 'background.paper', pt: 4, pb: { xs: 8, md: 10 } }}>
             <Container maxWidth="lg">
+
                 <Grid container spacing={0} sx={{ flexDirection: { xs: 'column', md: 'unset' } }}>
                     <Grid item xs={12} md={7}>
                         <Box
@@ -141,9 +142,7 @@ const HomeHero: FC = () => {
                             </Box>
                             <Box sx={{ mb: 4, width: { xs: '100%', md: '70%' } }}>
                                 <Typography sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
-                                    {
-                                        "Let's take an online course to improve your skills in a different way, you can set your own study time according to your learning speed. So you san study comfortable and absorb tge material easily."
-                                    }
+                                    lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                 </Typography>
                             </Box>
                             <Box sx={{ '& button': { mr: 2 } }}>
@@ -160,10 +159,10 @@ const HomeHero: FC = () => {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={5} sx={{ position: 'relative' }}>
-                        {/* Sertificate badge */}
+
+                    <Grid item xs={12} md={5} >
                         <Box sx={{ lineHeight: 0 }}>
-                            {/*<img src="/images/healcare.png" style={{ width: '775px', height: '787px' }} alt="Hero img" />*/}
+                            <img src="/images/healcare.png" style={{ width: '775px'}} alt="Hero img" />
                         </Box>
                     </Grid>
                 </Grid>

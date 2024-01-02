@@ -45,43 +45,6 @@ const HomeFeature: FC = () => {
                             <Box
                                 sx={{
                                     position: 'absolute',
-                                    top: -36,
-                                    right: { xs: 0, md: -36 },
-                                    boxShadow: 2,
-                                    borderRadius: 1,
-                                    px: 2.2,
-                                    py: 1.4,
-                                    zIndex: 1,
-                                    backgroundColor: 'background.paper',
-                                    width: 190,
-                                }}
-                            >
-                                <Typography variant="h5" sx={{ mb: 1 }}>
-                                    Lorem ipsum dolor
-                                </Typography>
-                                <Box sx={{ mb: 2 }}>
-                                    <Typography variant="subtitle1" color="text.secondary">
-                                        UI/UI Design
-                                    </Typography>
-                                    <BorderLinearProgress variant="determinate" color="inherit" value={65} order={1} />
-                                </Box>
-                                <Box sx={{ mb: 2 }}>
-                                    <Typography variant="subtitle1" color="text.secondary">
-                                        Mobile Development
-                                    </Typography>
-                                    <BorderLinearProgress variant="determinate" color="inherit" value={40} order={2} />
-                                </Box>
-                                <Box sx={{ mb: 2 }}>
-                                    <Typography variant="subtitle1" color="text.secondary">
-                                        Web Development
-                                    </Typography>
-                                    <BorderLinearProgress variant="determinate" color="inherit" value={50} order={3} />
-                                </Box>
-                            </Box>
-
-                            <Box
-                                sx={{
-                                    position: 'absolute',
                                     bottom: -12,
                                     left: { xs: 0, md: -24 },
                                     boxShadow: 2,
@@ -163,7 +126,7 @@ const HomeFeature: FC = () => {
                                     backgroundColor: 'unset',
                                 }}
                             >
-                                Learning <br />
+                                Healing <br />
                                 <Box
                                     sx={{
                                         position: 'absolute',
@@ -179,9 +142,8 @@ const HomeFeature: FC = () => {
                             Enjoyable
                         </Typography>
 
-                        <Typography sx={{ color: 'text.secondary', mb: 2, ml: { xs: 0, md: 4 } }}>
-                            Set the way of learning according to your wishes with some of the benefits that you get us, so you on
-                            enjoy the lessons that we provide.
+                        <Typography sx={{ color: 'text.secondary', mb: 2, ml: { xs: 0, md: 6 } }}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec justo rutrum leo feugiat tincidunt. Mauris eleifend
                         </Typography>
 
                         <Grid container spacing={2} sx={{ ml: { xs: 0, md: 2 } }}>

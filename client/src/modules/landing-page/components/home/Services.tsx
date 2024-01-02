@@ -86,11 +86,12 @@ const Services: FC = () => {
                     md: 8,
                 },
                 pb: 14,
-                backgroundColor: 'background.default',
+                backgroundColor: '#f2f5f5',
             }}
         >
             <Container maxWidth="lg">
                 <Grid container spacing={2}>
+
                     <Grid item xs={12} md={3}>
                         <Box
                             sx={{
@@ -102,7 +103,7 @@ const Services: FC = () => {
                             }}
                         >
                             <Typography variant="h1" sx={{ mt: { xs: 0, md: -5 }, fontSize: { xs: 30, md: 48 } }}>
-                                Most Popular Courses
+                                Our Services
                             </Typography>
                         </Box>
                     </Grid>
@@ -110,7 +111,7 @@ const Services: FC = () => {
                     <Grid item xs={12} md={9}>
                         <Slider {...sliderConfig}>
                             {data.map((item) => (
-                                <ServiceCardItem key={String(item.id)} item={item} />
+                                <ServiceCardItem key={item.id} item={item} />
                             ))}
                         </Slider>
                     </Grid>
