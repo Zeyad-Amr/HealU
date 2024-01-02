@@ -1,29 +1,42 @@
 import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box, IconButton, TextField } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { Edit, Delete, Save } from "@mui/icons-material";
+import { useState } from "react";
+import api from "../../../core/api/api";
+
 interface ServicesTableProps {
   rows: never[];
 }
 
 const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
-  const [editRowId, setEditRowId] = useState("");
+  const [updatedDescription, updateDescription] = useState("");
+  const [editModeId, setEditModeId] = useState("");
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    updateDescription(event.target.value);
+  };
   const handleEdit = (id: string) => {
-    setEditRowId(id);
-    console.log("Edit clicked for ID:", id);
+    setEditModeId(id);
   };
 
   const handleDelete = (id: string) => {
     console.log("Delete clicked for ID:", id);
+    api
+      .delete(`/admin/clinic-service/${id}`)
+      .then(() => window.location.reload());
   };
+  const handleSave = (id: string) => {
+    console.log("Saving changes at:", updatedDescription);
+    api
+      .patch(`/admin/clinic-service/${id}`, {
+        description: updatedDescription,
+      })
+      .then(() => window.location.reload());
 
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    rowId: string
-  ) => {
-    // Handle description change here and update state or perform other actions
-    console.log("New description:", e.target.value, "for ID:", rowId);
+    updateDescription("");
+    setEditModeId("");
   };
 
   const columns: GridColDef[] = [
@@ -36,15 +49,19 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
       hideable: false,
       renderCell: (params) => (
         <>
-          {editRowId === params.row.id ? (
-            <TextField
-              name="updatedDescription"
-              defaultValue={params.row.description}
-              // variant="filled"
-              size="small"
-              margin="dense"
-              // onChange={handleChange}
-            />
+          {editModeId === params.row.id ? (
+            <>
+              <TextField
+                name="updatedDescription"
+                defaultValue={params.row.description}
+                size="small"
+                margin="dense"
+                onChange={handleDescriptionChange}
+                onKeyDown={(e) => {
+                  e.stopPropagation();
+                }}
+              />
+            </>
           ) : (
             <span>{params.row.description}</span>
           )}
@@ -71,12 +88,24 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
       hideable: false,
       renderCell: (params) => (
         <Box>
-          <IconButton
-            aria-label="edit"
-            onClick={() => handleEdit(params.row.id)} // Implement handleEdit function
-          >
-            <Edit />
-          </IconButton>
+          {editModeId === params.row.id ? (
+            <>
+              <IconButton
+                aria-label="save"
+                onClick={() => handleSave(params.row.id)}
+              >
+                <Save />
+              </IconButton>
+            </>
+          ) : (
+            <IconButton
+              aria-label="edit"
+              onClick={() => handleEdit(params.row.id)} // Implement handleEdit function
+            >
+              <Edit />
+            </IconButton>
+          )}
+
           <IconButton
             aria-label="delete"
             color="warning"

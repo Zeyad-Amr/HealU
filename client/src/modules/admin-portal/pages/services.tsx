@@ -3,13 +3,12 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import { useEffect, useState } from "react";
 import ServicesTable from "../components/servicesTable";
 import CreateServicePopup from "../components/createServicePopup";
-import axios from "axios";
+import api from "../../../core/api/api";
 
 const Services = () => {
   useEffect(() => {
     getAllServices();
   }, []);
-  const auth_token = process.env.REACT_APP_GATEWAY_TOKEN;
   const [rows, setRows] = useState([]);
   const [isAddDialogOpen, openDialog] = useState(false);
   const handleAddService = () => {
@@ -19,15 +18,12 @@ const Services = () => {
     openDialog(false);
   };
   const getAllServices = () => {
-    axios
-      .get("https://healu-api-gateway.onrender.com/api/admin/clinic-service", {
-        headers: {
-          "auth-token": auth_token,
-        },
-      })
-      .then((response) => response.data.data.clinicServices)
-      .then((data) => setRows(data));
+    api
+      .get("/admin/clinic-service")
+      .then((response) => setRows(response.data.data.clinicServices));
   };
+  window.addEventListener("onreload", getAllServices);
+
   return (
     <>
       <Container>

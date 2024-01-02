@@ -12,13 +12,11 @@ import {
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import InputAdornment from "@mui/material/InputAdornment";
-import axios from "axios";
-
+import api from "../../../core/api/api";
 interface CreateServicePopupProps {
   isAddDialogOpen: boolean;
   handleCloseDialogs: () => void;
 }
-const auth_token = process.env.REACT_APP_GATEWAY_TOKEN;
 const CreateServicePopup: React.FC<CreateServicePopupProps> = ({
   isAddDialogOpen,
   handleCloseDialogs,
@@ -37,24 +35,19 @@ const CreateServicePopup: React.FC<CreateServicePopupProps> = ({
     });
   };
   const handleSubmit = () => {
-    axios
-      .post(
-        "https://healu-api-gateway.onrender.com/api/admin/clinic-service",
-        {
-          name: formData["name"],
-          clinicId: 1,
-          description: formData["description"],
-          price: formData["price"],
-        },
-        {
-          headers: {
-            "auth-token": auth_token,
-          },
-        }
-      )
+    api
+      .post("/admin/clinic-service", {
+        name: formData["name"],
+        clinicId: 1,
+        description: formData["description"],
+        price: formData["price"],
+      })
       .then((response) => {
+        handleCloseDialogs();
+        window.location.reload();
         console.log(response);
       })
+
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -99,7 +92,7 @@ const CreateServicePopup: React.FC<CreateServicePopupProps> = ({
             <TextField
               label="Name"
               name="name"
-              defaultValue="Vision Test"
+              defaultValue={formData.name}
               variant="filled"
               size="small"
               margin="dense"
@@ -108,7 +101,7 @@ const CreateServicePopup: React.FC<CreateServicePopupProps> = ({
             <TextField
               label="Clinic"
               name="clinic"
-              defaultValue="Ophthalmology"
+              defaultValue={formData.clinic}
               variant="filled"
               margin="dense"
               size="small"
@@ -117,7 +110,7 @@ const CreateServicePopup: React.FC<CreateServicePopupProps> = ({
             <TextField
               label="Description"
               name="description"
-              defaultValue="Vision test including eye measurements"
+              defaultValue={formData.description}
               variant="filled"
               margin="dense"
               size="small"
@@ -129,6 +122,7 @@ const CreateServicePopup: React.FC<CreateServicePopupProps> = ({
               type="number"
               name="price"
               margin="dense"
+              defaultValue={formData.price}
               InputLabelProps={{
                 shrink: true,
               }}
