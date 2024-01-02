@@ -1,4 +1,4 @@
-export const AboutUs = () => {
+const AboutUs = () => {
     return (
         <div>
             <div className="clients overlay">
@@ -85,3 +85,5 @@ export const AboutUs = () => {
         </div>
     );
 };
+
+export default AboutUs;

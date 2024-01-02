@@ -7,8 +7,7 @@ const Doctors = () => {
                         <div className="section-title">
                             <h2>Book from top specialties.</h2>
                             <img src="/img/section-img.png" alt="#"/>
-                            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit praesent aliquet.
-                                pretiumts</p>
+                            <p>Book Appointments with Top Specialties for Specialized and Comprehensive Healthcare Solutions</p>
                         </div>
                     </div>
                 </div>
@@ -21,7 +20,7 @@ const Doctors = () => {
                             </div>
                             <div className="news-body">
                                 <div className="news-content">
-                                    <h2><a href="blog-single.html">Dr Ibrahim Mohamed</a></h2>
+                                    <h2><a href="">Dr Ibrahim Mohamed</a></h2>
                                     <p className="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed
                                         do
                                         eiusmod tempor incididunt sed do incididunt sed.</p>
@@ -36,7 +35,7 @@ const Doctors = () => {
                             </div>
                             <div className="news-body">
                                 <div className="news-content">
-                                    <h2><a href="blog-single.html">Dr. Mohamed Ismail</a></h2>
+                                    <h2><a href="">Dr. Mohamed Ismail</a></h2>
                                     <p className="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed
                                         do
                                         eiusmod tempor incididunt sed do incididunt sed.</p>
@@ -51,7 +50,7 @@ const Doctors = () => {
                             </div>
                             <div className="news-body">
                                 <div className="news-content">
-                                    <h2><a href="blog-single.html">Dr Mohamed Ibrahim</a></h2>
+                                    <h2><a href="">Dr Mohamed Ibrahim</a></h2>
                                     <p className="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed
                                         do
                                         eiusmod tempor incididunt sed do incididunt sed.</p>

@@ -31,8 +31,7 @@ const Services = () => {
                                 <FontAwesomeIcon icon={faBowlFood}/>
                             </i>
                             <h4><a>Nutrition</a></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut
-                                imperdiet. </p>
+                            <p>Provides guidance on dietary habits, nutrition plans, and lifestyle changes to promote better health and manage conditions through balanced diets. </p>
                         </div>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12">
@@ -41,8 +40,7 @@ const Services = () => {
                                 <FontAwesomeIcon icon={faTooth}/>
                             </i>
                             <h4><a>Dental Care</a></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut
-                                imperdiet. </p>
+                            <p>Specializes in oral health, covering teeth, gums, and related areas. Offers services like cleanings, fillings, extractions, and more. </p>
                         </div>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12">
@@ -51,8 +49,7 @@ const Services = () => {
                                 <FontAwesomeIcon icon={faEye}/>
                             </i>
                             <h4><a>Ophthalmology</a></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut
-                                imperdiet. </p>
+                            <p>Concentrates on eye health, dealing with vision care, eye diseases, surgeries like cataract removal, and corrective procedures like LASIK.</p>
                         </div>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12">
@@ -61,8 +58,7 @@ const Services = () => {
                                 <FontAwesomeIcon icon={faBone}/>
                             </i>
                             <h4><a>Orthopedic</a></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut
-                                imperdiet. </p>
+                            <p>Specializes in musculoskeletal system care, treating injuries, conditions, and disorders related to bones, joints, ligaments, tendons, and muscles</p>
                         </div>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12">
@@ -71,8 +67,7 @@ const Services = () => {
                                 <FontAwesomeIcon icon={faChildren}/>
                             </i>
                             <h4><a>Pediatrics</a></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut
-                                imperdiet. </p>
+                            <p>Focuses on healthcare for infants, children, and adolescents, covering a wide range of medical services specific to their age group.</p>
                         </div>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12">
@@ -81,8 +76,7 @@ const Services = () => {
                                 <FontAwesomeIcon icon={faHandDots}/>
                             </i>
                             <h4><a>Dermatology</a></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut
-                                imperdiet. </p>
+                            <p>Focuses on skin health, diagnosing and treating various skin conditions, including acne, eczema, psoriasis, and skin cancer. </p>
                         </div>
                     </div>
                 </div>

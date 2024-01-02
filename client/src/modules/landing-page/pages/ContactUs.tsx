@@ -1,4 +1,4 @@
-export const ContactUs = () => {
+const ContactUs = () => {
     return (
         <div>
             <div className="clients overlay">
@@ -92,3 +92,5 @@ export const ContactUs = () => {
         </div>
     );
 };
+
+export default ContactUs;
