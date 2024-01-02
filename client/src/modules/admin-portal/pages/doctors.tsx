@@ -58,6 +58,8 @@ const AddDoctor = () => {
           text="Add Doctor"
           classStyle="ButtonComponent"
           includeIcon={true}
+          color="white"
+          fontSize="32px"
         />
       </div>
       {isEditForm ? (

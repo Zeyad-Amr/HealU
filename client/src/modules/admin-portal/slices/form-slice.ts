@@ -27,6 +27,7 @@ const formSlice = createSlice({
     },
     setEditedDoctor(state, action: PayloadAction<Doctor | null>) {
       state.editedDoctor = action.payload;
+      console.log(action.payload)
     },
   },
 });

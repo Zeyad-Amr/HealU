@@ -13,7 +13,6 @@ import {
   Doctor,
   deleteDoctor,
   getDoctors,
-  editDoctor,
   getDoctorById,
 } from "../../slices/doctor-slice";
 import { makeStyles } from "@mui/styles";
@@ -49,10 +48,12 @@ const TableComponent = () => {
   useEffect(() => {
     console.log('Dispatching getDoctors');
     dispatch(getDoctors() as any);
-  }, []);
+  }, [dispatch,doctors]);
 
-  const handleDelete = async (doctorId: string) => {
-    dispatch(deleteDoctor(doctorId) as any);
+  const handleDelete = async (doctorId: number | undefined) => {
+    if(doctorId){
+      await dispatch(deleteDoctor(doctorId) as any);
+    }
   };
   // const handleEdit = (
   //   doctorId: number,
@@ -84,14 +85,15 @@ const TableComponent = () => {
   //   dispatch(formActions.setIsEdit(true));
   // };
   // const [selectedDoctor, setSelectedDoctor] = useState<Partial<Doctor>>({});
-  const handleEdit = async (doctorId: string) => {
+  const handleEdit = async (doctorId: number | undefined) => {
     await dispatch(getDoctorById(doctorId) as any);
     dispatch(formActions.setFormVisibility(!isFormVisible));
     dispatch(formActions.setIsEdit(true));
-    const selectedDoctor = doctors.find((row) => row.ssn === doctorId);
+    const selectedDoctor = doctors.find((row) => row.userId === doctorId);
     if (selectedDoctor) {
       dispatch(formActions.setEditedDoctor(selectedDoctor));
     }
+    // dispatch(getDoctors()as any);
   };
   return (
     <Paper
@@ -111,7 +113,7 @@ const TableComponent = () => {
                     key={`${rowIndex}-column1`}
                     className={styles.column1}
                   >
-                    {row.id}
+                    {row.userId}
                   </TableCell>
 
                   <TableCell
@@ -170,7 +172,7 @@ const TableComponent = () => {
                   >
                     <div
                       className={styles.addIcon}
-                      onClick={() => handleDelete(row.ssn)}
+                      onClick={() => handleDelete(row.userId)}
                     >
                       <DeleteIcon style={{ width: "38px", height: "38px" }} />
                     </div>
@@ -182,7 +184,7 @@ const TableComponent = () => {
                     <div className={styles.addIcon}>
                       <BorderColorIcon
                         style={{ width: "38px", height: "38px" }}
-                        onClick={() => handleEdit(row.ssn)}
+                        onClick={() => handleEdit(row.userId)}
                       />
                     </div>
                   </TableCell>

@@ -15,6 +15,8 @@ interface ButtonProps {
   includeIcon?: boolean;
   customStyles?: string;
   backgroundColor?: string;
+  color?: string;
+  fontSize?: string;
 }
 
 const useStyles = makeStyles({
@@ -32,6 +34,8 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   type,
   backgroundColor,
   includeIcon = false,
+  color,
+  fontSize
 }) => {
   return (
     <Button
@@ -49,7 +53,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
         )
       }
     >
-      <span className={classes[textStyle as string]} style={{textTransform:"none"}}> {text} </span>
+      <span className={classes[textStyle as string]} style={{textTransform:"none", color:`${color}`, fontSize:`${fontSize}`}}> {text} </span>
     </Button>
   );
 };
