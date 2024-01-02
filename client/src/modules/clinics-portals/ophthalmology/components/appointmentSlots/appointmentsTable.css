@@ -1,10 +1,16 @@
-/* Your CSS file */
-
-/* Font styles */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap");
 
 /* Icon styles */
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+.time-cell {
+  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  width: 103px;
+  height: 60px;
+  flex-shrink: 0;
+}
 
 .appointment-container {
   margin-top: 20px;
@@ -12,6 +18,7 @@
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  font: "Roboto";
 }
 
 .table-container {
@@ -21,41 +28,56 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.header-text {
+
+.TableHead {
+  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+}
+
+.TableHead button {
+  color: #fff;
   display: flex;
   align-items: center;
+  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  margin-left: 0%;
+}
+
+.TableHead button:hover {
+  background-color: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
 }
 
 .TableHead .MuiIconButton-root {
+  position: absolute;
+  top: 50%;
+  right: 100px;
+  transform: translateY(-50%);
   color: #fff;
+}
+
+.TableRow {
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.TableRow:nth-child(even) {
+  background-color: var(--even-row-bg-color);
+}
+
+.TableRow:hover {
+  background-color: var(--hovered-row-bg-color);
 }
 
 .TableCell {
-  padding: 10px;
+  padding-left: 100px;
   text-align: center;
   border: 1px solid #ddd;
   border-radius: 10px;
-}
-
-.time-cell {
-  border-radius: 15px;
-  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
-  color: #fff;
-  font-weight: bold;
-  padding: 5px;
-  width: 40px;
-  text-align: center;
-}
-
-.add-appointment-button {
-  margin-left: auto;
-  margin-right: 20px;
-  background-color: #07d4c3;
-  color: #fff;
-}
-
-.add-appointment-button:hover {
-  background-color: #05a08b;
 }
 
 .MuiDialog-paperWidthSm {
@@ -63,7 +85,7 @@
 }
 
 .MuiDialogTitle-root {
-  background-color: #07d4c3;
+  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
   color: #fff;
 }
 
@@ -76,47 +98,43 @@
   justify-content: space-between;
 }
 
-.MuiButton-containedPrimary {
-  border-radius: 15px;
-  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
-  color: #fff;
-}
-
-.MuiButton-containedPrimary:hover {
-  background-color: #05a08b;
-}
-
-.MuiButton-containedSecondary {
-  background-color: #e57373;
-  color: #fff;
-}
-
-.MuiButton-containedSecondary:hover {
-  background-color: #d32f2f;
-}
-
 .MuiDialogContent-select {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .MuiDialogContent-timeField,
 .MuiDialogContent-amPmSelect {
-  width: 48%;
-  margin-bottom: 20px;
-}
-
-.MuiButton-containedPrimary.create-button {
-  background-color: #07d4c3;
-  color: #fff;
-}
-
-.MuiButton-containedPrimary.create-button:hover {
-  background-color: #05a08b;
+  width: 50%;
+  margin-bottom: 1px;
 }
 
 .patient-cell {
   cursor: pointer;
-  padding: 5px;
+  padding-right: 330px;
   border-radius: 5px;
+}
+
+.patient-cell.available {
+  background-color: #e0e0e0;
+  color: #424242;
+}
+
+.patient-cell.available:hover {
+  background-color: #bdbdbd;
+}
+
+.gradient-button {
+  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.gradient-button:hover {
+  background-color: #05a08b;
 }

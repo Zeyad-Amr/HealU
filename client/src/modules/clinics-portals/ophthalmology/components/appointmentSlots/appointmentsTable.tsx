@@ -27,10 +27,10 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import "./appointmentsTable.css";
 
 const initialAppointments = [
-  { time: "09:00 AM", patientName: "bassma" },
-  { time: "11:00 AM", patientName: "nada" },
-  { time: "12:00 PM", patientName: "" },
-  { time: "02:00 PM", patientName: "salma" },
+  { time: "09:00 ", patientName: "bassma", amOrPm: "am" },
+  { time: "11:00 ", patientName: "nada", amOrPm: "am" },
+  { time: "12:00 ", patientName: "", amOrPm: "am" },
+  { time: "14:00 ", patientName: "salma", amOrPm: "am" },
 ];
 
 export default function DoctorAppointments() {
@@ -86,7 +86,8 @@ export default function DoctorAppointments() {
     setDateDialogOpen(false);
   };
 
-  const handleSelectDate = (selectedDate: any) => {
+  const handleSelectDate = (dateString: any) => {
+    const selectedDate = new Date(dateString);
     setSelectedDate(selectedDate);
     handleCloseDateDialog();
   };
@@ -98,26 +99,41 @@ export default function DoctorAppointments() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align="left" className="header-cell">
-                <Typography variant="body1" className="header-text">
-                  {selectedDate.toLocaleDateString("en-US", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                  })}
-                </Typography>
-                <IconButton
-                  aria-label="select-date"
-                  color="primary"
-                  onClick={handleOpenDateDialog}
-                  className="date-icon"
-                >
-                  <DateRangeIcon />
-                </IconButton>
+              <TableCell className="header-cell">
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <IconButton
+                    aria-label="select-date"
+                    onClick={handleOpenDateDialog}
+                    className="date-icon"
+                    style={{
+                      background:
+                        "linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%)",
+                      color: "white",
+                      fontSize: "10px",
+                      padding: "5px",
+                      marginRight: "8px",
+                    }}
+                  >
+                    <DateRangeIcon />
+                  </IconButton>
+
+                  <Typography variant="body1" className="header-text">
+                    {selectedDate.toLocaleDateString("en-US", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                    })}
+                  </Typography>
+                </div>
+              </TableCell>
+
+              <TableCell className="header-cell">
+                <div style={{ display: "flex", alignItems: "center" }}></div>
               </TableCell>
               <TableCell align="right" className="header-cell">
                 <Button
+                  className="gradient-button"
                   variant="contained"
                   color="primary"
                   startIcon={<AddIcon />}
@@ -131,18 +147,17 @@ export default function DoctorAppointments() {
           <TableBody>
             {appointments.map((appointment, index) => (
               <TableRow key={index}>
-                <TableCell className="time-cell">{appointment.time}</TableCell>
+                <TableCell className="time-cell">
+                  {appointment.time} {appointment.amOrPm}
+                </TableCell>
                 <TableCell
                   className={`patient-cell ${
                     appointment.patientName ? "occupied" : "available"
                   }`}
-                  onClick={() =>
-                    appointment.patientName && handleClearSlot(index)
-                  }
                 >
                   {appointment.patientName || "Available"}
                 </TableCell>
-                <TableCell>
+                <TableCell align="right" className="header-cell">
                   <IconButton
                     aria-label="clear"
                     color="default"
@@ -173,7 +188,7 @@ export default function DoctorAppointments() {
             onChange={(e) =>
               setNewAppointment({ ...newAppointment, day: e.target.value })
             }
-            className="MuiDialogContent-select"
+            className="MuiDialogContent-select "
           >
             <MenuItem value="sunday">Sunday</MenuItem>
             <MenuItem value="monday">Monday</MenuItem>
@@ -207,13 +222,17 @@ export default function DoctorAppointments() {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialogs} color="secondary">
+          <Button
+            className="gradient-button"
+            onClick={handleCloseDialogs}
+            color="secondary"
+          >
             Cancel
           </Button>
           <Button
+            className="gradient-button"
             onClick={handleSaveAdd}
             color="primary"
-            className="create-button"
           >
             Create
           </Button>
@@ -225,14 +244,23 @@ export default function DoctorAppointments() {
           <TextField
             type="date"
             value={selectedDate.toISOString().split("T")[0]}
-            onChange={(e) => handleSelectDate(new Date(e.target.value))}
+            onChange={handleSelectDate}
+            className="MuiDialogContent-select "
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDateDialog} color="secondary">
+          <Button
+            onClick={handleCloseDateDialog}
+            color="secondary"
+            className="gradient-button"
+          >
             Cancel
           </Button>
-          <Button onClick={() => handleSelectDate(new Date())} color="primary">
+          <Button
+            className="gradient-button"
+            onClick={() => handleSelectDate(new Date())}
+            color="primary"
+          >
             Select
           </Button>
         </DialogActions>
