@@ -10,6 +10,7 @@ import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmolo
 import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages";
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
+import Analytics from "../../modules/admin-portal/pages/analytics";
 import Login from "../../modules/auth/pages";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
@@ -77,6 +78,10 @@ class Router {
             path: AppRoutes.signup,
             element: <Signup/>,
         },
+      {
+      path: AppRoutes.Analytics,
+      element: <Analytics />,
+    },
     ];
 
 
