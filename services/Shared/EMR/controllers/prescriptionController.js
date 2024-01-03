@@ -1,8 +1,29 @@
 const axios = require('axios');
+const Joi = require('joi');
 const connection = require('../DataBase/connection'); // Import the connection module 
 require('dotenv').config();
-//=========================================================================================
-async function createPrescription(req, res) {  // Create new prescription 
+//================================================ Schema ==============================================================
+const PatientPrescriptionSchema = Joi.object({
+  AppointmentID: Joi.string().required(),
+  DoctorName: Joi.string().allow('').required(),
+  Diagnosis: Joi.string().allow('').required(),
+  ExtraNotes: Joi.string().allow('').required(),
+  Drugs: Joi.array().items(
+    Joi.object({
+      DrugName: Joi.string().allow('').required(),
+      DrugDuration: Joi.string().allow('').required(),
+      DrugDose: Joi.string().allow('').required(),
+    })
+  ).default([]),
+})
+//========================================== Create new prescription  ===============================================
+async function createPrescription(req, res) {  
+  const { error } = PatientPrescriptionSchema.validate(req.body);    // Validate the request body
+
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
   const {
     AppointmentID,
     DoctorName,
@@ -34,7 +55,7 @@ async function createPrescription(req, res) {  // Create new prescription
     }
     
     insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes,(insertedPrescriptionID) => {
-      if (Drugs.length > 0){
+      if (Drugs && Drugs.length > 0){
         insertDrugs(insertedPrescriptionID,PatientID, Drugs,() => {});
       }
       console.log( "Prescription with Drugs is created successfully");

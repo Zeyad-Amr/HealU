@@ -10,13 +10,14 @@ import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmolo
 import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages";
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
-import Login from "../../modules/login/pages";
-import Signup from "../../modules/patient-portal/components/signup/SignUp";
+import Login from "../../modules/auth/pages";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 import AboutUs from "../../modules/landing-page/pages/AboutUs";
 import ContactUs from "../../modules/landing-page/pages/ContactUs";
 import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout";
+import Signup from "../../modules/user/pages/signup/SignUp";
+import Test from "../../modules/patient-portal/components/appointments-slots/appointments-bill/Test";
 
 class Router {
     static readonly routes: RouteModel[] = [
@@ -78,10 +79,31 @@ class Router {
         },
     ];
 
+
     static getRoutes(): ReactElement[] {
-        return Router.routes.map((route: RouteModel) => (
-            <Route key={route.path} path={route.path} element={route.element}/>
-        ));
+        return Router.routes.map((route: RouteModel) => {
+            return Router.handelRoutes(route);
+        });
+    }
+
+    private static handelRoutes(route: RouteModel): ReactElement {
+        // check if route has children
+        if (route.children) {
+            return (
+                // return route with children
+                <Route key={route.path} path={route.path} element={route.element}>
+                    {route.children.map((child: RouteModel) => {
+                        // check if child has children
+                        return Router.handelRoutes(child);
+                    })}
+                </Route>
+            );
+        } else {
+            return (
+                // return route without children
+                <Route key={route.path} path={route.path} element={route.element}/>
+            );
+        }
     }
 }
 

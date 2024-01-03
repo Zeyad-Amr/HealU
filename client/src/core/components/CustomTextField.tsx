@@ -4,6 +4,7 @@ import { FormControl, FormHelperText, Typography } from "@mui/material";
 export interface CustomTextFieldProps {
   onChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: any) => void;
   name: string;
   label: string;
   error: string | undefined;
@@ -15,11 +16,13 @@ export interface CustomTextFieldProps {
   width?: number | string;
   props?: TextFieldProps;
   sx?: {};
+  maxLength? : number
 }
 
 const CustomTextField = ({
   onChange,
   onBlur,
+  onFocus,
   name,
   label,
   error,
@@ -31,6 +34,7 @@ const CustomTextField = ({
   props,
   sx,
   width,
+  maxLength
 }: CustomTextFieldProps) => {
   return (
     <Box>
@@ -44,7 +48,7 @@ const CustomTextField = ({
 
         <TextField
           type={props?.type ? props.type : "text"}
-
+          onFocus={onFocus}
           disabled={nonEditable || !enable}
           required={isRequired}
           onChange={onChange}
@@ -66,6 +70,8 @@ const CustomTextField = ({
             maxWidth: "100%",
             ...sx,
           }}
+          inputProps={{ maxLength: maxLength }}
+          {...props}
         />
 
         <FormHelperText

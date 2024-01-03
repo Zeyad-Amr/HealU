@@ -1,5 +1,6 @@
 const Appointment = require("../models/Appointment");
 const Slot = require("../models/Slot");
+const axios = require("axios");
 
 const status = {
     Booked: 0,
@@ -34,15 +35,27 @@ const createAppointment = async (req, res, next) => {
                 });
             }
         } catch (error) {
-            res.status(500).json({
+            res.status(400).json({
                 message: "There is no slot found with this SlotID",
-            }) && next(error);
+            });
         }
 
         // Check for existing appointments for the same date and slot
         if (await Appointment.findOne({ slotId, date })) {
             return res.status(400).json({
                 message: "Appointment already booked for that slot and date",
+            });
+        }
+
+        // Validate patientId using registration service
+        try {
+            const patientValidationResponse = await axios.get(
+                `https://registration-zf9n.onrender.com/patient/${patientId}`
+            );
+        } catch (error) {
+            // Handle API request error
+            return res.status(400).json({
+                message: "Error validating patientId",
             });
         }
 

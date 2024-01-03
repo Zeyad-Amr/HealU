@@ -16,9 +16,8 @@ const Schedule = () => {
                                         </i>
                                     </div>
                                     <div className="single-content">
-                                        <h4>Emergency Cases</h4>
-                                        <p>Lorem ipsum sit amet consectetur adipiscing elit. Vivamus et erat in lacus
-                                            convallis sodales.</p>
+                                        <h4>New Way for Healthcare</h4>
+                                        <p> Embrace a New Era of Accessible, Innovative Solutions according to Your Needs</p>
                                         <a href="#">LEARN MORE<i><FontAwesomeIcon icon={faArrowRightLong} /></i></a>
                                     </div>
                                 </div>
@@ -39,7 +38,7 @@ const Schedule = () => {
                                             <li className="day">Saturday - Thursday <span>8.00-20.00</span></li>
                                             <li className="day">Friday <span>9.00-18.30</span></li>
                                         </ul>
-                                        <a href="#">LEARN MORE<i><FontAwesomeIcon icon={faArrowRightLong} /></i></a>
+                                        <a href="/patient/appointments">LEARN MORE<i><FontAwesomeIcon icon={faArrowRightLong} /></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +55,7 @@ const Schedule = () => {
                                     <div className="single-content">
                                         <h4>Doctors Timetable</h4>
                                         <p>Stay informed about our dedicated doctors' schedules with our comprehensive Doctors Timetable.</p>
-                                        <a href="#">LEARN MORE<i><FontAwesomeIcon icon={faArrowRightLong} /></i></a>
+                                        <a href="/patient/appointments">LEARN MORE<i><FontAwesomeIcon icon={faArrowRightLong} /></i></a>
                                     </div>
                                 </div>
                             </div>

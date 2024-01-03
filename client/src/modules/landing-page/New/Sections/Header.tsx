@@ -14,8 +14,8 @@ const Header = () => {
                                         that cater to your specific needs, ensuring you receive the best care possible
                                         from a team you can rely on.</p>
                                     <div className="button">
-                                        <a href="#" className="btn">Get Appointment</a>
-                                        <a href="#" className="btn primary">Learn More</a>
+                                        <a href="/patient/appointments" className="btn">Get Appointment</a>
+                                        <a href="/patient/appointments" className="btn primary">Learn More</a>
                                     </div>
                                 </div>
                             </div>

@@ -10,8 +10,8 @@ const CallToAction = () => {
                             <h2>Do you need Emergency Medical Care? Call us at 1234 56789</h2>
                             <p>Urgent Assistance at Your Fingertips: Reach Us for Emergency Medical Care</p>
                             <div className="button">
-                                <a href="#" className="btn">Contact Now</a>
-                                <a href="#" className="btn second">Learn More<i>
+                                <a href="/contact-us" className="btn">Contact Now</a>
+                                <a href="/patient/appointments" className="btn second">Learn More<i>
                                     <FontAwesomeIcon icon={faArrowRightLong} />
                                 </i></a>
                             </div>

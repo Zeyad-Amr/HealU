@@ -30,9 +30,9 @@ const Footer = () => {
                                 <div className="row">
                                     <div className="col-lg-6 col-md-6 col-12">
                                         <ul>
-                                            <li><a href="#"><i><FontAwesomeIcon icon={faCaretRight} /></i>Home</a>
+                                            <li><a href="/"><i><FontAwesomeIcon icon={faCaretRight} /></i>Home</a>
                                             </li>
-                                            <li><a href="#"><i><FontAwesomeIcon icon={faCaretRight} /></i>About
+                                            <li><a href="/about-us"><i><FontAwesomeIcon icon={faCaretRight} /></i>About
                                                 Us</a></li>
                                             <li><a href="#"><i><FontAwesomeIcon icon={faCaretRight} /></i>Services</a>
                                             </li>
@@ -46,7 +46,7 @@ const Footer = () => {
                                         <ul>
                                             <li><a href="#"><i><FontAwesomeIcon icon={faCaretRight} /></i>Consuling</a></li>
                                             <li><a href="#"><i><FontAwesomeIcon icon={faCaretRight} /></i>FAQ</a></li>
-                                            <li><a href="#"><i><FontAwesomeIcon icon={faCaretRight} /></i>Contact Us</a></li>
+                                            <li><a href="/contact-us"><i><FontAwesomeIcon icon={faCaretRight} /></i>Contact Us</a></li>
                                         </ul>
                                     </div>
                                 </div>

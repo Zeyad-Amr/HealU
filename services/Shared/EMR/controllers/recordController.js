@@ -1,8 +1,52 @@
 const axios = require('axios');
+const Joi = require('joi');
 const connection = require('../DataBase/connection'); // Import the connection module 
 require('dotenv').config();
-//==================================================================================================================
-async function createRecord(req, res) {   //Create new record
+//================================================ Schema ==============================================================
+const vitalSchema = Joi.object({   // Schema for the nested "Vital" object
+  BloodPressure: Joi.string().allow('').required(),
+  RespirationRate: Joi.string().allow('').required(),
+  HeartRate: Joi.string().allow('').required(),
+  DiabeticTest: Joi.string().allow('').required(),
+  SPO2: Joi.string().allow('').required(),
+});
+const eyeMeasurementsSchema = Joi.object({   // Schema for the nested "EyeMeasurements" object
+  LeftEye: Joi.string().allow('').required(),
+  RightEye: Joi.string().allow('').required(),
+});
+const nutritionDataSchema = Joi.object({   // Schema for the nested "NutritionData" object
+  DietPlan: Joi.string().allow('').required(),
+  Inbody: Joi.string().allow('').required(),
+});
+const medicalTestSchema = Joi.object({   // Schema for each medical test object
+  TestDescription: Joi.string().allow('').required(),
+});
+const PatientRecordSchema = Joi.object({   // Joi schema for the createRecord function
+  AppointmentID: Joi.string().required(),
+  Weight: Joi.number().allow('').required(),
+  Length: Joi.number().allow('').required(),
+  ServicesDescription: Joi.string().allow('').required(),
+  RecommendedActionDescription: Joi.string().allow('').required(),
+  Vital: vitalSchema.default({}),
+  MedicalTests:Joi.array().items(medicalTestSchema).default([]),
+  Vaccines: Joi.array().items(
+    Joi.object({
+      VaccineName: Joi.string().allow('').required(),
+      VaccineDate: Joi.date().allow('').required(),
+      VaccineType: Joi.string().allow('').required(),
+    })
+  ).default([]),
+  EyeMeasurements: eyeMeasurementsSchema.default({}),
+  NutritionData: nutritionDataSchema.default({}),
+})
+//=============================================== Create new record ===================================================================
+async function createRecord(req, res) {   
+  const { error } = PatientRecordSchema.validate(req.body);     // Validate the request body
+
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
   const {
     AppointmentID, Weight, Length,
     ServicesDescription, RecommendedActionDescription, MedicalTests,
@@ -45,10 +89,10 @@ async function createRecord(req, res) {   //Create new record
       if (RecommendedActionDescription !== "") {   //Check if patient had a recommended action in the clinic (Not NULL)
         insertRecommendedAction(insertedRecordID, RecommendedActionDescription, () => {});
       }
-      if (MedicalTests.length > 0) {   //Check if DR told patient to do any test 
+      if (MedicalTests && MedicalTests.length > 0) {   //Check if DR told patient to do any test 
         insertMedicalTests(PatientID, insertedRecordID, MedicalTests, () => {});
       }
-      if (Vaccines.length > 0) {
+      if (Vaccines && Vaccines.length > 0) {
         insertVaccines(insertedRecordID, Vaccines, () => {});
       }
       if (EyeMeasurements != null && Object.keys(EyeMeasurements).length !== 0) {
@@ -57,8 +101,8 @@ async function createRecord(req, res) {   //Create new record
       if (NutritionData != null && Object.keys(NutritionData).length !== 0) {
         insertNutrition(insertedRecordID, NutritionData, () => {});
       }
-      console.log(`New Record is created successfully with ClinicID  ${ClinicID}`);
-      res.status(201).json({ message: `New Record is created successfully with ClinicID ${ClinicID}`});
+      console.log(`New Record (RecordID: ${insertedRecordID}) is created successfully with ClinicID  ${ClinicID}`);
+      res.status(201).json({ message: `New Record (RecordID: ${insertedRecordID}) is created successfully with ClinicID ${ClinicID}`});
 
     });
     // Rest of your existing code
@@ -180,7 +224,7 @@ function processQueryResult(result) {          //Function to process the query r
 
     if (ID != null && !uniqueIDs.has(ID)) {        // Check if ID is not null 
       uniqueIDs.add(ID);
-      recordMap[RecordID].MedicalTests.push({ TestID: row.TestID, TestDescription: row.TestDescription });
+      recordMap[RecordID].MedicalTests.push({ ID : row.ID, TestID: row.TestID, TestDescription: row.TestDescription });
     }
 
     if (VitalID != null && !uniqueVitalIDs.has(VitalID)) {        // Check if VitalID is not null 

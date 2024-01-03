@@ -1,6 +1,5 @@
 class AppRoutes {
     static readonly home: string = "/";
-    static readonly test: string = "/test";
     static readonly aboutUs = "/about-us";
     static readonly contactUs = "/contact-us";
     static readonly clinicDental = "/clinic/dental";
@@ -14,6 +13,8 @@ class AppRoutes {
     static readonly patientPortalProfile = "/patient/profile";
     static readonly patientPortalAppointments = "/patient/appointments";
     static readonly patientPortalPreviousAppointments = "/patient/previous-appointments";
+    static readonly clinicOrthopedic = "/clinic/orthopedic";
 }
+
 
 export default AppRoutes;

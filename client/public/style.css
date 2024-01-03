@@ -1139,8 +1139,8 @@ body{
 	position:relative;
 }
 .portfolio .single-pf img{
-	height:100%;
-	width:100%;
+	height:335px;
+	width:500px;
 }
 .portfolio .single-pf:before{
 	position:absolute;

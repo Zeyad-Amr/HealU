@@ -4,11 +4,11 @@ import axios from 'axios';
 
 
 
-export interface Schedule{
-    PatientName:string ;
+export interface Schedule {
+    PatientName: string;
     date: Date;
 }
-export interface ScheduleState { 
+export interface ScheduleState {
     schedules: Schedule[];
     loading: boolean;
     error: string;
@@ -38,13 +38,13 @@ export const fetchSchedule = createAsyncThunk(
 
 export const AddSchedule = createAsyncThunk(
     'schedule/AddSchedule',
-    async (data :any, thunkApi) => {
+    async (data: any, thunkApi) => {
         const { rejectWithValue } = thunkApi;
         try {
             const response = await axios.post('http://localhost:5000/api/schedule', data);
             const schedules: Schedule[] = response.data;
             return schedules;
-            
+
         } catch (error) {
             return rejectWithValue("Failed to fetch schedule");
         }
@@ -54,7 +54,7 @@ export const AddSchedule = createAsyncThunk(
 
 const scheduleSlice = createSlice({
     name: 'schedules',
-    initialState:ScheduleInitialState,
+    initialState: ScheduleInitialState,
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchSchedule.pending, (state, action) => {
