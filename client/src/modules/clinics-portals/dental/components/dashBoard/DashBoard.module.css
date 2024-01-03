@@ -1,28 +1,38 @@
 /* DashBoard.module.css */
 
 .dashboardContainer {
-  height: 85vh;
+  height: 87vh;
   display: flex;
   flex-direction: column;
+  padding: 15px;
+  padding-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .tableContainer {
   flex: 1;
   position: relative;
+  padding: 15px;
+  border-radius: 24px 24px 0 0!important;
 }
 
 .createSlotButton {
   display: flex;
   justify-content: flex-end;
-  margin: 16px;
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
   border-radius: 15px;
+  padding: 0;
+  /* text */
+  color: white!important;
+  font-size: larger !important;
+  font-weight: 600 !important;
+  font-family: "Roboto";
 }
 .createSlotButtonContainer {
     display: flex;
     justify-content: space-between;
-    margin: 16px;
     align-items: center;
+    padding: 8px;
   }
 
 .textStyle {
@@ -31,14 +41,19 @@
 }
 
 .dateSelection {
-  background: transparent;
-  padding: 0px;
+  /* background: transparent; */
+  padding: 0px! important;
   border-radius: 8px;
-  color: rgba(139, 139, 139, 1);
-  font-size: 1.5rem;
-  margin: 16px;
   border: none;
   cursor: pointer;
+  margin: 0px;
+  /* text */
+  color: rgba(139, 139, 139, 1);
+  font-size: larger;
+  font-family: "Roboto";
+  font-weight: 400;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .menu {
@@ -50,7 +65,9 @@
 }
 
 .tableCell {
-  border: none;
+  border: none!important;
+  margin: 0;
+  padding: 5px !important;
 }
 
 .timeCell {
@@ -58,9 +75,15 @@
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
   padding: 8px;
   border-radius: 8px;
-  color: white;
-  text-align: center;
   margin-right: 15px !important; 
+  width: 30vh;
+  min-width: 60px ;
+  /* text */
+  font-family: "Roboto";
+  text-align: center;
+  color: white;
+  font-size: larger!important;
+  font-weight: 400 !important;
 }
 
 .patientName {
@@ -69,27 +92,26 @@
   padding: 8px;
   border-radius: 8px;
   cursor: pointer;
+  /* text */
+  font-family: "Roboto";
+  color: black;
+  font-size: larger!important;
+  font-weight: 400 !important;
 }
 
 .deleteIcon {
   background-color: rgba(184, 2, 2, 1) !important;
   border-radius: 15px !important;
-  color: white !important;
   width: 50px;
-  font-family: "Roboto";
-  font-weight: 400;
+  /* icon */
+  color: white !important;
 }
 
 .cancelButton {
   background-color: rgba(85, 85, 85, 1) !important;
   border-radius: 15px !important;
-  color: white !important;
   width: 50px;
-  font-family: "Roboto";
-  font-weight: 400;
   margin-left: 8px;
+  color: white !important;
 }
 
-.deleteIcon {
-  background-color: rgba(184, 2, 2, 1);
-}
