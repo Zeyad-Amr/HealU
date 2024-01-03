@@ -9,6 +9,7 @@ import appointment from "../../modules/clinics-portals/pediatric/slices/appointm
 import slots from "../../modules/clinics-portals/pediatric/slices/slots-slice";
 import auth from "../../modules/auth/slices/auth-slice";
 import examination from "../../modules/clinics-portals/pediatric/slices/examination-slice";
+import user from "../../modules/user/slices/user-slice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     appointment,
     slots,
     examination,
+    user,
   },
 });
 

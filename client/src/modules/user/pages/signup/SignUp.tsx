@@ -13,56 +13,65 @@ import { useRef } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import CustomTextField from "../../../../core/components/CustomTextField";
-import PatientDataHeader from "../patient-profile/PatientDataHeader";
+import PatientDataHeader from "../../../patient-portal/components/patient-profile/PatientDataHeader";
 import PrimaaryBtn from "../../../../core/components/PrimaaryBtn";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateField } from "@mui/x-date-pickers/DateField";
 import CustomHeader from "../../../../core/components/CustomHeader";
-import HeaderComponent from "../header";
+import HeaderComponent from "../../../patient-portal/components/header";
+import { useNavigate } from "react-router-dom";
+import UserModel from "../../models/user-model";
+import { register } from "../../slices/user-slice";
+import { useAppDispatch } from "../../../../core/store";
+import { login } from "../../../auth/slices/auth-slice";
+import AppRoutes from "../../../../core/routes/AppRoutes";
+
 const Signup = () => {
-  const initialValues = {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const initialValues: UserModel = {
     userName: "",
     password: "",
     firstName: "",
-    secondName: "",
+    lastName: "",
     gender: "",
-    DOB: "",
-    SSN: "",
+    dateOfBirth: "",
+    ssn: "",
     email: "",
-    phone: "",
-    insurancePersentage: "",
+    phoneNumber: "",
+    insurancePersentage: 0.0,
     emergencyContactName: "",
     emergencyContactNumber: "",
+    clinicId: 0,
   };
+
   const submitForm = useRef<any>();
   const handleFormSchema = Yup.object({
     userName: Yup.string().required("Username Should be entered"),
     password: Yup.string().required("Password Should be entered"),
     firstName: Yup.string().required("First Name Should be entered"),
-    secondName: Yup.string().required("Second Name Should be entered"),
+    lastName: Yup.string().required("Second Name Should be entered"),
     gender: Yup.string().required("Gender Should be entered"),
-    DOB: Yup.string().required("Date Of Birth Should be entered"),
-    SSN: Yup.string()
-      .required("SSN Should be entered")
+    dateOfBirth: Yup.string().required("Date Of Birth Should be entered"),
+    ssn: Yup.string()
+      .required("ssn Should be entered")
       .matches(/^[0-9]+$/, "Must be only digits")
-      .max(14, "phone number should be 14 number")
-      .min(14, "phone number should be 14 number"),
+      .max(14, "SSN should be 14 number")
+      .min(14, "SSN should be 14 number"),
     email: Yup.string().required("Email Should be entered"),
-    phone: Yup.string()
+    phoneNumber: Yup.string()
       .required("Phone Should be entered")
       .matches(/^[0-9]+$/, "Must be only digits")
-      .max(11, "phone number should be 11 number")
-      .min(11, "phone number should be 11 number"),
+      .max(11, "phoneNumber number should be 11 number")
+      .min(11, "phoneNumber number should be 11 number"),
     emergencyContactName: Yup.string().required(
       "Emergency Contact Name Should be entered"
     ),
     emergencyContactNumber: Yup.string()
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Emergency Contact Number Should be entered")
-      .max(11, "phone number should be 11 number")
-      .min(11, "phone number should be 11 number"),
+      .max(11, "phoneNumber number should be 11 number")
+      .min(11, "phoneNumber number should be 11 number"),
+    insurancePersentage: Yup.number(),
   });
 
   const handleSubmit = () => {
@@ -110,7 +119,7 @@ const Signup = () => {
         sx={{
           height: "87vh",
           width: "95vw",
-          margin:"0 auto",
+          margin: "0 auto",
 
           backgroundColor: "white",
           borderRadius: "15px",
@@ -134,6 +143,7 @@ const Signup = () => {
               cursor: "pointer",
               color: "secondary.main",
             }}
+            onClick={() => navigate("/login")}
           >
             Already has an account?
           </Typography>
@@ -143,6 +153,35 @@ const Signup = () => {
           validationSchema={handleFormSchema}
           onSubmit={(values) => {
             console.log(values);
+            dispatch(register(values)).then((res) => {
+              console.log("res", res);
+              if (res.payload.data) {
+                dispatch(
+                  login({
+                    username: values.userName,
+                    password: values.password,
+                  })
+                )
+                  .then(
+                    (ress: any) => {
+                      console.log("ress", ress);
+                      if (ress.payload.user) {
+                        navigate(AppRoutes.home);
+                      } else {
+                        alert(ress.payload.response.data.error);
+                      }
+                    },
+                    (err: any) => {
+                      alert(err.message);
+                    }
+                  )
+                  .catch((err) => {
+                    alert(err.message);
+                  });
+              } else {
+                alert(res.payload.response.data.error);
+              }
+            });
           }}
         >
           {({
@@ -177,13 +216,13 @@ const Signup = () => {
                   <CustomTextField
                     enable={true}
                     isRequired
-                    name="secondName"
+                    name="lastName"
                     label="second Name"
-                    value={values.secondName}
+                    value={values.lastName}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={errors.secondName}
-                    touched={touched.secondName}
+                    error={errors.lastName}
+                    touched={touched.lastName}
                     width="100%"
                     props={{
                       type: "text",
@@ -194,13 +233,13 @@ const Signup = () => {
                   <CustomTextField
                     enable={true}
                     isRequired
-                    name="DOB"
+                    name="dateOfBirth"
                     label="Date of Birth"
-                    value={values.DOB}
+                    value={values.dateOfBirth}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={errors.DOB}
-                    touched={touched.DOB}
+                    error={errors.dateOfBirth}
+                    touched={touched.dateOfBirth}
                     width="100%"
                     props={{
                       type: "date",
@@ -263,13 +302,13 @@ const Signup = () => {
                   <CustomTextField
                     enable={true}
                     isRequired
-                    name="phone"
-                    label="phone Number"
-                    value={values.phone}
+                    name="phoneNumber"
+                    label="phoneNumber Number"
+                    value={values.phoneNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={errors.phone}
-                    touched={touched.phone}
+                    error={errors.phoneNumber}
+                    touched={touched.phoneNumber}
                     width="100%"
                     props={{
                       type: "text",
@@ -280,13 +319,13 @@ const Signup = () => {
                   <CustomTextField
                     enable={true}
                     isRequired
-                    name="SSN"
+                    name="ssn"
                     label="National Number"
-                    value={values.SSN}
+                    value={values.ssn}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={errors.SSN}
-                    touched={touched.SSN}
+                    error={errors.ssn}
+                    touched={touched.ssn}
                     width="100%"
                     props={{
                       type: "text",
@@ -298,7 +337,7 @@ const Signup = () => {
                     enable={true}
                     isRequired
                     name="insurancePersentage"
-                    label="insurance Number"
+                    label="Insurance Persentage"
                     value={values.insurancePersentage}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -306,7 +345,7 @@ const Signup = () => {
                     touched={touched.insurancePersentage}
                     width="100%"
                     props={{
-                      type: "text",
+                      type: "number",
                     }}
                   />
                 </Grid>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
-import { errorHandler } from '../services';
+import { errorHandler, validate, } from '../services';
 
 interface CustomRequest extends Request {
     user: {
@@ -14,8 +14,23 @@ export const get_doctor_slots = async (req: Request, res: Response) => {
         const { date } = req.params
         const doctorId = (req as CustomRequest).user.sub
 
-        const slots = (await axios.get(`${process.env.Appointment_URL}/slots/doctor/${doctorId}/date/${date}`)).data
+        let slots = (await axios.get(`${process.env.Appointment_URL}/slots/doctor/${doctorId}/date/${date}`)).data
 
+        for await (const slot of slots) {
+            if (Object.keys(slot.appointmentObject).length !== 0) {
+                const patient = await axios.get(`${process.env.Registration_URL}/patient/${parseInt(slot.appointmentObject.patientId)}`)
+                    .then((res) => {
+                        if (!res.data.data.userId) throw { statusCode: 503, msg: res.data.data }
+                        return res.data.data
+                    }).catch((err) => {
+                        console.log(err);
+
+                        throw err
+                    })
+                slot.appointmentObject.patient = patient
+            }
+
+        }
 
         return res.status(200).json({
             slots
@@ -32,6 +47,7 @@ export const get_appointment_data = async (req: Request, res: Response) => {
         const { appointmentId } = req.params
 
         const appointment = (await axios.get(`${process.env.Appointment_URL}/appointments/${appointmentId}`)).data
+        console.log(appointment);
 
         let errors: any[] = []
         const [doctorRes, patientRes, recordRes, medicalHistoryRes] = await Promise.allSettled([
@@ -80,21 +96,58 @@ export const get_appointment_data = async (req: Request, res: Response) => {
     }
 }
 
+export const get_upcoming_appointments = async (req: Request, res: Response) => {
+    try {
+        const patientId = (req as CustomRequest).user.sub
+
+        const appointmentsRes = await axios.get(`${process.env.Appointment_URL}/appointments/patient/${patientId}`)
+
+        let appointments: any[] = appointmentsRes.data
+        // get the completed appointments only 
+        appointments = appointments.filter((item) => {
+            return item.status === 0
+        })
+        if (appointments.length === 0) {
+            return res.status(200).json({ appointments })
+        }
+
+        for await (const appointment of appointments) {
+            const doctor = (await axios.get(`${process.env.Registration_URL}/staff/${appointment.doctorId}`)).data.data
+            const clinic = (await axios.get(`${process.env.Admin_URL}/api/v1/clinic/${appointment.clinicId}`)).data.data.clinic
+
+            appointment.doctor = doctor
+            appointment.clinic = clinic
+
+        }
+
+        return res.status(200).json({
+            appointments,
+        })
+
+    } catch (error: any) {
+        const err = errorHandler(error)
+
+        res.status(err?.statusCode ?? 500).json(err)
+    }
+}
+
 export const get_previous_appointments = async (req: Request, res: Response) => {
     try {
-        const { patientId } = req.params
+        const patientId = (req as CustomRequest).user.sub
 
         const [appointmentsRes, prescriptionsRes] = await Promise.all([
             axios.get(`${process.env.Appointment_URL}/appointments/patient/${patientId}`),
             axios.get(`${process.env.EMR_URL}/prescription/patient/${patientId}`),
         ])
 
-
         let appointments: any[] = appointmentsRes.data
         // get the completed appointments only 
         appointments = appointments.filter((item) => {
             return item.status === 2
         })
+        if (appointments.length === 0) {
+            return res.status(200).json({ appointments })
+        }
 
         const appointmentIds = appointments.map((item) => item._id)
         function filterByAppointmentId(item: any) {
@@ -109,6 +162,10 @@ export const get_previous_appointments = async (req: Request, res: Response) => 
         clinics = clinics.filter((clinic: any) => {
             return clinicIds.includes(clinic.id)
         })
+
+        if (clinics.length === 0) {
+            throw { statusCode: 500, msg: "Internal Server Error" }
+        }
 
         const doctorIds = appointments.map((appointment: any) => (appointment.doctorId))
         let doctors: any[] = [];
@@ -272,7 +329,6 @@ export const get_all_slots = async (req: Request, res: Response) => {
 
 export const post_examination = async (req: Request, res: Response) => {
     try {
-
         const data = req.body
 
         const prescriptions = data.prescription
@@ -316,6 +372,10 @@ export const post_examination = async (req: Request, res: Response) => {
             prescriptionResponse
         });
 
+        await axios.put(`${process.env.Appointment_URL}/appointments/${data.appointmentId}`, {
+            status: 2
+        })
+
         return res.status(200).json({
             status: 'success',
             msg: 'examination added successfully'
@@ -328,57 +388,65 @@ export const post_examination = async (req: Request, res: Response) => {
     }
 }
 
-/*
-appt
-cardData
-
-create appt
-create invoice
-amount-> bill
-create bill
-    success: Done
-    Fail: delete appt
-        delete invoice
-*/
-
-/*
-{
-    appointment:{
-        slotId: number,
-        date:"YYYY-MM-dd",
-        patientId: number
-    },
-    bill:{
-        "invoiceId": 5, //int
-        "paymentMethod": "card", //could be card, paypal, or offline
-        "paymentSource":  //payment method details
-        {
-            "card": {
-                "number": "4111111111111111",
-                "expiry": "2027-02",
-                "name": "John Doe",
-                "cvv": 111
-            }
-        }
-    }
-}
-*/
-
 export const book_appt = async (req: Request, res: Response) => {
     try {
-        const { appointment, bill } = req.body
+        const { appointment, card } = validate.validate(req.body, validate.bookApptSchema)
+
 
         // create appointment 
-        const appt = await axios.post(`${process.env.Appointment_URL}`)
-        // const invoice/
+        const appt = (await axios.post(`${process.env.Appointment_URL}/appointments`, appointment)).data.appointment
 
+        const clinic = await axios.get(`${process.env.Admin_URL}/api/v1/clinic/${appt.clinicId}`)
+            .then((res) => {
+                return res.data.data.clinic
+            }).catch(async (err) => {
+                await axios.delete(`${process.env.Appointment_URL}/appointments/${appt._id}`)
+                throw err
+            })
+
+        const invoiceData = {
+            servicesIds: [clinic.defaultServiceId],
+            appointmentId: appt._id
+        }
+        console.log(clinic);
+        console.log(invoiceData);
+
+
+        const invoice = await axios.post(`${process.env.Bill_URL}/invoice`, invoiceData).then((res) => {
+            return res.data
+        }).catch(async (err) => {
+            await axios.delete(`${process.env.Appointment_URL}/appointments/${appt._id}`)
+            console.log(err);
+
+            throw err
+        })
+
+        const bill = await axios.post(`${process.env.Bill_URL}/bill`, {
+            invoiceId: invoice.id,
+            paymentMethod: "card",
+            paymentSource:
+            {
+                card
+            }
+        })
+            .then((res) => {
+                if (res.status == 201) {
+                    return res.data;
+                }
+            })
+            .catch(async (err) => {
+                await axios.delete(`${process.env.Appointment_URL}/appointments/${appt._id}`)
+                await axios.delete(`${process.env.Bill_URL}/invoice/${appt._id}`)
+                throw err
+            })
 
 
         return res.status(200).json({
-
+            message: "appointment created successfully"
         })
 
     } catch (error: any) {
+
         const err = errorHandler(error)
 
         res.status(err?.statusCode ?? 500).json(err)
@@ -389,7 +457,7 @@ export const book_appt = async (req: Request, res: Response) => {
 
 /*
     POST book appointment
-    POST add examination
+    POST add examination ✅
 
     GET previous appts
     GET upcoming appts
