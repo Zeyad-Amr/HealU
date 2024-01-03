@@ -108,12 +108,24 @@ const OphthalmologyForm = () => {
             borderRadius: '8px',
             marginBottom: '16px',
           }}  elevation={3} >
-          <Typography variant="h6">Patient Information</Typography>
-          <Typography><strong>Patient ID:</strong> {patientData.patientId}</Typography>
-          <Typography><strong>Name:</strong> {patientData.name}</Typography>
-          <Typography><strong>Age:</strong> {patientData.age}</Typography>
-          <Typography><strong>Weight:</strong> {patientData.weight}</Typography>
-          <Typography><strong>Height:</strong> {patientData.height}</Typography>
+          <Typography variant="h6" style={{ fontFamily: 'Roboto', fontSize: '32px', fontWeight: 600, lineHeight: '38px', letterSpacing: '0em', textAlign: 'left' }}>
+          Patient Information
+        </Typography>
+        <Typography style={{ fontFamily: 'Roboto', fontSize: '32px', fontWeight: 600, lineHeight: '38px', letterSpacing: '0em', textAlign: 'left' }}>
+          <strong>Patient ID:</strong> {patientData.patientId}
+        </Typography>
+        <Typography style={{ fontFamily: 'Roboto', fontSize: '32px', fontWeight: 600, lineHeight: '38px', letterSpacing: '0em', textAlign: 'left' }}>
+          <strong>Name:</strong> {patientData.name}
+        </Typography>
+        <Typography style={{ fontFamily: 'Roboto', fontSize: '32px', fontWeight: 600, lineHeight: '38px', letterSpacing: '0em', textAlign: 'left' }}>
+          <strong>Age:</strong> {patientData.age}
+        </Typography>
+        <Typography style={{ fontFamily: 'Roboto', fontSize: '32px', fontWeight: 600, lineHeight: '38px', letterSpacing: '0em', textAlign: 'left' }}>
+          <strong>Weight:</strong> {patientData.weight}
+        </Typography>
+        <Typography style={{ fontFamily: 'Roboto', fontSize: '32px', fontWeight: 600, lineHeight: '38px', letterSpacing: '0em', textAlign: 'left' }}>
+          <strong>Height:</strong> {patientData.height}
+        </Typography>
         </Paper>
       </Grid>
 
@@ -126,30 +138,61 @@ const OphthalmologyForm = () => {
             borderRadius: '8px',
             marginBottom: '16px',
           }} elevation={3}>
-          <Typography variant="h6">Medical History</Typography>
-          <Grid container spacing={2}>
+          <Typography variant="h6" style={{ fontFamily: 'Roboto', fontSize: '32px', fontWeight: 600, lineHeight: '38px', letterSpacing: '0em', textAlign: 'left' }}>
+            Medical History
+          </Typography>    
+                <Grid container spacing={2}>
             {/* Column 1: Illnesses */}
             <Grid item xs={3}>
               {medicalHistory.illnesses.map((illness, index) => (
-                <Typography key={index}>{illness}</Typography>
+                <Typography key={index} style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '25px',
+                  fontWeight: 600,
+                  lineHeight: '29px',
+                  letterSpacing: '0em',
+                  textAlign: 'left',
+                }} >{illness}</Typography>
               ))}
             </Grid>
             {/* Column 2: Drugs */}
             <Grid item xs={3}>
               {medicalHistory.drugs.map((drug, index) => (
-                <Typography key={index}>{drug}</Typography>
+                <Typography key={index}
+                style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '25px',
+                  fontWeight: 600,
+                  lineHeight: '29px',
+                  letterSpacing: '0em',
+                  textAlign: 'left',
+                }}>{drug}</Typography>
               ))}
             </Grid>
             {/* Column 3: Medical Tests */}
             <Grid item xs={3}>
               {medicalHistory.medicalTests.map((test, index) => (
-                <Typography key={index}>{test}</Typography>
+                <Typography key={index} style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '25px',
+                  fontWeight: 600,
+                  lineHeight: '29px',
+                  letterSpacing: '0em',
+                  textAlign: 'left',
+                }}>{test}</Typography>
               ))}
             </Grid>
             {/* Column 4: Operations */}
             <Grid item xs={3}>
               {medicalHistory.operations.map((operation, index) => (
-                <Typography key={index}>{operation}</Typography>
+                <Typography key={index} style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '25px',
+                  fontWeight: 600,
+                  lineHeight: '29px',
+                  letterSpacing: '0em',
+                  textAlign: 'left',
+                }}>{operation}</Typography>
               ))}
             </Grid>
           </Grid>
