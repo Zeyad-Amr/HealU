@@ -1,7 +1,7 @@
 // import { useState } from "react";
 import ButtonComponent from "../../components/button/button";
 import classes from "../../components/button/button.module.css";
-import ClassNames from "./doctorSlot.module.css"
+import ClassNames from "./doctorSlot.module.css";
 import React, { useEffect } from "react";
 import AddSlotForm from "../../components/form/addSlotForm";
 import SchedulesTable from "../../components/table/schedulesTable";
