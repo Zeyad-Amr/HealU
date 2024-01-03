@@ -29,8 +29,24 @@ export const store = configureStore({
     user,
     analytics,
     rootReducer,
+
+    // Dental Clinic And Appointments
+    slotReducer,
+    appointmentReducer,
+    snackbarReducer,
+    prescriptionReducer,
+    examinationReducer,
+    patientReducer,
+    doctorSlotsReducer,
+
+    prescreption,
+    record,
+    appointment,
+    slots,
+    examination,
   },
 });
 
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
