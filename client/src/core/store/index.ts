@@ -12,7 +12,13 @@ import prescriptionReducer from "../../modules/clinics-portals/dental/state/slic
 import examinationReducer from "../../modules/clinics-portals/dental/state/slices/examinationSlice";
 import patientReducer from "../../modules/clinics-portals/dental/state/slices/patientSlice";
 import analytics from "../../modules/admin-portal/slices/analytics-slice";
+import prescreption from "../../modules/clinics-portals/pediatric/slices/prescreption-slice";
+import record from "../../modules/clinics-portals/pediatric/slices/record-slice";
+import appointment from "../../modules/clinics-portals/pediatric/slices/appointment-slice";
+import slots from "../../modules/clinics-portals/pediatric/slices/slots-slice";
+import examination from "../../modules/clinics-portals/pediatric/slices/examination-slice";
 import user from "../../modules/user/slices/user-slice";
+
 export const store = configureStore({
   reducer: {
     auth,
@@ -30,7 +36,15 @@ export const store = configureStore({
     examinationReducer,
     patientReducer,
     doctorSlotsReducer,
+
+    prescreption,
+    record,
+    appointment,
+    slots,
+    examination,
+
   },
+
 });
 
 export type RootState = ReturnType<typeof store.getState>;

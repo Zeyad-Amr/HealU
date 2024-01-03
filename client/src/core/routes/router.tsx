@@ -18,9 +18,11 @@ import AboutUs from "../../modules/landing-page/pages/AboutUs";
 import ContactUs from "../../modules/landing-page/pages/ContactUs";
 import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout";
 import Signup from "../../modules/user/pages/signup/SignUp";
+import UpcomingAppointments from "../../modules/patient-portal/pages/appointments/upcoming";
 import AppLayout from "../components/AppLayout";
 import DentalExaminationPage from "../../modules/clinics-portals/dental/pages/DentalExaminationPage";
 import DentalClinicPortal from "../../modules/clinics-portals/dental/pages/DentalClinicPortal";
+
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -85,6 +87,10 @@ class Router {
     {
       path: AppRoutes.patientPortalPreviousAppointments,
       element: <PreviousAppointments />,
+    },
+    {
+      path: AppRoutes.patientPortalUpcomingAppointments,
+      element: <UpcomingAppointments />,
     },
     {
       path: AppRoutes.adminPortal,

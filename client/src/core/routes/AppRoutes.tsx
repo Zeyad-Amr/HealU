@@ -18,6 +18,8 @@ class AppRoutes {
   static readonly aboutUs = "/about-us";
   static readonly contactUs = "/contact-us";
   static readonly Analytics = "/analytics";
+  static readonly patientPortalUpcomingAppointments =
+    "/patient/upcoming-appointments";
 }
 
 export default AppRoutes;
