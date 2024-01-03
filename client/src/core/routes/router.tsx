@@ -9,7 +9,7 @@ import NutritionClinicPortal from "../../modules/clinics-portals/nutrition/pages
 import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmology/pages";
 import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages";
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
-import AdminPortal from "../../modules/admin-portal";
+import AdminPortal from "../../modules/admin-portal/pages/doctors";
 import Login from "../../modules/auth/pages";
 import Signup from "../../modules/patient-portal/components/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
@@ -75,6 +75,7 @@ class Router {
       path: AppRoutes.orthoExamination,
       element: <Patient />,
     },
+    
   ];
 
   static getRoutes(): ReactElement[] {

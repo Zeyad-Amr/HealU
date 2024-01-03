@@ -7,9 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 // import { doctorSliceActions } from "../slices/doctor-slice";
 import AddForm from "../components/form/form";
 import { RootState } from "../../clinics-portals/orthopedic/slices/combineReducers";
-// import { FormState, formActions } from "../slices/form-slice";
-import { useEffect } from "react";
-import { useState } from "react";
 import { formActions } from "../slices/form-slice";
 
 // <div
@@ -42,9 +39,9 @@ import { formActions } from "../slices/form-slice";
 const AddDoctor = () => {
   const dispatch = useDispatch();
   const isFormVisible = useSelector(
-    (state: RootState) => state.form.isFormVisible
+    (state: any) => state.rootReducer.form.isFormVisible
   );
-  const isEditForm = useSelector((state: RootState) => state.form.isEdit);
+  const isEditForm = useSelector((state: any) => state.rootReducer.form.isEdit);
 
   const handleButtonClick = () => {
     dispatch(formActions.setFormVisibility(!isFormVisible));

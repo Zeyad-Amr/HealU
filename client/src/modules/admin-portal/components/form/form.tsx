@@ -11,11 +11,6 @@ import { MouseEvent, FormEvent } from "react";
 import { formActions } from "../../slices/form-slice";
 import ButtonComponent from "../../../clinics-portals/orthopedic/components/button/button";
 import CloseIcon from "@mui/icons-material/Close";
-import { stat } from "fs";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import Input from "react-select/dist/declarations/src/components/Input";
-
 
 // import { handleEdit } from "../table/table";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -61,10 +56,10 @@ interface FormProps {
 export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   const dispatch = useDispatch();
   const classesUI = formStyles();
-  const isVisible = useSelector((state: RootState) => state.form.isFormVisible);
-  const isEditForm = useSelector((state: RootState) => state.form.isEdit);
+  const isVisible = useSelector((state: any) => state.rootReducer.form.isFormVisible);
+  const isEditForm = useSelector((state: any) => state.rootReducer.form.isEdit);
   const editedDoctor = useSelector(
-    (state: RootState) => state.form.editedDoctor
+    (state: any) => state.rootReducer.form.editedDoctor
   );
   const [password, setPassword] = useState("");
   const [visible, setvisible] = useState(true);
@@ -78,7 +73,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     password: "",
     email: "",
     phoneNumber: "",
-    specialization: "",  
+    specialization: "",
   });
 
   useEffect(() => {
@@ -125,7 +120,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   });
 
   const isFormVisible = useSelector(
-    (state: RootState) => state.form.isFormVisible
+    (state: any) => state.rootReducer.form.isFormVisible
   );
 
   const selectedClinic = clinics.find(
@@ -510,7 +505,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
                     }}
                   />
                   <div onClick={() => setvisible(!visible)}>
-                    {visible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                    {/* {visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} */}
                   </div>
                 </div>
                 {localErrors.errorPassword && (

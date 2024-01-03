@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dispatch } from "redux";
+import { AnyAction, Dispatch } from "redux";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -39,19 +39,23 @@ export const useStyles = makeStyles({
 
 const TableComponent = () => {
   const classesX = useStyles();
-  const doctors = useSelector((state: RootState) => state.doctors.doctors);
+  const doctors = useSelector(
+    (state: any) => state.rootReducer.doctors.doctors
+  );
   const isFormVisible = useSelector(
-    (state: RootState) => state.form.isFormVisible
+    (state: any) => state.rootReducer.form.isFormVisible
   );
 
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log('Dispatching getDoctors');
-    dispatch(getDoctors() as any);
-  }, [dispatch,doctors]);
+    if (!doctors.length) {
+      console.log("Dispatching getDoctors");
+      dispatch(getDoctors() as any);
+    }
+  }, [dispatch, doctors]);
 
   const handleDelete = async (doctorId: number | undefined) => {
-    if(doctorId){
+    if (doctorId) {
       await dispatch(deleteDoctor(doctorId) as any);
     }
   };
@@ -89,7 +93,7 @@ const TableComponent = () => {
     await dispatch(getDoctorById(doctorId) as any);
     dispatch(formActions.setFormVisibility(!isFormVisible));
     dispatch(formActions.setIsEdit(true));
-    const selectedDoctor = doctors.find((row) => row.userId === doctorId);
+    const selectedDoctor = doctors.find((row: any) => row.userId === doctorId);
     if (selectedDoctor) {
       dispatch(formActions.setEditedDoctor(selectedDoctor));
     }

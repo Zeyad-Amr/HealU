@@ -20,6 +20,7 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     setFormVisibility(state, action: PayloadAction<boolean>) {
+      console.log(state.isFormVisible);
       state.isFormVisible = action.payload;
     },
     setIsEdit(state, action: PayloadAction<boolean>) {
