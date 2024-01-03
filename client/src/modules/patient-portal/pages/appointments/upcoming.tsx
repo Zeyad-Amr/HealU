@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import HeaderComponent from "../../components/header";
 import PageBody from "../../../../core/components/PageBody";
-import PreviousAppointmentsComponent from "../../components/appointments/PreviousAppointments";
+import UpcomingAppointmentsComponent from "../../components/appointments/UpcomingAppointments";
 
-const PerviousAppointments = () => {
+const UpcomingAppointments = () => {
   return (
     <Box
       sx={{
@@ -16,10 +16,10 @@ const PerviousAppointments = () => {
     >
       <HeaderComponent />
       <PageBody>
-        <PreviousAppointmentsComponent />
+        <UpcomingAppointmentsComponent />
       </PageBody>
     </Box>
   );
 };
 
-export default PerviousAppointments;
+export default UpcomingAppointments;

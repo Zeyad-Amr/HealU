@@ -70,8 +70,8 @@ const AppointmentsBill = ({
 
   }
   const handleFormSchema = Yup.object({
-    name: Yup.string().required("Name is required")
-    .matches(/^[A-Za-z]+$/, "Name must be string"),
+    name: Yup.string().required("Name is required"),
+    // .matches(/^[A-Za-z]+$/, "Name must be string"),
     number: Yup.string()
       .required("Number is required")
       .matches(/^\+?[0-9\(\)]+$/, "Invalid Card Number")

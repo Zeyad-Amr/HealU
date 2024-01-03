@@ -16,6 +16,8 @@ class AppRoutes {
     "/patient/previous-appointments";
   static readonly clinicOrthopedic = "/clinic/orthopedic";
   static readonly Analytics = "/analytics";
+  static readonly patientPortalUpcomingAppointments =
+    "/patient/upcoming-appointments";
 }
 
 export default AppRoutes;
