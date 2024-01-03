@@ -7,6 +7,7 @@ import {
     Button,
     MenuItem,
     Menu,
+    Box,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CreateSlotModal from "./popUP/CreateSlotModal";
@@ -103,7 +104,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   };
 
   return (
-    <div className={styles.dashboardContainer}>
+    <Box className={styles.dashboardContainer}>
       <TableContainer component={Paper} className={styles.tableContainer}>
         <div className={styles.createSlotButtonContainer}>
           <Stack
@@ -162,7 +163,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
         onClose={handleCreateSlotModalClose}
         selectedDate={selectedDate}
       />
-    </div>
+    </Box>
   );
 };
 
