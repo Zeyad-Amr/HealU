@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@mui/icons-material": "^5.15.0",
     "@mui/material": "^5.15.0",
     "@reduxjs/toolkit": "^2.0.1",

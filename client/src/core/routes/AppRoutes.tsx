@@ -13,6 +13,7 @@ class AppRoutes {
   static readonly patientPortalAppointments = "/patient/appointments";
   static readonly patientPortalPreviousAppointments =
     "/patient/previous-appointments";
+  static readonly orthoExamination = this.clinicOrthopedic + "/examination/:id";
 }
 
 export default AppRoutes;

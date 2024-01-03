@@ -29,7 +29,6 @@ const DateComponent = () => {
     if (date) {
       const formattedDate = dayjs(date).format("YYYY-MM-DD");
       const dayName = dayjs(date).format("dddd").toString();
-  
       setSelectedDay(dayName);
       dispatch(getSlots(formattedDate) as any);
       dispatch(addSlotActions.setSelectedDate(formattedDate));

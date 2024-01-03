@@ -10,17 +10,29 @@ import { addSlotActions, getSlots } from "../../slices/addSlotsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 import { $CombinedState } from "redux";
+import { useEffect } from "react";
 
 const DoctorsSlot = () => {
   // const slots = useSelector((state: RootState) => state[$CombinedState].slots);
-  const { slots, isVisible } = useSelector((state: any) => ({
-    slots: state.rootReducer.slots,
-    isVisible: state.rootReducer.isFormVisible,
+  const { slots, isVisible, date } = useSelector((state: any) => ({
+    slots: state.rootReducer.slots.slots,
+    date: state.rootReducer.slots.selectedDate,
+    isVisible: state.rootReducer.slots.isVisible,
   }));
   const dispatch = useDispatch();
   const handleButtonClick = () => {
     dispatch(addSlotActions.setFormVisibility(true));
   };
+  useEffect(() => {
+    // Perform 'getSlots' after 'deleteSlot' (if needed)
+    const fetchData = async () => {
+      if (date) {
+        await dispatch(getSlots(date) as any);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
   return (
     <div className={ClassNames.mainContainer}>
       <div className={ClassNames.container}>
@@ -50,8 +62,8 @@ const DoctorsSlot = () => {
         isIncluded={false}
         onAddSlot={true}
       />
-      </div>
-      //  </div>
+    </div>
+    //  </div>
   );
 };
 export default DoctorsSlot;

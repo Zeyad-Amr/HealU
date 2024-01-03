@@ -15,7 +15,6 @@ import { addSlot } from "../../slices/addSlotsSlice";
 import { makeStyles } from "@mui/styles";
 import CloseIcon from "@mui/icons-material/Close";
 
-
 const orthoId = 2;
 const doctorId = 13;
 
@@ -97,11 +96,12 @@ const AddSlotForm = ({
   const [time, setTime] = useState<string | null>(null);
   const [period, setPeriod] = useState<string | null>(null);
   const slots = useSelector((state: any) => state.rootReducer.slots.slots);
+  const userId = localStorage.getItem("auth-token");
   const selectedDate = useSelector(
     (state: any) => state.rootReducer.slots.selectedDate
   );
   const isVisible = useSelector(
-    (state: any) => state.rootReducer.slots.slots.isVisible
+    (state: any) => state.rootReducer.slots.isVisible
   );
   const add = (weekDay: string) => {
     let generatedId = slots.length + 1;
@@ -216,11 +216,16 @@ const AddSlotForm = ({
       <div className={styles.closeIcon}>
         <CloseIcon
           onClick={() => dispatch(addSlotActions.setFormVisibility(false))}
-          style={{ width: "30px", height: "30px", position:"relative", left: "-80px" }}
+          style={{
+            width: "30px",
+            height: "30px",
+            position: "relative",
+            left: "-80px",
+          }}
         />
       </div>
       <h2 className={styles.textElement}>{formTitle}</h2>
-      <Box> 
+      <Box>
         <div className={styles[div1Style as string]}>
           <label className={styles.labelElement}>{label1}</label>
           {inputType === "select" ? (
@@ -234,7 +239,7 @@ const AddSlotForm = ({
               classes={{ root: classesM.menuItem }}
               value={selectedDay}
               helperText={error.date}
-            > 
+            >
               {weekdays.map((date) => (
                 <MenuItem key={date} value={date} className={styles.menuItem}>
                   {date}

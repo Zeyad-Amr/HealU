@@ -36,115 +36,118 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
   const params = useParams();
   const navigate = useNavigate();
   const classesX = useStyles();
-  const { slots } = useSelector((state: any) => ({
+  const { slots, isVisible, date } = useSelector((state: any) => ({
     slots: state.rootReducer.slots.slots,
     isVisible: state.rootReducer.isFormVisible,
+    date: state.rootReducer.slots.selectedDate,
   }));
   const dispatch = useDispatch();
-  const handleDelete = async (dateId: string, date?: string) => {
-    dispatch(deleteSlot(parseInt(dateId)) as any);
+  const handleDelete = async (slotId: string | undefined) => {
+    console.log("Deleeeeett", slotId);
+    if (slotId) {
+      await dispatch(deleteSlot(slotId) as any);
+    }
+    dispatch(getSlots(date) as any);
+    console.log("3333333", date);
   };
-  const handleClearAppoinment = async (dateId: string, date: string) => {
-    dispatch(updateSlot(parseInt(dateId)) as any);
-  };
+  // const handleClearAppoinment = async (dateId: string, date: string) => {
+  //   dispatch(updateSlot(parseInt(dateId)) as any);
+  // };
   const handlePreview = () => {
     console.log("Preview");
   };
 
-  // merge conflict:
-  // await dispatch(updateSlot(parseInt(dateId)) as any);
-  // dispatch(getSlots(date) as any);
-  // useEffect(() => {
-  // dispatch(getSlots() as any);
-  // }, [dispatch,slots]);
-
   return (
-    <div>
-      {!slots && (<Paper
-      sx={{ width: "70%", overflow: "hidden" }}
-      classes={{ root: classesX.containerA }}
-    >
-      <TableContainer
-        className={styles.customTableContainer}
-        classes={{ root: classesX.box }}
-      >
-        <Table  style={{ width: "100%" }}>
-          <TableBody>
-            {schedules.map((row, rowIndex) => (
-              <TableRow key={rowIndex}>
-                <TableCell
-                  key={`${rowIndex}-column1`}
-                  className={styles.column1}
-                >
-                  {row.time}
-                </TableCell>
-                <TableCell
-                  key={`${rowIndex}-column2`}
-                  className={styles.column2}
-                >
-                  <div>{row.patientId}</div>
-                </TableCell>
-                <TableCell
-                  key={`${rowIndex}-column3`}
-                  className={styles.column3}
-                >
-                  <div
-                    onClick={() => {
-                      if (row._id) {
-                        handleClearAppoinment(row._id, row.weekDay);
-                      }
-                    }}
-                    className={styles.addIcon}
-                    style={{ justifyContent: "center", display: "flex" }}
-                  >
-                    <ClearIcon style={{ width: "38px", height: "38px" }} />
-                  </div>
-                  {/* <div>{row.date}</div> */}
-                </TableCell>
-                <TableCell
-                  key={`${rowIndex}-column4`}
-                  className={styles.column4}
-                >
-                  <div
-                    onClick={() => {
-                      if (row.time !== null && row._id) {
-                        handleDelete(row._id, row.weekDay);
-                      }
-                    }}
-                    className={styles.addIcon}
-                    style={{ justifyContent: "center", display: "flex" }}
-                  >
-                    <DeleteIcon style={{ width: "38px", height: "38px" }} />
-                  </div>
-                </TableCell>
-                <TableCell
-                  key={`${rowIndex}-column5`}
-                  className={styles.column5}
-                >
-                  <div
-                    onClick={() => {
-                      if (row.time !== null) {
-                        navigate(
-                          `/ExaminationScreen/${row.patientId}`
-                        );
-                      }
-                    }}
-                    className={styles.addIcon}
-                    style={{ justifyContent: "center", display: "flex" }}
-                  >
-                    <PreviewIcon style={{ width: "38px", height: "38px" }} />
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+    <>
+      {schedules.length !== 0 && (
+        <Paper
+          sx={{ width: "70%", overflow: "hidden" }}
+          classes={{ root: classesX.containerA }}
+        >
+          <TableContainer
+            className={styles.customTableContainer}
+            classes={{ root: classesX.box }}
+          >
+            <Table style={{ width: "100%" }}>
+              <TableBody>
+                {schedules.map((row, rowIndex) => (
+                  <TableRow key={rowIndex}>
+                    <TableCell
+                      key={`${rowIndex}-column1`}
+                      className={styles.column1}
+                    >
+                      {row.time}
+                    </TableCell>
+                    <TableCell
+                      key={`${rowIndex}-column2`}
+                      className={styles.column2}
+                    >
+                      <div>{row.patientFirstName}</div>
+                    </TableCell>
+                    <TableCell
+                      key={`${rowIndex}-column3`}
+                      className={styles.column3}
+                    >
+                      <div
+                        onClick={() => {
+                          // if (row.appointmentObject?.patient?.userId) {
+                          //   handleClearAppoinment(row.appointmentObject.patient.userId, row.weekDay);
+                          // }
+                        }}
+                        className={styles.addIcon}
+                        style={{ justifyContent: "center", display: "flex" }}
+                      >
+                        <ClearIcon style={{ width: "38px", height: "38px" }} />
+                      </div>
+                    </TableCell>
+                    <TableCell
+                      key={`${rowIndex}-column4`}
+                      className={styles.column4}
+                    >
+                      <div
+                        onClick={() => {
+                          handleDelete(row.slotId);
+                          console.log(row.slotId);
+                        }}
+                        className={styles.addIcon}
+                        style={{ justifyContent: "center", display: "flex" }}
+                      >
+                        <DeleteIcon style={{ width: "38px", height: "38px" }} />
+                      </div>
+                    </TableCell>
+                    <TableCell
+                      key={`${rowIndex}-column5`}
+                      className={styles.column5}
+                    >
+                      <div
+                        onClick={() => {
+                          if (row.patientId !== undefined) {
+                            navigate(`/clinic/orthopedic/examination/${row.patientId}`);
+                          }
+                        }}
+                        className={styles.addIcon}
+                        style={{ justifyContent: "center", display: "flex" }}
+                      >
+                        <PreviewIcon
+                          style={{ width: "38px", height: "38px" }}
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
       )}
-      </div>
-    );
-  };
+
+      <button onClick={() => console.log(schedules)} style={{ color: "black" }}>
+        {" "}
+        vvvvvvvv
+      </button>
+    </>
+  );
+};
 
 // const isSlot = (obj: any): obj is Slot => "time" in obj && "date" in obj;
 // const isSchedule = (obj: any): obj is Schedule =>

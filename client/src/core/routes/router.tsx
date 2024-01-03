@@ -15,6 +15,7 @@ import Signup from "../../modules/patient-portal/components/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 import DoctorSlots from "../../modules/clinics-portals/orthopedic/pages/doctorSlot/doctorSlot";
+import Patient from "../../modules/clinics-portals/orthopedic/pages/patient/patient";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -69,7 +70,11 @@ class Router {
     {
       path: AppRoutes.clinicOrthopedic,
       element: <DoctorSlots />,
-    }
+    },
+    {
+      path: AppRoutes.orthoExamination,
+      element: <Patient />,
+    },
   ];
 
   static getRoutes(): ReactElement[] {

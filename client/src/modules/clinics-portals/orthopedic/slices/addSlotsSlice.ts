@@ -2,17 +2,17 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import Patient from "./patientSlice";
-
-const authToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY";
+import api from "../../../../core/api/api";
 
 export default interface Slot {
   _id?: string;
+  patientFirstName?: string;
   doctorId: number;
   clinicId: number;
   patientId?: number;
   weekDay: string;
   time: string | null;
+  slotId?: string | undefined;
 }
 
 // {
@@ -41,12 +41,9 @@ export const updateSlotStatus = createAsyncThunk(
   async (id: number, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     return axios
-      .patch<Slot>(
-        `https://healu-api-gateway.onrender.com/api/appointment/:appointmentId`,
-        {
-          status: 1,
-        }
-      )
+      .patch<Slot>(`${api}/appointment/:appointmentId`, {
+        status: 1,
+      })
       .then((res) => res.data)
       .catch((error) => rejectWithValue(error.message));
   }
@@ -65,16 +62,7 @@ export const addSlot = createAsyncThunk(
     }
 
     try {
-      const response = await axios.post<Slot>(
-        "https://healu-api-gateway.onrender.com/api/appointment/slots",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": authToken,
-          },
-        }
-      );
+      const response = await api.post<Slot>("/appointment/slots", data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -85,60 +73,78 @@ export const addSlot = createAsyncThunk(
 
 export const updateSlot = createAsyncThunk(
   "slots/updateSlot",
-  async (id: number, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    return axios
-      .patch<Slot>(
-        `https://healu-api-gateway.onrender.com/api/appointment/slots/${id}`,
-        {
-          patient: "   ",
-        }
-      )
-      .then((res) => res.data)
-      .catch((error) => rejectWithValue(error.message));
-  }
-);
-
-export const getSlots = createAsyncThunk(
-  "slots/getSlots",
-  async (selectedDate: string | void, thunkAPI) => {
+  async (id: number, { rejectWithValue }) => {
     try {
-      const response = await axios.get<Slot[]>(
-        `https://healu-api-gateway.onrender.com/api/appointment/doctor/57`,
-        {
-          headers: {
-            "auth-token": authToken,
-          },
-        }
-      );
-      return response.data.filter((item: any) => {
-        const dateValue = new Date(item.date);
-
-        // Check if dateValue is a valid date
-        if (isNaN(dateValue.getTime())) {
-          console.error(`Invalid date: ${item.date}`);
-          return false; // Skip this item
-        }
-
-        // Convert the valid date to ISO format
-        const itemDate = dateValue.toISOString().split("T")[0];
-        return itemDate === selectedDate;
+      const response = await api.patch<Slot>(`/appointment/slots/${id}`, {
+        patient: "   ",
       });
-    } catch (error) {
+      return response.data;
+    } catch (error: any) {
       console.error(error);
-      throw error;
+      return rejectWithValue(error.message);
     }
   }
 );
 
-export const deleteSlot = createAsyncThunk(
-  "slots/deleteSlot",
-  async (id: number, thunkAPI) => {
+export const getSlots = createAsyncThunk<Slot[], string | void>(
+  "slots/getSlots",
+  async (selectedDate, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
-    return axios
-      .delete<Slot[]>(`http://localhost:3003/slots/${id}`)
-      .then((res) => res.data)
-      .catch((error) => rejectWithValue(error.message));
+    try {
+      const response = await api.get<any>(`/data/slots/${selectedDate}`);
+      const slots = response.data.slots;
+      if (slots.length === 0) {
+        console.log(slots);
+        return [];
+      } else {
+        const slotData = slots.map((slot: any) => {
+          const patientId = slot.appointmentObject?.patient?.userId ?? "";
+          const patientFirstName =
+            slot.appointmentObject?.patient?.firstName ?? "";
+          const time = slot.slot.time;
+          const slotId = slot.slot._id;
+          console.log("rrrr", time);
+          return {
+            patientId,
+            patientFirstName,
+            time,
+            slotId,
+          };
+        });
+        return slotData;
+      }
+      // console.log(slotData);
+
+      // const userIds = slots.map(
+      //   (slot: any) => slot.appointmentObject?.patient?.userId ?? ""
+      // );
+      // console.log(userIds);
+      // const time = slots.map((slot: any) => slot.time);
+      // const firstName = slots.map((slot: any) => {
+      //   const userId = slot.appointmentObject?.patient?.userId;
+      //   const patientFirstName = slot.appointmentObject?.patient?.firstName;
+
+      //   return userId !== undefined ? patientFirstName : " ";
+      // });
+    } catch (error: any) {
+      console.error(error);
+      throw rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteSlot = createAsyncThunk<Slot[], string>(
+  "slots/deleteSlot",
+  async (id, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+
+    try {
+      const response = await api.delete<Slot[]>(`appointment/slots/${id}`);
+      return response.data;
+    } catch (error: any) {
+      console.error(error);
+      throw rejectWithValue(error.message);
+    }
   }
 );
 
@@ -164,18 +170,25 @@ const addSlotSlice = createSlice({
         state.slots.push(newSlot);
       }
     });
+    builder.addCase(getSlots.rejected, (state, action) => {
+      console.log(action.payload);
+      state.slots = [];
+    });
     builder.addCase(
       getSlots.fulfilled,
-      (state, action: PayloadAction<Slot[] | undefined>) => {
+      (state: any, action: PayloadAction<Slot[] | undefined>) => {
         if (action.payload) {
           console.log(action.payload);
-          state.slots = action.payload;
+          if (action.payload.length !== 0) {
+            state.slots = action.payload;
+          }
         } else {
           console.log("failed");
           return state;
         }
       }
     );
+
     builder.addCase(addSlot.rejected, (state, action) => {
       const errorMessage = action.payload
         ? action.payload
