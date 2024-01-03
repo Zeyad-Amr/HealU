@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -72,42 +72,41 @@ const PatientProfile = () => {
 
   //////////////////////////////////////////////////////////////////////////////////////////////
 
-  const initialValues = {
-    userName: "ahmedsy12",
-    password: "",
-    firstName: "ahmed",
-    secondName: "sayed",
-    gender: "male",
-    DOB: "12/12/2000",
-    SSN: "12312312312322",
-    email: "example@example.com",
-    phone: "",
-    insurancePersentage: "25%",
-    emergencyContactName: "Abdelrhman Yaser",
-    emergencyContactNumber: "01211035528",
-  };
+  console.log(localStorage.getItem("user"));
+
+  const initialValues: {
+    userName: string
+    password: string
+    firstName: string
+    lastName: string
+    gender: string
+    dateOfBirth: string
+    ssn: string
+    email: string
+    phoneNumber: string
+    insurancePersentage: number
+    emergencyContactName: string
+    emergencyContactNumber: string
+  } = JSON.parse((localStorage.getItem("user") as string));
+
   const submitForm = useRef<any>();
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const handleFormSchema = Yup.object({
     userName: Yup.string().required("Username Should be entered"),
     newPassword: Yup.string(),
     firstName: Yup.string().required("First Name Should be entered"),
-    secondName: Yup.string().required("Second Name Should be entered"),
+    lastName: Yup.string().required("Last Name Should be entered"),
     gender: Yup.string().required(),
-    DOB: Yup.string().required(),
-    SSN: Yup.number().required(),
+    dateOfBirth: Yup.string().required(),
+    ssn: Yup.number().required(),
     email: Yup.string().required(),
-    phone: Yup.string()
+    phoneNumber: Yup.string()
       .matches(/^[0-9]+$/, "Must be only digits")
-      .required()
-      .max(11, "phone number should be 11 number")
-      .min(11, "phone number should be 11 number"),
+      .required(),
     emergencyContactName: Yup.string(),
     emergencyContactNumber: Yup.string()
       .matches(/^[0-9]+$/, "Must be only digits")
-      .required()
-      .max(11, "phone number should be 11 number")
-      .min(11, "phone number should be 11 number"),
+      .required(),
   });
 
   const handleSubmit = () => {
@@ -146,9 +145,8 @@ const PatientProfile = () => {
             sx={{
               marginRight: "1rem",
               padding: "1rem 0",
-              borderBottom: `${
-                !historyMode ? "2px solid #006D6D" : "2px solid #fff"
-              }`,
+              borderBottom: `${!historyMode ? "2px solid #006D6D" : "2px solid #fff"
+                }`,
               color: `${!historyMode ? "#000" : "#999"}`,
               transition: "0.2s",
               cursor: `${!historyMode ? "default" : "pointer"}`,
@@ -160,9 +158,8 @@ const PatientProfile = () => {
           <Box
             sx={{
               padding: "1rem 0",
-              borderBottom: `${
-                historyMode ? "2px solid #006D6D" : "2px solid #fff"
-              }`,
+              borderBottom: `${historyMode ? "2px solid #006D6D" : "2px solid #fff"
+                }`,
               color: `${historyMode ? "#000" : "#999"}`,
               transition: "0.2s",
               cursor: `${historyMode ? "default" : "pointer"}`,
@@ -722,13 +719,13 @@ const PatientProfile = () => {
                       <CustomTextField
                         enable={isUpdating}
                         isRequired
-                        name="secondName"
-                        label="second Name"
-                        value={values.secondName}
+                        name="lastName"
+                        label="Last Name"
+                        value={values.lastName}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={errors.secondName}
-                        touched={touched.secondName}
+                        error={errors.lastName}
+                        touched={touched.lastName}
                         width="100%"
                         props={{
                           type: "text",
@@ -760,11 +757,11 @@ const PatientProfile = () => {
                         isRequired
                         name="DOB"
                         label="Date of Birth"
-                        value={values.DOB}
+                        value={values.dateOfBirth}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={errors.DOB}
-                        touched={touched.DOB}
+                        error={errors.dateOfBirth}
+                        touched={touched.dateOfBirth}
                         width="100%"
                         props={{
                           type: "text",
@@ -793,13 +790,13 @@ const PatientProfile = () => {
                       <CustomTextField
                         enable={isUpdating}
                         isRequired
-                        name="phone"
+                        name="phoneNumber"
                         label="phone Number"
-                        value={values.phone}
+                        value={values.phoneNumber}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={errors.phone}
-                        touched={touched.phone}
+                        error={errors.phoneNumber}
+                        touched={touched.phoneNumber}
                         width="100%"
                         props={{
                           type: "text",
@@ -811,13 +808,13 @@ const PatientProfile = () => {
                         enable={isUpdating}
                         nonEditable
                         isRequired
-                        name="SSN"
+                        name="ssn"
                         label="National Number"
-                        value={values.SSN}
+                        value={values.ssn}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={errors.SSN}
-                        touched={touched.SSN}
+                        error={errors.ssn}
+                        touched={touched.ssn}
                         width="100%"
                         props={{
                           type: "text",
