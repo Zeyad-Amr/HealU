@@ -255,8 +255,20 @@ const OphthalmologyForm = () => {
         {/* Prescription Popup */}
         <Modal open={openPopup.prescription} onClose={() => handleClosePopup('prescription')}>
           <Paper className="popup">
-            <Typography variant="h6">Add Prescription</Typography>
-            <TextField
+          <Typography
+                variant="h6"
+                style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '32px',
+                  fontWeight: 600,
+                  lineHeight: '38px',
+                  letterSpacing: '0em',
+                  textAlign: 'left',
+                }}
+              >
+                Add Services
+              </Typography>   
+              <TextField
               label="Drug Name"
               value={prescriptionData.drugName}
               onChange={(e) => setPrescriptionData({ ...prescriptionData, drugName: e.target.value })}
@@ -291,8 +303,19 @@ const OphthalmologyForm = () => {
             borderRadius: '8px',
             marginBottom: '16px',
           }}>
-          <Typography variant="h6">Add Test</Typography>
-          <Button onClick={() => handleOpenPopup('tests')}>Add Test</Button>
+            <Typography
+                variant="h6"
+                style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '32px',
+                  fontWeight: 600,
+                  lineHeight: '38px',
+                  letterSpacing: '0em',
+                  textAlign: 'left',
+                }}
+              >
+                Add Services
+              </Typography>             <Button onClick={() => handleOpenPopup('tests')}>Add Test</Button>
           <Typography>{testCard}</Typography>
           {testCard && (
             <Button variant="outlined" onClick={handleEditTest}>
@@ -327,19 +350,56 @@ const OphthalmologyForm = () => {
             borderRadius: '8px',
             marginBottom: '16px'}}
             >
-          <Typography variant="h6">Add Services</Typography>
-          <Button onClick={() => handleOpenPopup('services')}>Select Services</Button>
+              <Typography
+                variant="h6"
+                style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '32px',
+                  fontWeight: 600,
+                  lineHeight: '38px',
+                  letterSpacing: '0em',
+                  textAlign: 'left',
+                }}
+              >
+                Add Services
+              </Typography>   
+              <Button onClick={() => handleOpenPopup('services')}>Services</Button>
         </Paper>
         {/* Services Popup */}
         <Modal open={openPopup.services} onClose={() => handleClosePopup('services')}>
-          <Paper className="popup">
-            <Typography variant="h6">Select Services</Typography>
+          <Paper className="popup" style={{ padding: '16px' }}>
+            <Typography
+              variant="h6"
+              style={{
+                fontFamily: 'Roboto',
+                fontSize: '32px',
+                fontWeight: 600,
+                lineHeight: '38px',
+                letterSpacing: '0em',
+                textAlign: 'left',
+              }}
+            >
+              Select Services
+            </Typography>
             {/* Options for selecting services */}
-            <Button variant="contained" color="primary" onClick={() => handleClosePopup('services')}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleClosePopup('services')}
+              style={{
+                fontFamily: 'Roboto',
+                fontSize: '32px',
+                fontWeight: 600,
+                lineHeight: '38px',
+                letterSpacing: '0em',
+                textAlign: 'left',
+                marginTop: '20px', // Adjust top margin for spacing
+              }}
+            >
               Close
             </Button>
           </Paper>
-        </Modal>     
+        </Modal>  
 	 </Grid>
        </Grid>
   );
