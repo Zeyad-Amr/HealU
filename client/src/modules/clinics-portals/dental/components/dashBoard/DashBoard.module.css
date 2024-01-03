@@ -1,22 +1,28 @@
 /* DashBoard.module.css */
 
 .dashboardContainer {
-  height: 85vh;
+  height: 87vh;
   display: flex;
   flex-direction: column;
+  padding: 15px;
+  padding-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .tableContainer {
   flex: 1;
   position: relative;
+  padding: 15px;
+  border-radius: 24px 24px 0 0!important;
 }
 
 .createSlotButton {
   display: flex;
   justify-content: flex-end;
-  margin: 16px;
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
   border-radius: 15px;
+  color: white!important;
+  font-size: larger !important;
 }
 .createSlotButtonContainer {
     display: flex;
@@ -36,7 +42,7 @@
   border-radius: 8px;
   color: rgba(139, 139, 139, 1);
   font-size: 1.5rem;
-  margin: 16px;
+  margin: 0px;
   border: none;
   cursor: pointer;
 }
