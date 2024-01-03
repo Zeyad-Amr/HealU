@@ -8,7 +8,7 @@ const UpcomingAppointmentsComponent = () => {
     return (
         <>
             <CustomHeader separatorColor="primary.main" title="Pervious Appointments" separatorWidth="50px" />
-            <UpcomingAppointmentsCard />
+            <UpcomingAppointmentsCard resultData={[]} />
 
             {/* <DataTable /> */}
 

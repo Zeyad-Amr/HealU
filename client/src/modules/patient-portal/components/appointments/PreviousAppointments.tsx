@@ -12,7 +12,7 @@ const PreviousAppointmentsComponent = () => {
     return (
         <>
             <CustomHeader separatorColor="primary.main" title="Pervious Appointments" separatorWidth="50px" />
-            <PreviousAppointmentsCard />
+            <PreviousAppointmentsCard resultData={[]} />
 
             {/* <DataTable /> */}
 

@@ -12,10 +12,9 @@ import { Info, InfoOutlined } from "@mui/icons-material";
 import { useState } from "react";
 
 interface AppointmentsFilterResultsPropsI {
-    resultData?: any[];
+    resultData: any[];
 }
 
-const appointmentsData: any[] = []
 
 const UpcomingAppointmentsCard = ({
     resultData,
@@ -63,7 +62,7 @@ const UpcomingAppointmentsCard = ({
     return (
         <Box sx={{ overflowY: "auto", m: 2 }}>
             <Grid container spacing={2}>
-                {appointmentsData.map((appointment: any, index: number) => {
+                {resultData.map((appointment: any, index: number) => {
                     return (
                         <Grid key={index} item lg={3} md={3} sm={6} xs={12} minWidth={330}>
 
@@ -91,11 +90,6 @@ const UpcomingAppointmentsCard = ({
                                         <>
                                             {appointment.clinic.name}
                                         </>
-                                    }
-                                    action={
-                                        <IconButton onClick={() => { }} aria-label="settings">
-                                            <InfoOutlined />
-                                        </IconButton>
                                     }
                                 />
                                 <CardContent>
