@@ -7,8 +7,13 @@ const loginSchema = Joi.object({
 })
 
 const bookApptSchema = Joi.object({
-    appointment: Joi.object().length(3).required(),
+    appointment: Joi.object().length(2).required(),
     card: Joi.object().length(4).required(),
+})
+
+const slotSchema = Joi.object({
+    weekDay: Joi.string().valid('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday').required(),
+    time: Joi.string().pattern(/^([01]\d|2[0-3]):([0-5]\d)$/, "format HH:MM").required(),
 })
 
 
@@ -26,6 +31,7 @@ const validate = (input: any, schema: ObjectSchema) => {
 export default {
     validate,
     loginSchema,
-    bookApptSchema
+    bookApptSchema,
+    slotSchema
 
 }

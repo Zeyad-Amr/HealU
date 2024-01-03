@@ -6,10 +6,10 @@ import * as Yup from "yup";
 import PrimaaryBtn from "../../../core/components/PrimaaryBtn";
 import { useAppDispatch } from "../../../core/store";
 import { useSelector } from "react-redux";
-import { AuthState, login } from "../slices/auth-slice";
-import authModel from "../models/auth-model";
 import { useNavigate } from "react-router-dom";
 import AppRoutes from "../../../core/routes/AppRoutes";
+import authModel from "../models/auth-model";
+import { AuthState, login } from "../slices/auth-slice";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -38,6 +38,34 @@ const Login = () => {
             transform: "translateY(50%)",
           }}
         ></Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          cursor: "pointer",
+          position: "absolute",
+          left: "50%",
+          top: "4rem",
+          transform: "translate(-50%, -50%)",
+        }}
+        onClick={() => {
+          navigate(AppRoutes.home);
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: "600",
+            fontSize: "2.5rem",
+            color: "secondary.dark",
+          }}
+        >
+          Heal
+        </Typography>
+        <Typography
+          sx={{ fontWeight: "600", fontSize: "2.5rem", color: "primary.main" }}
+        >
+          U
+        </Typography>
       </Box>
       <Box
         sx={{

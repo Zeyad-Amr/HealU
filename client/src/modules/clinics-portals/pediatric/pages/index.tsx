@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import "./index.css";
+import AppLayout from "../../../../core/components/AppLayout";
 
 const PediatricClinicPortal = () => {
   const [value, setValue] = React.useState(0);

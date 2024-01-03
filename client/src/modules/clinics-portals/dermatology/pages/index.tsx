@@ -1,15 +1,19 @@
+import AppLayout from "../../../../core/components/AppLayout";
+
 const DermatologyClinicPortal = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "90vh",
-      }}
-    >
-      <h1>Dermatology Clinic Portal</h1>
-    </div>
+    <AppLayout>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "90vh",
+        }}
+      >
+        <h1>Dermatology Clinic Portal</h1>
+      </div>
+    </AppLayout>
   );
 };
 

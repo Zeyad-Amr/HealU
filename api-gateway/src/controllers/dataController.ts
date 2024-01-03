@@ -9,6 +9,26 @@ interface CustomRequest extends Request {
 }
 
 
+export const create_slot = async (req: Request, res: Response) => {
+    try {
+        const doctorId = (req as CustomRequest).user.sub
+
+        let slotData = validate.validate(req.body, validate.slotSchema)
+        slotData.doctorId = doctorId
+
+        let slot = await axios.post(`${process.env.Appointment_URL}/slots`, slotData)
+
+        return res.status(200).json({
+            message: "slot created successfully"
+            , slot
+        })
+    } catch (error: any) {
+        const err = errorHandler(error)
+
+        res.status(err?.statusCode ?? 500).json(err)
+    }
+}
+
 export const get_doctor_slots = async (req: Request, res: Response) => {
     try {
         const { date } = req.params
@@ -135,16 +155,20 @@ export const get_previous_appointments = async (req: Request, res: Response) => 
     try {
         const patientId = (req as CustomRequest).user.sub
 
-        const [appointmentsRes, prescriptionsRes] = await Promise.all([
+        const [appointmentsRes, prescriptionsRes, recordRes] = await Promise.all([
             axios.get(`${process.env.Appointment_URL}/appointments/patient/${patientId}`),
             axios.get(`${process.env.EMR_URL}/prescription/patient/${patientId}`),
+            axios.get(`${process.env.EMR_URL}/record/patient/${patientId}`),
         ])
 
         let appointments: any[] = appointmentsRes.data
         // get the completed appointments only 
+        console.log(appointments);
         appointments = appointments.filter((item) => {
             return item.status === 2
         })
+        console.log(appointments);
+
         if (appointments.length === 0) {
             return res.status(200).json({ appointments })
         }
@@ -156,6 +180,10 @@ export const get_previous_appointments = async (req: Request, res: Response) => 
         let prescriptions = prescriptionsRes.data
         // get prescriptions assigned to these appointments
         prescriptions = prescriptionsRes.data.filter(filterByAppointmentId)
+
+        let records = recordRes.data
+        // get records assigned to these appointments
+        records = recordRes.data.filter(filterByAppointmentId)
 
         const clinicIds = appointments.map((appointment: any) => (appointment.clinicId))
         let clinics = (await axios.get(`${process.env.Admin_URL}/api/v1/clinic`)).data.data.clinics
@@ -179,6 +207,7 @@ export const get_previous_appointments = async (req: Request, res: Response) => 
             const doctor = doctors.find((doctor) => doctor.userId === appointment.doctorId)
             const clinic = clinics.find((clinic: any) => clinic.id === appointment.clinicId)
             const prescription = prescriptions.find((pres: any) => pres.AppointmentID === appointment._id)
+            const record = records.find((pres: any) => pres.AppointmentID === appointment._id)
 
             return {
                 appointmentId: appointment._id,
@@ -190,6 +219,12 @@ export const get_previous_appointments = async (req: Request, res: Response) => 
                     id: clinic.id,
                     name: clinic.name,
                     description: clinic.description
+                },
+                medicalRecord: {
+                    vitals: record.Vital,
+                    EyeMeasurement: record.EyeMeasurement,
+                    medicalTests: record.MedicalTests,
+                    Nutrition: record.Nutrition
                 },
                 prescription
             }
@@ -268,7 +303,6 @@ export const get_all_slots = async (req: Request, res: Response) => {
             );
         });
 
-        console.log(slotsWithDates);
 
         /* 
         get clinic ids from slots
@@ -303,11 +337,7 @@ export const get_all_slots = async (req: Request, res: Response) => {
                     id: doctor.userId,
                     name: doctor.firstName + " " + doctor.lastName
                 },
-                clinic: {
-                    id: clinic.id,
-                    name: clinic.name,
-                    description: clinic.description
-                },
+                clinic,
                 time: slot.time,
                 weekDay: slot.weekDay,
                 date: slot.date,
@@ -391,6 +421,7 @@ export const post_examination = async (req: Request, res: Response) => {
 export const book_appt = async (req: Request, res: Response) => {
     try {
         const { appointment, card } = validate.validate(req.body, validate.bookApptSchema)
+        appointment.patientId = (req as CustomRequest).user.sub
 
 
         // create appointment 

@@ -7,6 +7,7 @@ import prescreption from "../../modules/clinics-portals/pediatric/slices/prescre
 import record from "../../modules/clinics-portals/pediatric/slices/record-slice";
 import appointment from "../../modules/clinics-portals/pediatric/slices/appointment-slice";
 import slots from "../../modules/clinics-portals/pediatric/slices/slots-slice";
+import analytics from "../../modules/admin-portal/slices/analytics-slice";
 import auth from "../../modules/auth/slices/auth-slice";
 import examination from "../../modules/clinics-portals/pediatric/slices/examination-slice";
 import user from "../../modules/user/slices/user-slice";
@@ -23,7 +24,9 @@ export const store = configureStore({
     slots,
     examination,
     user,
+    analytics,
   },
+
 });
 
 export type AppDispatch = typeof store.dispatch;

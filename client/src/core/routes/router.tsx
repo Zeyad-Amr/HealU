@@ -10,16 +10,39 @@ import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmolo
 import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages";
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
+import Analytics from "../../modules/admin-portal/pages/analytics";
 import Login from "../../modules/auth/pages";
-import Signup from "../../modules/user/pages/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
+import AboutUs from "../../modules/landing-page/pages/AboutUs";
+import ContactUs from "../../modules/landing-page/pages/ContactUs";
+import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout";
+import Signup from "../../modules/user/pages/signup/SignUp";
+import AppLayout from "../components/AppLayout";
 
 class Router {
   static readonly routes: RouteModel[] = [
     {
       path: AppRoutes.home,
       element: <LandingPage />,
+    },
+    {
+      path: AppRoutes.aboutUs,
+      element: (
+        <SecondaryLayout>
+          {" "}
+          <AboutUs />{" "}
+        </SecondaryLayout>
+      ),
+    },
+    {
+      path: AppRoutes.contactUs,
+      element: (
+        <SecondaryLayout>
+          {" "}
+          <ContactUs />{" "}
+        </SecondaryLayout>
+      ),
     },
     {
       path: AppRoutes.clinicDental,
@@ -65,18 +88,14 @@ class Router {
       path: AppRoutes.signup,
       element: <Signup />,
     },
-
-    // Eample on children
-    // {
-    //   path: AppRoutes.dashboardLayout,
-    //   element: <DashboardLayout />,
-    //   isPrivate: true,
-    //   children: [
-    //     { path: AppRoutes.dashboard, element: <Dashboard /> },
-    //     { path: AppRoutes.dashboard, element: <Dashboard /> },
-    //     { path: AppRoutes.dashboard, element: <Dashboard /> },
-    //   ],
-    // },
+    {
+      path: AppRoutes.Analytics,
+      element: (
+        <AppLayout>
+          <Analytics />
+        </AppLayout>
+      ),
+    },
   ];
 
   static getRoutes(): ReactElement[] {
