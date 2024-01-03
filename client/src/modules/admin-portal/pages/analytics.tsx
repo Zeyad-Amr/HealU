@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import Title from "../components/AnalyticsTitle/title";
 import Box from "@mui/material/Box";
@@ -9,48 +10,8 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../../core/store/index";
 import { fetchAnalytics } from "../slices/analytics-slice";
 import { analyticsState } from "../slices/analytics-slice";
-import { TotalRevenue } from "../slices/analytics-slice";
 import { analyticsMedicalRecords } from "../slices/analytics-slice";
-import { on } from "events";
 
-const dataset = [
-  {
-    recordsAdded: 59,
-    prescriptionsAdded: 57,
-    medicalHistoryAdded: 57,
-    clinc: "clinc 1",
-  },
-  {
-    recordsAdded: 59,
-    prescriptionsAdded: 57,
-    medicalHistoryAdded: 57,
-    clinc: "clinc 2",
-  },
-  {
-    recordsAdded: 59,
-    prescriptionsAdded: 57,
-    medicalHistoryAdded: 57,
-    clinc: "clinc 3",
-  },
-  {
-    recordsAdded: 59,
-    prescriptionsAdded: 57,
-    medicalHistoryAdded: 57,
-    clinc: "clinc 4",
-  },
-  {
-    recordsAdded: 59,
-    prescriptionsAdded: 57,
-    medicalHistoryAdded: 57,
-    clinc: "clinc 5",
-  },
-  {
-    recordsAdded: 59,
-    prescriptionsAdded: 57,
-    medicalHistoryAdded: 57,
-    clinc: "clinc 6",
-  },
-];
 interface GenderDistributionData {
   [key: string]: {
     male: number;
@@ -87,7 +48,7 @@ function convertMedicalRecordsToDataset(
       recordsAdded: medicalRecords.recordsAdded[clinic],
       prescriptionsAdded: medicalRecords.prescriptionsAdded[clinic],
       medicalHistoryAdded: medicalRecords.medicalHistoryAdded[clinic],
-      clinic: `Clinic ${clinic}`,
+      clinic: `${clinic}`,
     }))
     .filter(
       (item) =>
@@ -102,7 +63,7 @@ function convertGenderDistributionToDataset(
     .map(([key, data]) => ({
       male: data.male,
       female: data.female,
-      clinic: `Clinic ${key}`,
+      clinic: `${key}`,
     }))
     .filter(
       (item) =>
@@ -115,7 +76,7 @@ function convertToData(analyticsToConvert: analyticsToConvert): ConvertedData {
     data: Object.entries(analyticsToConvert)
       ?.map(([key, value]) => ({
         value,
-        label: `Clinic ${key}`,
+        label: `${key}`,
       }))
       .filter(
         (item) =>
