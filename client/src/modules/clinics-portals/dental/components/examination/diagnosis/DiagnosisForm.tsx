@@ -1,9 +1,11 @@
 import { useState } from "react";
+import TextField from "@mui/material/TextField";
 
 // import styles from "./form.module.css";
 import styles from "../examination.module.css";
 
 import CustomTextArea from "../elements/CustomTextArea";
+
 // test options
 const TestOptions = [
   { label: "Test 1", value: 1 },
@@ -27,35 +29,39 @@ const PrescriptionsOptions = [
 
 // diagnosis form
 const DiagnosisForm = () => {
-  // text area for report
-  const [report, setReport] = useState("");
+  // report state
+  const [report, setReport] = useState([]);
   const handleReportChange = (event: any) => {
     setReport(event.target.value);
+    // console.log(report);
   };
-
-  // text area for recommendations
-  const [recommendations, setRecommendations] = useState("");
+  // recommendations state
+  const [recommendations, setRecommendations] = useState([]);
   const handleRecommendationsChange = (event: any) => {
     setRecommendations(event.target.value);
+    // console.log(recommendations);
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.input}>
-        <CustomTextArea
-          height={5}
-          title="Report"
-          placeholder="Enter Report"
+        <label htmlFor="report">Report</label>
+        <TextField
+          id="report"
+          multiline
+          minRows={5}
           value={report}
+          onChange={handleReportChange}
         />
       </div>
       <div className={styles.input}>
-        <CustomTextArea
-          height={5}
-          title="Recommendations"
-          placeholder="Enter Recommendations.."
+        <label htmlFor="recommendations">Report</label>
+        <TextField
+          id="recommendations"
+          multiline
+          minRows={5}
           value={recommendations}
-        ></CustomTextArea>
+          onChange={handleRecommendationsChange}
+        />
       </div>
     </div>
   );
