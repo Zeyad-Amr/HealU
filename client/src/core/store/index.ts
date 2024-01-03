@@ -14,12 +14,11 @@ import patientReducer from "../../modules/clinics-portals/dental/state/slices/pa
 import analytics from "../../modules/admin-portal/slices/analytics-slice";
 import prescreption from "../../modules/clinics-portals/pediatric/slices/prescreption-slice";
 import record from "../../modules/clinics-portals/pediatric/slices/record-slice";
-import appointment from "../../modules/clinics-portals/pediatric/slices/appointment-slice";;
+import appointment from "../../modules/clinics-portals/pediatric/slices/appointment-slice";
 import slots from "../../modules/clinics-portals/pediatric/slices/slots-slice";
 import examination from "../../modules/clinics-portals/pediatric/slices/examination-slice";
 import user from "../../modules/user/slices/user-slice";
 import { rootReducer } from "../../modules/clinics-portals/orthopedic/slices/combineReducers";
-
 
 export const store = configureStore({
   reducer: {
@@ -27,8 +26,8 @@ export const store = configureStore({
     devices,
     schedules,
     patients,
-        user,
-      analytics,
+    user,
+    analytics,
     rootReducer,
   },
 });
