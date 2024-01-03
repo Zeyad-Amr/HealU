@@ -3,14 +3,15 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+.page{
+  margin: 15px;
+}
 .container {
   border: solid 2px rgba(1, 182, 182, 1);
-  position: relative;
-  border-radius: 1rem;
+  border-radius: 15px;
   background: #fff;
   display: flex;
   flex-direction: row;
-  width: 95%;
   min-height: 30vh;
   margin: 1rem auto;
   padding: 1rem 1rem;
@@ -18,9 +19,6 @@
 
 .historyContainer {
   background: #fff;
-  min-height: 30vh;
-  margin: 1rem auto;
-  padding: 1rem 1rem;
 }
 
 .row {

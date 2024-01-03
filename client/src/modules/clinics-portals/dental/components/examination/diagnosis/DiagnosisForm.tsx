@@ -54,7 +54,7 @@ const DiagnosisForm = () => {
         />
       </div>
       <div className={styles.input}>
-        <label htmlFor="recommendations">Report</label>
+        <label htmlFor="recommendations">Recommendations</label>
         <TextField
           id="recommendations"
           multiline
