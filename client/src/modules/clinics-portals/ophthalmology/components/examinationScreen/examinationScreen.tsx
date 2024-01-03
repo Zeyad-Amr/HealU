@@ -356,11 +356,6 @@ const OphthalmologyForm = () => {
               <Typography
                 variant="h6"
                 sx={{
-                  fontFamily: "Roboto, sans-serif",
-                  fontSize: "32px",
-                  fontWeight: 600,
-                  lineHeight: "38px",
-                  letterSpacing: "0em",
                   textAlign: "left",
                 }}
               >

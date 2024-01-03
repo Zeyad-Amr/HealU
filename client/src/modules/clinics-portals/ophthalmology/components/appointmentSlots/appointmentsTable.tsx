@@ -25,6 +25,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import "./appointmentsTable.css";
+import api from "../../../../../core/api/api";
 
 const initialAppointments = [
   { time: "09:00 ", patientName: "bassma", amOrPm: "am" },
@@ -42,7 +43,7 @@ export default function DoctorAppointments() {
     patientName: "",
     time: "",
     amOrPm: "am",
-    day: "sunday",
+    day: "Sunday",
   });
 
   const handleDeleteAppointment = (index: any) => {
@@ -56,14 +57,22 @@ export default function DoctorAppointments() {
   };
 
   const handleSaveAdd = () => {
-    console.log("Save new appointment:", newAppointment);
+    console.log("HANDLE");
     setAppointments([...appointments, { ...newAppointment }]);
     setNewAppointment({
       patientName: "",
       time: "",
       amOrPm: "am",
-      day: "sunday",
+      day: "Sunday",
     });
+    const postObj = {
+      weekDay: newAppointment.day,
+      time: newAppointment.time,
+    };
+    console.log("post object ", postObj);
+    api
+      .post("/data/slots", postObj)
+      .then((res) => console.log("CREATE RESPONSE ", res));
     setAddDialogOpen(false);
   };
 
@@ -96,6 +105,11 @@ export default function DoctorAppointments() {
   const handleSelectDate = (dateValue: any) => {
     const selectedDate = new Date(dateValue.toString());
     setSelectedDate(selectedDate);
+    const formattedDate = formatDate(selectedDate);
+    console.log(formattedDate);
+    api
+      .get(`/data/slots/${formattedDate}`)
+      .then((res) => console.log("RESSS", res));
     handleCloseDateDialog();
   };
 
@@ -197,11 +211,12 @@ export default function DoctorAppointments() {
             }
             className="MuiDialogContent-select "
           >
-            <MenuItem value="sunday">Sunday</MenuItem>
-            <MenuItem value="monday">Monday</MenuItem>
-            <MenuItem value="tuesday">Tuesday</MenuItem>
-            <MenuItem value="wednesday">Wednesday</MenuItem>
-            <MenuItem value="thursday">Thursday</MenuItem>
+            <MenuItem value="Sunday">Sunday</MenuItem>
+            <MenuItem value="Monday">Monday</MenuItem>
+            <MenuItem value="Tuesday">Tuesday</MenuItem>
+            <MenuItem value="Wednesday">Wednesday</MenuItem>
+            <MenuItem value="Thursday">Thursday</MenuItem>
+            <MenuItem value="Friday">Friday</MenuItem>
           </Select>
           <InputLabel>Select Time:</InputLabel>
           <div className="time-input-group">

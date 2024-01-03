@@ -19,7 +19,7 @@ import ExaminationPortal from "../../modules/clinics-portals/ophthalmology/pages
 class Router {
   static readonly routes: RouteModel[] = [
     {
-      path: AppRoutes.clinicOphthalmolgy + "/appointments",
+      path: AppRoutes.clinicOphthalmolgy,
       element: <Appointments />,
     },
     {
