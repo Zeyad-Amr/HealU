@@ -15,7 +15,7 @@ import Signup from "../../modules/patient-portal/components/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 import Appointments from "../../modules/clinics-portals/ophthalmology/pages/appointments";
-import OphthalmologyForm from "../../modules/clinics-portals/ophthalmology/pages/examinationPortal";
+import ExaminationPortal from "../../modules/clinics-portals/ophthalmology/pages/examinationPortal";
 class Router {
   static readonly routes: RouteModel[] = [
     {
@@ -24,7 +24,7 @@ class Router {
     },
     {
       path: AppRoutes.clinicOphthalmolgy + "/exam",
-      element: <OphthalmologyForm />,
+      element: <ExaminationPortal />,
     },
     {
       path: AppRoutes.home,
