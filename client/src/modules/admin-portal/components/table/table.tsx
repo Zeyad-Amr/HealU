@@ -58,6 +58,7 @@ const TableComponent = () => {
     if (doctorId) {
       await dispatch(deleteDoctor(doctorId) as any);
     }
+    dispatch(getDoctors() as any);
   };
   // const handleEdit = (
   //   doctorId: number,
@@ -97,7 +98,7 @@ const TableComponent = () => {
     if (selectedDoctor) {
       dispatch(formActions.setEditedDoctor(selectedDoctor));
     }
-    // dispatch(getDoctors()as any);
+    dispatch(getDoctors() as any);
   };
   return (
     <Paper

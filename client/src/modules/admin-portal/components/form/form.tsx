@@ -11,8 +11,11 @@ import { MouseEvent, FormEvent } from "react";
 import { formActions } from "../../slices/form-slice";
 import ButtonComponent from "../../../clinics-portals/orthopedic/components/button/button";
 import CloseIcon from "@mui/icons-material/Close";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 // import { handleEdit } from "../table/table";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 const specialties: string[] = [
   " ",
@@ -58,6 +61,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   const isVisible = useSelector(
     (state: any) => state.rootReducer.form.isFormVisible
   );
+
   const isEditForm = useSelector((state: any) => state.rootReducer.form.isEdit);
   const editedDoctor = useSelector(
     (state: any) => state.rootReducer.form.editedDoctor
@@ -507,6 +511,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
                   />
                   <div onClick={() => setvisible(!visible)}>
                     {/* {visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} */}
+                    {visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                   </div>
                 </div>
                 {localErrors.errorPassword && (
