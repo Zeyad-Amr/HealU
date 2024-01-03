@@ -13,6 +13,9 @@ clinicRouter.route("/:clinicId")
             .patch(clinicController.updateClinic)
             .delete(clinicController.deleteClinic)
 
+clinicRouter.route("/many")
+            .post(clinicController.createClinics)
+
 
 
 
