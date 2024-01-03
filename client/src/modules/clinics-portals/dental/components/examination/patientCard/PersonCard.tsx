@@ -6,7 +6,7 @@ import styles from "../examination.module.css";
 const PersonCard = () => {
 
   return (
-    <Stack direction="row" spacing={1.5} className={styles.container}>
+    <Stack direction="row" spacing={1} className={styles.historyContainer}>
       <PersonalDataBox />
       <HistoryBox />
     </Stack>

@@ -1,4 +1,4 @@
-// Modal.tsx
+// ModalPopUp.tsx
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "../modal.module.css";

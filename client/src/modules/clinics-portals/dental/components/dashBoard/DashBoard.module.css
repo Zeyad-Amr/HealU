@@ -21,7 +21,7 @@
   justify-content: flex-end;
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
   border-radius: 15px;
-  padding: 0;
+  margin-bottom:10px !important;
   /* text */
   color: white!important;
   font-size: larger !important;
