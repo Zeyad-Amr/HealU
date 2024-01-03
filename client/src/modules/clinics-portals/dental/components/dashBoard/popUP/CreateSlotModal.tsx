@@ -6,12 +6,16 @@ import WeekDayPicker from "../../doctor-slots/WeekDayPicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import styles from "./CreateSlotModal.module.css"; // Import the CSS module
 import { openSnackbar } from "../../../state/slices/snackbarSlice";
-import { createSlotForDoctor } from "../../../state/slices/slotsSlice";
 import { useAppDispatch } from "../../../../../../core/store";
+import {
+  createSlotForLoggedInDoctor,
+  fetchLoggedInDoctorSlots,
+} from "../../../state/slices/doctorSlotsSlice";
 
 interface CreateSlotModalProps {
   open: boolean;
   onClose: () => void;
+  selectedDate: number;
 }
 
 interface TimeObject {
@@ -42,7 +46,11 @@ const formatTime = (timeObject: TimeObject) => {
   return `${hours}:${minutes}`;
 };
 
-const CreateSlotModal: React.FC<CreateSlotModalProps> = ({ open, onClose }) => {
+const CreateSlotModal: React.FC<CreateSlotModalProps> = ({
+  open,
+  onClose,
+  selectedDate,
+}) => {
   const dispatch = useAppDispatch();
 
   const [selectedDay, setSelectedDay] = useState<number>(0);
@@ -59,24 +67,19 @@ const CreateSlotModal: React.FC<CreateSlotModalProps> = ({ open, onClose }) => {
 
   const createSlot = async (weekDay: string, time: string) => {
     await dispatch(
-      createSlotForDoctor({
+      createSlotForLoggedInDoctor({
         time: time,
         weekDay: weekDay,
       })
     ).then((resultAction) => {
       dispatch(
         openSnackbar({
-          message:
-            resultAction.meta.requestStatus === "fulfilled"
-              ? "Slot Created Successfully"
-              : "Something Went Wrong! Please try again later",
-          type:
-            resultAction.meta.requestStatus === "fulfilled"
-              ? "success"
-              : "warning",
+          message: "Slot Created Successfully",
+          type: "success",
         })
       );
     });
+    dispatch(fetchLoggedInDoctorSlots(selectedDate));
   };
 
   const handleCreateSlot = () => {

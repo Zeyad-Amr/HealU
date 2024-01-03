@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../../../core/api/api";
 import { Appointment } from "./appointmentSlice";
-import dayjs from "dayjs";
-
-let doctorId: number = 1;
 
 export interface Slot {
   _id?: string;
@@ -36,39 +33,20 @@ export const fetchSlots = createAsyncThunk("slot/fetchSlots", async () => {
   }
 });
 
-export const fetchSlotsForDoctor = createAsyncThunk(
-  "slot/fetchDoctorSlots",
-  async ({ doctorId, weekDay }: { doctorId: number; weekDay: number }) => {
-    try {
-      // Convert weekday to date string
-      const date = dayjs().day(weekDay).format("YYYY-MM-DD");
-
-      const response = await axios.get(
-        `appointment/slots/doctor/${doctorId}/date/${date}`
-      );
-
-      // Map each item in the array to a Slot instance
-      const slots: Slot[] = response.data.map((item: any) => ({
-        doctorId: item.slot.doctorId,
-        clinicId: item.slot.clinicId,
-        time: item.slot.time,
-        weekDay: item.slot.weekDay,
-        _id: item.slot._id,
-        appointment: item.appointmentObject, // Assuming appointmentObject is of type Appointment
-      }));
-      return { slots }; // Return an object
-    } catch (error) {
-      throw error;
-    }
-  }
-);
-
 // Create an async thunk for creating a new slot for the doctor
 export const createSlotForDoctor = createAsyncThunk(
   "slot/createSlot",
-  async ({ time, weekDay }: { time: string; weekDay: string }) => {
+  async ({
+    time,
+    weekDay,
+    doctorId,
+  }: {
+    time: string;
+    weekDay: string;
+    doctorId: number;
+  }) => {
     try {
-      const res = await axios.post(`appointment/slots/`, {
+      const res = await axios.post(`/appointment/slots/`, {
         doctorId: doctorId,
         time: time,
         weekDay: weekDay,
@@ -85,7 +63,7 @@ export const deleteSlot = createAsyncThunk(
   "slot/deleteSlot",
   async (slotId: string) => {
     try {
-      await axios.delete(`appointment/slots/${slotId}`);
+      await axios.delete(`/appointment/slots/${slotId}`);
       return slotId;
     } catch (error) {
       throw error;
@@ -106,7 +84,6 @@ const slotSlice = createSlice({
       .addCase(fetchSlots.fulfilled, (state, action) => {
         state.loading = false;
         state.slots = action.payload;
-        state.slots = state.slots.filter((slot) => slot.doctorId === doctorId);
       })
       .addCase(fetchSlots.rejected, (state, action) => {
         state.loading = false;
@@ -126,7 +103,7 @@ const slotSlice = createSlice({
         state.loading = false;
         state.error = `Error deleting slot: ${action.error.message}`;
       });
-    ///////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////
 
     builder
       .addCase(createSlotForDoctor.pending, (state, action) => {
@@ -141,19 +118,6 @@ const slotSlice = createSlice({
         state.error = `Error deleting slot: ${action.error.message}`;
       });
     ///////////////////////////////////////////////////////////////
-
-    builder
-      .addCase(fetchSlotsForDoctor.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(fetchSlotsForDoctor.fulfilled, (state, action) => {
-        state.loading = false;
-        state.slots = action.payload.slots;
-      })
-      .addCase(fetchSlotsForDoctor.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      });
   },
 });
 

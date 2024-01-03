@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../../../core/api/api";
 import dayjs from "dayjs";
+import { Patient } from "../../../pediatric/slices/patient-slice";
 
 let doctorId: number = 1;
 
@@ -13,6 +14,7 @@ export interface Appointment {
   status: string;
   date: string;
   time: string;
+  patient?: Patient;
 }
 
 export interface AppointmentState {
@@ -32,9 +34,7 @@ export const fetchAppointments = createAsyncThunk(
   "appointment/fetchAppointments",
   async () => {
     try {
-      const response = await axios.get(
-        `/appointment/`
-      );
+      const response = await axios.get(`/appointment/`);
       return response.data;
     } catch (error) {
       throw error;
@@ -42,20 +42,18 @@ export const fetchAppointments = createAsyncThunk(
   }
 );
 
-// Create an async thunk for cancling appointment
-export const cancelAppointment = createAsyncThunk(
-  "appointment/cancelAppointment",
-  async (appointmentId: string) => {
-    try {
-      await axios.delete(
-        `appointment/${appointmentId}`
-      );
-      return appointmentId;
-    } catch (error) {
-      throw error;
-    }
-  }
-);
+// // Create an async thunk for cancling appointment
+// export const cancelAppointment = createAsyncThunk(
+//   "/appointment/cancelAppointment",
+//   async (appointmentId: string) => {
+//     try {
+//       await axios.delete(`/appointment/${appointmentId}`);
+//       return appointmentId;
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
 
 // Create the slot slice
 const appointmentSlice = createSlice({
@@ -63,20 +61,20 @@ const appointmentSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(cancelAppointment.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(cancelAppointment.fulfilled, (state, action) => {
-        state.loading = false;
-        state.appointments = state.appointments.filter(
-          (appointment) => appointment._id !== action.payload
-        );
-      })
-      .addCase(cancelAppointment.rejected, (state, action) => {
-        state.loading = false;
-        state.error = `Error canceling appointment: ${action.error.message}`;
-      });
+    // builder
+    //   .addCase(cancelAppointment.pending, (state) => {
+    //     state.loading = true;
+    //   })
+    //   .addCase(cancelAppointment.fulfilled, (state, action) => {
+    //     state.loading = false;
+    //     state.appointments = state.appointments.filter(
+    //       (appointment) => appointment._id !== action.payload
+    //     );
+    //   })
+    //   .addCase(cancelAppointment.rejected, (state, action) => {
+    //     state.loading = false;
+    //     state.error = `Error canceling appointment: ${action.error.message}`;
+    //   });
 
     builder
       .addCase(fetchAppointments.pending, (state) => {

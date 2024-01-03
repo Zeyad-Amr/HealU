@@ -7,21 +7,21 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const DentalClinicPortal = () => {
-    const SnackbarState = useSelector(
-        (state: RootState) => state.snackbarReducer
-    );
-    return (
-        <>
-            <NavBar />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DashBoard />
-            </LocalizationProvider>
-            <CustomizedSnackbar
-                message={SnackbarState.snackbar.message}
-                messageType={SnackbarState.snackbar.type}
-                open={SnackbarState.snackbarOpen}
-            />
-        </>
-    );
+  const SnackbarState = useSelector(
+    (state: RootState) => state.snackbarReducer
+  );
+  return (
+    <>
+      <NavBar />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DashBoard />
+      </LocalizationProvider>
+      <CustomizedSnackbar
+        message={SnackbarState.snackbar.message}
+        messageType={SnackbarState.snackbar.type}
+        open={SnackbarState.snackbarOpen}
+      />
+    </>
+  );
 };
 export default DentalClinicPortal;

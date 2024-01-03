@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../../../core/store";
-import { Slot, deleteSlot } from "../../state/slices/slotsSlice";
+import { Slot,  } from "../../state/slices/slotsSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   TableRow,
@@ -14,23 +14,22 @@ import {
 import { openSnackbar } from "../../state/slices/snackbarSlice";
 import {
   Appointment,
-  cancelAppointment,
 } from "../../state/slices/appointmentSlice";
 import styles from "./DashBoard.module.css"; // Import the CSS module
+import { cancelAppointment, deleteSlot } from "../../state/slices/doctorSlotsSlice";
 
 function SlotsTable(props: {
-  slots: Slot[];
-  handleAppointmentClick: (appointment: Appointment | undefined) => void;
+  slots: Array<{ slot: Slot; appointmentObject: Appointment }>;
+  handleAppointmentClick: (appointmentId: string) => void;
 }) {
   const dispatch = useAppDispatch();
-  const AppointmentState = useSelector(
-    (state: RootState) => state.appointmentReducer
-  );
+
   const PatientsState = useSelector((state: RootState) => state.patientReducer);
+  const DoctorSlotsState = useSelector(
+    (state: RootState) => state.doctorSlotsReducer
+  );
 
   const handleDeleteSlot = async (slotId: string) => {
-    console.log("SlotID: ", slotId);
-    console.log("Slots ", props.slots);
     await dispatch(deleteSlot(slotId)).then((resultAction) => {
       dispatch(
         openSnackbar({
@@ -47,59 +46,50 @@ function SlotsTable(props: {
     });
   };
 
-  const handleCancelAppointment = async (slotId: string) => {
-    const appointmentToCancel = AppointmentState.appointments.filter(
-      (appointment) => appointment.slotId.toString() === slotId
-    )[0];
-    await dispatch(cancelAppointment(appointmentToCancel?._id ?? "")).then(
-      (resultAction) => {
-        dispatch(
-          openSnackbar({
-            message:
-              resultAction.meta.requestStatus === "fulfilled"
-                ? "Appointment Canceled Successfully"
-                : "Something Went Wrong! Please try again later",
-            type:
-              resultAction.meta.requestStatus === "fulfilled"
-                ? "info"
-                : "warning",
-          })
-        );
-      }
-    );
+  const handleCancelAppointment = async (appointmentId: string) => {
+    await dispatch(cancelAppointment(appointmentId)).then((resultAction) => {
+      dispatch(
+        openSnackbar({
+          message:
+            resultAction.meta.requestStatus === "fulfilled"
+              ? "Appointment Canceled Successfully"
+              : "Something Went Wrong! Please try again later",
+          type:
+            resultAction.meta.requestStatus === "fulfilled"
+              ? "info"
+              : "warning",
+        })
+      );
+    });
   };
 
   return (
     <>
       <Table key={"SlotsTable"} className={styles.table}>
         <TableBody>
-          {props.slots.map((slot) => (
-            <TableRow key={slot._id}>
+          {DoctorSlotsState.slots.map((slot) => (
+            <TableRow key={slot.slot._id}>
               <TableCell className={styles.tableCell}>
                 <Stack direction="row" spacing={2} style={{ width: "100%" }}>
-                  
                   <Typography variant="body1" className={styles.timeCell}>
-                    {slot.time}
+                    {slot.slot.time}
                   </Typography>
 
                   <Typography
                     variant="body1"
                     className={styles.patientName}
-                    onClick={() =>
+                    onClick={() => {
                       props.handleAppointmentClick(
-                        AppointmentState.appointments.find(
-                          (appointment) => appointment.slotId === slot._id
-                        )
-                      )
-                    }
+                        slot.appointmentObject?._id ?? ""
+                      );
+                      console.log(slot.appointmentObject._id);
+                    }}
                   >
                     {(() => {
-                      const appointment = AppointmentState.appointments.find(
-                        (appointment) => appointment.slotId === slot._id
-                      );
+                      const appoPatientId = slot.appointmentObject?.patientId;
 
                       const patient = PatientsState.patients.find(
-                        (patient) => patient.userId === appointment?.patientId
+                        (patient) => patient.userId === appoPatientId
                       );
 
                       const firstName = patient?.firstName ?? "";
@@ -112,14 +102,16 @@ function SlotsTable(props: {
                   <IconButton
                     aria-label="Cancel"
                     className={styles.cancelButton}
-                    onClick={() => handleCancelAppointment(slot._id ?? "")}
+                    onClick={() =>
+                      handleCancelAppointment(slot.appointmentObject?._id ?? "")
+                    }
                   >
                     X
                   </IconButton>
                   <IconButton
                     aria-label="Delete"
                     className={styles.deleteIcon}
-                    onClick={() => handleDeleteSlot(slot._id ?? "")}
+                    onClick={() => handleDeleteSlot(slot.slot._id ?? "")}
                   >
                     <DeleteIcon />
                   </IconButton>
