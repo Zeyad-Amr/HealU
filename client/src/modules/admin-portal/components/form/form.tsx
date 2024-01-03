@@ -13,7 +13,6 @@ import ButtonComponent from "../../../clinics-portals/orthopedic/components/butt
 import CloseIcon from "@mui/icons-material/Close";
 
 // import { handleEdit } from "../table/table";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 const specialties: string[] = [
   " ",
@@ -56,7 +55,9 @@ interface FormProps {
 export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   const dispatch = useDispatch();
   const classesUI = formStyles();
-  const isVisible = useSelector((state: any) => state.rootReducer.form.isFormVisible);
+  const isVisible = useSelector(
+    (state: any) => state.rootReducer.form.isFormVisible
+  );
   const isEditForm = useSelector((state: any) => state.rootReducer.form.isEdit);
   const editedDoctor = useSelector(
     (state: any) => state.rootReducer.form.editedDoctor
