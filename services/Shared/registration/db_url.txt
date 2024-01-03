@@ -1,0 +1,1 @@
+DATABASE_URL= mysql://sql11672283:9EzZMQTD5W@sql11.freesqldatabase.com:3306/sql11672283
