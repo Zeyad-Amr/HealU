@@ -12,7 +12,11 @@ import { formActions } from "../../slices/form-slice";
 import ButtonComponent from "../../../clinics-portals/orthopedic/components/button/button";
 import CloseIcon from "@mui/icons-material/Close";
 import { stat } from "fs";
-import { error } from "console";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import Input from "react-select/dist/declarations/src/components/Input";
+
+
 // import { handleEdit } from "../table/table";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
@@ -74,7 +78,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     password: "",
     email: "",
     phoneNumber: "",
-    specialization: "",
+    specialization: "",  
   });
 
   useEffect(() => {

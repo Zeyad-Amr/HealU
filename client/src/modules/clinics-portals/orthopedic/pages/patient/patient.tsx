@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ButtonComponent from "../../components/button/button";
 import AddSlotForm from "../../components/form/addSlotForm";
+import SimpleForm from "../../components/form2/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 import { addSlotActions } from "../../slices/addSlotsSlice";
@@ -75,7 +76,8 @@ const Patient = () => {
           fontSize="32px"
         />
       </div>
-      <AddSlotForm
+      <SimpleForm formHeading="Tests" labelFieldName="yyy"/>
+      {/* <AddSlotForm
         isFormVisible={isVisible}
         formTitle="Prescription"
         label1="Drug Name"
@@ -87,7 +89,8 @@ const Patient = () => {
         submitButtonStyle="submitButton"
         inputType="text"
         isIncluded={true}
-      />
+      /> */}
+
     </div>
   );
 };
