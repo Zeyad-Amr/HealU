@@ -1,6 +1,10 @@
 import { Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import AppRoutes from "../../../../core/routes/AppRoutes";
 
 const HeaderComponent = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -16,7 +20,12 @@ const HeaderComponent = () => {
         paddingX: "3rem",
       }}
     >
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{ display: "flex", cursor: "pointer" }}
+        onClick={() => {
+          navigate(AppRoutes.home);
+        }}
+      >
         <Typography
           sx={{
             fontWeight: "600",
@@ -33,8 +42,22 @@ const HeaderComponent = () => {
         </Typography>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Box sx={{ cursor: "pointer", marginLeft: "1rem" }}>Appointments</Box>
-        <Box sx={{ cursor: "pointer", marginLeft: "1rem" }}>Yarab</Box>
+        <Box
+          sx={{ cursor: "pointer", marginLeft: "1rem" }}
+          onClick={() => {
+            navigate(AppRoutes.home);
+          }}
+        >
+          Home
+        </Box>
+        <Box
+          sx={{ cursor: "pointer", marginLeft: "1rem" }}
+          onClick={() => {
+            navigate(AppRoutes.patientPortalAppointments);
+          }}
+        >
+          Appointments
+        </Box>
         <Box sx={{ cursor: "pointer", marginLeft: "1rem" }}>About</Box>
         <Box
           sx={{
@@ -46,8 +69,25 @@ const HeaderComponent = () => {
             color: "white",
             padding: "0.2rem 1.5rem",
           }}
+          onClick={() => {
+            navigate(AppRoutes.login);
+          }}
         >
           Login
+        </Box>
+        <Box
+          sx={{
+            cursor: "pointer",
+            marginLeft: "1rem",
+
+            borderRadius: " 5px",
+            color: "secondary.main",
+          }}
+          onClick={() => {
+            navigate(AppRoutes.signup);
+          }}
+        >
+          Signup
         </Box>
       </Box>
     </Box>
