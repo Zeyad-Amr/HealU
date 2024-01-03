@@ -3,9 +3,10 @@ import React from "react";
 
 interface PatientDataHeaderProps {
   title: string;
+  color?: string;
 }
 
-const PatientDataHeader = ({ title }: PatientDataHeaderProps) => {
+const PatientDataHeader = ({ title, color }: PatientDataHeaderProps) => {
   return (
     <Box
       sx={{
@@ -19,6 +20,7 @@ const PatientDataHeader = ({ title }: PatientDataHeaderProps) => {
           minWidth: "max-content",
           fontSize: "1.5rem",
           fontWeight: "600",
+          color: `${color ? color : "black"}`,
         }}
       >
         {title}
@@ -27,7 +29,7 @@ const PatientDataHeader = ({ title }: PatientDataHeaderProps) => {
         sx={{
           height: "2px",
           width: "100%",
-          backgroundColor: "#000",
+          backgroundColor: `${color ? color : "black"}`,
           marginLeft: "1rem",
         }}
       ></Box>

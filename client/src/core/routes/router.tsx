@@ -10,10 +10,16 @@ import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmolo
 import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages";
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal/pages/doctors";
+import Analytics from "../../modules/admin-portal/pages/analytics";
 import Login from "../../modules/auth/pages";
 import Signup from "../../modules/patient-portal/components/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
+import AboutUs from "../../modules/landing-page/pages/AboutUs";
+import ContactUs from "../../modules/landing-page/pages/ContactUs";
+import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout";
+import Signup from "../../modules/user/pages/signup/SignUp";
+import Test from "../../modules/patient-portal/components/appointments-slots/appointments-bill/Test";
 import DoctorSlots from "../../modules/clinics-portals/orthopedic/pages/doctorSlot/doctorSlot";
 import Patient from "../../modules/clinics-portals/orthopedic/pages/patient/patient";
 
@@ -75,7 +81,6 @@ class Router {
       path: AppRoutes.orthoExamination,
       element: <Patient />,
     },
-    
   ];
 
   static getRoutes(): ReactElement[] {
