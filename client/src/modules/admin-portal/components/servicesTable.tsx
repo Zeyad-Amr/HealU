@@ -92,6 +92,7 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
             <>
               <IconButton
                 aria-label="save"
+                color="primary"
                 onClick={() => handleSave(params.row.id)}
               >
                 <Save />
@@ -100,7 +101,8 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
           ) : (
             <IconButton
               aria-label="edit"
-              onClick={() => handleEdit(params.row.id)} 
+              color="secondary"
+              onClick={() => handleEdit(params.row.id)}
             >
               <Edit />
             </IconButton>
@@ -109,7 +111,7 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
           <IconButton
             aria-label="delete"
             color="warning"
-            onClick={() => handleDelete(params.row.id)} 
+            onClick={() => handleDelete(params.row.id)}
           >
             <Delete />
           </IconButton>

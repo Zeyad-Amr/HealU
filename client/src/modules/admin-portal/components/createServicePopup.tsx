@@ -23,7 +23,7 @@ const CreateServicePopup: React.FC<CreateServicePopupProps> = ({
 }) => {
   const [formData, setFormData] = useState({
     name: "Vision Test",
-    clinic: "Ophthalmology",
+    clinicId: 1,
     description: "Vision test including eye measurements",
     price: 100,
   });
@@ -38,7 +38,7 @@ const CreateServicePopup: React.FC<CreateServicePopupProps> = ({
     api
       .post("/admin/clinic-service", {
         name: formData["name"],
-        clinicId: 1,
+        clinicId: formData["clinicId"],
         description: formData["description"],
         price: formData["price"],
       })
@@ -101,7 +101,7 @@ const CreateServicePopup: React.FC<CreateServicePopupProps> = ({
             <TextField
               label="Clinic"
               name="clinic"
-              defaultValue={formData.clinic}
+              defaultValue={formData.clinicId}
               variant="filled"
               margin="dense"
               size="small"
