@@ -14,6 +14,7 @@ import Login from "../../modules/auth/pages";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 import Signup from "../../modules/user/pages/signup/SignUp";
+import Test from "../../modules/patient-portal/components/appointments-slots/appointments-bill/Test";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -65,18 +66,10 @@ class Router {
       path: AppRoutes.signup,
       element: <Signup />,
     },
-
-    // Eample on children
-    // {
-    //   path: AppRoutes.dashboardLayout,
-    //   element: <DashboardLayout />,
-    //   isPrivate: true,
-    //   children: [
-    //     { path: AppRoutes.dashboard, element: <Dashboard /> },
-    //     { path: AppRoutes.dashboard, element: <Dashboard /> },
-    //     { path: AppRoutes.dashboard, element: <Dashboard /> },
-    //   ],
-    // },
+    {
+      path: AppRoutes.test,
+      element: <Test />,
+    },
   ];
 
   static getRoutes(): ReactElement[] {
