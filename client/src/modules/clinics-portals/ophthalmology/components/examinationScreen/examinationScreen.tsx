@@ -519,6 +519,7 @@ const OphthalmologyForm = () => {
                   position: "absolute",
                   top: "50%",
                   left: "50%",
+                  width: "20%",
                   transform: "translate(-50%, -50%)",
                   backgroundColor: "#F4F4F4",
                   padding: "26px",
