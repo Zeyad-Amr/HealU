@@ -21,13 +21,17 @@
   justify-content: flex-end;
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
   border-radius: 15px;
+  /* text */
   color: white!important;
   font-size: larger !important;
+  font-weight: 600 !important;
+  font-family: "Roboto";
 }
 .createSlotButtonContainer {
     display: flex;
     justify-content: space-between;
     margin: 16px;
+    margin-left:2px;
     align-items: center;
   }
 
@@ -37,14 +41,19 @@
 }
 
 .dateSelection {
-  background: transparent;
-  padding: 0px;
+  /* background: transparent; */
+  padding: 0px! important;
   border-radius: 8px;
-  color: rgba(139, 139, 139, 1);
-  font-size: 1.5rem;
-  margin: 0px;
   border: none;
   cursor: pointer;
+  margin: 0px;
+  /* text */
+  color: rgba(139, 139, 139, 1);
+  font-size: larger;
+  font-family: "Roboto";
+  font-weight: 400;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .menu {
@@ -56,7 +65,9 @@
 }
 
 .tableCell {
-  border: none;
+  border: none!important;
+  margin: 0;
+  padding: 5px !important;
 }
 
 .timeCell {
@@ -64,9 +75,13 @@
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
   padding: 8px;
   border-radius: 8px;
-  color: white;
-  text-align: center;
   margin-right: 15px !important; 
+  width: 30vh;
+  /* text */
+  font-family: "Roboto";
+  text-align: center;
+  color: white;
+  font-size: larger!important;
 }
 
 .patientName {
@@ -75,27 +90,25 @@
   padding: 8px;
   border-radius: 8px;
   cursor: pointer;
+  /* text */
+  font-family: "Roboto";
+  color: black;
+  font-size: larger!important;
 }
 
 .deleteIcon {
   background-color: rgba(184, 2, 2, 1) !important;
   border-radius: 15px !important;
-  color: white !important;
   width: 50px;
-  font-family: "Roboto";
-  font-weight: 400;
+  /* icon */
+  color: white !important;
 }
 
 .cancelButton {
   background-color: rgba(85, 85, 85, 1) !important;
   border-radius: 15px !important;
-  color: white !important;
   width: 50px;
-  font-family: "Roboto";
-  font-weight: 400;
   margin-left: 8px;
+  color: white !important;
 }
 
-.deleteIcon {
-  background-color: rgba(184, 2, 2, 1);
-}
