@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import CustomTextField from "../../../../core/components/CustomTextField";
 import PatientDataHeader from "./PatientDataHeader";
 import PrimaaryBtn from "../../../../core/components/PrimaaryBtn";
