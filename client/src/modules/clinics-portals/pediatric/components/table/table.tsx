@@ -45,13 +45,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const DevicesTable = () => {
   const dispatch = useAppDispatch();
   const deviceState: DeviceState = useSelector((state: any) => state.devices);
-  const [selectedDevices, setSelectedDevices] = useState<DeviceState>(
-    {} as DeviceState
-  );
   useEffect(() => {
     dispatch(fetchDevices(deviceState.AllDevices));
-    setSelectedDevices(deviceState);
-  }, [deviceState]);
+  }, []);
   return (
     <>
       <TableContainer component={Paper}>
@@ -71,9 +67,9 @@ const DevicesTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {selectedDevices.AllDevices == undefined
+            {deviceState.AllDevices == undefined
               ? null
-              : selectedDevices.AllDevices.map((item: any) => (
+              : deviceState.AllDevices.map((item: any) => (
                   <StyledTableRow key={item.DeviceID}>
                     <StyledTableCell component="th" scope="row">
                       {item.Device[0].DeviceName}
@@ -85,10 +81,10 @@ const DevicesTable = () => {
                       {item.Device[0].DeviceManufacturer}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {item.Device[0].PurchaseDate}
+                      {item.Device[0].PurchaseDate.slice(0, 10)}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {item.Device[0].ExpiryDate}
+                      {item.Device[0].ExpiryDate.slice(0, 10)}
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       {item.Device[0].DeviceStatus}
