@@ -12,7 +12,7 @@ import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal/pages/doctors";
 import Analytics from "../../modules/admin-portal/pages/analytics";
 import Login from "../../modules/auth/pages";
-import Signup from "../../modules/patient-portal/components/signup/SignUp";
+// import Signup from "../../modules/patient-portal/components/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 import AboutUs from "../../modules/landing-page/pages/AboutUs";
