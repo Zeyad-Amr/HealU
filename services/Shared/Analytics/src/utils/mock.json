@@ -1,0 +1,138 @@
+{
+  "status": "success",
+  "message": "Analytics data fetched successfully",
+  "timeframe": "Daily",
+  "analytics": {
+    "billing": {
+      "totalRevenue": {
+        "clinic_1": 5000,
+        "clinic_2": 6000,
+        "clinic_3": 4500,
+        "average_all_clinics": 5166.67
+      },
+      "billsAdded": {
+        "clinic_1": 5000,
+        "clinic_2": 6000,
+        "clinic_3": 4500,
+        "average_all_clinics": 5166.67
+      },
+      "invoicesAdded": {
+        "clinic_1": 5000,
+        "clinic_2": 6000,
+        "clinic_3": 4500,
+        "average_all_clinics": 5166.67
+      }
+    },
+    "medicalRecords": {
+      "recordsAdded": {
+        "clinic_1": 150,
+        "clinic_2": 180,
+        "clinic_3": 160,
+        "average_all_clinics": 163.33
+      },
+      "prescriptionsAdded": {
+        "clinic_1": 100,
+        "clinic_2": 120,
+        "clinic_3": 110,
+        "average_all_clinics": 110
+      },
+      "medicalHistoryAdded": {
+        "clinic_1": 50,
+        "clinic_2": 60,
+        "clinic_3": 50,
+        "average_all_clinics": 53.33
+      }
+    },
+    "patientDemographics": {
+      "ageDistribution": {
+        "clinic_1": {
+          "0-18": 20,
+          "19-35": 30,
+          "36-50": 25,
+          "50+": 25
+        },
+        "clinic_2": {
+          "0-18": 20,
+          "19-35": 30,
+          "36-50": 25,
+          "50+": 25
+        },
+        "clinic_3": {
+          "0-18": 20,
+          "19-35": 30,
+          "36-50": 25,
+          "50+": 25
+        }
+      },
+      "genderDistribution": {
+        "clinic_1": {
+          "male": 45,
+          "female": 55
+        },
+        "clinic_2": {
+          "male": 45,
+          "female": 55
+        },
+        "clinic_3": {
+          "male": 45,
+          "female": 55
+        }
+      }
+    },
+    "numberOfPatients": {
+      "clinic_1": 500,
+      "clinic_2": 600,
+      "clinic_3": 450
+    },
+    "percentageOfScheduledSlots": {
+      "clinic_1": "40%",
+      "clinic_2": "60%",
+      "clinic_3": "50%"
+    },
+    "numberOfAppointments": {
+      "clinic_1": 800,
+      "clinic_2": 1000,
+      "clinic_3": 700
+    },
+    "numberOfServicesUsed": {
+      "clinic_1": 300,
+      "clinic_2": 350,
+      "clinic_3": 280
+    },
+    "clinics": {
+      "numberOfClinics": 6,
+      "clinics": [
+        {
+          "id": "clinic_1",
+          "name": "Clinic 1",
+          "numberOfDoctors": 5
+        },
+        {
+          "id": "clinic_1",
+          "name": "Clinic 1",
+          "numberOfDoctors": 5
+        },
+        {
+          "id": "clinic_1",
+          "name": "Clinic 1",
+          "numberOfDoctors": 5
+        },
+        {
+          "id": "clinic_1",
+          "name": "Clinic 1",
+          "numberOfDoctors": 5
+        },
+        {
+          "id": "clinic_1",
+          "name": "Clinic 1",
+          "numberOfDoctors": 5
+        },
+        {
+          "id": "clinic_1",
+          "name": "Clinic 1",
+          "numberOfDoctors": 5
+        }
+      ]
+    }
+  }
+}

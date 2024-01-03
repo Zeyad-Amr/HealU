@@ -1,8 +1,29 @@
 const axios = require('axios');
+const Joi = require('joi');
 const connection = require('../DataBase/connection'); // Import the connection module 
 require('dotenv').config();
-//=========================================================================================
-async function createPrescription(req, res) {  // Create new prescription 
+//================================================ Schema ==============================================================
+const PatientPrescriptionSchema = Joi.object({
+  AppointmentID: Joi.string().required(),
+  DoctorName: Joi.string().allow('').required(),
+  Diagnosis: Joi.string().allow('').required(),
+  ExtraNotes: Joi.string().allow('').required(),
+  Drugs: Joi.array().items(
+    Joi.object({
+      DrugName: Joi.string().allow('').required(),
+      DrugDuration: Joi.string().allow('').required(),
+      DrugDose: Joi.string().allow('').required(),
+    })
+  ).default([]),
+})
+//========================================== Create new prescription  ===============================================
+async function createPrescription(req, res) {  
+  const { error } = PatientPrescriptionSchema.validate(req.body);    // Validate the request body
+
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
   const {
     AppointmentID,
     DoctorName,
@@ -34,7 +55,7 @@ async function createPrescription(req, res) {  // Create new prescription
     }
     
     insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosis, ExtraNotes,(insertedPrescriptionID) => {
-      if (Drugs.length > 0){
+      if (Drugs && Drugs.length > 0){
         insertDrugs(insertedPrescriptionID,PatientID, Drugs,() => {});
       }
       console.log( "Prescription with Drugs is created successfully");
@@ -50,7 +71,6 @@ async function createPrescription(req, res) {  // Create new prescription
 //================================================================================================
 function getAllPrescriptions(req, res) {  //Get all prescriptions
   const sql_query = generatePrescriptionQuery("","");
-
   connection.query(sql_query, (err, result) => {
     if (err) throw err;
     if (result.length === 0) {
@@ -66,7 +86,6 @@ function getAllPrescriptions(req, res) {  //Get all prescriptions
 function getPrescriptionByID (req, res){  // Get prescription by prescriptionId
   const PrescriptionID = req.params.prescriptionId;
   const sql_query = generatePrescriptionQuery("",` AND prescription.PrescriptionID = ${PrescriptionID}`);
-
   connection.query(sql_query, [PrescriptionID], (err, result) => {
     if (err) throw err;
     if (result.length === 0) {
@@ -82,7 +101,6 @@ function getPrescriptionByID (req, res){  // Get prescription by prescriptionId
 function getPrescriptionByPatientID (req, res){   // Get prescription by patientId
   const PatientID = req.params.patientId;
   const sql_query = generatePrescriptionQuery("",` AND prescription.PatientID = ${PatientID}`);
-
   connection.query(sql_query, [PatientID], (err, result) => {
     if (err) throw err;
     if (result.length === 0) {
@@ -98,7 +116,7 @@ function getPrescriptionByPatientID (req, res){   // Get prescription by patient
 function generatePrescriptionQuery(joinConditions, whereConditions) {   // Function to generate the common SQL query for retrieving prescriptions
   const sql_query = `
     SELECT prescription.PrescriptionID, prescription.PatientID, prescription.AppointmentID,  prescription.DoctorName, prescription.Diagnosis, prescription.ExtraNotes, 
-    drug.DrugID, drug.DName, drug.DDuration, drug.DDose
+    prescription.CreatedAt, drug.DrugID, drug.DName, drug.DDuration, drug.DDose
     FROM prescription
     LEFT JOIN drug ON prescription.PrescriptionID = drug.PrescriptionID
     ${joinConditions}
@@ -109,7 +127,6 @@ function generatePrescriptionQuery(joinConditions, whereConditions) {   // Funct
 //===============================================================================================
 function processQueryResult(result) {          //Function to process the query result and build the prescription map
   const prescriptionMap = {};
-
   result.forEach((row) => {
     const {PrescriptionID, DrugID} = row;
 
@@ -121,6 +138,7 @@ function processQueryResult(result) {          //Function to process the query r
         DoctorName: row.DoctorName,
         Diagnosis: row.Diagnosis,
         ExtraNotes: row.ExtraNotes,
+        CreatedAt: row.CreatedAt,
         drug: []
       };
     }
@@ -143,7 +161,6 @@ async function insertPrescription(PatientID, AppointmentID, DoctorName, Diagnosi
 //==============================================================================================
 function insertDrugs(insertedPrescriptionID,PatientID, Drugs,callback) {        // Insert drugs into drug table
   const sql_query_Drug = `INSERT INTO drug (PrescriptionID,PatientID, DName, DDuration, DDose) VALUES ( ?, ?, ?, ?, ?)`;
-
   // handling asynchronous insertion of multiple drugs
   Promise.all(Drugs.map((drug) => { return new Promise((resolve, reject) => {
     connection.query(sql_query_Drug,[insertedPrescriptionID,PatientID, drug.DrugName, drug.DrugDuration, drug.DrugDose],(drugErr, drugResult) => {

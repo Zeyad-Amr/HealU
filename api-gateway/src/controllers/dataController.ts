@@ -1,31 +1,149 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
-import { errorHandler } from '../services';
+import { errorHandler, validate, } from '../services';
 
+interface CustomRequest extends Request {
+    user: {
+        sub: string
+    }
+}
+
+
+export const create_slot = async (req: Request, res: Response) => {
+    try {
+        const doctorId = (req as CustomRequest).user.sub
+
+        let slotData = validate.validate(req.body, validate.slotSchema)
+        slotData.doctorId = doctorId
+
+        let slot = await axios.post(`${process.env.Appointment_URL}/slots`, slotData)
+
+        return res.status(200).json({
+            message: "slot created successfully"
+            , slot
+        })
+    } catch (error: any) {
+        const err = errorHandler(error)
+
+        res.status(err?.statusCode ?? 500).json(err)
+    }
+}
+
+export const get_doctor_slots = async (req: Request, res: Response) => {
+    try {
+        const { date } = req.params
+        const doctorId = (req as CustomRequest).user.sub
+
+        let slots = (await axios.get(`${process.env.Appointment_URL}/slots/doctor/${doctorId}/date/${date}`)).data
+
+        for await (const slot of slots) {
+            if (Object.keys(slot.appointmentObject).length !== 0) {
+                const patient = await axios.get(`${process.env.Registration_URL}/patient/${parseInt(slot.appointmentObject.patientId)}`)
+                    .then((res) => {
+                        if (!res.data.data.userId) throw { statusCode: 503, msg: res.data.data }
+                        return res.data.data
+                    }).catch((err) => {
+                        console.log(err);
+
+                        throw err
+                    })
+                slot.appointmentObject.patient = patient
+            }
+
+        }
+
+        return res.status(200).json({
+            slots
+        })
+    } catch (error: any) {
+        const err = errorHandler(error)
+
+        res.status(err?.statusCode ?? 500).json(err)
+    }
+}
 
 export const get_appointment_data = async (req: Request, res: Response) => {
     try {
         const { appointmentId } = req.params
 
         const appointment = (await axios.get(`${process.env.Appointment_URL}/appointments/${appointmentId}`)).data
+        console.log(appointment);
 
-        const [doctorRes, patientRes, recordRes, medicalHistoryRes] = await Promise.all([
-            axios.get(`${process.env.Registration_URL}/staff/doctor/${appointment.doctorId}`),
-            axios.get(`${process.env.Registration_URL}/staff/patient/${appointment.patientId}`),
+        let errors: any[] = []
+        const [doctorRes, patientRes, recordRes, medicalHistoryRes] = await Promise.allSettled([
+            axios.get(`${process.env.Registration_URL}/staff/${appointment.doctorId}`),
+            axios.get(`${process.env.Registration_URL}/patient/${appointment.patientId}`),
             axios.get(`${process.env.EMR_URL}/record/patient/${appointment.patientId}`),
             axios.get(`${process.env.EMR_URL}/medical-history/${appointment.patientId}`),
         ])
-        const doctorData = doctorRes.data.data
-        const patientData = patientRes.data.data
-        const patientRecord = recordRes.data[0]
-        const medicalHistory = medicalHistoryRes.data[0]
+
+        let doctorData = {};
+        if (doctorRes.status === 'fulfilled') {
+            doctorData = doctorRes.value.data.data
+        } else {
+            errors.push(doctorRes.reason)
+        }
+        let patientData = {};
+        if (patientRes.status === 'fulfilled') {
+            patientData = patientRes.value.data.data
+        } else {
+            errors.push(patientRes.reason)
+        }
+        let patientRecord = {};
+        if (recordRes.status === 'fulfilled') {
+            patientRecord = recordRes.value.data
+        } else {
+            errors.push(recordRes.reason)
+        }
+        let medicalHistory = {};
+        if (medicalHistoryRes.status === 'fulfilled') {
+            medicalHistory = medicalHistoryRes.value.data[0]
+        } else {
+            errors.push(medicalHistoryRes.reason)
+        }
 
         return res.status(200).json({
             doctor: doctorData,
             patient: patientData,
             patientRecord,
-            medicalHistory
+            medicalHistory,
+            errors
         })
+    } catch (error: any) {
+        const err = errorHandler(error)
+
+        res.status(err?.statusCode ?? 500).json(err)
+    }
+}
+
+export const get_upcoming_appointments = async (req: Request, res: Response) => {
+    try {
+        const patientId = (req as CustomRequest).user.sub
+
+        const appointmentsRes = await axios.get(`${process.env.Appointment_URL}/appointments/patient/${patientId}`)
+
+        let appointments: any[] = appointmentsRes.data
+        // get the completed appointments only 
+        appointments = appointments.filter((item) => {
+            return item.status === 0
+        })
+        if (appointments.length === 0) {
+            return res.status(200).json({ appointments })
+        }
+
+        for await (const appointment of appointments) {
+            const doctor = (await axios.get(`${process.env.Registration_URL}/staff/${appointment.doctorId}`)).data.data
+            const clinic = (await axios.get(`${process.env.Admin_URL}/api/v1/clinic/${appointment.clinicId}`)).data.data.clinic
+
+            appointment.doctor = doctor
+            appointment.clinic = clinic
+
+        }
+
+        return res.status(200).json({
+            appointments,
+        })
+
     } catch (error: any) {
         const err = errorHandler(error)
 
@@ -35,36 +153,85 @@ export const get_appointment_data = async (req: Request, res: Response) => {
 
 export const get_previous_appointments = async (req: Request, res: Response) => {
     try {
-        const { patientId } = req.params
+        const patientId = (req as CustomRequest).user.sub
 
-        const [appointmentsRes, medicalRecordRes, medicalHistoryRes, prescriptionsRes] = await Promise.all([
+        const [appointmentsRes, prescriptionsRes, recordRes] = await Promise.all([
             axios.get(`${process.env.Appointment_URL}/appointments/patient/${patientId}`),
-            axios.get(`${process.env.EMR_URL}/record/patient/${patientId}`),
-            axios.get(`${process.env.EMR_URL}/medical-history/${patientId}`),
             axios.get(`${process.env.EMR_URL}/prescription/patient/${patientId}`),
+            axios.get(`${process.env.EMR_URL}/record/patient/${patientId}`),
         ])
 
         let appointments: any[] = appointmentsRes.data
+        // get the completed appointments only 
+        console.log(appointments);
         appointments = appointments.filter((item) => {
-            return item.status === 'Completed'
+            return item.status === 2
         })
+        console.log(appointments);
 
-        const appointmentIds = appointments.map((item) => { item._id })
-
-        const filterByAppointmentId = (item: any) => {
-            appointmentIds.includes(item.AppointmentID)
+        if (appointments.length === 0) {
+            return res.status(200).json({ appointments })
         }
 
-        let medicalRecord = medicalRecordRes.data.filter(filterByAppointmentId)
-        let prescriptions = prescriptionsRes.data.filter(filterByAppointmentId)
-        let medicalHistory = medicalHistoryRes.data
+        const appointmentIds = appointments.map((item) => item._id)
+        function filterByAppointmentId(item: any) {
+            return appointmentIds.includes(item.AppointmentID)
+        }
+        let prescriptions = prescriptionsRes.data
+        // get prescriptions assigned to these appointments
+        prescriptions = prescriptionsRes.data.filter(filterByAppointmentId)
 
+        let records = recordRes.data
+        // get records assigned to these appointments
+        records = recordRes.data.filter(filterByAppointmentId)
+
+        const clinicIds = appointments.map((appointment: any) => (appointment.clinicId))
+        let clinics = (await axios.get(`${process.env.Admin_URL}/api/v1/clinic`)).data.data.clinics
+        clinics = clinics.filter((clinic: any) => {
+            return clinicIds.includes(clinic.id)
+        })
+
+        if (clinics.length === 0) {
+            throw { statusCode: 500, msg: "Internal Server Error" }
+        }
+
+        const doctorIds = appointments.map((appointment: any) => (appointment.doctorId))
+        let doctors: any[] = [];
+
+        for await (const doctorId of new Set(doctorIds)) {
+            const doctor = (await axios.get(`${process.env.Registration_URL}/staff/${doctorId}`)).data.data
+            doctors.push(doctor)
+        }
+
+        appointments = appointments.map((appointment) => {
+            const doctor = doctors.find((doctor) => doctor.userId === appointment.doctorId)
+            const clinic = clinics.find((clinic: any) => clinic.id === appointment.clinicId)
+            const prescription = prescriptions.find((pres: any) => pres.AppointmentID === appointment._id)
+            const record = records.find((pres: any) => pres.AppointmentID === appointment._id)
+
+            return {
+                appointmentId: appointment._id,
+                doctor: {
+                    id: doctor.userId,
+                    name: doctor.firstName + " " + doctor.lastName
+                },
+                clinic: {
+                    id: clinic.id,
+                    name: clinic.name,
+                    description: clinic.description
+                },
+                medicalRecord: {
+                    vitals: record.Vital,
+                    EyeMeasurement: record.EyeMeasurement,
+                    medicalTests: record.MedicalTests,
+                    Nutrition: record.Nutrition
+                },
+                prescription
+            }
+        })
 
         return res.status(200).json({
             appointments,
-            medicalHistory,
-            medicalRecord,
-            prescriptions
         })
 
     } catch (error: any) {
@@ -91,11 +258,11 @@ export const get_all_slots = async (req: Request, res: Response) => {
         // get all slots and Appointments from Appointment Service
         let getSlotsURL = `${process.env.Appointment_URL}/slots`
         let getAppointmentsURL = `${process.env.Appointment_URL}/appointments`
-        if (clinicId) {
+        if (parseInt(clinicId as string)) {
             getSlotsURL = `${process.env.Appointment_URL}/slots/clinic/${clinicId}/?unscheduled=false`
             getAppointmentsURL = `${process.env.Appointment_URL}/appointments/clinic/${clinicId}/?unscheduled=false`
         }
-        if (doctorId) {
+        if (parseInt(doctorId as string)) {
             getSlotsURL = `${process.env.Appointment_URL}/slots/doctor/${doctorId}/?unscheduled=false`
             getAppointmentsURL = `${process.env.Appointment_URL}/appointments/doctor/${doctorId}/?unscheduled=false`
         }
@@ -135,7 +302,6 @@ export const get_all_slots = async (req: Request, res: Response) => {
                 (appointment: any) => appointment.date == slot.date
             );
         });
-        console.log(slotsWithDates);
 
 
         /* 
@@ -146,9 +312,19 @@ export const get_all_slots = async (req: Request, res: Response) => {
         const doctorIds = slotsWithDates.map((slot: any) => (slot.doctorId))
         let doctors: any[] = [];
 
+        const errors = []
         const clinic = (await axios.get(`${process.env.Admin_URL}/api/v1/clinic/${clinicIds[0]}`)).data.data.clinic
         for await (const doctorId of new Set(doctorIds)) {
-            const doctor = (await axios.get(`${process.env.Registration_URL}/staff/${doctorId}`)).data.data
+            const [doctorRes] = await Promise.allSettled([
+                axios.get(`${process.env.Registration_URL}/staff/${doctorId}`)
+            ])
+            let doctor;
+            if (doctorRes.status === 'fulfilled') {
+                doctor = doctorRes.value.data.data
+            } else {
+                errors.push(doctorRes.reason)
+            }
+
             doctors.push(doctor)
         }
 
@@ -159,43 +335,18 @@ export const get_all_slots = async (req: Request, res: Response) => {
                 slotId: slot._id,
                 doctor: {
                     id: doctor.userId,
-                    name: doctor.firstName + doctor.lastName
+                    name: doctor.firstName + " " + doctor.lastName
                 },
-                clinic: {
-                    id: clinic.id,
-                    name: clinic.name
-                },
+                clinic,
                 time: slot.time,
                 weekDay: slot.weekDay,
                 date: slot.date,
             }
         })
 
-        console.log(slotsWithDates);
-
-
-        /*
-        {
-            slotId: '658f1886aadce3fc8458c47a',
-            doctor: {
-                id:13,
-                name:'Zeyad Amr'
-            },
-            clinic: {
-                id:5,
-                name:'Dental clinic'
-            },
-            time: '11:00',
-            weekDay: 'Monday',
-            booked: true,
-            __v: 0,
-            date: 2023-12-18T11:00:00.000Z,
-        }
-
-          */
-
         return res.status(200).json({
             slots: slotsWithDates,
+            errors
         })
 
     } catch (error: any) {
@@ -210,10 +361,54 @@ export const post_examination = async (req: Request, res: Response) => {
     try {
         const data = req.body
 
+        const prescriptions = data.prescription
 
+        let prescriptionResponse: any[] = []
+        for await (const prescription of prescriptions) {
+            let prescriptionData = {
+                AppointmentID: data.appointmentId,
+                Diagnosis: data.Diagnosis,
+                ExtraNotes: prescription.ExtraNotes,
+                DoctorName: "",
+                Drugs: [
+                    {
+                        DrugName: prescription.DrugName,
+                        DrugDuration: prescription.DrugDuration,
+                        DrugDose: prescription.DrugDose
+                    }
+                ]
+            }
+            const newPrescription = (await axios.post(`${process.env.EMR_URL}/prescription`, prescriptionData)).data
+            prescriptionResponse.push(newPrescription)
+        }
+
+        const recordData = {
+            AppointmentID: data.appointmentId,
+            Weight: data.weight,
+            Length: data.height,
+            MedicalTests: data.MedicalTests,
+            Vital: data.Vitals,
+            Vaccines: data.Vaccines,
+            EyeMeasurements: data.EyeMeasurements,
+            NutritionData: data.NutritionData,
+            ServicesDescription: "",
+            RecommendedActionDescription: "",
+        }
+
+        const newRecord = (await axios.post(`${process.env.EMR_URL}/record`, recordData)).data
+
+        console.log({
+            recordResponse: newRecord,
+            prescriptionResponse
+        });
+
+        await axios.put(`${process.env.Appointment_URL}/appointments/${data.appointmentId}`, {
+            status: 2
+        })
 
         return res.status(200).json({
-
+            status: 'success',
+            msg: 'examination added successfully'
         })
 
     } catch (error: any) {
@@ -222,3 +417,80 @@ export const post_examination = async (req: Request, res: Response) => {
         res.status(err?.statusCode ?? 500).json(err)
     }
 }
+
+export const book_appt = async (req: Request, res: Response) => {
+    try {
+        const { appointment, card } = validate.validate(req.body, validate.bookApptSchema)
+        appointment.patientId = (req as CustomRequest).user.sub
+
+
+        // create appointment 
+        const appt = (await axios.post(`${process.env.Appointment_URL}/appointments`, appointment)).data.appointment
+
+        const clinic = await axios.get(`${process.env.Admin_URL}/api/v1/clinic/${appt.clinicId}`)
+            .then((res) => {
+                return res.data.data.clinic
+            }).catch(async (err) => {
+                await axios.delete(`${process.env.Appointment_URL}/appointments/${appt._id}`)
+                throw err
+            })
+
+        const invoiceData = {
+            servicesIds: [clinic.defaultServiceId],
+            appointmentId: appt._id
+        }
+        console.log(clinic);
+        console.log(invoiceData);
+
+
+        const invoice = await axios.post(`${process.env.Bill_URL}/invoice`, invoiceData).then((res) => {
+            return res.data
+        }).catch(async (err) => {
+            await axios.delete(`${process.env.Appointment_URL}/appointments/${appt._id}`)
+            console.log(err);
+
+            throw err
+        })
+
+        const bill = await axios.post(`${process.env.Bill_URL}/bill`, {
+            invoiceId: invoice.id,
+            paymentMethod: "card",
+            paymentSource:
+            {
+                card
+            }
+        })
+            .then((res) => {
+                if (res.status == 201) {
+                    return res.data;
+                }
+            })
+            .catch(async (err) => {
+                await axios.delete(`${process.env.Appointment_URL}/appointments/${appt._id}`)
+                await axios.delete(`${process.env.Bill_URL}/invoice/${appt._id}`)
+                throw err
+            })
+
+
+        return res.status(200).json({
+            message: "appointment created successfully"
+        })
+
+    } catch (error: any) {
+
+        const err = errorHandler(error)
+
+        res.status(err?.statusCode ?? 500).json(err)
+    }
+}
+
+
+
+/*
+    POST book appointment
+    POST add examination ✅
+
+    GET previous appts
+    GET upcoming appts
+    GET user data with photo
+ */

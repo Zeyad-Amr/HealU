@@ -66,7 +66,7 @@ const ExaminationScreen = () => {
   const closeServicesModal = () => setServicesModalOpen(false);
 
   return (
-    <Container maxWidth="lg" className="container">
+    <Container maxWidth="lg" className="ped-container">
       <PatientSection />
       <Diagnosis DataFromDiagnosis={handleDataFromDiagnosiss} />
       <div className="AddBtns">
