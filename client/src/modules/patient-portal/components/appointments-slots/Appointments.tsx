@@ -52,7 +52,7 @@ const Appointments = () => {
         setAllClinicsData(res.data.data.clinics);
         setClinicIdData(res.data.data.clinics[0].id);
         loadAllDoctorsByClinicId(res.data.data.clinics[0].id);
-        onSearch(doctorIdData, clinicIdData, selectedFromDate, selectedToDate);
+        onSearch(doctorIdData, res.data.data.clinics[0].id, selectedFromDate, selectedToDate);
       })
       .catch((err: any) => {
         console.log(err);
@@ -144,16 +144,9 @@ const Appointments = () => {
     }
   };
 
-  // useEffect(() => {
-  //   // const formattedDate = selectedFromDate.format('DD-MM-YYYY');
-  //   const formattedFromDate = selectedFromDate.format("YYYY-MM-DD");
-  //   console.log(formattedFromDate);
-
-  //   const formattedToDate = selectedToDate.format("YYYY-MM-DD");
-  //   console.log(formattedToDate);
-  // }, [selectedFromDate, selectedToDate]);
-
   const onChangeDoctors = (event: any) => {
+    console.log(event.target.value);
+    
     setDoctorIdData(event.target.value);
     onSearch(
       event.target.value,
