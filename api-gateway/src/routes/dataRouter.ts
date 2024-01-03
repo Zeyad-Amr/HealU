@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { book_appt, get_all_slots, get_appointment_data, get_doctor_slots, get_previous_appointments, get_upcoming_appointments, post_examination } from "../controllers/dataController";
+import { book_appt, create_slot, get_all_slots, get_appointment_data, get_doctor_slots, get_previous_appointments, get_upcoming_appointments, post_examination } from "../controllers/dataController";
 
 const router = Router();
 
@@ -18,6 +18,9 @@ router.get('/data/slots', get_all_slots)
 
 // get doctor's slots in given date
 router.get('/data/slots/:date', get_doctor_slots)
+
+// create slot for logged in user
+router.post('/data/slots', create_slot)
 
 
 // add examination for patient 
