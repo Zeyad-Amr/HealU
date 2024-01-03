@@ -21,6 +21,7 @@
   justify-content: flex-end;
   background: linear-gradient(285.17deg, #01b6b6 10.66%, #13d2de 102.7%);
   border-radius: 15px;
+  padding: 0;
   /* text */
   color: white!important;
   font-size: larger !important;
@@ -30,9 +31,8 @@
 .createSlotButtonContainer {
     display: flex;
     justify-content: space-between;
-    margin: 16px;
-    margin-left:2px;
     align-items: center;
+    padding: 8px;
   }
 
 .textStyle {
@@ -77,11 +77,13 @@
   border-radius: 8px;
   margin-right: 15px !important; 
   width: 30vh;
+  min-width: 60px ;
   /* text */
   font-family: "Roboto";
   text-align: center;
   color: white;
   font-size: larger!important;
+  font-weight: 400 !important;
 }
 
 .patientName {
@@ -94,6 +96,7 @@
   font-family: "Roboto";
   color: black;
   font-size: larger!important;
+  font-weight: 400 !important;
 }
 
 .deleteIcon {
