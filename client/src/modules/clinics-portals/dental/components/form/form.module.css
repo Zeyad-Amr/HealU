@@ -1,0 +1,6 @@
+.form {
+  /* padding: 10px; */
+  border: solid 2px black;
+  position: relative;
+  border-radius: 8px;
+}

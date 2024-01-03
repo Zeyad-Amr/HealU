@@ -1,6 +1,8 @@
+
 .page {
   margin: 15px;
 }
+
 
 .container {
   border: solid 2px rgba(1, 182, 182, 1);
@@ -67,12 +69,15 @@
 
 /* Style for the label text */
 .PopUpDropListButton-label {
+
   color: white;
   /* Set text color to white or any color of your choice */
+
 }
 
 /* Style for the add icon */
 .PopUpDropListButton-icon {
+
   width: 20px;
   /* Adjust icon size as needed */
   height: 20px;
@@ -101,3 +106,4 @@
   margin-left: auto;
   /* Align the button to the right */
 }
+
