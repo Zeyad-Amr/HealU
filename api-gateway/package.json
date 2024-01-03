@@ -1,0 +1,32 @@
+{
+  "name": "api-gateway",
+  "version": "1.0.0",
+  "description": "The API gateway for HealU polyclinics system",
+  "main": "build/app.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/app.js",
+    "dev": "nodemon src/app.ts"
+  },
+  "author": "Ahmed Abd ElRaouf",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.3",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2"
+  }
+}

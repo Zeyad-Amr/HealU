@@ -17,8 +17,8 @@ const ContainerWrapper = styled("div")(({theme}: { theme: Theme }) => ({
     display: "flex",
     justifyContent: "center",
     // backgroundColor: "#9a1111",
-    width: "100vw",
-    padding: "4rem",
+    width: "100%",
+    paddingX: "4rem",
     overflowX: "hidden",
 }));
 

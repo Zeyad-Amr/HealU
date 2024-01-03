@@ -1,10 +1,11 @@
 const axios = require('axios');
+const Joi = require('joi');
 const connection = require('../DataBase/connection'); // Import the connection module 
 require('dotenv').config();
 // ============================================================================================================
 function generateRecordQuery(joinConditions, whereConditions) {   // Function to generate the common SQL query for retrieving mwdical history
   select_query = `
-  SELECT medicalhistory.PatientID,
+  SELECT medicalhistory.PatientID, medicalhistory.CreatedAt, 
   illnesses.IllnessID, illnesses.IllnessDescription,
   operations.OperationID, operations.OperationName, operations.OperationDate,
   medicaltests.TestID, medicaltests.TestDescription,
@@ -40,7 +41,6 @@ function getMedicalhistory (req, res)  {         //Get All medical histories
 function getMedicalhistoryByPatientID(req, res) {     //Get medical history with id
   const patientID = req.params.patientId;
   const sql_query = generateRecordQuery('', `AND medicalhistory.PatientID = ${patientID}`);
-
   connection.query(sql_query, (err, result) => {
     if (err) throw err;
     if (result.length === 0) {
@@ -67,6 +67,7 @@ function processQueryResult(result) {          //Function to process the query r
     if (!patientsMap[PatientID]) {
       patientsMap[PatientID] = {
         PatientID,
+        CreatedAt: row.CreatedAt,
         Illnesses: [],
         Operations: [],
         MedicalTests: [],
@@ -106,54 +107,55 @@ function processQueryResult(result) {          //Function to process the query r
   });
   return Object.values(patientsMap);
 }
-// .==================================== Create operation (POST) ================================================
+//================================================ Schema ==============================================================
+const illnessSchema = Joi.object({ // Schema for each illness object
+  IllnessDescription: Joi.string().allow('').required(),
+});
+const operationSchema = Joi.object({   // Schema for each operation object
+  OperationName: Joi.string().allow('').required(),
+  OperationDate: Joi.date().allow('').required(), 
+});
+const medicalTestSchema = Joi.object({    // Schema for each medical test object
+  TestID: Joi.number().allow('').required(),
+  TestDescription: Joi.string().allow('').required(),
+});
+const complaintSchema = Joi.object({   // Schema for each complaint object
+  ComplaintDescription: Joi.string().allow('').required(),
+});
+const drugSchema = Joi.object({   // Schema for each drug object
+  DrugName: Joi.string().allow('').required(),
+  DrugDuration: Joi.string().allow('').required(),
+  DrugDose: Joi.string().allow('').required(),
+});
+const patientHistorySchema = Joi.object({    // Schema for the entire input JSON
+  PatientID: Joi.number().required(),
+  Illnesses: Joi.array().items(illnessSchema).default([]),
+  Operations: Joi.array().items(operationSchema).default([]),
+  MedicalTests: Joi.array().items(medicalTestSchema).default([]),
+  Complaints: Joi.array().items(complaintSchema).default([]),
+  Drugs: Joi.array().items(drugSchema).default([]),
+});
+
+// ==================================== Create operation (POST) ================================================
 async function createMedicalHistory(req, res) {
+  const { error } = patientHistorySchema.validate(req.body);    // Validate the request body
+
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
   const { PatientID, Illnesses, Operations, MedicalTests, Complaints, Drugs } = req.body;
 
   try {
-    // Check if PatientID exists
+    // Check if PatientID exists in Registration
     const registerationUrl = process.env.REGISTERATION_API_URL;
-    const response = await axios.get(`${registerationUrl}/user/patient/${PatientID}`).catch(() => null);
+    const response = await axios.get(`${registerationUrl}/patient/${PatientID}`).catch(() => null);
 
     if (!response || !response.data) {
       console.log(`PatientID ${PatientID} is not found in Registeration List`);
       return res.status(404).json({ message:`PatientID ${PatientID} is not found in Registeration List` });
     }
 
-    // Map MedicalTests array to promises checking if TestID exists in the external API (Storage API)
-    const medicalTestPromises = MedicalTests.map(async (medicalTest) => {
-      const { TestID } = medicalTest;
-
-      const testUrl = process.env.MEDICALTEST_API_URL;
-
-      const Imagesresponse = await axios.get(`${testUrl}/api/v1/images/${TestID}`).catch(() => null);
-      const Filesresponse = await axios.get(`${testUrl}/api/v1/files/${TestID}`).catch(() => null);
-
-      if ((!Imagesresponse || !Imagesresponse.data) && (!Filesresponse || !Filesresponse.data)) {
-        console.log(`Tests are not found for TestID ${TestID}`);
-        return { message: `Tests are not found for TestID ${TestID}` };
-      }
-
-      // Check if the PatientID matches the response.patientId
-      const imagePatientId = Imagesresponse?.data?.data?.image?.patientId;
-      const filesPatientId = Filesresponse?.data?.data?.file?.patientId;
-      const responsePatientId = imagePatientId || filesPatientId;
-
-      if (responsePatientId != PatientID) {
-        console.log(`TestID ${TestID} does not belong to the patient with patientId: ${PatientID}`);
-        return { message: `TestID ${TestID} does not belong to the patient with patientId: ${PatientID}` };
-      }
-
-      return null;
-    });
-
-    const medicalTestResults = await Promise.all(medicalTestPromises);      // Wait for all promises to resolve
-
-    const testmessages = medicalTestResults.filter((result) => result && result.message);      // Collect errors from medicalTestResults
-
-    if (testmessages.length > 0) {
-      return res.status(404).json({ messages: testmessages });
-    }
     // Check if PatientID exists in MedicalHistory table
     const checkMedicalHistoryQuery = `SELECT * FROM medicalhistory WHERE PatientID = ?`;
     const [medicalHistoryResult] = await connection.promise().query(checkMedicalHistoryQuery, [PatientID]);
@@ -163,19 +165,17 @@ async function createMedicalHistory(req, res) {
       await connection.promise().query(sql_query_medicalhistory, [PatientID]);
       console.log("New Patient is created with PatientID:", PatientID);
     }
-
     // Check if PatientID has referenced values in other tables ( his medical history already exists) (patient has only one medical history)
-      const referencesQuery = `
-      SELECT PatientID FROM medicaltests WHERE PatientID = ?
-      UNION
-      SELECT PatientID FROM illnesses WHERE PatientID = ?
-      UNION
-      SELECT PatientID FROM operations WHERE PatientID = ?
-      UNION
-      SELECT PatientID FROM complaints WHERE PatientID = ?
-      UNION
-      SELECT PatientID FROM drug WHERE PatientID = ? AND PrescriptionID IS NULL
-    `;
+    const referencesQuery = `
+    SELECT PatientID FROM medicaltests WHERE PatientID = ?
+    UNION
+    SELECT PatientID FROM illnesses WHERE PatientID = ?
+    UNION
+    SELECT PatientID FROM operations WHERE PatientID = ?
+    UNION
+    SELECT PatientID FROM complaints WHERE PatientID = ?
+    UNION
+    SELECT PatientID FROM drug WHERE PatientID = ? AND PrescriptionID IS NULL`;
 
     const [referencesResult] = await connection.promise().query(referencesQuery, [PatientID, PatientID, PatientID, PatientID, PatientID]);
 
@@ -184,31 +184,75 @@ async function createMedicalHistory(req, res) {
       console.log(Message);
       return res.status(404).json({ message: Message });
     }
+    //Check if user added MedicalTests
+    if (MedicalTests && MedicalTests.length > 0){  
+      // Map MedicalTests array to promises checking if TestID exists in the external API (Storage API)
+      const medicalTestPromises = MedicalTests.map(async (medicalTest) => {
+        const { TestID } = medicalTest;
 
-    // Now that all validations passed, proceed with insertions into other tables
+        const testUrl = process.env.MEDICALTEST_API_URL;
 
-    // Insert data into the MedicalTests table
-    await insertDataIntoTable('medicaltests', ['PatientID', 'TestID', 'TestDescription'], MedicalTests, PatientID);
+        const Imagesresponse = await axios.get(`${testUrl}/api/v1/images/${TestID}`).catch(() => null);
+        const Filesresponse = await axios.get(`${testUrl}/api/v1/files/${TestID}`).catch(() => null);
 
-    await Promise.all([       // Insert data into other tables
-      insertDataIntoTable('illnesses', ['PatientID', 'IllnessDescription'], Illnesses, PatientID),
-      insertDataIntoTable('operations', ['PatientID', 'OperationName', 'OperationDate'], Operations, PatientID),
-      insertDataIntoTable('complaints', ['PatientID', 'ComplaintDescription'], Complaints, PatientID),
-      insertDataIntoTable('drug', ['PatientID', 'DName', 'DDuration', 'DDose'], Drugs, PatientID),
-    ]);
+        if ((!Imagesresponse || !Imagesresponse.data) && (!Filesresponse || !Filesresponse.data)) {
+          console.log(`Tests are not found for TestID ${TestID}`);
+          return { message: `Tests are not found for TestID ${TestID}` };
+        }
 
-    // Respond with succ ess message
+        // Check if the PatientID matches the response.patientId
+        const imagePatientId = Imagesresponse?.data?.data?.image?.patientId;
+        const filesPatientId = Filesresponse?.data?.data?.file?.patientId;
+        const responsePatientId = imagePatientId || filesPatientId;
+
+        if (responsePatientId != PatientID) {
+          console.log(`TestID ${TestID} does not belong to the patient with patientId: ${PatientID}`);
+          return { message: `TestID ${TestID} does not belong to the patient with patientId: ${PatientID}` };
+        }
+
+        return null;
+      });
+
+      const medicalTestResults = await Promise.all(medicalTestPromises);      // Wait for all promises to resolve
+
+      const testmessages = medicalTestResults.filter((result) => result && result.message);      // Collect errors from medicalTestResults
+
+      if (testmessages.length > 0) {
+        return res.status(404).json({ messages: testmessages });
+      }
+
+      // Insert data into the MedicalTests table
+      await insertDataIntoTable('medicaltests', ['PatientID', 'TestID', 'TestDescription'], MedicalTests, PatientID);
+    }
+    
+    //Check if user added Illnesses
+    if (Illnesses && Illnesses.length > 0){  
+      await insertDataIntoTable('illnesses', ['PatientID', 'IllnessDescription'], Illnesses, PatientID);
+    }
+    //Check if user added Operations
+    if (Operations && Operations.length > 0){  
+      await insertDataIntoTable('operations', ['PatientID', 'OperationName', 'OperationDate'], Operations, PatientID);
+    }
+     //Check if user added Complaints
+     if (Complaints && Complaints.length > 0){  
+      await insertDataIntoTable('complaints', ['PatientID', 'ComplaintDescription'], Complaints, PatientID) ;
+    }
+     //Check if user added Drugs
+     if (Drugs && Drugs.length > 0){  
+      await insertDataIntoTable('drug', ['PatientID', 'DName', 'DDuration', 'DDose'], Drugs, PatientID);
+    }
+
+    // Respond with success message
     console.log(`New Medical History is created successfully with PatientID: ${PatientID}`);
     res.status(201).json({ message:`New Medical History is created successfully with PatientID: ${PatientID}`});
   } catch (error) {
     console.error("Error creating medical history:", error);
-    res.status(500).json({ error: "Internal Server Error, Check if patientId exists" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 //==============================================================================================================
 function insertDataIntoTable(tableName, columns, data,ID) {
   const sqlQuery = `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES (${columns.map(() => '?').join(', ')})`;
-
   return Promise.all(
     data.map((item) => {
       return new Promise((resolve, reject) => {

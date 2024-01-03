@@ -2,6 +2,7 @@ import React from "react";
 import { styled, Theme } from "@mui/material/styles";
 import Appointments from "../pages/Appointments";
 import NutritionDashBoard from "../pages/nutritionDashboard";
+import AppLayout from "../../../../core/components/AppLayout";
 
 const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
   display: "flex",
@@ -12,13 +13,15 @@ const ContentWrapper = styled("div")({});
 
 const NutritionClinicPortal = () => {
     return (
-        <ContainerWrapper>
-            <ContentWrapper>
-                <Appointments/>
-                {/*<NutritionDashBoard />*/}
-            </ContentWrapper>
-        </ContainerWrapper>
+        <AppLayout>
+            <ContainerWrapper>
+                <ContentWrapper>
+                    <Appointments/>
+                </ContentWrapper>
+            </ContainerWrapper>
+        </AppLayout>
     );
+
 };
 
 export default NutritionClinicPortal;
