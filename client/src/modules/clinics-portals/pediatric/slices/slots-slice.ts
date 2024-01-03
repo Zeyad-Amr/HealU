@@ -47,15 +47,7 @@ export const fetchSlotsData = createAsyncThunk(
   async (_data: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const response = await axios.get(
-        `https://healu-api-gateway.onrender.com/api/data/slots/${_data}`,
-        {
-          headers: {
-            "auth-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTcwNDIxNzA5Mn0.VrFVdk_9qHI_xQmqO0-l4OalNKq0ldlNdiP36OEeBP4",
-          },
-        }
-      );
+      const response = await api.get(`/data/slots/${_data}`);
       const slots: SlotData = response.data;
       return slots;
     } catch (error) {

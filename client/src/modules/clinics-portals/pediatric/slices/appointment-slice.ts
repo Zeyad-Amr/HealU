@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "./../../../../core/api/api";
 
 export interface appointmentDoctor {
   userId: number;
@@ -128,15 +129,7 @@ export const getAllAppointmentData = createAsyncThunk(
   async (data: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const response = await axios.get(
-        `https://healu-api-gateway.onrender.com/api/data/appointment/${data}`,
-        {
-          headers: {
-            "auth-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY",
-          },
-        }
-      );
+      const response = await api.get(`/data/appointment/${data}`);
       console.log(response.data);
       return response.data;
     } catch (error) {

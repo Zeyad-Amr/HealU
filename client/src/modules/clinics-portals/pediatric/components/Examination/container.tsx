@@ -27,10 +27,6 @@ import {
 } from "../../slices/appointment-slice";
 
 import { useSelector } from "react-redux";
-import {
-  addExaminationRecord,
-  ExaminationRecord,
-} from "../../slices/examination-slice";
 
 const ExaminationScreen = (props: any) => {
   const dispatch = useAppDispatch();

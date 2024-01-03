@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "./../../../../core/api/api";
 
 export interface drugData {
   DrugName: string;
@@ -29,16 +30,7 @@ export const AddPrescreptions = createAsyncThunk(
   async (data: prescreptionData, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const response = await axios.post(
-        "https://healu-api-gateway.onrender.com/api/emr/prescription",
-        data,
-        {
-          headers: {
-            "auth-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY",
-          },
-        }
-      );
+      const response = await api.post("/emr/prescription", data);
       console.log(response.data);
       return response.data;
     } catch (error) {
