@@ -8,7 +8,6 @@ import { addSlotActions } from "../../slices/addSlotsSlice";
 import classes from "./pateint.module.css";
 import BlockContainer from "../../components/block/blockContainer";
 import { useParams } from "react-router-dom";
-import SimpleForm from "../../components/form2/Form";
 
 const Patient = () => {
   const { id } = useParams();
