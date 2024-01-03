@@ -1,7 +1,7 @@
 import React, { useState, useRef, SetStateAction } from "react"
 
-
-import './Form.module.css'; // Import the CSS file
+import styles from "./Form.module.css";
+import { blue } from "@mui/material/colors";
 
 interface FormProps {
   formHeading: string;
@@ -22,15 +22,19 @@ const SimpleForm: React.FC<FormProps> = ({ formHeading, labelFieldName }) => {
   };
 
   return (
-    <div className="my-form-container">
-      <h2 className="my-form-heading">{formHeading}</h2>
-      <form onSubmit={handleSubmit}>
-        <label className="my-form-label">
+    <div className={styles["my-form-container"]}>
+      <div className={styles["header"]}>
+      <h2 className={styles["my-form-heading"]}>{formHeading}</h2>
+      <button className={styles["closeButton"]}>x</button>
+      </div>
+      <form onSubmit={handleSubmit} className={styles["form"]}>
+        <label className={styles["my-form-label"]} >
           {labelFieldName}:
-          <input type="text" value={fieldValue} onChange={handleChange} className="my-form-input" />
-        </label>
-        <button type="submit" className="my-form-button">
-          Submit
+          </label>
+          <input type="text" value={fieldValue} onChange={handleChange} className={styles["my-form-input"]} />
+          
+        <button type="submit" className={styles["my-form-button"]}>
+          Save
         </button>
       </form>
     </div>

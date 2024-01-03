@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ButtonComponent from "../../components/button/button";
 import AddSlotForm from "../../components/form/addSlotForm";
-import Form from "../../components/form2/Form";
+import SimpleForm from "../../components/form2/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 import { addSlotActions } from "../../slices/addSlotsSlice";

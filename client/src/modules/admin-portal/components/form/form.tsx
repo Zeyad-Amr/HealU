@@ -18,6 +18,11 @@ import { FormState } from "../../slices/form-slice";
 import ButtonComponent from "../../../clinics-portals/orthopedic/components/button/button";
 import CloseIcon from "@mui/icons-material/Close";
 import { stat } from "fs";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import Input from "react-select/dist/declarations/src/components/Input";
+
+
 // import { handleEdit } from "../table/table";
 
 const specialties: string[] = [
@@ -66,7 +71,8 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
   const editedDoctor = useSelector(
     (state: RootState) => state.form.editedDoctor
   );
-
+  const [password, setPassword] = useState("");
+  const [visible, setvisible] = useState(true);
   const [localFormState, setLocalFormState] = useState({
     ssn: "",
     firstName: "",
@@ -78,7 +84,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     // clinicId: NaN,
     email: "",
     phoneNumber: "",
-    specialization: "",
+    specialization: "",  
   });
   useEffect(() => {
     // Update localFormState if editedDoctor is available
@@ -94,6 +100,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
         dateOfBirth: editedDoctor.dateOfBirth || "",
         userName: editedDoctor.userName || "",
         password: editedDoctor.password || "",
+        
         // clinicId: editedDoctor.clinicId,
       });
     } else {
