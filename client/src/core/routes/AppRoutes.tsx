@@ -1,7 +1,5 @@
 class AppRoutes {
   static readonly home: string = "/";
-  static readonly aboutUs = "/about-us";
-  static readonly contactUs = "/contact-us";
   static readonly clinicDental = "/clinic/dental";
   static readonly clinicDermatology = "/clinic/dermatology";
   static readonly clinicNutrition = "/clinic/nutrition";
@@ -15,7 +13,13 @@ class AppRoutes {
   static readonly patientPortalAppointments = "/patient/appointments";
   static readonly patientPortalPreviousAppointments =
     "/patient/previous-appointments";
-  static readonly orthoExamination = this.clinicOrthopedic + "/examination/:id";
+  // dental routes
+  static readonly clinicDentalExamination = "/clinic/dental/examination";
+  static readonly aboutUs = "/about-us";
+  static readonly contactUs = "/contact-us";
+  static readonly Analytics = "/analytics";
+  static readonly patientPortalUpcomingAppointments =
+    "/patient/upcoming-appointments";
 }
 
 export default AppRoutes;

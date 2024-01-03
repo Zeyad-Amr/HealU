@@ -1,50 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export interface Schedule {
-  id: number;
-  date: string;
-  time: string;
-  status: string;
-}
-export interface Drug {
-  name: string;
-  dosage: string;
-  frequency: string;
-  duration: string;
-  notes?: string;
-}
-export interface Eprescription {
-  id: number;
-  drugs: Drug[];
-}
-export interface VitalSingns {
-  date: string;
-  time: string;
-  temperature: number;
-  bloodPressure?: number;
-  respiratoryRate?: number;
-  oxygenSaturation?: number;
-  Height: number;
-  Weight: number;
-  notes?: string;
-}
-export interface Diagnosis {
-  Diagnoses: string;
-  VitalSingns: VitalSingns;
-  Eprescription?: Eprescription;
-}
-export interface Record {
-  id: number;
-  Diagnosis: Diagnosis[];
-}
-
 export interface device {
   DeviceName: string;
   DeviceType: string;
   DeviceManufacturer: string;
-  PurchaseDate: string;
-  ExpiryDate: string;
+  PurchaseDate: Date;
+  ExpiryDate: Date;
   DeviceStatus: string;
 }
 

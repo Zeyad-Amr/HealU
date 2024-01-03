@@ -33,7 +33,7 @@ const getAnalytics = async (req: Request, res: Response) => {
 
         //* Processing Data
         const processedData = {
-            clinics: getNumberOfClinics(allClinicsRes?.data.clinics ?? []),
+            s: getNumberOfClinics(allClinicsRes?.data.clinics ?? []),
             services: getNumberOfServices(allServicesRes?.data.clinicServices ?? []),
             appointments: getNumberOfAppointments(allAppointments ?? []),
             doctors: getNumberOfDoctors(allStaffsRef?.data ?? []),
@@ -76,33 +76,33 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                 "numberOfClinics": 6,
                 "clinics": [
                     {
-                        "id": "Dental Clinic",
-                        "name": "Orthopedic Clinic",
+                        "id": "Dental",
+                        "name": "Orthopedic",
                         "numberOfDoctors": 12
                     },
                     {
-                        "id": "Nutrition Clinic",
-                        "name": "Nutrition Clinic",
+                        "id": "Nutrition",
+                        "name": "Nutrition",
                         "numberOfDoctors": 10
                     },
                     {
-                        "id": "Dermatology Clinic",
-                        "name": "Paediatric Clinic",
+                        "id": "Dermatology",
+                        "name": "Paediatric",
                         "numberOfDoctors": 14
                     },
                     {
-                        "id": "Ophthalmology Clinic",
-                        "name": "Ophthalmology Clinic",
+                        "id": "Ophthalmology",
+                        "name": "Ophthalmology",
                         "numberOfDoctors": 10
                     },
                     {
-                        "id": "Orthopedic Clinic",
-                        "name": "Dental Clinic",
+                        "id": "Orthopedic",
+                        "name": "Dental",
                         "numberOfDoctors": 12
                     },
                     {
-                        "id": "Pediatric Clinic",
-                        "name": "Dermatology Clinic",
+                        "id": "Pediatric",
+                        "name": "Dermatology",
                         "numberOfDoctors": 10
                     }
                 ]
@@ -112,113 +112,113 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                 "numberOfNewPatients": 535.83,
                 "billing": {
                     "totalRevenue": {
-                        "Dental Clinic": 8532,
-                        "Nutrition Clinic": 7221,
-                        "Dermatology Clinic": 5899,
-                        "Ophthalmology Clinic": 6764,
-                        "Orthopedic Clinic": 5987,
-                        "Pediatric Clinic": 6189,
-                        "averageAllClinics": 6500.33,
-                        "total": 40592
+                        "Dental": 8532,
+                        "Nutrition": 7221,
+                        "Dermatology": 5899,
+                        "Ophthalmology": 6764,
+                        "Orthopedic": 5987,
+                        "Pediatric": 6189,
+                        "Average": 6500.33,
+                        "Total": 40592
                     },
                     "billsAdded": {
-                        "Dental Clinic": 612,
-                        "Nutrition Clinic": 728,
-                        "Dermatology Clinic": 545,
-                        "Ophthalmology Clinic": 601,
-                        "Orthopedic Clinic": 568,
-                        "Pediatric Clinic": 589,
-                        "averageAllClinics": 608.17,
-                        "total": 3643
+                        "Dental": 612,
+                        "Nutrition": 728,
+                        "Dermatology": 545,
+                        "Ophthalmology": 601,
+                        "Orthopedic": 568,
+                        "Pediatric": 589,
+                        "Average": 608.17,
+                        "Total": 3643
                     },
                     "invoicesAdded": {
-                        "Dental Clinic": 617,
-                        "Nutrition Clinic": 732,
-                        "Dermatology Clinic": 559,
-                        "Ophthalmology Clinic": 609,
-                        "Orthopedic Clinic": 575,
-                        "Pediatric Clinic": 595,
-                        "averageAllClinics": 608.17,
-                        "total": 3687
+                        "Dental": 617,
+                        "Nutrition": 732,
+                        "Dermatology": 559,
+                        "Ophthalmology": 609,
+                        "Orthopedic": 575,
+                        "Pediatric": 595,
+                        "Average": 608.17,
+                        "Total": 3687
                     }
                 },
                 "medicalRecords": {
                     "recordsAdded": {
-                        "Dental Clinic": 152,
-                        "Nutrition Clinic": 189,
-                        "Dermatology Clinic": 161,
-                        "Ophthalmology Clinic": 156,
-                        "Orthopedic Clinic": 164,
-                        "Pediatric Clinic": 157,
-                        "averageAllClinics": 165.17,
-                        "total": 979
+                        "Dental": 152,
+                        "Nutrition": 189,
+                        "Dermatology": 161,
+                        "Ophthalmology": 156,
+                        "Orthopedic": 164,
+                        "Pediatric": 157,
+                        "Average": 165.17,
+                        "Total": 979
                     },
                     "prescriptionsAdded": {
-                        "Dental Clinic": 97,
-                        "Nutrition Clinic": 118,
-                        "Dermatology Clinic": 112,
-                        "Ophthalmology Clinic": 111,
-                        "Orthopedic Clinic": 109,
-                        "Pediatric Clinic": 114,
-                        "averageAllClinics": 111.83,
-                        "total": 661
+                        "Dental": 97,
+                        "Nutrition": 118,
+                        "Dermatology": 112,
+                        "Ophthalmology": 111,
+                        "Orthopedic": 109,
+                        "Pediatric": 114,
+                        "Average": 111.83,
+                        "Total": 661
                     },
                     "medicalHistoryAdded": {
-                        "Dental Clinic": 51,
-                        "Nutrition Clinic": 61,
-                        "Dermatology Clinic": 53,
-                        "Ophthalmology Clinic": 49,
-                        "Orthopedic Clinic": 55,
-                        "Pediatric Clinic": 52,
-                        "averageAllClinics": 53.50,
-                        "total": 321
+                        "Dental": 51,
+                        "Nutrition": 61,
+                        "Dermatology": 53,
+                        "Ophthalmology": 49,
+                        "Orthopedic": 55,
+                        "Pediatric": 52,
+                        "Average": 53.50,
+                        "Total": 321
                     }
                 },
                 "patientDemographics": {
                     "ageDistribution": {
-                        "Dental Clinic": {
+                        "Dental": {
                             "0-18": 25,
                             "19-35": 30,
                             "36-50": 22,
                             "50+": 23
                         },
-                        "Nutrition Clinic": {
+                        "Nutrition": {
                             "0-18": 23,
                             "19-35": 32,
                             "36-50": 25,
                             "50+": 20
                         },
-                        "Dermatology Clinic": {
+                        "Dermatology": {
                             "0-18": 20,
                             "19-35": 28,
                             "36-50": 26,
                             "50+": 26
                         },
-                        "Ophthalmology Clinic": {
+                        "Ophthalmology": {
                             "0-18": 28,
                             "19-35": 25,
                             "36-50": 23,
                             "50+": 24
                         },
-                        "Orthopedic Clinic": {
+                        "Orthopedic": {
                             "0-18": 24,
                             "19-35": 28,
                             "36-50": 24,
                             "50+": 24
                         },
-                        "Pediatric Clinic": {
+                        "Pediatric": {
                             "0-18": 22,
                             "19-35": 30,
                             "36-50": 25,
                             "50+": 23
                         },
-                        "averageAllClinics": {
+                        "Average": {
                             "0-18": 24,
                             "19-35": 29,
                             "36-50": 24,
                             "50+": 23
                         },
-                        "total": {
+                        "Total": {
                             "0-18": 142,
                             "19-35": 173,
                             "36-50": 145,
@@ -226,68 +226,68 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                         }
                     },
                     "genderDistribution": {
-                        "Dental Clinic": {
+                        "Dental": {
                             "male": 48,
                             "female": 52
                         },
-                        "Nutrition Clinic": {
+                        "Nutrition": {
                             "male": 47,
                             "female": 53
                         },
-                        "Dermatology Clinic": {
+                        "Dermatology": {
                             "male": 49,
                             "female": 51
                         },
-                        "Ophthalmology Clinic": {
+                        "Ophthalmology": {
                             "male": 50,
                             "female": 50
                         },
-                        "Orthopedic Clinic": {
+                        "Orthopedic": {
                             "male": 49,
                             "female": 51
                         },
-                        "Pediatric Clinic": {
+                        "Pediatric": {
                             "male": 50,
                             "female": 50
                         },
-                        "averageAllClinics": {
+                        "Average": {
                             "male": 50,
                             "female": 51
                         },
-                        "total": {
+                        "Total": {
                             "male": 245,
                             "female": 240
                         }
                     }
                 },
                 "percentageOfScheduledSlots": {
-                    "Dental Clinic": "45%",
-                    "Nutrition Clinic": "65%",
-                    "Dermatology Clinic": "55%",
-                    "Ophthalmology Clinic": "60%",
-                    "Orthopedic Clinic": "50%",
-                    "Pediatric Clinic": "55%",
-                    "averageAllClinics": "55%"
+                    "Dental": "45%",
+                    "Nutrition": "65%",
+                    "Dermatology": "55%",
+                    "Ophthalmology": "60%",
+                    "Orthopedic": "50%",
+                    "Pediatric": "55%",
+                    "Average": "55%"
                 },
                 "numberOfAppointments": {
-                    "Dental Clinic": 820,
-                    "Nutrition Clinic": 1025,
-                    "Dermatology Clinic": 720,
-                    "Ophthalmology Clinic": 900,
-                    "Orthopedic Clinic": 800,
-                    "Pediatric Clinic": 850,
-                    "averageAllClinics": 850,
-                    "total": 5115
+                    "Dental": 820,
+                    "Nutrition": 1025,
+                    "Dermatology": 720,
+                    "Ophthalmology": 900,
+                    "Orthopedic": 800,
+                    "Pediatric": 850,
+                    "Average": 850,
+                    "Total": 5115
                 },
                 "numberOfServicesUsed": {
-                    "Dental Clinic": 315,
-                    "Nutrition Clinic": 360,
-                    "Dermatology Clinic": 290,
-                    "Ophthalmology Clinic": 320,
-                    "Orthopedic Clinic": 300,
-                    "Pediatric Clinic": 310,
-                    "averageAllClinics": 310,
-                    "total": 1895
+                    "Dental": 315,
+                    "Nutrition": 360,
+                    "Dermatology": 290,
+                    "Ophthalmology": 320,
+                    "Orthopedic": 300,
+                    "Pediatric": 310,
+                    "Average": 310,
+                    "Total": 1895
                 }
             }
         };
@@ -302,33 +302,33 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                 "numberOfClinics": 6,
                 "clinics": [
                     {
-                        "id": "Dental Clinic",
-                        "name": "Orthopedic Clinic",
+                        "id": "Dental",
+                        "name": "Orthopedic",
                         "numberOfDoctors": 5
                     },
                     {
-                        "id": "Nutrition Clinic",
-                        "name": "Nutrition Clinic",
+                        "id": "Nutrition",
+                        "name": "Nutrition",
                         "numberOfDoctors": 4
                     },
                     {
-                        "id": "Dermatology Clinic",
-                        "name": "Paediatric Clinic",
+                        "id": "Dermatology",
+                        "name": "Paediatric",
                         "numberOfDoctors": 6
                     },
                     {
-                        "id": "Ophthalmology Clinic",
-                        "name": "Ophthalmology Clinic",
+                        "id": "Ophthalmology",
+                        "name": "Ophthalmology",
                         "numberOfDoctors": 4
                     },
                     {
-                        "id": "Orthopedic Clinic",
-                        "name": "Dental Clinic",
+                        "id": "Orthopedic",
+                        "name": "Dental",
                         "numberOfDoctors": 5
                     },
                     {
-                        "id": "Pediatric Clinic",
-                        "name": "Dermatology Clinic",
+                        "id": "Pediatric",
+                        "name": "Dermatology",
                         "numberOfDoctors": 4
                     }
                 ]
@@ -338,113 +338,113 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                 "numberOfNewPatients": 400,
                 "billing": {
                     "totalRevenue": {
-                        "Dental Clinic": 21330,
-                        "Nutrition Clinic": 18080,
-                        "Dermatology Clinic": 14730,
-                        "Ophthalmology Clinic": 16980,
-                        "Orthopedic Clinic": 14970,
-                        "Pediatric Clinic": 15570,
-                        "averageAllClinics": 16271.67,
-                        "total": 97660
+                        "Dental": 21330,
+                        "Nutrition": 18080,
+                        "Dermatology": 14730,
+                        "Ophthalmology": 16980,
+                        "Orthopedic": 14970,
+                        "Pediatric": 15570,
+                        "Average": 16271.67,
+                        "Total": 97660
                     },
                     "billsAdded": {
-                        "Dental Clinic": 1530,
-                        "Nutrition Clinic": 1820,
-                        "Dermatology Clinic": 1365,
-                        "Ophthalmology Clinic": 1505,
-                        "Orthopedic Clinic": 1420,
-                        "Pediatric Clinic": 1475,
-                        "averageAllClinics": 1520.83,
-                        "total": 9125
+                        "Dental": 1530,
+                        "Nutrition": 1820,
+                        "Dermatology": 1365,
+                        "Ophthalmology": 1505,
+                        "Orthopedic": 1420,
+                        "Pediatric": 1475,
+                        "Average": 1520.83,
+                        "Total": 9125
                     },
                     "invoicesAdded": {
-                        "Dental Clinic": 1540,
-                        "Nutrition Clinic": 1830,
-                        "Dermatology Clinic": 1395,
-                        "Ophthalmology Clinic": 1515,
-                        "Orthopedic Clinic": 1425,
-                        "Pediatric Clinic": 1485,
-                        "averageAllClinics": 1525,
-                        "total": 9150
+                        "Dental": 1540,
+                        "Nutrition": 1830,
+                        "Dermatology": 1395,
+                        "Ophthalmology": 1515,
+                        "Orthopedic": 1425,
+                        "Pediatric": 1485,
+                        "Average": 1525,
+                        "Total": 9150
                     }
                 },
                 "medicalRecords": {
                     "recordsAdded": {
-                        "Dental Clinic": 152,
-                        "Nutrition Clinic": 189,
-                        "Dermatology Clinic": 161,
-                        "Ophthalmology Clinic": 156,
-                        "Orthopedic Clinic": 164,
-                        "Pediatric Clinic": 157,
-                        "averageAllClinics": 165.17,
-                        "total": 979
+                        "Dental": 152,
+                        "Nutrition": 189,
+                        "Dermatology": 161,
+                        "Ophthalmology": 156,
+                        "Orthopedic": 164,
+                        "Pediatric": 157,
+                        "Average": 165.17,
+                        "Total": 979
                     },
                     "prescriptionsAdded": {
-                        "Dental Clinic": 97,
-                        "Nutrition Clinic": 118,
-                        "Dermatology Clinic": 112,
-                        "Ophthalmology Clinic": 111,
-                        "Orthopedic Clinic": 109,
-                        "Pediatric Clinic": 114,
-                        "averageAllClinics": 111.83,
-                        "total": 661
+                        "Dental": 97,
+                        "Nutrition": 118,
+                        "Dermatology": 112,
+                        "Ophthalmology": 111,
+                        "Orthopedic": 109,
+                        "Pediatric": 114,
+                        "Average": 111.83,
+                        "Total": 661
                     },
                     "medicalHistoryAdded": {
-                        "Dental Clinic": 51,
-                        "Nutrition Clinic": 61,
-                        "Dermatology Clinic": 53,
-                        "Ophthalmology Clinic": 49,
-                        "Orthopedic Clinic": 55,
-                        "Pediatric Clinic": 52,
-                        "averageAllClinics": 53.50,
-                        "total": 321
+                        "Dental": 51,
+                        "Nutrition": 61,
+                        "Dermatology": 53,
+                        "Ophthalmology": 49,
+                        "Orthopedic": 55,
+                        "Pediatric": 52,
+                        "Average": 53.50,
+                        "Total": 321
                     }
                 },
                 "patientDemographics": {
                     "ageDistribution": {
-                        "Dental Clinic": {
+                        "Dental": {
                             "0-18": 25,
                             "19-35": 30,
                             "36-50": 22,
                             "50+": 23
                         },
-                        "Nutrition Clinic": {
+                        "Nutrition": {
                             "0-18": 23,
                             "19-35": 32,
                             "36-50": 25,
                             "50+": 20
                         },
-                        "Dermatology Clinic": {
+                        "Dermatology": {
                             "0-18": 20,
                             "19-35": 28,
                             "36-50": 26,
                             "50+": 26
                         },
-                        "Ophthalmology Clinic": {
+                        "Ophthalmology": {
                             "0-18": 28,
                             "19-35": 25,
                             "36-50": 23,
                             "50+": 24
                         },
-                        "Orthopedic Clinic": {
+                        "Orthopedic": {
                             "0-18": 24,
                             "19-35": 28,
                             "36-50": 24,
                             "50+": 24
                         },
-                        "Pediatric Clinic": {
+                        "Pediatric": {
                             "0-18": 22,
                             "19-35": 30,
                             "36-50": 25,
                             "50+": 23
                         },
-                        "averageAllClinics": {
+                        "Average": {
                             "0-18": 24,
                             "19-35": 29,
                             "36-50": 24,
                             "50+": 23
                         },
-                        "total": {
+                        "Total": {
                             "0-18": 142,
                             "19-35": 173,
                             "36-50": 145,
@@ -452,68 +452,68 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                         }
                     },
                     "genderDistribution": {
-                        "Dental Clinic": {
+                        "Dental": {
                             "male": 48,
                             "female": 52
                         },
-                        "Nutrition Clinic": {
+                        "Nutrition": {
                             "male": 47,
                             "female": 53
                         },
-                        "Dermatology Clinic": {
+                        "Dermatology": {
                             "male": 49,
                             "female": 51
                         },
-                        "Ophthalmology Clinic": {
+                        "Ophthalmology": {
                             "male": 50,
                             "female": 50
                         },
-                        "Orthopedic Clinic": {
+                        "Orthopedic": {
                             "male": 49,
                             "female": 51
                         },
-                        "Pediatric Clinic": {
+                        "Pediatric": {
                             "male": 50,
                             "female": 50
                         },
-                        "averageAllClinics": {
+                        "Average": {
                             "male": 50,
                             "female": 51
                         },
-                        "total": {
+                        "Total": {
                             "male": 245,
                             "female": 240
                         }
                     }
                 },
                 "percentageOfScheduledSlots": {
-                    "Dental Clinic": "45%",
-                    "Nutrition Clinic": "65%",
-                    "Dermatology Clinic": "55%",
-                    "Ophthalmology Clinic": "60%",
-                    "Orthopedic Clinic": "50%",
-                    "Pediatric Clinic": "55%",
-                    "averageAllClinics": "55%"
+                    "Dental": "45%",
+                    "Nutrition": "65%",
+                    "Dermatology": "55%",
+                    "Ophthalmology": "60%",
+                    "Orthopedic": "50%",
+                    "Pediatric": "55%",
+                    "Average": "55%"
                 },
                 "numberOfAppointments": {
-                    "Dental Clinic": 820,
-                    "Nutrition Clinic": 1025,
-                    "Dermatology Clinic": 720,
-                    "Ophthalmology Clinic": 900,
-                    "Orthopedic Clinic": 800,
-                    "Pediatric Clinic": 850,
-                    "averageAllClinics": 850,
-                    "total": 5115
+                    "Dental": 820,
+                    "Nutrition": 1025,
+                    "Dermatology": 720,
+                    "Ophthalmology": 900,
+                    "Orthopedic": 800,
+                    "Pediatric": 850,
+                    "Average": 850,
+                    "Total": 5115
                 },
                 "numberOfServicesUsed": {
-                    "Dental Clinic": 315,
-                    "Nutrition Clinic": 360,
-                    "Dermatology Clinic": 290,
-                    "Ophthalmology Clinic": 320,
-                    "Orthopedic Clinic": 300,
-                    "Pediatric Clinic": 310,
-                    "averageAllClinics": 310,
-                    "total": 1895
+                    "Dental": 315,
+                    "Nutrition": 360,
+                    "Dermatology": 290,
+                    "Ophthalmology": 320,
+                    "Orthopedic": 300,
+                    "Pediatric": 310,
+                    "Average": 310,
+                    "Total": 1895
                 }
             }
         };
@@ -530,33 +530,33 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                 "numberOfClinics": 6,
                 "clinics": [
                     {
-                        "id": "Dental Clinic",
-                        "name": "Orthopedic Clinic",
+                        "id": "Dental",
+                        "name": "Orthopedic",
                         "numberOfDoctors": 18
                     },
                     {
-                        "id": "Nutrition Clinic",
-                        "name": "Nutrition Clinic",
+                        "id": "Nutrition",
+                        "name": "Nutrition",
                         "numberOfDoctors": 15
                     },
                     {
-                        "id": "Dermatology Clinic",
-                        "name": "Paediatric Clinic",
+                        "id": "Dermatology",
+                        "name": "Paediatric",
                         "numberOfDoctors": 20
                     },
                     {
-                        "id": "Ophthalmology Clinic",
-                        "name": "Ophthalmology Clinic",
+                        "id": "Ophthalmology",
+                        "name": "Ophthalmology",
                         "numberOfDoctors": 15
                     },
                     {
-                        "id": "Orthopedic Clinic",
-                        "name": "Dental Clinic",
+                        "id": "Orthopedic",
+                        "name": "Dental",
                         "numberOfDoctors": 18
                     },
                     {
-                        "id": "Pediatric Clinic",
-                        "name": "Dermatology Clinic",
+                        "id": "Pediatric",
+                        "name": "Dermatology",
                         "numberOfDoctors": 15
                     }
                 ]
@@ -566,113 +566,113 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                 "numberOfNewPatients": 1600,
                 "billing": {
                     "totalRevenue": {
-                        "Dental Clinic": 85320,
-                        "Nutrition Clinic": 72210,
-                        "Dermatology Clinic": 58990,
-                        "Ophthalmology Clinic": 67640,
-                        "Orthopedic Clinic": 59870,
-                        "Pediatric Clinic": 61890,
-                        "averageAllClinics": 65003.33,
-                        "total": 405920
+                        "Dental": 85320,
+                        "Nutrition": 72210,
+                        "Dermatology": 58990,
+                        "Ophthalmology": 67640,
+                        "Orthopedic": 59870,
+                        "Pediatric": 61890,
+                        "Average": 65003.33,
+                        "Total": 405920
                     },
                     "billsAdded": {
-                        "Dental Clinic": 6120,
-                        "Nutrition Clinic": 7280,
-                        "Dermatology Clinic": 5450,
-                        "Ophthalmology Clinic": 6010,
-                        "Orthopedic Clinic": 5680,
-                        "Pediatric Clinic": 5890,
-                        "averageAllClinics": 6081.67,
-                        "total": 36430
+                        "Dental": 6120,
+                        "Nutrition": 7280,
+                        "Dermatology": 5450,
+                        "Ophthalmology": 6010,
+                        "Orthopedic": 5680,
+                        "Pediatric": 5890,
+                        "Average": 6081.67,
+                        "Total": 36430
                     },
                     "invoicesAdded": {
-                        "Dental Clinic": 6170,
-                        "Nutrition Clinic": 7320,
-                        "Dermatology Clinic": 5590,
-                        "Ophthalmology Clinic": 6090,
-                        "Orthopedic Clinic": 5750,
-                        "Pediatric Clinic": 5950,
-                        "averageAllClinics": 6081.67,
-                        "total": 36870
+                        "Dental": 6170,
+                        "Nutrition": 7320,
+                        "Dermatology": 5590,
+                        "Ophthalmology": 6090,
+                        "Orthopedic": 5750,
+                        "Pediatric": 5950,
+                        "Average": 6081.67,
+                        "Total": 36870
                     }
                 },
                 "medicalRecords": {
                     "recordsAdded": {
-                        "Dental Clinic": 1520,
-                        "Nutrition Clinic": 1890,
-                        "Dermatology Clinic": 1610,
-                        "Ophthalmology Clinic": 1560,
-                        "Orthopedic Clinic": 1640,
-                        "Pediatric Clinic": 1570,
-                        "averageAllClinics": 1651.67,
-                        "total": 9790
+                        "Dental": 1520,
+                        "Nutrition": 1890,
+                        "Dermatology": 1610,
+                        "Ophthalmology": 1560,
+                        "Orthopedic": 1640,
+                        "Pediatric": 1570,
+                        "Average": 1651.67,
+                        "Total": 9790
                     },
                     "prescriptionsAdded": {
-                        "Dental Clinic": 970,
-                        "Nutrition Clinic": 1180,
-                        "Dermatology Clinic": 1120,
-                        "Ophthalmology Clinic": 1110,
-                        "Orthopedic Clinic": 1090,
-                        "Pediatric Clinic": 1140,
-                        "averageAllClinics": 1118.33,
-                        "total": 6610
+                        "Dental": 970,
+                        "Nutrition": 1180,
+                        "Dermatology": 1120,
+                        "Ophthalmology": 1110,
+                        "Orthopedic": 1090,
+                        "Pediatric": 1140,
+                        "Average": 1118.33,
+                        "Total": 6610
                     },
                     "medicalHistoryAdded": {
-                        "Dental Clinic": 510,
-                        "Nutrition Clinic": 610,
-                        "Dermatology Clinic": 530,
-                        "Ophthalmology Clinic": 490,
-                        "Orthopedic Clinic": 550,
-                        "Pediatric Clinic": 520,
-                        "averageAllClinics": 535,
-                        "total": 3210
+                        "Dental": 510,
+                        "Nutrition": 610,
+                        "Dermatology": 530,
+                        "Ophthalmology": 490,
+                        "Orthopedic": 550,
+                        "Pediatric": 520,
+                        "Average": 535,
+                        "Total": 3210
                     }
                 },
                 "patientDemographics": {
                     "ageDistribution": {
-                        "Dental Clinic": {
+                        "Dental": {
                             "0-18": 250,
                             "19-35": 300,
                             "36-50": 220,
                             "50+": 230
                         },
-                        "Nutrition Clinic": {
+                        "Nutrition": {
                             "0-18": 230,
                             "19-35": 320,
                             "36-50": 250,
                             "50+": 200
                         },
-                        "Dermatology Clinic": {
+                        "Dermatology": {
                             "0-18": 200,
                             "19-35": 280,
                             "36-50": 260,
                             "50+": 260
                         },
-                        "Ophthalmology Clinic": {
+                        "Ophthalmology": {
                             "0-18": 280,
                             "19-35": 250,
                             "36-50": 230,
                             "50+": 240
                         },
-                        "Orthopedic Clinic": {
+                        "Orthopedic": {
                             "0-18": 240,
                             "19-35": 280,
                             "36-50": 240,
                             "50+": 240
                         },
-                        "Pediatric Clinic": {
+                        "Pediatric": {
                             "0-18": 220,
                             "19-35": 300,
                             "36-50": 250,
                             "50+": 230
                         },
-                        "averageAllClinics": {
+                        "Average": {
                             "0-18": 240,
                             "19-35": 290,
                             "36-50": 240,
                             "50+": 230
                         },
-                        "total": {
+                        "Total": {
                             "0-18": 1420,
                             "19-35": 1730,
                             "36-50": 1450,
@@ -680,68 +680,68 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                         }
                     },
                     "genderDistribution": {
-                        "Dental Clinic": {
+                        "Dental": {
                             "male": 480,
                             "female": 520
                         },
-                        "Nutrition Clinic": {
+                        "Nutrition": {
                             "male": 470,
                             "female": 530
                         },
-                        "Dermatology Clinic": {
+                        "Dermatology": {
                             "male": 490,
                             "female": 510
                         },
-                        "Ophthalmology Clinic": {
+                        "Ophthalmology": {
                             "male": 500,
                             "female": 500
                         },
-                        "Orthopedic Clinic": {
+                        "Orthopedic": {
                             "male": 490,
                             "female": 510
                         },
-                        "Pediatric Clinic": {
+                        "Pediatric": {
                             "male": 500,
                             "female": 500
                         },
-                        "averageAllClinics": {
+                        "Average": {
                             "male": 500,
                             "female": 510
                         },
-                        "total": {
+                        "Total": {
                             "male": 2450,
                             "female": 2400
                         }
                     }
                 },
                 "percentageOfScheduledSlots": {
-                    "Dental Clinic": "45%",
-                    "Nutrition Clinic": "65%",
-                    "Dermatology Clinic": "55%",
-                    "Ophthalmology Clinic": "60%",
-                    "Orthopedic Clinic": "50%",
-                    "Pediatric Clinic": "55%",
-                    "averageAllClinics": "55%"
+                    "Dental": "45%",
+                    "Nutrition": "65%",
+                    "Dermatology": "55%",
+                    "Ophthalmology": "60%",
+                    "Orthopedic": "50%",
+                    "Pediatric": "55%",
+                    "Average": "55%"
                 },
                 "numberOfAppointments": {
-                    "Dental Clinic": 8200,
-                    "Nutrition Clinic": 10250,
-                    "Dermatology Clinic": 7200,
-                    "Ophthalmology Clinic": 9000,
-                    "Orthopedic Clinic": 8000,
-                    "Pediatric Clinic": 8500,
-                    "averageAllClinics": 8500,
-                    "total": 51150
+                    "Dental": 8200,
+                    "Nutrition": 10250,
+                    "Dermatology": 7200,
+                    "Ophthalmology": 9000,
+                    "Orthopedic": 8000,
+                    "Pediatric": 8500,
+                    "Average": 8500,
+                    "Total": 51150
                 },
                 "numberOfServicesUsed": {
-                    "Dental Clinic": 3150,
-                    "Nutrition Clinic": 3600,
-                    "Dermatology Clinic": 2900,
-                    "Ophthalmology Clinic": 3200,
-                    "Orthopedic Clinic": 3000,
-                    "Pediatric Clinic": 3100,
-                    "averageAllClinics": 3100,
-                    "total": 18950
+                    "Dental": 3150,
+                    "Nutrition": 3600,
+                    "Dermatology": 2900,
+                    "Ophthalmology": 3200,
+                    "Orthopedic": 3000,
+                    "Pediatric": 3100,
+                    "Average": 3100,
+                    "Total": 18950
                 }
             }
         };
@@ -757,33 +757,33 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                 "numberOfClinics": 6,
                 "clinics": [
                     {
-                        "id": "Dental Clinic",
-                        "name": "Orthopedic Clinic",
+                        "id": "Dental",
+                        "name": "Orthopedic",
                         "numberOfDoctors": 25
                     },
                     {
-                        "id": "Nutrition Clinic",
-                        "name": "Nutrition Clinic",
+                        "id": "Nutrition",
+                        "name": "Nutrition",
                         "numberOfDoctors": 20
                     },
                     {
-                        "id": "Dermatology Clinic",
-                        "name": "Paediatric Clinic",
+                        "id": "Dermatology",
+                        "name": "Paediatric",
                         "numberOfDoctors": 30
                     },
                     {
-                        "id": "Ophthalmology Clinic",
-                        "name": "Ophthalmology Clinic",
+                        "id": "Ophthalmology",
+                        "name": "Ophthalmology",
                         "numberOfDoctors": 20
                     },
                     {
-                        "id": "Orthopedic Clinic",
-                        "name": "Dental Clinic",
+                        "id": "Orthopedic",
+                        "name": "Dental",
                         "numberOfDoctors": 25
                     },
                     {
-                        "id": "Pediatric Clinic",
-                        "name": "Dermatology Clinic",
+                        "id": "Pediatric",
+                        "name": "Dermatology",
                         "numberOfDoctors": 30
                     }
                 ]
@@ -793,113 +793,113 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                 "numberOfNewPatients": 3500,
                 "billing": {
                     "totalRevenue": {
-                        "Dental Clinic": 152560,
-                        "Nutrition Clinic": 130600,
-                        "Dermatology Clinic": 105500,
-                        "Ophthalmology Clinic": 122160,
-                        "Orthopedic Clinic": 107100,
-                        "Pediatric Clinic": 111480,
-                        "averageAllClinics": 116983.33,
-                        "total": 701000
+                        "Dental": 152560,
+                        "Nutrition": 130600,
+                        "Dermatology": 105500,
+                        "Ophthalmology": 122160,
+                        "Orthopedic": 107100,
+                        "Pediatric": 111480,
+                        "Average": 116983.33,
+                        "Total": 701000
                     },
                     "billsAdded": {
-                        "Dental Clinic": 10700,
-                        "Nutrition Clinic": 12750,
-                        "Dermatology Clinic": 9590,
-                        "Ophthalmology Clinic": 10530,
-                        "Orthopedic Clinic": 9950,
-                        "Pediatric Clinic": 10310,
-                        "averageAllClinics": 10680.83,
-                        "total": 64030
+                        "Dental": 10700,
+                        "Nutrition": 12750,
+                        "Dermatology": 9590,
+                        "Ophthalmology": 10530,
+                        "Orthopedic": 9950,
+                        "Pediatric": 10310,
+                        "Average": 10680.83,
+                        "Total": 64030
                     },
                     "invoicesAdded": {
-                        "Dental Clinic": 10780,
-                        "Nutrition Clinic": 12780,
-                        "Dermatology Clinic": 9655,
-                        "Ophthalmology Clinic": 10525,
-                        "Orthopedic Clinic": 9905,
-                        "Pediatric Clinic": 10335,
-                        "averageAllClinics": 10755.83,
-                        "total": 64580
+                        "Dental": 10780,
+                        "Nutrition": 12780,
+                        "Dermatology": 9655,
+                        "Ophthalmology": 10525,
+                        "Orthopedic": 9905,
+                        "Pediatric": 10335,
+                        "Average": 10755.83,
+                        "Total": 64580
                     }
                 },
                 "medicalRecords": {
                     "recordsAdded": {
-                        "Dental Clinic": 1520,
-                        "Nutrition Clinic": 1890,
-                        "Dermatology Clinic": 1610,
-                        "Ophthalmology Clinic": 1560,
-                        "Orthopedic Clinic": 1640,
-                        "Pediatric Clinic": 1570,
-                        "averageAllClinics": 1651.67,
-                        "total": 9900
+                        "Dental": 1520,
+                        "Nutrition": 1890,
+                        "Dermatology": 1610,
+                        "Ophthalmology": 1560,
+                        "Orthopedic": 1640,
+                        "Pediatric": 1570,
+                        "Average": 1651.67,
+                        "Total": 9900
                     },
                     "prescriptionsAdded": {
-                        "Dental Clinic": 970,
-                        "Nutrition Clinic": 1180,
-                        "Dermatology Clinic": 1120,
-                        "Ophthalmology Clinic": 1110,
-                        "Orthopedic Clinic": 1090,
-                        "Pediatric Clinic": 1140,
-                        "averageAllClinics": 1118.33,
-                        "total": 6710
+                        "Dental": 970,
+                        "Nutrition": 1180,
+                        "Dermatology": 1120,
+                        "Ophthalmology": 1110,
+                        "Orthopedic": 1090,
+                        "Pediatric": 1140,
+                        "Average": 1118.33,
+                        "Total": 6710
                     },
                     "medicalHistoryAdded": {
-                        "Dental Clinic": 510,
-                        "Nutrition Clinic": 610,
-                        "Dermatology Clinic": 530,
-                        "Ophthalmology Clinic": 490,
-                        "Orthopedic Clinic": 550,
-                        "Pediatric Clinic": 520,
-                        "averageAllClinics": 535,
-                        "total": 3210
+                        "Dental": 510,
+                        "Nutrition": 610,
+                        "Dermatology": 530,
+                        "Ophthalmology": 490,
+                        "Orthopedic": 550,
+                        "Pediatric": 520,
+                        "Average": 535,
+                        "Total": 3210
                     }
                 },
                 "patientDemographics": {
                     "ageDistribution": {
-                        "Dental Clinic": {
+                        "Dental": {
                             "0-18": 250,
                             "19-35": 300,
                             "36-50": 220,
                             "50+": 230
                         },
-                        "Nutrition Clinic": {
+                        "Nutrition": {
                             "0-18": 230,
                             "19-35": 320,
                             "36-50": 250,
                             "50+": 200
                         },
-                        "Dermatology Clinic": {
+                        "Dermatology": {
                             "0-18": 200,
                             "19-35": 280,
                             "36-50": 260,
                             "50+": 260
                         },
-                        "Ophthalmology Clinic": {
+                        "Ophthalmology": {
                             "0-18": 280,
                             "19-35": 250,
                             "36-50": 230,
                             "50+": 240
                         },
-                        "Orthopedic Clinic": {
+                        "Orthopedic": {
                             "0-18": 240,
                             "19-35": 280,
                             "36-50": 240,
                             "50+": 240
                         },
-                        "Pediatric Clinic": {
+                        "Pediatric": {
                             "0-18": 220,
                             "19-35": 300,
                             "36-50": 250,
                             "50+": 230
                         },
-                        "averageAllClinics": {
+                        "Average": {
                             "0-18": 240,
                             "19-35": 290,
                             "36-50": 240,
                             "50+": 230
                         },
-                        "total": {
+                        "Total": {
                             "0-18": 1440,
                             "19-35": 1740,
                             "36-50": 1450,
@@ -907,68 +907,68 @@ const getAnalyticsMock = async (req: Request, res: Response) => {
                         }
                     },
                     "genderDistribution": {
-                        "Dental Clinic": {
+                        "Dental": {
                             "male": 480,
                             "female": 520
                         },
-                        "Nutrition Clinic": {
+                        "Nutrition": {
                             "male": 470,
                             "female": 530
                         },
-                        "Dermatology Clinic": {
+                        "Dermatology": {
                             "male": 490,
                             "female": 510
                         },
-                        "Ophthalmology Clinic": {
+                        "Ophthalmology": {
                             "male": 500,
                             "female": 500
                         },
-                        "Orthopedic Clinic": {
+                        "Orthopedic": {
                             "male": 490,
                             "female": 510
                         },
-                        "Pediatric Clinic": {
+                        "Pediatric": {
                             "male": 500,
                             "female": 500
                         },
-                        "averageAllClinics": {
+                        "Average": {
                             "male": 500,
                             "female": 510
                         },
-                        "total": {
+                        "Total": {
                             "male": 2450,
                             "female": 2400
                         }
                     }
                 },
                 "percentageOfScheduledSlots": {
-                    "Dental Clinic": "45%",
-                    "Nutrition Clinic": "65%",
-                    "Dermatology Clinic": "55%",
-                    "Ophthalmology Clinic": "60%",
-                    "Orthopedic Clinic": "50%",
-                    "Pediatric Clinic": "55%",
-                    "averageAllClinics": "55%"
+                    "Dental": "45%",
+                    "Nutrition": "65%",
+                    "Dermatology": "55%",
+                    "Ophthalmology": "60%",
+                    "Orthopedic": "50%",
+                    "Pediatric": "55%",
+                    "Average": "55%"
                 },
                 "numberOfAppointments": {
-                    "Dental Clinic": 8200,
-                    "Nutrition Clinic": 10250,
-                    "Dermatology Clinic": 7200,
-                    "Ophthalmology Clinic": 9000,
-                    "Orthopedic Clinic": 8000,
-                    "Pediatric Clinic": 8500,
-                    "averageAllClinics": 8500,
-                    "total": 51150
+                    "Dental": 8200,
+                    "Nutrition": 10250,
+                    "Dermatology": 7200,
+                    "Ophthalmology": 9000,
+                    "Orthopedic": 8000,
+                    "Pediatric": 8500,
+                    "Average": 8500,
+                    "Total": 51150
                 },
                 "numberOfServicesUsed": {
-                    "Dental Clinic": 3150,
-                    "Nutrition Clinic": 3600,
-                    "Dermatology Clinic": 2900,
-                    "Ophthalmology Clinic": 3200,
-                    "Orthopedic Clinic": 3000,
-                    "Pediatric Clinic": 3100,
-                    "averageAllClinics": 3100,
-                    "total": 18950
+                    "Dental": 3150,
+                    "Nutrition": 3600,
+                    "Dermatology": 2900,
+                    "Ophthalmology": 3200,
+                    "Orthopedic": 3000,
+                    "Pediatric": 3100,
+                    "Average": 3100,
+                    "Total": 18950
                 }
             }
         };

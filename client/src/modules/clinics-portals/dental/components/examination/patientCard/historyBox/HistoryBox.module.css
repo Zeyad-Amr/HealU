@@ -1,0 +1,56 @@
+.historyBox{
+    background: linear-gradient(119.45deg, #006D6D 1.3%, #002426 100%);
+    border-radius: 15px;
+    padding: 20px;
+    flex: 2;
+    display: flex; /* Add display flex to enable flex properties */
+    flex-direction: column; /* Stack child elements vertically */
+}
+
+
+.titleText {
+    font-family: Roboto;
+    font-size: xx-large;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the text horizontally */
+}
+
+.listText {
+    font-family: Roboto;
+    font-size: large;
+    font-weight: 600;
+    color: white;
+}
+
+
+.subBox{
+    border: 1px solid rgba(19, 210, 222, 1);
+    border-radius: 15px;
+    padding: 10px;
+    color: white;
+    flex: 1;
+}
+
+
+.subBoxTwoColumns {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid rgba(19, 210, 222, 1);
+    border-radius: 15px;
+    padding: 10px;
+    color: white;
+    flex: 2; /* Adjust the flex value to allocate more space */
+}
+
+
+.column {
+    width: 48%; /* Adjust as needed */
+}
+
+.SeparateLine {
+    border-left: 1px solid white;
+}
+
