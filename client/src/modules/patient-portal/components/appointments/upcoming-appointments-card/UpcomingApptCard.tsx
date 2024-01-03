@@ -6,12 +6,9 @@ import {
     Typography,
     Grid,
     Box,
-    Stack,
-    Container,
     IconButton,
-    LinearProgress,
 } from "@mui/material";
-import { Info, InfoOutlined, InfoTwoTone, More, MoreVert, ReadMore } from "@mui/icons-material";
+import { Info, InfoOutlined } from "@mui/icons-material";
 import { useState } from "react";
 
 interface AppointmentsFilterResultsPropsI {
@@ -103,9 +100,6 @@ const UpcomingAppointmentsCard = ({
                                 />
                                 <CardContent>
                                     <Typography variant="body2" >
-                                        {appointment.prescription.Diagnosis}
-                                    </Typography>
-                                    <Typography variant="subtitle1" color="text.secondary">
                                         {formatDate(appointment.prescription.CreatedAt)[0] + " " + formatDate(appointment.prescription.CreatedAt)[1]}
                                     </Typography>
                                 </CardContent>
