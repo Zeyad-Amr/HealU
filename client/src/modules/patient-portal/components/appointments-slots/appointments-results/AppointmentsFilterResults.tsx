@@ -9,7 +9,7 @@ import {
   Button,
 } from "@mui/material";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
-import { useState } from "react";
+import { useState , useRef } from "react";
 import React, { Dispatch, SetStateAction } from 'react';
 import AppointmentsBill from "../appointments-bill/AppointmentsBill";
 
@@ -22,6 +22,8 @@ const AppointmentsFilterResults = ({
 }: AppointmentsFilterResultsPropsI) => {
 
   const [open, setOpen] = useState(false);
+  const [slotElData, setSlotElData] = useState({});
+  const slotData = useRef({});
 
   function getInitials(name: string) {
     const words = name.split(" ");
@@ -29,13 +31,10 @@ const AppointmentsFilterResults = ({
     return initials.join("");
   }
 
-  const onOpenDialog = () => {
-    setOpen(true)
+  const onOpenDialog = (slot : any) => {
+    setSlotElData(slot)
+    setOpen(true)    
   }
-
-  // const onCloseDialog = () => {
-  //   setOpen(false)
-  // }
 
   function getRandomColor() {
     const letters = "0123456789ABCDEF";
@@ -276,7 +275,11 @@ const AppointmentsFilterResults = ({
                       {formatDate(slot.date).formattedTime}
                     </Typography>
                     <Button
-                      onClick={onOpenDialog}
+                      onClick={() => {
+                        onOpenDialog(slot)
+                        
+                        
+                      }}
                       sx={{
                         outline: "none",
                         borderWidth: "1.9px",
@@ -299,9 +302,7 @@ const AppointmentsFilterResults = ({
           );
         })}
       </Grid>
-      {/* <ApptBillDialog open={open} handleClose={onCloseDialog} /> */}
-      <Button onClick={onOpenDialog}></Button>
-      <AppointmentsBill open={open} setOpen={setOpen} />
+      <AppointmentsBill slotData={slotElData} open={open} setOpen={setOpen} />
     </Box>
   );
 };

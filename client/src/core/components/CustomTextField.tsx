@@ -16,6 +16,7 @@ export interface CustomTextFieldProps {
   width?: number | string;
   props?: TextFieldProps;
   sx?: {};
+  maxLength? : number
 }
 
 const CustomTextField = ({
@@ -33,6 +34,7 @@ const CustomTextField = ({
   props,
   sx,
   width,
+  maxLength
 }: CustomTextFieldProps) => {
   return (
     <Box>
@@ -68,6 +70,8 @@ const CustomTextField = ({
             maxWidth: "100%",
             ...sx,
           }}
+          inputProps={{ maxLength: maxLength }}
+          {...props}
         />
 
         <FormHelperText

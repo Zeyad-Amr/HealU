@@ -16,7 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axios from "../../../../core/api/api";
 import Swal from "sweetalert2";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -45,12 +45,7 @@ const Appointments = () => {
 
   const loadAllClinics = () => {
     axios
-      .get(`${api_URL}/api/admin/clinic`, {
-        headers: {
-          "auth-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY",
-        },
-      })
+      .get(`/admin/clinic`)
       .then((res: any) => {
         console.log(res);
 
@@ -67,12 +62,7 @@ const Appointments = () => {
   const loadAllDoctorsByClinicId = (clinicId: number) => {
     console.log(clinicId);
     axios
-      .get(`${api_URL}/api/registration/staff/clinic/${clinicId}`, {
-        headers: {
-          "auth-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY",
-        },
-      })
+      .get(`/registration/staff/clinic/${clinicId}`)
       .then((res: any) => {
         console.log(res.data.data);
         setAllDoctorsData(res.data.data);

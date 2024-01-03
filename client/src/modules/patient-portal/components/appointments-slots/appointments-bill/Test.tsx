@@ -44,6 +44,7 @@ const Test = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", margin: "1rem" }}>
+      <Box sx={{ marginBottom : "1rem" }}>
       <Cards
         number={state.number}
         expiry={state.expiry}
@@ -51,6 +52,8 @@ const Test = () => {
         name={state.name}
         focused={state.focus}
       />
+      </Box>
+      <Box>
       <Formik
         initialValues={initialValues}
         validationSchema={handleFormSchema}
@@ -160,6 +163,7 @@ const Test = () => {
           </Box>
         )}
       </Formik>
+      </Box>
     </Box>
   );
 };
