@@ -11,13 +11,16 @@ import snackbarReducer from "../../modules/clinics-portals/dental/state/slices/s
 import prescriptionReducer from "../../modules/clinics-portals/dental/state/slices/prescriptionSlice";
 import examinationReducer from "../../modules/clinics-portals/dental/state/slices/examinationSlice";
 import patientReducer from "../../modules/clinics-portals/dental/state/slices/patientSlice";
-
+import analytics from "../../modules/admin-portal/slices/analytics-slice";
+import user from "../../modules/user/slices/user-slice";
 export const store = configureStore({
   reducer: {
     auth,
     devices,
     schedules,
     patients,
+    user,
+    analytics,
 
     // Dental Clinic And Appointments
     slotReducer,

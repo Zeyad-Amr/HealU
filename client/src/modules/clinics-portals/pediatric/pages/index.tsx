@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import "./index.css";
+import AppLayout from "../../../../core/components/AppLayout";
 
 const PediatricClinicPortal = () => {
   const [value, setValue] = React.useState(0);
@@ -16,23 +17,25 @@ const PediatricClinicPortal = () => {
   };
   return (
     <>
-      <div className="Nav-Bar">
-        <ClinicTitle />
-        <Box sx={{ borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="Clinic Mange" />
-            <Tab label="Schedule " />
-            <Tab label="Examination" />
-          </Tabs>
-        </Box>
-      </div>
-      {value === 0 && <ClinicMange />}
-      {value === 1 && <ScheduleViwer />}
-      {value === 2 && <ExaminationScreen />}
+      <AppLayout>
+        <div className="Nav-Bar">
+          <ClinicTitle />
+          <Box sx={{ borderColor: "divider" }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+            >
+              <Tab label="Clinic Mange" />
+              <Tab label="Schedule " />
+              <Tab label="Examination" />
+            </Tabs>
+          </Box>
+        </div>
+        {value === 0 && <ClinicMange />}
+        {value === 1 && <ScheduleViwer />}
+        {value === 2 && <ExaminationScreen />}
+      </AppLayout>
     </>
   );
 };
