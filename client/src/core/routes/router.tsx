@@ -11,9 +11,9 @@ import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
 import Login from "../../modules/auth/pages";
-import Signup from "../../modules/user/pages/signup/SignUp";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
+import Signup from "../../modules/user/pages/signup/SignUp";
 
 class Router {
   static readonly routes: RouteModel[] = [
