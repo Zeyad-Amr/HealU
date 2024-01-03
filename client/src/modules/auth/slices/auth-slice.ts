@@ -51,7 +51,9 @@ export const authSlice = createSlice({
         builder.addCase(login.fulfilled, (state, action) => {
             state.loading = false;
             const token: string = action.payload['access_token'];
+            const userId: number = action.payload['user'].userId;
             localStorage.setItem('auth-token', token);
+            localStorage.setItem('userId', JSON.stringify(userId));
             console.log('token', token);
             console.log('user', action.payload['user']);
         });
