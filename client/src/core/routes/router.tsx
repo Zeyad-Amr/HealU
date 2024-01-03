@@ -19,6 +19,8 @@ import ContactUs from "../../modules/landing-page/pages/ContactUs";
 import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout";
 import Signup from "../../modules/user/pages/signup/SignUp";
 import UpcomingAppointments from "../../modules/patient-portal/pages/appointments/upcoming";
+import AppLayout from "../components/AppLayout";
+
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -94,7 +96,11 @@ class Router {
     },
     {
       path: AppRoutes.Analytics,
-      element: <Analytics />,
+      element: (
+        <AppLayout>
+          <Analytics />
+        </AppLayout>
+      ),
     },
   ];
 
