@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import NavBar from "../components/navBar/NavBar";
 import CustomizedSnackbar from "../components/doctor-slots/CustomizedSnackbar";
 import DashBoard from "../components/dashBoard/DashBoard";
 import { RootState } from "../../../../core/store";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import AppLayout from "../../../../core/components/AppLayout";
 
 const DentalClinicPortal = () => {
   const SnackbarState = useSelector(
@@ -12,15 +12,16 @@ const DentalClinicPortal = () => {
   );
   return (
     <>
-      <NavBar />
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DashBoard />
-      </LocalizationProvider>
-      <CustomizedSnackbar
-        message={SnackbarState.snackbar.message}
-        messageType={SnackbarState.snackbar.type}
-        open={SnackbarState.snackbarOpen}
-      />
+      <AppLayout>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DashBoard />
+        </LocalizationProvider>
+        <CustomizedSnackbar
+          message={SnackbarState.snackbar.message}
+          messageType={SnackbarState.snackbar.type}
+          open={SnackbarState.snackbarOpen}
+        />
+      </AppLayout>
     </>
   );
 };
