@@ -30,7 +30,6 @@ const DoctorsSlot = () => {
         await dispatch(getSlots(date) as any);
       }
     };
-
     fetchData();
   }, [dispatch]);
   return (

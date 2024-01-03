@@ -7,12 +7,18 @@ export interface FormState {
   isFormVisible: boolean;
   isEdit: boolean;
   editedDoctor?: Doctor | null; // Add editedDoctor to FormState
+  isTestsVisible?: boolean;
+  isServicesVisible?: boolean;
+  isPrescriptionVisible?: boolean;
 }
 
 const initialState: FormState = {
   isFormVisible: false,
   isEdit: false,
   editedDoctor: null,
+  isTestsVisible: false,
+  isServicesVisible: false,
+  isPrescriptionVisible: false,
 };
 
 const formSlice = createSlice({
@@ -28,7 +34,16 @@ const formSlice = createSlice({
     },
     setEditedDoctor(state, action: PayloadAction<Doctor | null>) {
       state.editedDoctor = action.payload;
-      console.log(action.payload)
+      console.log(action.payload);
+    },
+    setPrescriptionVisibility(state, action: PayloadAction<boolean>) {
+      state.isPrescriptionVisible = action.payload;
+    },
+    setTestsVisibility(state, action: PayloadAction<boolean>) {
+      state.isTestsVisible = action.payload;
+    },
+    setServicesVisibility(state, action: PayloadAction<boolean>) {
+      state.isServicesVisible = action.payload;
     },
   },
 });

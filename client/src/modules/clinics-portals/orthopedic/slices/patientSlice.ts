@@ -1,9 +1,11 @@
+import { isFor } from "@babel/types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { is, set } from "immer/dist/internal";
 
 export default interface Patient {
-  patientId: number;
-  patientName: string;
+  patientId?: number | string;
+  patientName?: string;
 }
 
 export const getPatients = createAsyncThunk(
@@ -21,21 +23,32 @@ export const getPatients = createAsyncThunk(
 
 const initialStatePatients: Patient[] = [
   {
-    patientId: NaN,
-    patientName: " ",
+    patientId: "",
+    patientName: "",
   },
+  {},
 ];
 
 const patientSlice = createSlice({
   name: "patients",
   initialState: initialStatePatients,
-  reducers: {},
+  reducers: {
+    // setPrescriptionVisibility(state: any, action: PayloadAction<boolean>) {
+    //   state.patients.isPrescriptionVisible = action.payload;
+    // },
+    // setTestsVisibility(state: any, action: PayloadAction<boolean>) {
+    //   state.patients.isTestsVisible = action.payload;
+    // },
+    // setServicesVisibility(state: any, action: PayloadAction<boolean>) {
+    //   state.patients.isTestsVisible = action.payload;
+    // },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       getPatients.fulfilled,
       (state, action: PayloadAction<Patient[] | void>) => {
         if (action.payload) {
-          state.push(...action.payload);
+          // state.push(...action.payload);
         }
       }
     );

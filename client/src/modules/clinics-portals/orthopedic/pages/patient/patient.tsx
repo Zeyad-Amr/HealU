@@ -8,17 +8,32 @@ import { addSlotActions } from "../../slices/addSlotsSlice";
 import classes from "./pateint.module.css";
 import BlockContainer from "../../components/block/blockContainer";
 import { useParams } from "react-router-dom";
+import { patientActions } from "../../slices/patientSlice";
+import { formActions } from "../../../../admin-portal/slices/form-slice";
 
 const Patient = () => {
   const { id } = useParams();
   const parsedId = id ? parseInt(id, 10) : undefined;
-  const isVisible = useSelector(
-    (state: any) => state.rootReducer.slots.isVisible
+  // const isVisible = useSelector(
+  //   (state: any) => state.rootReducer.slots.isVisible
+  // );
+  const isPrescriptionVisible = useSelector(
+    (state: any) => state.rootReducer.form.isPrescriptionVisible
+  );
+  const isTestsVisible = useSelector(
+    (state: any) => state.rootReducer.form.isTestsVisible
+  );
+  const isServicesVisible = useSelector(
+    (state: any) => state.rootReducer.form.isServicesVisible
   );
 
   const dispatch = useDispatch();
-  const handleButtonClick = () => {
-    dispatch(addSlotActions.setFormVisibility(true));
+  const handleButtonClick = (isVisible: number) => {
+    if (isVisible === 1)
+      dispatch(formActions.setPrescriptionVisibility(!isPrescriptionVisible));
+    else if (isVisible === 2) dispatch(formActions.setTestsVisibility(true));
+    else if (isVisible === 3)
+      dispatch(formActions.setServicesVisibility(!isServicesVisible));
   };
 
   return (
@@ -46,7 +61,7 @@ const Patient = () => {
           classStyle="buttonPrescription"
           textStyle="text"
           text="Prescription"
-          onClick={() => handleButtonClick()}
+          onClick={() => handleButtonClick(1)}
           backgroundColor="#C3C3C3"
           marginRight="25px"
         />
@@ -54,7 +69,7 @@ const Patient = () => {
           classStyle="buttonPrescription"
           text="Tests"
           textStyle="text"
-          onClick={() => handleButtonClick()}
+          onClick={() => handleButtonClick(2)}
           backgroundColor="#C3C3C3"
           marginRight="25px"
         />
@@ -63,7 +78,7 @@ const Patient = () => {
           classStyle="buttonPrescription"
           text="Services"
           textStyle="text"
-          onClick={() => handleButtonClick()}
+          onClick={() => handleButtonClick(3)}
           backgroundColor="#C3C3C3"
           marginRight="25px"
         />
@@ -76,9 +91,11 @@ const Patient = () => {
           fontSize="32px"
         />
       </div>
-      <SimpleForm formHeading="Tests" labelFieldName="yyy"/>
-      {/* <AddSlotForm
-        isFormVisible={isVisible}
+      {isTestsVisible && (
+        <SimpleForm formHeading="Tests" labelFieldName="yyy" />
+      )}
+      <AddSlotForm
+        isFormVisible={isPrescriptionVisible}
         formTitle="Prescription"
         label1="Drug Name"
         formStyle="prescriptionForm_formContainer"
@@ -89,8 +106,7 @@ const Patient = () => {
         submitButtonStyle="submitButton"
         inputType="text"
         isIncluded={true}
-      /> */}
-
+      />
     </div>
   );
 };
