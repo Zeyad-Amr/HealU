@@ -303,7 +303,6 @@ export const get_all_slots = async (req: Request, res: Response) => {
             );
         });
 
-        console.log(slotsWithDates);
 
         /* 
         get clinic ids from slots
@@ -422,6 +421,7 @@ export const post_examination = async (req: Request, res: Response) => {
 export const book_appt = async (req: Request, res: Response) => {
     try {
         const { appointment, card } = validate.validate(req.body, validate.bookApptSchema)
+        appointment.patientId = (req as CustomRequest).user.sub
 
 
         // create appointment 

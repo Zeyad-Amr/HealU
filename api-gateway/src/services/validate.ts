@@ -7,7 +7,7 @@ const loginSchema = Joi.object({
 })
 
 const bookApptSchema = Joi.object({
-    appointment: Joi.object().length(3).required(),
+    appointment: Joi.object().length(2).required(),
     card: Joi.object().length(4).required(),
 })
 
