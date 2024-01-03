@@ -6,12 +6,15 @@ import * as Yup from "yup";
 import PrimaaryBtn from "../../../core/components/PrimaaryBtn";
 import { useAppDispatch } from "../../../core/store";
 import { useSelector } from "react-redux";
-import { AuthState, login } from "../slices/auth-slice";
+import { useNavigate } from "react-router-dom";
+import AppRoutes from "../../../core/routes/AppRoutes";
 import authModel from "../models/auth-model";
+import { AuthState, login } from "../slices/auth-slice";
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const authState: AuthState = useSelector((state: any) => state.auth);
+  const navigate = useNavigate();
 
   const formSubmit = useRef<any>();
 
@@ -35,6 +38,34 @@ const Login = () => {
             transform: "translateY(50%)",
           }}
         ></Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          cursor: "pointer",
+          position: "absolute",
+          left: "50%",
+          top: "4rem",
+          transform: "translate(-50%, -50%)",
+        }}
+        onClick={() => {
+          navigate(AppRoutes.home);
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: "600",
+            fontSize: "2.5rem",
+            color: "secondary.dark",
+          }}
+        >
+          Heal
+        </Typography>
+        <Typography
+          sx={{ fontWeight: "600", fontSize: "2.5rem", color: "primary.main" }}
+        >
+          U
+        </Typography>
       </Box>
       <Box
         sx={{
@@ -66,7 +97,49 @@ const Login = () => {
               validationSchema={handleFormSchema}
               onSubmit={(values: authModel) => {
                 console.log(values);
-                dispatch(login(values));
+                dispatch(login(values)).then(
+                  (res: any) => {
+                    console.log("res", res);
+                    if (res.payload.user) {
+                      // navigate(AppRoutes.home);
+                      if (res.payload.user.role === "Admin") {
+                        navigate(AppRoutes.adminPortal);
+                      } else if (res.payload.user.role === "Patient") {
+                        navigate(AppRoutes.home);
+                      } else if (res.payload.user.role === "Doctor") {
+                        switch (res.payload.user.clinicId) {
+                          case 13:
+                            navigate(AppRoutes.clinicDental);
+                            break;
+                          case 14:
+                            navigate(AppRoutes.clinicNutrition);
+                            break;
+                          case 15:
+                            navigate(AppRoutes.clinicOphthalmolgy);
+                            break;
+                          case 16:
+                            navigate(AppRoutes.clinicOrthopedic);
+                            break;
+                          case 17:
+                            navigate(AppRoutes.clinicPediatric);
+                            break;
+                          case 18:
+                            navigate(AppRoutes.clinicDermatology);
+                            break;
+
+                          default:
+                            navigate(AppRoutes.home);
+                            break;
+                        }
+                      }
+                    } else {
+                      alert(res.payload.response.data.error);
+                    }
+                  },
+                  (err: any) => {
+                    alert(err.message);
+                  }
+                );
               }}
             >
               {({
@@ -105,7 +178,7 @@ const Login = () => {
                     touched={touched.password}
                     width="100%"
                     props={{
-                      type: "text",
+                      type: "password",
                     }}
                   />
                   <Button
@@ -120,12 +193,15 @@ const Login = () => {
             </Formik>
           </Box>
           <PrimaaryBtn
-            title="log in"
+            title="Log in"
             Func={() => formSubmit.current.click()}
             sx={{ width: "70%", margin: "0 auto 1rem" }}
           />
           <Typography
             sx={{ width: "100%", textAlign: "center", cursor: "pointer" }}
+            onClick={() => {
+              navigate(AppRoutes.signup);
+            }}
           >
             Don't have an account?
           </Typography>

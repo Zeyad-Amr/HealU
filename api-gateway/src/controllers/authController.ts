@@ -28,7 +28,7 @@ const login_user = async (req: Request, res: Response) => {
         await hashing.compareHashPassword(user.password, exist.password, authError)
 
         const token = jwt.createToken({ sub: exist.userId })
-        return res.status(200).json({ access_token: token })
+        return res.status(200).json({ access_token: token, user: exist })
     } catch (error: any) {
         const err = errorHandler(error)
         res.status(err?.statusCode ?? 500).json(err)

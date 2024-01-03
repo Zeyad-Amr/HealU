@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authModel from "../models/auth-model";
-import axios from "axios";
+import api from "../../../core/api/api";
 
 export interface AuthState {
     auth: authModel;
@@ -23,7 +23,7 @@ export const login = createAsyncThunk(
         const { rejectWithValue } = thunkApi;
         try {
             console.log('data', data);
-            const response = await axios.post('https://healu-api-gateway.onrender.com/api/login', data);
+            const response = await api.post('/login', data);
             console.log('response', response);
             return response.data;
 
@@ -40,7 +40,6 @@ export const authSlice = createSlice({
         updateAuth: (state, action: PayloadAction<authModel>) => {
             state.auth = action.payload;
         }
-
     },
 
     extraReducers: (builder) => {
@@ -54,6 +53,7 @@ export const authSlice = createSlice({
             const token: string = action.payload['access_token'];
             localStorage.setItem('auth-token', token);
             console.log('token', token);
+            console.log('user', action.payload['user']);
         });
 
         builder.addCase(login.rejected, (state, action) => {

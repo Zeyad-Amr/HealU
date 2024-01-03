@@ -1,5 +1,8 @@
+import AppLayout from "../../../../core/components/AppLayout";
+
 const DentalClinicPortal = () => {
   return (
+    <AppLayout>
     <div
       style={{
         display: "flex",
@@ -10,6 +13,7 @@ const DentalClinicPortal = () => {
     >
       <h1>Dental Clinic Portal</h1>
     </div>
+    </AppLayout>
   );
 };
 
