@@ -24,7 +24,8 @@ import UpcomingAppointments from "../../modules/patient-portal/pages/appointment
 import AppLayout from "../components/AppLayout";
 import DentalExaminationPage from "../../modules/clinics-portals/dental/pages/DentalExaminationPage";
 import DentalClinicPortal from "../../modules/clinics-portals/dental/pages/DentalClinicPortal";
-import React from "react";
+
+import DoctorsSlot from "../../modules/clinics-portals/orthopedic/pages/doctorSlot/doctorSlot";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -115,8 +116,12 @@ class Router {
       ),
     },
     {
+      path: AppRoutes.clinicOrthopedic,
+      element: <DoctorsSlot/>,
+    },
+    {
       path: AppRoutes.orthoExamination,
-      element: <Patient />,
+      element: <Patient/>,
     },
   ];
 

@@ -141,10 +141,6 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
         </Paper>
       )}
 
-      <button onClick={() => console.log(schedules)} style={{ color: "black" }}>
-        {" "}
-        vvvvvvvv
-      </button>
     </>
   );
 };

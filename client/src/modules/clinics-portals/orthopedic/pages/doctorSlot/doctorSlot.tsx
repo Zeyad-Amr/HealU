@@ -10,7 +10,6 @@ import { addSlotActions, getSlots } from "../../slices/addSlotsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 const DoctorsSlot = () => {
-  // const slots = useSelector((state: RootState) => state[$CombinedState].slots);
   const { slots, isVisible, date } = useSelector((state: any) => ({
     slots: state.rootReducer.slots.slots,
     date: state.rootReducer.slots.selectedDate,
