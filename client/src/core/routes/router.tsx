@@ -15,6 +15,7 @@ import AppointmentsPage from "../../modules/patient-portal/pages/appointments-pa
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
 import Signup from "../../modules/user/pages/signup/SignUp";
 import Test from "../../modules/patient-portal/components/appointments-slots/appointments-bill/Test";
+import UpcomingAppointments from "../../modules/patient-portal/pages/appointments/upcoming";
 
 class Router {
   static readonly routes: RouteModel[] = [
@@ -53,6 +54,10 @@ class Router {
     {
       path: AppRoutes.patientPortalPreviousAppointments,
       element: <PreviousAppointments />,
+    },
+    {
+      path: AppRoutes.patientPortalUpcomingAppointments,
+      element: <UpcomingAppointments />,
     },
     {
       path: AppRoutes.adminPortal,

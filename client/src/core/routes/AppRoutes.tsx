@@ -14,6 +14,8 @@ class AppRoutes {
   static readonly test = "/test";
   static readonly patientPortalPreviousAppointments =
     "/patient/previous-appointments";
+  static readonly patientPortalUpcomingAppointments =
+    "/patient/upcoming-appointments";
 }
 
 export default AppRoutes;
