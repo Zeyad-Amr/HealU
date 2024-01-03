@@ -30,7 +30,7 @@ const initialAppointments = [
   { time: "09:00 ", patientName: "bassma", amOrPm: "am" },
   { time: "11:00 ", patientName: "nada", amOrPm: "am" },
   { time: "12:00 ", patientName: "", amOrPm: "am" },
-  { time: "14:00 ", patientName: "salma", amOrPm: "am" },
+  { time: "14:00 ", patientName: "salma", amOrPm: "pm" },
 ];
 
 export default function DoctorAppointments() {
@@ -86,8 +86,15 @@ export default function DoctorAppointments() {
     setDateDialogOpen(false);
   };
 
-  const handleSelectDate = (dateString: any) => {
-    const selectedDate = new Date(dateString);
+  const formatDate = (date: any) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const handleSelectDate = (dateValue: any) => {
+    const selectedDate = new Date(dateValue.toString());
     setSelectedDate(selectedDate);
     handleCloseDateDialog();
   };
@@ -243,9 +250,9 @@ export default function DoctorAppointments() {
         <DialogContent>
           <TextField
             type="date"
-            value={selectedDate.toISOString().split("T")[0]}
-            onChange={handleSelectDate}
-            className="MuiDialogContent-select "
+            value={formatDate(selectedDate)}
+            onChange={(e) => handleSelectDate(e.target.value)}
+            className="MuiDialogContent-select"
           />
         </DialogContent>
         <DialogActions>
@@ -258,7 +265,7 @@ export default function DoctorAppointments() {
           </Button>
           <Button
             className="gradient-button"
-            onClick={() => handleSelectDate(new Date())}
+            onClick={() => handleSelectDate(selectedDate.toString())}
             color="primary"
           >
             Select
