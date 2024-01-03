@@ -50,11 +50,7 @@ function convertMedicalRecordsToDataset(
       medicalHistoryAdded: medicalRecords.medicalHistoryAdded[clinic],
       clinic: `${clinic}`,
     }))
-    .filter(
-      (item) =>
-        item.clinic !== "Clinic total" &&
-        item.clinic !== "Clinic averageAllClinics"
-    );
+    .filter((item) => item.clinic !== "Total" && item.clinic !== "Average");
 }
 function convertGenderDistributionToDataset(
   genderDistribution: GenderDistributionData
@@ -65,11 +61,7 @@ function convertGenderDistributionToDataset(
       female: data.female,
       clinic: `${key}`,
     }))
-    .filter(
-      (item) =>
-        item.clinic !== "Clinic total" &&
-        item.clinic !== "Clinic averageAllClinics"
-    );
+    .filter((item) => item.clinic !== "Total" && item.clinic !== "Average");
 }
 function convertToData(analyticsToConvert: analyticsToConvert): ConvertedData {
   return {
@@ -78,11 +70,7 @@ function convertToData(analyticsToConvert: analyticsToConvert): ConvertedData {
         value,
         label: `${key}`,
       }))
-      .filter(
-        (item) =>
-          item.label !== "Clinic total" &&
-          item.label !== "Clinic averageAllClinics"
-      ),
+      .filter((item) => item.label !== "Total" && item.label !== "Average"),
   };
 }
 
