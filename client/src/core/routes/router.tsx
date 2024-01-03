@@ -3,7 +3,7 @@ import AppRoutes from "./AppRoutes";
 import { ReactElement } from "react";
 import { Route } from "react-router-dom";
 import LandingPage from "../../modules/landing-page/pages";
-import DentalClinicPortal from "../../modules/clinics-portals/dental/pages";
+
 import DermatologyClinicPortal from "../../modules/clinics-portals/dermatology/pages";
 import NutritionClinicPortal from "../../modules/clinics-portals/nutrition/pages";
 import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmology/pages";
@@ -20,6 +20,8 @@ import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout"
 import Signup from "../../modules/user/pages/signup/SignUp";
 import UpcomingAppointments from "../../modules/patient-portal/pages/appointments/upcoming";
 import AppLayout from "../components/AppLayout";
+import DentalExaminationPage from "../../modules/clinics-portals/dental/pages/DentalExaminationPage";
+import DentalClinicPortal from "../../modules/clinics-portals/dental/pages/DentalClinicPortal";
 
 
 class Router {
@@ -27,6 +29,14 @@ class Router {
     {
       path: AppRoutes.home,
       element: <LandingPage />,
+    },
+    {
+      path: AppRoutes.clinicDental,
+      element: <DentalClinicPortal />,
+    },
+    {
+      path: AppRoutes.clinicDentalExamination,
+      element: <DentalExaminationPage />,
     },
     {
       path: AppRoutes.aboutUs,
