@@ -303,11 +303,7 @@ export const get_all_slots = async (req: Request, res: Response) => {
                     id: doctor.userId,
                     name: doctor.firstName + " " + doctor.lastName
                 },
-                clinic: {
-                    id: clinic.id,
-                    name: clinic.name,
-                    description: clinic.description
-                },
+                clinic,
                 time: slot.time,
                 weekDay: slot.weekDay,
                 date: slot.date,
