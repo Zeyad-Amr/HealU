@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import HeaderComponent from "../../components/header";
 import PageBody from "../../../../core/components/PageBody";
-import PreviousAppointmentsComponent from "../../components/appointments";
+import PreviousAppointmentsComponent from "../../components/appointments/PreviousAppointments";
 
 const PerviousAppointments = () => {
   return (
