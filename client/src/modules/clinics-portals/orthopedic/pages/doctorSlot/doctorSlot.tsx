@@ -9,7 +9,6 @@ import DateComponent from "../../components/datePicker/datePicker";
 import { addSlotActions, getSlots } from "../../slices/addSlotsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
-import { $CombinedState } from "redux";
 import { useEffect } from "react";
 
 const DoctorsSlot = () => {
