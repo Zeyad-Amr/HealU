@@ -1,6 +1,9 @@
 import Box from "@mui/material/Box";
 import AppointmentSlot from "./AppointmentSlot";
 import {useState} from "react";
+import {useSelector} from "react-redux";
+import {useAppDispatch} from "../../../../../core/store";
+import {clearAppointment, removeAppointment} from "../../slices/nutritionSlice";
 
 
 const data = [
@@ -22,26 +25,22 @@ const data = [
 
 const AppointmentsBody = () => {
 
-    const [appointments, setAppointments] = useState(data);
+    const {appointments} = useSelector((state: any) => state.nutrition);
 
-    const handleDeleteSlot = (index: number) => {
-        setAppointments(appointments.filter((item, i) => i !== index));
+    const dispatch = useAppDispatch()
+
+    const handleDeleteSlot = (id: string) => {
+        dispatch(removeAppointment(id))
     };
 
-    const handleClearSlot = (index: number) => {
-        // clear one slot
-        setAppointments(appointments.filter((item, i)=>{
-            if(i === index){
-                item.name = "";
-            }
-            return item;
-        }));
+    const handleClearSlot = (time: string) => {
+        dispatch(clearAppointment(time))
     }
 
     return (
         <Box>
             {
-                appointments.map((item, index) => {
+                appointments.map((item: any, index: number) => {
                     return (
                         <Box
                             key={index}
@@ -51,9 +50,9 @@ const AppointmentsBody = () => {
                         >
                             <AppointmentSlot
                                 time={item.time}
-                                name={item.name}
-                                onDeleteSlot={() => handleDeleteSlot(index)}
-                                onClearSlot={() => handleClearSlot(index)}
+                                name={item.patientName}
+                                onDeleteSlot={() => handleDeleteSlot(item.patientId)}
+                                onClearSlot={() => handleClearSlot(item.time)}
                             />
                         </Box>
                     )

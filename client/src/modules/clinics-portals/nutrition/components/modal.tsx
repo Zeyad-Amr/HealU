@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 
 interface ModalProps {
   onClose: () => void;
-  handleShowCard: () => void;
   children: ReactNode;
   modalTitle: string;
 }
@@ -54,7 +53,6 @@ const FormWrapper = styled("form")(({ theme }: { theme: Theme }) => ({
 
 const Modal: React.FC<ModalProps> = ({
   onClose,
-  handleShowCard,
   modalTitle,
   children,
 }) => {

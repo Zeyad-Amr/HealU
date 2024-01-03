@@ -7,9 +7,6 @@ interface ButtonProps {
 }
 
 const StyledButton = styled("button")(({ theme }: { theme: Theme }) => ({
-  marginLeft: "1285px",
-  marginBottom: "30px",
-  marginTop: "20px",
   width: "150px",
   fontFamily: theme.typography.fontFamily,
   fontSize: 16,

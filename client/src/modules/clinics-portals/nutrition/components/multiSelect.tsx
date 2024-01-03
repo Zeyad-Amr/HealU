@@ -22,7 +22,7 @@ const time = [
   },
 ];
 
-export default function SelectTextFields() {
+export default function SelectTextFields({changeHandler = (e: any) => {} }) {
   return (
     <Box
       component="form"
@@ -46,6 +46,7 @@ export default function SelectTextFields() {
           label="Select"
           defaultValue="After Breakfast"
           variant="filled"
+          onChange={changeHandler}
         >
           {time.map((option) => (
             <MenuItem key={option.value} value={option.value}>

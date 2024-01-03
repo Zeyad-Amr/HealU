@@ -1,9 +1,9 @@
 import React from "react";
 import { styled, Theme } from "@mui/material/styles";
+import Appointments from "../pages/Appointments";
 import NutritionDashBoard from "../pages/nutritionDashboard";
 
 const ContainerWrapper = styled("div")(({ theme }: { theme: Theme }) => ({
-  marginTop: "10px",
   display: "flex",
   justifyContent: "center",
 }));
@@ -15,7 +15,7 @@ const NutritionClinicPortal = () => {
         <ContainerWrapper>
             <ContentWrapper>
                 <Appointments/>
-<!--                 <NutritionDashBoard /> -->
+                {/*<NutritionDashBoard />*/}
             </ContentWrapper>
         </ContainerWrapper>
     );

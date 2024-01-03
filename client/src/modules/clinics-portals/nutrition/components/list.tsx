@@ -167,7 +167,6 @@ const List: React.FC<ListProps> = ({
         return (
           <Modal
             onClose={handleCloseModal}
-            handleShowCard={handleShowCard}
             modalTitle="Prescription"
           >
             {prescriptionField.map((field) => (
@@ -195,7 +194,6 @@ const List: React.FC<ListProps> = ({
         return (
           <Modal
             onClose={handleCloseModal}
-            handleShowCard={handleShowCard}
             modalTitle="Diet Plan"
           >
             {dietFields.map((field) => (
@@ -218,11 +216,10 @@ const List: React.FC<ListProps> = ({
           return (
             <Modal
               onClose={handleCloseModal}
-              handleShowCard={handleShowCard}
               modalTitle="Tests"
             >
             <Dropdown options={Tests} />
-  
+
               <StyledButton type="submit" onClick={handleShowCard}>
                 Save
               </StyledButton>
@@ -232,7 +229,6 @@ const List: React.FC<ListProps> = ({
           return (
             <Modal
               onClose={handleCloseModal}
-              handleShowCard={handleShowCard}
               modalTitle="Services"
             >
             <Dropdown options={Services} />

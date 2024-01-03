@@ -1,32 +1,17 @@
 import React from "react";
 import { styled, Theme } from "@mui/material/styles";
-import { theme } from "../../../../../src/core/theme/theme";
-
-interface PatientDataProps {
-  name: string;
-  weight: number;
-  length: number;
-  age: number;
-}
-
-interface DataItem {
-  key: string;
-  value: string | number;
-}
+import { theme } from "../../../../core/theme/theme";
+import {useSelector} from "react-redux";
+import { toTitleCase } from "../utils/toProperCase";
 
 const PersonalDataContainer = styled("div")(({ theme: Theme }) => ({
-  marginTop: 20,
-  marginBottom: 16,
-  marginLeft: 60,
-  marginRight: -100,
   backgroundImage:
     "linear-gradient(90deg, hsla(180, 99%, 36%, 1) 0%, hsla(183, 85%, 47%, 1) 100%)",
   borderRadius: "10px",
   padding: "16px",
-  width: "300px",
   color: "#fff",
   fontFamily: "Arial, sans-serif",
-  height: "90%",
+  height: "100%",
 }));
 
 const Title = styled("h2")(({ theme: Theme }) => ({
@@ -52,28 +37,25 @@ const DataItemValue = styled("span")(({ theme: Theme }) => ({
   fontSize: "20px",
 }));
 
-const PatientData: React.FC<PatientDataProps> = ({
-  name,
-  weight,
-  length,
-  age,
-}) => {
+const PatientData = () => {
   const currentTheme = theme();
 
-  const dataItems: DataItem[] = [
-    { key: "Name:", value: name },
-    { key: "Weight:", value: `${weight} Kg` },
-    { key: "Height:", value: `${length} Cm` },
-    { key: "Age:", value: age },
-  ];
+  // use the redux store to get the patient data
+  const {
+    currentPatient,
+  } = useSelector((state : any) => state.nutrition);
+
+  const keys = Object.keys(currentPatient.personalInfo);
+  const values: string[] = Object.values(currentPatient.personalInfo);
+
 
   return (
     <PersonalDataContainer theme={currentTheme}>
       <Title theme={currentTheme}>Personal Data</Title>
-      {dataItems.map((item) => (
-        <DataItemContainer key={item.key} theme={currentTheme}>
-          <DataItemKey theme={currentTheme}>{item.key}</DataItemKey>{" "}
-          <DataItemValue theme={currentTheme}>{item.value}</DataItemValue>
+      {keys.map((key: any, index: number) => (
+        <DataItemContainer key={key} theme={currentTheme}>
+          <DataItemKey theme={currentTheme}>{toTitleCase(key)}</DataItemKey>{": "}
+          <DataItemValue theme={currentTheme}>{values[index]}</DataItemValue>
         </DataItemContainer>
       ))}
     </PersonalDataContainer>
