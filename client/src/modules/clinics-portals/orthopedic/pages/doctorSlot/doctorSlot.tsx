@@ -10,11 +10,14 @@ import { addSlotActions, getSlots } from "../../slices/addSlotsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/combineReducers";
 const DoctorsSlot = () => {
-  const { slots, isVisible, date } = useSelector((state: any) => ({
-    slots: state.rootReducer.slots.slots,
-    date: state.rootReducer.slots.selectedDate,
-    isVisible: state.rootReducer.slots.isVisible,
-  }));
+
+  const slots = useSelector((state: any) => state.rootReducer.slots.slots);
+  const date = useSelector(
+    (state: any) => state.rootReducer.slots.selectedDate
+  );
+  const isVisible = useSelector(
+    (state: any) => state.rootReducer.slots.isVisible
+  );
   const dispatch = useDispatch();
   const handleButtonClick = () => {
     dispatch(addSlotActions.setFormVisibility(true));

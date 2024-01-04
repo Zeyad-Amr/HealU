@@ -5,7 +5,7 @@ import styles from "./form.module.css";
 import classes from "../../../clinics-portals/orthopedic/components/form/addSlotForm.module.css";
 import { TextField, MenuItem } from "@mui/material";
 import { makeStyles } from "@mui/styles"; // Add this import
-import { editDoctor, getDoctors } from "../../slices/doctor-slice";
+import { editDoctor, getDoctorById } from "../../slices/doctor-slice";
 import { addDoctor } from "../../slices/doctor-slice";
 import { MouseEvent, FormEvent } from "react";
 import { formActions } from "../../slices/form-slice";
@@ -13,17 +13,15 @@ import ButtonComponent from "../../../clinics-portals/orthopedic/components/butt
 import CloseIcon from "@mui/icons-material/Close";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-
-// import { handleEdit } from "../table/table";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import DateComponent from "../../../clinics-portals/orthopedic/components/datePicker/datePicker";
 
 const specialties: string[] = [
   " ",
-  "Dental",
-  "Nutrition",
-  "Ophthalmology",
-  "Orthopedics",
+  "Dentist",
+  "Ophthalmologist",
+  "Orthopedic Surgeon",
   "Pediatrics",
+  "Nutritionist",
 ];
 
 const gender: string[] = [" ", "Male", "Female"];
@@ -256,6 +254,21 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     setLocalFormState({ ...localFormState, email: inputData }) as any;
   };
 
+  const handleSelectedDate = (selectedDate: string) => {
+    if (selectedDate) {
+      setLocalFormState({ ...localFormState, dateOfBirth: selectedDate });
+    } else {
+      setLocalErrors({
+        ...localErrors,
+        errorDateOfBirth: "You must enter a date",
+      });
+    }
+  };
+
+  const updatedDoctor = useSelector(
+    (state: any) => state.rootReducer.form.editedDoctor
+  );
+
   const handleOnSubmit = async (
     e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>
   ) => {
@@ -298,46 +311,25 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
     ) {
       try {
         if (isEditForm) {
-          if (editedDoctor) {
+          if (updatedDoctor) {
+            console.log("lllllll", localFormState);
             await dispatch(
               editDoctor({
-                doctorId: editedDoctor.userId,
-                updatedData: {
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                  specialization: data.specialization,
-                  phoneNumber: data.phoneNumber,
-                  email: data.email,
-                  userName: data.userName,
-                  password: data.password,
-                  dateOfBirth: data.dateOfBirth,
-                  ssn: data.ssn,
-                  role: "Doctor",
-                },
+                doctorId: updatedDoctor.userId,
+                updatedData: localFormState,
               }) as any
             );
           }
           dispatch(formActions.setFormVisibility(!isVisible));
           dispatch(formActions.setIsEdit(!isEditForm));
         } else {
-          const resultAction = await dispatch(addDoctor(data) as any);
-          await dispatch(getDoctors() as any);
-          // console.log(resultAction);
-          // // Check if the action returned an error
-          // if (resultAction.payload===undefined) {
-          //   // Handle the error, if needed
-          //   console.log("Error adding doctor:", resultAction.error);
-          // } else {
-          //   // Handle the success case, if needed
-          //   console.log("Doctor added successfully");
-          //   await dispatch(getDoctors() as any);
-          // }
-
           dispatch(formActions.setFormVisibility(!isVisible));
         }
       } catch (error) {
         console.log("erorrrrrrrrrr", error);
         console.error("Error while dispatching editDoctor/addDoctor:", error);
+      } finally {
+        dispatch(addDoctor(data) as any);
       }
     } else {
       alert("Please fill all the fields correctly");
@@ -469,12 +461,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
             <div className={styles.formRow}>
               <div className={styles.column}>
                 <label className={styles.labelElement}>Date of Birth</label>
-                <TextField
-                  value={localFormState.dateOfBirth || ""}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    handleOnChange(e, "dateOfBirth");
-                  }}
-                />
+                <DateComponent admin={true} onSelectDate={handleSelectedDate} />
                 {localErrors.errorDateOfBirth && (
                   <label className={styles.errorLabel}>
                     {localErrors.errorDateOfBirth}

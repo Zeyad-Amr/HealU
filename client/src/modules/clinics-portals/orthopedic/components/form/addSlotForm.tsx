@@ -96,7 +96,6 @@ const AddSlotForm = ({
   const [time, setTime] = useState<string | null>(null);
   const [period, setPeriod] = useState<string | null>(null);
   const slots = useSelector((state: any) => state.rootReducer.slots.slots);
-  const userId = localStorage.getItem("auth-token");
   const selectedDate = useSelector(
     (state: any) => state.rootReducer.slots.selectedDate
   );
@@ -104,14 +103,9 @@ const AddSlotForm = ({
     (state: any) => state.rootReducer.slots.isVisible
   );
   const add = (weekDay: string) => {
-    let generatedId = slots.length + 1;
     const existingSlot = slots.find(
       (slot: any) => slot.weekDay === weekDay && slot.time === time
     );
-    const isIdExists = slots.some((slot: any) => slot._id);
-    if (isIdExists) {
-      generatedId = generatedId + 1;
-    }
     if (existingSlot) {
       setError((prevError) => ({
         ...prevError,
@@ -120,10 +114,9 @@ const AddSlotForm = ({
       return;
     }
     const data: Slot = {
-      doctorId: 20,
-      clinicId: 2,
       weekDay,
       time,
+      doctorId: doctorId,
     };
     if (selectedDate === selectedDay) {
       dispatch(getSlots(selectedDate) as any);
@@ -205,7 +198,6 @@ const AddSlotForm = ({
       setPeriod(null);
     }
     onAddSlot && add(data.weekDay);
-    console.log(error);
     if (error.date === "" && error.time === "" && error.period === "") {
       dispatch(addSlotActions.setFormVisibility(false));
     }

@@ -36,14 +36,13 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
   const params = useParams();
   const navigate = useNavigate();
   const classesX = useStyles();
-  const { slots, isVisible, date } = useSelector((state: any) => ({
-    slots: state.rootReducer.slots.slots,
-    isVisible: state.rootReducer.isFormVisible,
-    date: state.rootReducer.slots.selectedDate,
-  }));
+
+  const date = useSelector(
+    (state: any) => state.rootReducer.slots.selectedDate
+  );
+
   const dispatch = useDispatch();
   const handleDelete = async (slotId: string | undefined) => {
-    console.log("Deleeeeett", slotId);
     if (slotId) {
       await dispatch(deleteSlot(slotId) as any);
     }
@@ -61,14 +60,14 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
     <>
       {schedules.length !== 0 && (
         <Paper
-          sx={{ width: "70%", overflow: "hidden" }}
+          sx={{ width: "90%", overflow: "hidden" }}
           classes={{ root: classesX.containerA }}
         >
           <TableContainer
             className={styles.customTableContainer}
             classes={{ root: classesX.box }}
           >
-            <Table style={{ width: "100%" }}>
+            <Table style={{ width: "80%" }}>
               <TableBody>
                 {schedules.map((row, rowIndex) => (
                   <TableRow key={rowIndex}>
@@ -122,7 +121,9 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                       <div
                         onClick={() => {
                           if (row.patientId !== undefined) {
-                            navigate(`/clinic/orthopedic/examination/${row.patientId}`);
+                            navigate(
+                              `/clinic/orthopedic/examination/${row.patientId}`
+                            );
                           }
                         }}
                         className={styles.addIcon}
@@ -140,7 +141,6 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
           </TableContainer>
         </Paper>
       )}
-
     </>
   );
 };

@@ -1,6 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { error } from "console";
+import { createSlice,  PayloadAction } from "@reduxjs/toolkit";
 import { Doctor } from "./doctor-slice";
 
 export interface FormState {

@@ -12,7 +12,7 @@
   width: 100%;
   border-collapse: separate;
   border-radius: 0 0 24px 24px;
-  padding: 0 10px 10px;
+  padding: 0 15px 10px;
   margin-top: 0;
   z-index: 1;
   position: relative;
@@ -72,7 +72,6 @@
   border-radius: 15px;
   background-color: darkgray;
 }
-
 
 .addIcon {
   width: 38px;

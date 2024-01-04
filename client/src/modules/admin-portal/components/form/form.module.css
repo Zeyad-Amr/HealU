@@ -74,12 +74,12 @@
   ); /* Change the hover background color */
 }
 
-
 .closeIcon {
   display: flex;
   justify-content: right;
   margin-bottom: 0px;
-  margin-left: 10px;
+  margin-right: 10px;
+  margin-left: -28px;
   width: 685px;
   height: 8px;
   margin-top: 10px;
