@@ -97,7 +97,6 @@ export const editDoctor = createAsyncThunk(
       );
       return res.data;
     } catch (error: any) {
-      alert(error.response.data.error);
       return rejectWithValue(error.message);
     }
   }

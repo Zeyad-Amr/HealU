@@ -69,9 +69,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/uuid": "^9.0.7",
-    "@types/react-redux": "^7.1.33"
   }
 }
