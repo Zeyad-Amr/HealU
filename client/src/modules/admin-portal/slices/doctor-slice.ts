@@ -16,14 +16,17 @@ export interface Doctor {
   specialization: string;
   clinicId?: number;
   role: string;
+  loading?: boolean;
 }
 
 export interface DoctorState {
   doctors: Doctor[];
+  loading?: boolean;
 }
 
 const initialState: DoctorState = {
   doctors: [],
+  loading: false,
 };
 
 export const getDoctors = createAsyncThunk(
@@ -112,7 +115,9 @@ const doctorSlice = createSlice({
         state.doctors = (action.payload as any) || [];
       }
     });
-    builder.addCase(getDoctors.pending, (state, action) => {});
+    builder.addCase(getDoctors.pending, (state, action) => {
+      state.loading = true;
+    });
     builder.addCase(addDoctor.fulfilled, (state, action) => {
       console.log("rawda", action.payload);
       if (action.payload !== undefined) {

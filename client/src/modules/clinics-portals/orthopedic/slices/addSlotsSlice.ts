@@ -13,6 +13,7 @@ export default interface Slot {
   weekDay: string;
   time: string | null;
   slotId?: string | undefined;
+  loading?: boolean;
 }
 
 interface SlotsState {
@@ -20,6 +21,7 @@ interface SlotsState {
   selectedDate: string | null;
   slotsLength: number;
   isVisible: boolean;
+  loading?: boolean;
 }
 
 const initialStateSlots: SlotsState = {
@@ -27,6 +29,7 @@ const initialStateSlots: SlotsState = {
   selectedDate: null,
   slotsLength: 0,
   isVisible: false,
+  loading: false,
 };
 
 export const updateSlotStatus = createAsyncThunk(
@@ -44,22 +47,22 @@ export const updateSlotStatus = createAsyncThunk(
 
 export const addSlot = createAsyncThunk(
   "slots/addSlot",
-  async (data: Slot, thunkAPI) => {
-    const { time, weekDay } = data;
-
-    // Check for empty strings
-    if (!time || !weekDay) {
-      return thunkAPI.rejectWithValue({
-        message: "Time and date are required fields.",
-      });
-    }
-
+  async ({
+    time,
+    weekDay,
+  }: {
+    time: string | null;
+    weekDay: string;
+  }) => {
+    console.log(time, weekDay);
     try {
-      const response = await api.post<Slot>("/appointment/slots", data);
-      console.log(response.data);
-      return response.data;
+      const res = await api.post("/data/slots", {
+        time: time,
+        weekDay: weekDay,
+      });
+      return { time: time, weekDay: weekDay };
+
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }
@@ -67,11 +70,10 @@ export const addSlot = createAsyncThunk(
 
 export const updateSlot = createAsyncThunk(
   "slots/updateSlot",
-  async (id: number, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
-      const response = await api.patch<Slot>(`/appointment/slots/${id}`, {
-        patient: "   ",
-      });
+      const response = await api.delete<Slot>(`/appointment/${id}`);
+      console.log(response.data);
       return response.data;
     } catch (error: any) {
       console.error(error);
@@ -92,13 +94,14 @@ export const getSlots = createAsyncThunk<Slot[], string | void>(
         return [];
       } else {
         const slotData = slots.map((slot: any) => {
+          const appointmentObjectId = slot.appointmentObject?._id ?? "";
           const patientId = slot.appointmentObject?.patient?.userId ?? "";
           const patientFirstName =
             slot.appointmentObject?.patient?.firstName ?? "";
           const time = slot.slot.time;
           const slotId = slot.slot._id;
-          console.log("rrrr", time);
           return {
+            appointmentObjectId,
             patientId,
             patientFirstName,
             time,
@@ -114,13 +117,14 @@ export const getSlots = createAsyncThunk<Slot[], string | void>(
   }
 );
 
-export const deleteSlot = createAsyncThunk<Slot[], string>(
-  "slots/deleteSlot",
+export const deleteSlotDoctor = createAsyncThunk<Slot[], any>(
+  "slots/deleteSlotDoctor",
   async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
     try {
       const response = await api.delete<Slot[]>(`appointment/slots/${id}`);
+      console.log(response.data);
       return response.data;
     } catch (error: any) {
       console.error(error);
@@ -140,20 +144,38 @@ const addSlotSlice = createSlice({
       state.isVisible = action.payload;
     },
   },
+
   extraReducers: (builder) => {
+    builder.addCase(deleteSlotDoctor.pending, (state: any, action) => {
+      state.loading = true;
+    });
+
+    builder.addCase(deleteSlotDoctor.fulfilled, (state: any, action) => {
+      state.slots = state.slots.filter(
+        (slot: any) => slot._id !== action.payload
+      );
+    });
+    builder.addCase(deleteSlotDoctor.rejected, (state, action) => {
+      console.log(action.payload);
+    });
     builder.addCase(addSlot.pending, (state, action) => {
       console.log(action.meta.arg);
     });
     builder.addCase(addSlot.fulfilled, (state, action) => {
       console.log(action.payload);
-      const newSlot = action.payload;
-      if (state.selectedDate === newSlot.weekDay) {
-        state.slots.push(newSlot);
+      if (action.payload) {
+        const newSlot = action.payload as any; // Add type assertion here
+        if (state.selectedDate === newSlot.weekDay) {
+          state.slots.push(newSlot);
+        }
       }
     });
-    builder.addCase(getSlots.rejected, (state, action) => {
+    builder.addCase(addSlot.rejected, (state, action) => {
       console.log(action.payload);
-      state.slots = [];
+      const errorMessage = action.payload
+        ? action.payload
+        : "An error occurred.";
+      console.log(errorMessage);
     });
     builder.addCase(
       getSlots.fulfilled,
@@ -169,15 +191,9 @@ const addSlotSlice = createSlice({
         }
       }
     );
-
-    builder.addCase(addSlot.rejected, (state, action) => {
-      const errorMessage = action.payload
-        ? action.payload
-        : "An error occurred.";
-      console.log(errorMessage);
-    });
-    builder.addCase(deleteSlot.rejected, (state, action) => {
+    builder.addCase(getSlots.rejected, (state, action) => {
       console.log(action.payload);
+      state.slots = [];
     });
   },
 });

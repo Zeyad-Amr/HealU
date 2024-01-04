@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styles from "./schedulesTable.module.css";
 import Slot, {
-  deleteSlot,
+  deleteSlotDoctor,
   getSlots,
   updateSlot,
 } from "../../slices/addSlotsSlice";
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
+const TableComponent = ({ schedules }: { schedules: any }) => {
   const params = useParams();
   const navigate = useNavigate();
   const classesX = useStyles();
@@ -44,15 +44,15 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
   const dispatch = useDispatch();
   const handleDelete = async (slotId: string | undefined) => {
     if (slotId) {
-      await dispatch(deleteSlot(slotId) as any);
+      await dispatch(deleteSlotDoctor(slotId) as any);
     }
     dispatch(getSlots(date) as any);
   };
-  // const handleClearAppoinment = async (dateId: string, date: string) => {
-  //   dispatch(updateSlot(parseInt(dateId)) as any);
-  // };
-  const handlePreview = () => {
-    console.log("Preview");
+  const handleClearAppoinment = async (appoinmentId: string) => {
+    if (appoinmentId) {
+      await dispatch(updateSlot(appoinmentId) as any);
+    }
+    dispatch(getSlots(date) as any);
   };
 
   return (
@@ -68,7 +68,7 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
           >
             <Table style={{ width: "80%" }}>
               <TableBody>
-                {schedules.map((row, rowIndex) => (
+                {schedules.map((row: any, rowIndex: number) => (
                   <TableRow key={rowIndex}>
                     <TableCell
                       key={`${rowIndex}-column1`}
@@ -88,9 +88,10 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                     >
                       <div
                         onClick={() => {
-                          // if (row.appointmentObject?.patient?.userId) {
-                          //   handleClearAppoinment(row.appointmentObject.patient.userId, row.weekDay);
-                          // }
+                          console.log("hhhh", row);
+                          if (row.patientId !== undefined) {
+                            handleClearAppoinment(row.appointmentObjectId);
+                          }
                         }}
                         className={styles.addIcon}
                         style={{ justifyContent: "center", display: "flex" }}
@@ -105,7 +106,7 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                       <div
                         onClick={() => {
                           handleDelete(row.slotId);
-                          console.log(row.slotId);
+                          
                         }}
                         className={styles.addIcon}
                         style={{ justifyContent: "center", display: "flex" }}

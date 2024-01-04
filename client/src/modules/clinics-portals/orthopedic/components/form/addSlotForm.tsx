@@ -16,7 +16,6 @@ import { makeStyles } from "@mui/styles";
 import CloseIcon from "@mui/icons-material/Close";
 
 const orthoId = 2;
-const doctorId = 13;
 
 export const useStyles = makeStyles({
   textField: {
@@ -92,9 +91,8 @@ const AddSlotForm = ({
 }) => {
   const dispatch = useDispatch();
   const [selectedDay, setSelectedDay] = useState<string>("");
-  const [error, setError] = useState({ date: "", time: "", period: "" });
+  const [error, setError] = useState({ date: "", time: "" });
   const [time, setTime] = useState<string | null>(null);
-  const [period, setPeriod] = useState<string | null>(null);
   const slots = useSelector((state: any) => state.rootReducer.slots.slots);
   const selectedDate = useSelector(
     (state: any) => state.rootReducer.slots.selectedDate
@@ -113,10 +111,9 @@ const AddSlotForm = ({
       }));
       return;
     }
-    const data: Slot = {
+    const data: any = {
       weekDay,
       time,
-      doctorId: doctorId,
     };
     if (selectedDate === selectedDay) {
       dispatch(getSlots(selectedDate) as any);
@@ -129,21 +126,20 @@ const AddSlotForm = ({
 
   const generateTimeOptions = () => {
     const options = [];
-    for (let hour = 0; hour < 12; hour++) {
-      for (let minute = 0; minute < 60; minute += 30) {
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 15) {
+        const paddedHour = hour.toString().padStart(2, "0");
+        const paddedMinute = minute.toString().padStart(2, "0");
+        const timeString = `${paddedHour}:${paddedMinute}`;
         options.push({
-          label: `${hour % 12 === 0 ? 12 : hour}:${
-            minute === 0 ? "00" : minute
-          }`,
-          value: `${hour % 12 === 0 ? 12 : hour}:${
-            minute === 0 ? "00" : minute
-          }`,
-          period: hour < 12 ? "AM" : "PM",
+          value: timeString,
+          label: timeString,
         });
       }
     }
     return options;
   };
+
   const timeOptions = generateTimeOptions();
 
   const handleDayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,7 +164,6 @@ const AddSlotForm = ({
     const value = event.target.value;
     if (value === "AM" || value === "PM") {
       setError((prevError) => ({ ...prevError, period: "" }));
-      setPeriod(value);
     } else {
       setError((prevError) => ({
         ...prevError,
@@ -183,22 +178,19 @@ const AddSlotForm = ({
       time: `${time}`,
       weekDay: selectedDay,
       clinicId: orthoId,
-      doctorId: doctorId,
     };
-    if (selectedDay === "" || time === null || period === null) {
+    if (selectedDay === "" || time === null) {
       setError({
         date: !selectedDay ? "Please select a day" : "",
         time: !time ? "Please select a time" : "",
-        period: !period ? "Please select a period" : "",
       });
       return;
     } else {
       setSelectedDay("");
       setTime(null);
-      setPeriod(null);
     }
     onAddSlot && add(data.weekDay);
-    if (error.date === "" && error.time === "" && error.period === "") {
+    if (error.date === "" && error.time === "" ) {
       dispatch(addSlotActions.setFormVisibility(false));
     }
   };
@@ -282,9 +274,9 @@ const AddSlotForm = ({
                 classes={{ root: classesM.menuItem }}
                 helperText={error.time}
               >
-                {timeOptions.map((option) => (
+                {timeOptions.map((option: any, index: number) => (
                   <MenuItem
-                    key={`${option.value}-${option.period}`}
+                    key={`${option.value}-${option.period}-${index}`}
                     value={option.value}
                     className={styles.menuItem}
                   >
@@ -312,34 +304,7 @@ const AddSlotForm = ({
               />
             )}
           </div>
-          {inputType === "select" && (
-            <TextField
-              classes={{ root: classesM.menuItem }}
-              id="doctorPeriod"
-              select
-              onChange={handlePeriodChange}
-              style={{
-                width: "30%",
-                backgroundColor: " #F4F4F4 ",
-                marginTop: "30px",
-                marginLeft: "60px",
-                left: "calc(351.4px)",
-                fontSize: "40px",
-              }}
-              value={period || ""}
-              helperText={error.period}
-            >
-              {[" ", "AM", "PM"].map((period) => (
-                <MenuItem
-                  key={period}
-                  value={period}
-                  className={styles.menuItem}
-                >
-                  {period}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
+ 
         </div>
         {isIncluded && (
           <div className={styles[div4Style as string]}>
