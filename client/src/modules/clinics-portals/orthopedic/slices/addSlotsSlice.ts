@@ -7,8 +7,8 @@ import api from "../../../../core/api/api";
 export default interface Slot {
   _id?: string;
   patientFirstName?: string;
-  doctorId: number;
-  clinicId: number;
+  doctorId?: number;
+  clinicId?: number;
   patientId?: number;
   weekDay: string;
   time: string | null;
@@ -56,6 +56,7 @@ export const addSlot = createAsyncThunk(
 
     try {
       const response = await api.post<Slot>("/appointment/slots", data);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);

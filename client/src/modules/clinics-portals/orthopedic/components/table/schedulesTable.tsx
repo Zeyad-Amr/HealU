@@ -36,14 +36,13 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
   const params = useParams();
   const navigate = useNavigate();
   const classesX = useStyles();
-  const { slots, isVisible, date } = useSelector((state: any) => ({
-    slots: state.rootReducer.slots.slots,
-    isVisible: state.rootReducer.isFormVisible,
-    date: state.rootReducer.slots.selectedDate,
-  }));
+
+  const date = useSelector(
+    (state: any) => state.rootReducer.slots.selectedDate
+  );
+
   const dispatch = useDispatch();
   const handleDelete = async (slotId: string | undefined) => {
-    console.log("Deleeeeett", slotId);
     if (slotId) {
       await dispatch(deleteSlot(slotId) as any);
     }

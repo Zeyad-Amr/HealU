@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { AnyAction, Dispatch } from "redux";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -14,11 +13,10 @@ import {
   deleteDoctor,
   getDoctors,
   getDoctorById,
+  editDoctor,
 } from "../../slices/doctor-slice";
 import { makeStyles } from "@mui/styles";
 import styles from "./table.module.css";
-import { RootState } from "../../../clinics-portals/orthopedic/slices/combineReducers";
-import { flexbox } from "@mui/system";
 import { formActions } from "../../slices/form-slice";
 export const useStyles = makeStyles({
   box: {
@@ -45,7 +43,6 @@ const TableComponent = () => {
   const isFormVisible = useSelector(
     (state: any) => state.rootReducer.form.isFormVisible
   );
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (!doctors.length) {
@@ -62,14 +59,19 @@ const TableComponent = () => {
   };
 
   const handleEdit = async (doctorId: number | undefined) => {
-    await dispatch(getDoctorById(doctorId) as any);
-    dispatch(formActions.setFormVisibility(!isFormVisible));
-    dispatch(formActions.setIsEdit(true));
-    const selectedDoctor = doctors.find((row: any) => row.userId === doctorId);
-    if (selectedDoctor) {
-      dispatch(formActions.setEditedDoctor(selectedDoctor));
+    const doctorData = await dispatch(getDoctorById(doctorId) as any);
+
+    if (doctorData.payload) {
+      const selectedDoctor = doctors.find(
+        (row: any) => row.userId === doctorId
+      );
+
+      if (selectedDoctor) {
+        dispatch(formActions.setFormVisibility(!isFormVisible));
+        dispatch(formActions.setIsEdit(true));
+        dispatch(formActions.setEditedDoctor(selectedDoctor));
+      }
     }
-    dispatch(getDoctors() as any);
   };
   return (
     <Paper
@@ -173,9 +175,5 @@ const TableComponent = () => {
     </Paper>
   );
 };
-
-// const isSlot = (obj: any): obj is Slot => "time" in obj && "date" in obj;
-// const isSchedule = (obj: any): obj is Schedule =>
-//   "scheduleId" in obj && "doctorName" in obj;
 
 export default TableComponent;

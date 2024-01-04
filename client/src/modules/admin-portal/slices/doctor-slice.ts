@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../../core/api/api";
+import { act } from "react-dom/test-utils";
 
 export interface Doctor {
   userId?: number | undefined;
@@ -43,8 +44,9 @@ export const addDoctor = createAsyncThunk(
   async (data: Doctor, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await api.post<Doctor>("/registration/staff", data);
-      return res.data;
+      const res = await api.post<Doctor | any>("/registration/staff", data);
+      console.log("adddd", res.data.data);
+      return res.data.data;
     } catch (error: any) {
       console.log(error);
       alert(error.response.data.error);
@@ -111,10 +113,11 @@ const doctorSlice = createSlice({
         state.doctors = (action.payload as any) || [];
       }
     });
+    builder.addCase(getDoctors.pending, (state, action) => {});
     builder.addCase(addDoctor.fulfilled, (state, action) => {
       console.log("rawda", action.payload);
       if (action.payload !== undefined) {
-        state.doctors.push(action.payload as Doctor);
+        state.doctors.push(action.payload);
       }
     });
     builder.addCase(deleteDoctor.fulfilled, (state, action) => {
@@ -135,10 +138,13 @@ const doctorSlice = createSlice({
       }
     });
     builder.addCase(editDoctor.fulfilled, (state, action) => {
-      const editedDoctor = action.payload as Doctor | undefined;
+      const editedDoctor = action.payload as any | undefined;
+      console.log("ettttt", editedDoctor.data.userId);
       if (editedDoctor !== undefined) {
         state.doctors = state.doctors.map((doctor) =>
-          doctor.userId === editedDoctor.userId ? editedDoctor : doctor
+          doctor.userId === editedDoctor?.data?.userId
+            ? editedDoctor.data
+            : doctor
         );
       }
     });
@@ -150,6 +156,10 @@ const doctorSlice = createSlice({
           doctor.userId === getDoctor.userId ? getDoctor : doctor
         );
       }
+    });
+    builder.addCase(getDoctorById.rejected, (state, action) => {
+      const getDoctor = action.payload as Doctor | undefined;
+      console.log(getDoctor);
     });
   },
 });
