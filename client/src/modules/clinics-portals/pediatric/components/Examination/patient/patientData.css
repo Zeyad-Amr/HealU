@@ -1,0 +1,63 @@
+p {
+  margin: 0px !important;
+}
+.personal {
+  font-size: 15px;
+  color: white;
+  font-weight: bold;
+}
+.info {
+  border-style: solid;
+  border-color: #0bc6cc;
+  border-width: 1px;
+  background: #0bc6cc;
+  border-radius: 15px;
+  width: 90%;
+  padding: 10px;
+  height: 250px;
+}
+
+.history {
+  border-style: solid;
+  border-color: #014142;
+  border-width: 1px;
+  background: #014142;
+  border-radius: 15px;
+  padding: 10px;
+  padding-bottom: 15px;
+  font-size: 10px;
+  color: white;
+  height: 250px;
+}
+
+.mid {
+  text-align: center;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.his1 {
+  border-style: solid;
+  border-color: #056f72;
+  border-width: 2px;
+  border-radius: 10px;
+  padding: 10px;
+  height: 190px;
+  overflow: hidden;
+}
+
+.his2 {
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+}
+
+.MuiGrid-root.MuiGrid-container.css-106m9ew-MuiGrid-root {
+  justify-content: space-evenly;
+}
+.MuiGrid-root.MuiGrid-container.css-11lq3yg-MuiGrid-root {
+  justify-content: space-evenly;
+}

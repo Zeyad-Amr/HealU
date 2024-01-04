@@ -5,9 +5,9 @@ function createDevice(req, res) {
        Devices
       } = req.body;
     
-    const sql_query = `INSERT INTO Devices (DName, DType, DManufacturer, PurchaseDate, ExpiryDate, DStatus) VALUES (?, ?, ?, ?, ?, ?)`;
+    const sql_query = `INSERT INTO devices (DName, DType, DManufacturer, PurchaseDate, ExpiryDate, DStatus) VALUES (?, ?, ?, ?, ?, ?)`;
     Promise.all(Devices.map((Devices) => { return new Promise((resolve, reject) => {
-      connection.query(sql_query, [Devices.DName, Devices.DType, Devices.DManufacturer, Devices.PurchaseDate, Devices.ExpiryDate, Devices.DStatus], (DevicesErr, result) => {
+      connection.query(sql_query, [Devices.DeviceName, Devices.DeviceType, Devices.DeviceManufacturer, Devices.PurchaseDate, Devices.ExpiryDate, Devices.DeviceStatus], (DevicesErr, result) => {
         if (DevicesErr) {
           console.error("Error adding device:", DevicesErr);
           res.status(500).json({ error: "Internal Server Error" });
@@ -40,7 +40,7 @@ function getDevice(req, res) {
 //====================================================================================================================
 function getDeviceByDeviceID(req, res){
     const deviceID = req.params.deviceID;
-    sql_query = getting("",`AND Devices.DeviceID = ${deviceID}`);
+    sql_query = getting("",`AND devices.DeviceID = ${deviceID}`);
     connection.query(sql_query, (err, result) => {
       if (err) throw err;
       if (result.length === 0) {
@@ -54,10 +54,10 @@ function getDeviceByDeviceID(req, res){
 }
 //====================================================================================================================
 function getting(joinConditions, whereConditions){
-    const sql_query = `SELECT Devices.DeviceID, Devices.DName, Devices.DType, Devices.DManufacturer, Devices.PurchaseDate, Devices.ExpiryDate, Devices.DStatus
-    FROM Devices
+    const sql_query = `SELECT devices.DeviceID, devices.DName, devices.DType, devices.DManufacturer, devices.PurchaseDate, devices.ExpiryDate, devices.DStatus
+    FROM devices
     ${joinConditions}
-    WHERE Devices.DeviceID IS NOT NULL ${whereConditions}` ;
+    WHERE devices.DeviceID IS NOT NULL ${whereConditions}` ;
 
     return sql_query;
 
@@ -84,9 +84,9 @@ function processquery(result){
 //===================================================================================================================
 function updateDevice(req, res){
     const DeviceID = req.params.deviceID;
-    const {DStatus }= req.body;          //Device Status can be updated
-    const sql_query = `UPDATE Devices SET DStatus = ? WHERE DeviceID = ? `;
-    connection.query(sql_query, [DStatus, DeviceID], (err, result) => {
+    const {DeviceStatus }= req.body;          //Device Status can be updated
+    const sql_query = `UPDATE devices SET DStatus = ? WHERE DeviceID = ? `;
+    connection.query(sql_query, [DeviceStatus, DeviceID], (err, result) => {
       if (err) throw err;
       if (result.affectedRows === 0) {
         res.status(404).json({ message: "No device with DeviceID:"+ DeviceID +' was found.' });
@@ -99,7 +99,7 @@ function updateDevice(req, res){
 //====================================================================================================================
 function deleteDevice(req, res){
     const DeviceID = req.params.deviceID;
-    const sql_query = `DELETE FROM Devices  WHERE DeviceID = ?`;
+    const sql_query = `DELETE FROM devices  WHERE DeviceID = ?`;
     connection.query(sql_query, [DeviceID], (err, result) => {
       if (err) throw err;
       if (result.affectedRows === 0) {

@@ -4,9 +4,10 @@
   "description": "Adminstration Service for the HealU project",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p ."
   },
   "author": "Ibrahim Mohamed",
   "license": "ISC",
