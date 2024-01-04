@@ -1,8 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const authToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTcwMzY2NjAwMX0.nWs6p02Jbm0EDQya2iQht5R129bU2hLIk80A4kdHgDY";
+import api from "../../../core/api/api";
 
 export interface Doctor {
   userId?: number | undefined;
@@ -32,21 +29,12 @@ export const getDoctors = createAsyncThunk(
   "doctors/getDoctors",
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
-    return axios
-      .get<any>(
-        "https://healu-api-gateway.onrender.com/api/registration/staff",
-        {
-          headers: {
-            "auth-token": authToken,
-          },
-        }
-      )
-      .then((res) =>
-        res.data.data.filter((item: any) => item.role === "Doctor")
-      )
-      .catch((error) => {
-        rejectWithValue(error.message);
-      });
+    try {
+      const res = await api.get<any>("/registration/staff");
+      return res.data.data.filter((item: any) => item.role === "Doctor");
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -54,44 +42,27 @@ export const addDoctor = createAsyncThunk(
   "doctors/addDoctor",
   async (data: Doctor, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
-    return axios
-      .post<Doctor>(
-        "https://healu-api-gateway.onrender.com/api/registration/staff",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": authToken,
-          },
-        }
-      )
-      .then((res) => res.data)
-      .catch((error) => {
-        console.log(error);
-        alert(error.response.data.error);
-        rejectWithValue(error.message);
-      });
+    try {
+      const res = await api.post<Doctor>("/registration/staff", data);
+      return res.data;
+    } catch (error: any) {
+      console.log(error);
+      alert(error.response.data.error);
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const getDoctorById = createAsyncThunk(
-  " doctors/getDoctorById",
+  "doctors/getDoctorById",
   async (id: number | undefined, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
-    return axios
-      .get<Doctor>(
-        `https://healu-api-gateway.onrender.com/api/registration/staff/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": authToken,
-          },
-        }
-      )
-      .then((res) => res.data)
-      .catch((error) => {
-        rejectWithValue(error.message);
-      });
+    try {
+      const res = await api.get<Doctor>(`/registration/staff/${id}`);
+      return res.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -99,20 +70,12 @@ export const deleteDoctor = createAsyncThunk(
   "doctors/deleteDoctor",
   async (id: number | undefined, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
-    return axios
-      .delete<Doctor>(
-        `https://healu-api-gateway.onrender.com/api/registration/staff/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": authToken,
-          },
-        }
-      )
-      .then((res) => res.data)
-      .catch((error) => {
-        rejectWithValue(error.message);
-      });
+    try {
+      const res = await api.delete<Doctor>(`/registration/staff/${id}`);
+      return res.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -125,22 +88,16 @@ export const editDoctor = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     const { doctorId, updatedData } = data;
 
-    return axios
-      .put<Doctor>(
-        `https://healu-api-gateway.onrender.com/api/registration/staff/${doctorId}`,
-        updatedData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": authToken,
-          },
-        }
-      )
-      .then((res) => res.data)
-      .catch((error) => {
-        alert(error.response.data.error);
-        rejectWithValue(error.message);
-      });
+    try {
+      const res = await api.put<Doctor>(
+        `/registration/staff/${doctorId}`,
+        updatedData
+      );
+      return res.data;
+    } catch (error: any) {
+      alert(error.response.data.error);
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -150,19 +107,18 @@ const doctorSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getDoctors.fulfilled, (state, action) => {
-      if(action.payload!==undefined){
-        state.doctors = action.payload as any || [];
+      if (action.payload !== undefined) {
+        state.doctors = (action.payload as any) || [];
       }
-     
     });
     builder.addCase(addDoctor.fulfilled, (state, action) => {
-      console.log("rawda",action.payload);
-      if(action.payload !==undefined){
+      console.log("rawda", action.payload);
+      if (action.payload !== undefined) {
         state.doctors.push(action.payload as Doctor);
       }
     });
     builder.addCase(deleteDoctor.fulfilled, (state, action) => {
-      const deletedDoctorId = action.payload as number | undefined;
+      const deletedDoctorId = action.payload as unknown as number | undefined;
       if (deletedDoctorId !== undefined) {
         state.doctors = state.doctors.filter(
           (doctor) => doctor.userId !== deletedDoctorId

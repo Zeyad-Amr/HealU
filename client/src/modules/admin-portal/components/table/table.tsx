@@ -60,36 +60,7 @@ const TableComponent = () => {
     }
     dispatch(getDoctors() as any);
   };
-  // const handleEdit = (
-  //   doctorId: number,
-  //   dispatch: Dispatch,
-  //   doctors: Doctor[],
-  // ): void => {
-  //   const doctorToEdit = doctors.find((row) => row.id === doctorId);
-  //   dispatch(formActions.setFormVisibility(!isFormVisible));
-  //   dispatch(formActions.setIsEdit(true));
 
-  //   if (!doctorToEdit) {
-  //     return;
-  //   }
-
-  //   const { name, speciality, phone, email } = doctorToEdit;
-
-  //   dispatch(
-  //     editDoctor({
-  //       doctorId,
-  //       updatedData: { name, speciality, phone, email },
-  //     }) as any
-  //   );
-  // };
-
-  // const handleEdit = async (doctorId: number) => {
-  //   const doctorToEdit = doctors.find((row) => row.id === doctorId);
-  //   const { name, speciality, phone, email } = doctorToEdit;
-  //   dispatch(formActions.setFormVisibility(!isFormVisible));
-  //   dispatch(formActions.setIsEdit(true));
-  // };
-  // const [selectedDoctor, setSelectedDoctor] = useState<Partial<Doctor>>({});
   const handleEdit = async (doctorId: number | undefined) => {
     await dispatch(getDoctorById(doctorId) as any);
     dispatch(formActions.setFormVisibility(!isFormVisible));

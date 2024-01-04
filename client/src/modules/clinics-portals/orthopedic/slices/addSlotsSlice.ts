@@ -15,13 +15,6 @@ export default interface Slot {
   slotId?: string | undefined;
 }
 
-// {
-//   "doctorId": 2,
-//   "clinicId": 3,
-//   "time": "21:00",
-//   "weekDay": "Sunday"
-// }
-
 interface SlotsState {
   slots: Slot[];
   selectedDate: string | null;
@@ -113,19 +106,6 @@ export const getSlots = createAsyncThunk<Slot[], string | void>(
         });
         return slotData;
       }
-      // console.log(slotData);
-
-      // const userIds = slots.map(
-      //   (slot: any) => slot.appointmentObject?.patient?.userId ?? ""
-      // );
-      // console.log(userIds);
-      // const time = slots.map((slot: any) => slot.time);
-      // const firstName = slots.map((slot: any) => {
-      //   const userId = slot.appointmentObject?.patient?.userId;
-      //   const patientFirstName = slot.appointmentObject?.patient?.firstName;
-
-      //   return userId !== undefined ? patientFirstName : " ";
-      // });
     } catch (error: any) {
       console.error(error);
       throw rejectWithValue(error.message);

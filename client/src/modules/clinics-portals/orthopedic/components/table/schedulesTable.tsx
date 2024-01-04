@@ -61,14 +61,14 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
     <>
       {schedules.length !== 0 && (
         <Paper
-          sx={{ width: "70%", overflow: "hidden" }}
+          sx={{ width: "90%", overflow: "hidden" }}
           classes={{ root: classesX.containerA }}
         >
           <TableContainer
             className={styles.customTableContainer}
             classes={{ root: classesX.box }}
           >
-            <Table style={{ width: "100%" }}>
+            <Table style={{ width: "80%" }}>
               <TableBody>
                 {schedules.map((row, rowIndex) => (
                   <TableRow key={rowIndex}>
@@ -122,7 +122,9 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
                       <div
                         onClick={() => {
                           if (row.patientId !== undefined) {
-                            navigate(`/clinic/orthopedic/examination/${row.patientId}`);
+                            navigate(
+                              `/clinic/orthopedic/examination/${row.patientId}`
+                            );
                           }
                         }}
                         className={styles.addIcon}
@@ -140,7 +142,6 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
           </TableContainer>
         </Paper>
       )}
-
     </>
   );
 };
