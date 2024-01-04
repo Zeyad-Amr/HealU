@@ -47,7 +47,6 @@ const TableComponent = ({ schedules }: { schedules: Slot[] }) => {
       await dispatch(deleteSlot(slotId) as any);
     }
     dispatch(getSlots(date) as any);
-    console.log("3333333", date);
   };
   // const handleClearAppoinment = async (dateId: string, date: string) => {
   //   dispatch(updateSlot(parseInt(dateId)) as any);

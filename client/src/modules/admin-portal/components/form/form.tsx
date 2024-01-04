@@ -287,6 +287,7 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
       role: "Doctor",
       clinicId: selectedClinic?.clinicId,
     };
+
     if (
       !localErrors.errorEmail &&
       !localErrors.errorFirstName &&
@@ -323,13 +324,13 @@ export const AddForm: React.FC<FormProps> = ({ formTitle }) => {
           dispatch(formActions.setFormVisibility(!isVisible));
           dispatch(formActions.setIsEdit(!isEditForm));
         } else {
+          // Only dispatch 'addDoctor' if it's not an edit form
+          await dispatch(addDoctor(data) as any);
           dispatch(formActions.setFormVisibility(!isVisible));
         }
       } catch (error) {
         console.log("erorrrrrrrrrr", error);
         console.error("Error while dispatching editDoctor/addDoctor:", error);
-      } finally {
-        dispatch(addDoctor(data) as any);
       }
     } else {
       alert("Please fill all the fields correctly");
