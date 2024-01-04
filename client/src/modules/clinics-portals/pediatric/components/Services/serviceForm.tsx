@@ -12,15 +12,12 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export interface serviceData {
-  ServiceName:  string[];
-  
+  ServiceName: string[];
 }
 interface ChildProps {
-  
   DataFromservice: (data: serviceData) => void;
   OnClose: () => void;
 }
-
 
 const AddServicesForm = (props: ChildProps) => {
   const serviceOptions = [

@@ -5,261 +5,136 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21b07dff-5ad8-41a1-b1f7-f84b539e1fad" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/app.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/controllers/authController.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/controllers/dataController.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/routes/authRouter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/routes/dataRouter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/services/auth.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/services/errorHandler.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/services/validate.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/animate.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/datepicker.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/font-awesome.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/icofont.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/magnific-popup.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/nice-select.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/normalize.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/owl-carousel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/responsive.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/css/slicknav.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/about-img.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/author1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/author2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/author3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/av1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/av2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/blockqoute-bg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/blog-sidebar1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/blog-sidebar2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/blog-sidebar3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/blog1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/blog2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/blog3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/bread-bg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/call-bg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/client-bg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/client1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/client2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/client3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/client4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/client5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/clinic-about-us.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/contact-img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/fun-bg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/map-marker.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/mission-img.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/pf1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/pf2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/pf3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/pf4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/section-img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/signup-bg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/slider.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/slider2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/slider3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/testi-bg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/img/video-bg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/bootstrap-datepicker.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/colors.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/easing.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/gmaps.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/jquery-migrate-3.0.0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/jquery-ui.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/jquery.counterup.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/jquery.magnific-popup.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/jquery.nav.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/jquery.scrollUp.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/map-active.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/niceselect.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/owl-carousel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/popper.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/slicknav.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/steller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/tilt.jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/js/wow.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/serv/Inbody.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/serv/baby.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/serv/body.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/serv/clean.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/serv/derma.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/serv/metal.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/serv/nut.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/serv/sports.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/serv/vision.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/core/components/AppLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/core/components/CustomHeader.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/core/components/CustomTextField.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/core/components/OverlapLoading.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/core/components/PageBody.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/core/components/PrimaaryBtn.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/core/services/loading-service.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/auth/models/auth-model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/auth/pages/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/auth/slices/auth-slice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/diagnosis.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/history.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientInfo.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/personalinfo.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/PopUp/Popup.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/PopUp/Popup.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Prescreption/prescreptionForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Services/serviceForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Tests/testsForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/table/ClincMange.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/table/clincMange.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/table/deviceForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/table/table.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/pages/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/Schedule-slice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/diagnosis-slice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/patient-slice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/New/Footer/Footer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/New/Sections/CallToAction.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/New/Sections/Doctors.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/New/Sections/Facts.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/New/Sections/Features.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/New/Sections/Header.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/New/Sections/Portfolio.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/New/Sections/Schedule.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/New/Sections/Services.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/layouts/MainLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/layouts/SecondaryLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/pages/AboutUs.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/pages/ContactUs.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/landing-page/pages/HomePage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments-slots/Appointments.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments-slots/appointments-bill/AppointmentsBill.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments-slots/appointments-bill/Test.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments-slots/appointments-results/AppointmentsFilterResults.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/appointment-detalis-dialog/AppointmentDialog.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/appointment-detalis-dialog/drug-table/DrugTable.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/appointment-detalis-dialog/single-table/SingleTable.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/appointment-detalis-dialog/tests-table/TestsTable.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/previous-appointments-card/PreviousAppointmentsCard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/medical-history/MedicalHistory.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/patient-profile/PatientDataHeader.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/patient-profile/PatientProfile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/table/TableComponent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/appointments-page/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/appointments/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/user/models/user-model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/user/pages/signup/SignUp.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/modules/user/slices/user-slice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Admin/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Admin/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/controllers/analyticsController.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/models/request.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/routes/analyticsRouter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/services/adminService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/services/appointmentsService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/services/billingService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/services/emrService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/services/errorHandler.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/services/fetchingData.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/services/registrationService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/services/storageService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/utils/mock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/utils/mock.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/Analytics/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/db_url.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/prisma/schema.prisma" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/Scripts/hashing.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/Scripts/validation.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/app.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/controllers/loginController.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/controllers/patientController.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/controllers/staffController.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/controllers/userController.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/routers/loginRouter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/routers/patientRouter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/routers/staffRouter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/src/routers/userRouter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Shared/registration/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/components/AnalyticsTitle/title.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/components/AnalyticsTitle/title.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/components/dataDispaly/dispaly.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/pages/analytics.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/pages/analytics.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/slices/analytics-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/AppointmentModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/DashBoard.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/DashBoard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/SlotsTable.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/popUP/CreateSlotModal.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/popUP/CreateSlotModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/doctor-slots/CustomizedSnackbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/doctor-slots/WeekDayPicker.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/PatientExamination.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/diagnosis/DiagnosisForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/CustomMultiSelect.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/CustomTextArea.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/Item.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/ItemList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/ModalPopUp.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/PopUpDropListButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/SubmitButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/examination.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/examinationForm/PrescriptionFrom.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/examinationForm/ServicesForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/examinationForm/TestForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/modal.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/PersonCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/historyBox/HistoryBox.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/historyBox/HistoryBox.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/personalData/PersonalDataBox.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/personalData/PersonalDataBox.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/AppointmentForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/elements/CustomMultiSelect.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/elements/CustomSelect.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/elements/CustomTextArea.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/elements/CustomTextFiled.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/form.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/navBar/NavBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/navBar/navBar.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/imgs/NavBarlogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/imgs/add_vector.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/pages/DentalClinicPortal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/pages/DentalExaminationPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/addExaminationSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/appointmentSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/doctorSlotsSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/examinationSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/patientSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/prescriptionSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/servicesSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/slotsSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/snackbarSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/appointment-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/examination-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/prescreption-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/record-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/slots-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/PreviousAppointments.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/UpcomingAppointments.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/upcoming-appointments-card/UpcomingApptCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/appointments/upcoming.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/migrations/0002_alter_bill_paymentmethod.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/migrations/0003_alter_invoice_appointmentid.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/paypal_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/src/uploads/files/60dd8c19-4709-41fa-b161-4c79dbc2ab551703024296125-1990999.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/src/uploads/images/ac050f0b-651d-40d0-89b8-280693ccf1151703023216117-674453197.dcm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/HealU.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HealU.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/6f2fd263-c2ec-4d0a-9db5-1a778f25492c.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/core/api/api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/api/api.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.test.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/core/routes/AppRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/routes/AppRoutes.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/core/routes/router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/routes/router.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/core/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/store/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/admin-portal/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/auth/slices/auth-slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/auth/slices/auth-slice.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/DentalRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/DentalRoutes.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/DentalDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/DentalDashboard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/dermatology/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dermatology/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/nutrition/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/nutrition/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/nutrition/pages/nutritionDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/nutrition/pages/nutritionDashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/ophthalmology/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/ophthalmology/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/title/title.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/title/title.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/title/title.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/title/title.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/history.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/history.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/personalinfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/personalinfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Prescreption/prescreptionForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Prescreption/prescreptionForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Services/serviceForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Services/serviceForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/table/table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/table/table.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/diagnosis-slice.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/pediatric-slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/pediatric-slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/landing-page/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/landing-page/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments-slots/appointments-bill/AppointmentsBill.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments-slots/appointments-bill/AppointmentsBill.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/previous-appointments-card/PreviousAppointmentsCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/previous-appointments-card/PreviousAppointmentsCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/header/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/header/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/profile-page/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/profile-page/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Pediatric/controllers/deviceController.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Pediatric/controllers/deviceController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Pediatric/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Pediatric/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/patient-profile/PatientProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/patient-profile/PatientProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/appointments/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/appointments/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reportWebVitals.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/setupTests.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/app.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/controllers/clinicController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/controllers/clinicController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/controllers/clinicServicesController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/controllers/clinicServicesController.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/models/clinicModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/models/clinicModel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/models/clinicServiceModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/models/clinicServiceModel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/routes/clinicRoutes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/routes/clinicRoutes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/routes/clinicServicesRoutes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/routes/clinicServicesRoutes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Appointment/controllers/appointmentsController.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Appointment/controllers/appointmentsController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Appointment/controllers/slotControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Appointment/controllers/slotControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Appointment/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Appointment/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Appointment/models/Appointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Appointment/models/Appointment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Appointment/models/Slot.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Appointment/models/Slot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Appointment/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Appointment/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Appointment/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Appointment/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/src/controllers/authController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/src/models/authModel.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/src/routes/authRouter.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/src/services/errorHandler.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/src/services/hashing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/services/hashing.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/src/services/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/services/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/src/services/jwt.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/services/jwt.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/src/services/validate.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/Auth/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/EMR/DataBase/connection.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/EMR/DataBase/connection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/EMR/controllers/historyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/EMR/controllers/historyController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/EMR/controllers/prescriptionController.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/EMR/controllers/prescriptionController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/EMR/controllers/recordController.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/EMR/controllers/recordController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/EMR/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/EMR/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Shared/EMR/routes/recordRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/EMR/routes/recordRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/models/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/models/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Analytics/src/controllers/analyticsController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/controllers/analyticsController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing_app/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Document-Storage/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Document-Storage/src/controllers/fileController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/src/controllers/fileController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Document-Storage/src/controllers/imageController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/src/controllers/imageController.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -293,28 +168,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
-    "git-widget-placeholder": "Merging Client/Clinics-Portal/Nutrition/Main",
-    "last_opened_file_path": "D:/My PC/Projects/Web/HealU/client/src/modules/clinics-portals/nutrition/components/LowerComponets",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\My PC\\Projects\\Web\\HealU\\services\\Shared\\Document-Storage\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging Client/Clinics-Portal/Nutrition/Main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/My PC/Projects/Web/HealU/client/src/modules/clinics-portals/nutrition/components/LowerComponets&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\My PC\\Projects\\Web\\HealU\\services\\Shared\\Document-Storage\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\My PC\Projects\Web\HealU\client\src\modules\clinics-portals\nutrition\components\LowerComponets" />
@@ -358,6 +233,7 @@
       <workItem from="1704199517049" duration="2078000" />
       <workItem from="1704226222389" duration="22896000" />
       <workItem from="1704260570966" duration="2449000" />
+      <workItem from="1704381570165" duration="93000" />
     </task>
     <servers />
   </component>

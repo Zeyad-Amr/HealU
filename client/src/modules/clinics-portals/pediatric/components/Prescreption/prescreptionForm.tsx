@@ -3,39 +3,25 @@ import { Grid } from "@mui/material";
 import Item from "@mui/material/Grid";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
-
-export interface PrescreptionData {
-  Drug: string;
-  Dose: string;
-  Time: string;
-  Notes: string;
-}
+import { drugData } from "../../slices/prescreption-slice";
 
 interface ChildProps {
-  DataFromPrescreption: (data: PrescreptionData) => void;
+  DataFromPrescreption: (data: drugData) => void;
   OnClose: () => void;
 }
 
 const AddPrescreptionForm = (props: ChildProps) => {
-  const [formData, setFormData] = useState<PrescreptionData>({
-    Drug: "",
-    Dose: "",
-    Time: "",
-    Notes: "",
+  const [formData, setFormData] = useState<drugData>({
+    DrugName: "",
+    DrugDose: "",
+    DrugDuration: "",
   });
-
-  // const handledrugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  // const { id, value } = event.target;
-  // };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
-      [id]:
-        id === "PatientWeight" || id === "PatientHeight"
-          ? parseFloat(value)
-          : value,
+      [id]: value,
     }));
   };
 
@@ -51,7 +37,7 @@ const AddPrescreptionForm = (props: ChildProps) => {
             <TextField
               fullWidth
               label="Drug"
-              id="Drug"
+              id="DrugName"
               onChange={handleInputChange}
             />
           </Item>
@@ -60,7 +46,7 @@ const AddPrescreptionForm = (props: ChildProps) => {
           <TextField
             fullWidth
             label="Dose"
-            id="Dose"
+            id="DrugDose"
             onChange={handleInputChange}
           />
         </Grid>
@@ -68,18 +54,7 @@ const AddPrescreptionForm = (props: ChildProps) => {
           <TextField
             fullWidth
             label="Time"
-            id="Time"
-            onChange={handleInputChange}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            id="Notes"
-            label="Notes"
-            multiline
-            rows={4}
-            fullWidth
-            variant="filled"
+            id="DrugDuration"
             onChange={handleInputChange}
           />
         </Grid>

@@ -13,6 +13,12 @@ const databaseTablesSync = async () => {
         as: 'clinic',
     });
 
+    Clinic.belongsTo(ClinicService, {
+        foreignKey: 'defaultServiceId',
+        as: 'defaultService', // Alias for the association
+        targetKey: 'id'
+    });
+
     await sequelize.sync();
 };
 
