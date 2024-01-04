@@ -43,9 +43,10 @@ export const store = configureStore({
     appointment,
     slots,
     examination,
+    nutrition
   },
-});
 
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
