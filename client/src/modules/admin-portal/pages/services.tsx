@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ServicesTable from "../components/servicesTable";
 import CreateServicePopup from "../components/createServicePopup";
 import api from "../../../core/api/api";
+import AppLayout from "../../../core/components/AppLayout";
 
 const Services = () => {
   useEffect(() => {
@@ -26,62 +27,64 @@ const Services = () => {
 
   return (
     <>
-      <Container>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Typography
-            gutterBottom
-            variant="h1"
-            color="textSecondary"
-            align="center"
-          >
-            Clinic Services
-          </Typography>
-        </Box>
+      <AppLayout>
+        <Container>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Typography
+              gutterBottom
+              variant="h1"
+              color="textSecondary"
+              align="center"
+            >
+              Clinic Services
+            </Typography>
+          </Box>
 
-        <br></br>
+          <br></br>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            flexDirection: "column",
-            alignItems: "flex-end",
-          }}
-        >
-          <Button
-            onClick={handleAddService}
-            variant="contained"
-            color="primary"
+          <Box
             sx={{
-              borderRadius: "15px",
-              background:
-                "linear-gradient(285deg, #01B6B6 10.66%, #13D2DE 102.7%)",
-              color: "#FFF",
-              width: "200px",
-              height: "52px",
+              display: "flex",
+              justifyContent: "flex-end",
+              flexDirection: "column",
+              alignItems: "flex-end",
             }}
-            startIcon={<AddCircleOutlineOutlinedIcon />}
           >
-            Create New Service
-          </Button>
-        </Box>
+            <Button
+              onClick={handleAddService}
+              variant="contained"
+              color="primary"
+              sx={{
+                borderRadius: "15px",
+                background:
+                  "linear-gradient(285deg, #01B6B6 10.66%, #13D2DE 102.7%)",
+                color: "#FFF",
+                width: "200px",
+                height: "52px",
+              }}
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+            >
+              Create New Service
+            </Button>
+          </Box>
 
-        <br></br>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <ServicesTable rows={rows} />
-        </Box>
-      </Container>
-      <CreateServicePopup
-        isAddDialogOpen={isAddDialogOpen}
-        handleCloseDialogs={handleCloseDialogs}
-      ></CreateServicePopup>
+          <br></br>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <ServicesTable rows={rows} />
+          </Box>
+        </Container>
+        <CreateServicePopup
+          isAddDialogOpen={isAddDialogOpen}
+          handleCloseDialogs={handleCloseDialogs}
+        ></CreateServicePopup>
+      </AppLayout>
     </>
   );
 };

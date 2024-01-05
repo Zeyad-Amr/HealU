@@ -1,7 +1,7 @@
 import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box, IconButton, TextField } from "@mui/material";
-import { Edit, Delete, Save } from "@mui/icons-material";
+import { Edit, Delete, Save, Clear } from "@mui/icons-material";
 import { useState } from "react";
 import api from "../../../core/api/api";
 
@@ -35,6 +35,10 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
       })
       .then(() => window.location.reload());
 
+    updateDescription("");
+    setEditModeId("");
+  };
+  const handleCancelEdit = () => {
     updateDescription("");
     setEditModeId("");
   };
@@ -97,28 +101,37 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
               >
                 <Save />
               </IconButton>
+              <IconButton
+                aria-label="delete"
+                color="warning"
+                onClick={() => handleCancelEdit()}
+              >
+                <Clear />
+              </IconButton>
             </>
           ) : (
-            <IconButton
-              aria-label="edit"
-              color="secondary"
-              onClick={() => handleEdit(params.row.id)}
-            >
-              <Edit />
-            </IconButton>
+            <>
+              <IconButton
+                aria-label="edit"
+                color="secondary"
+                onClick={() => handleEdit(params.row.id)}
+              >
+                <Edit />
+              </IconButton>
+              <IconButton
+                aria-label="delete"
+                color="warning"
+                onClick={() => handleDelete(params.row.id)}
+              >
+                <Delete />
+              </IconButton>
+            </>
           )}
-
-          <IconButton
-            aria-label="delete"
-            color="warning"
-            onClick={() => handleDelete(params.row.id)}
-          >
-            <Delete />
-          </IconButton>
         </Box>
       ),
     },
   ];
+
   return (
     <>
       <Box
@@ -130,11 +143,15 @@ const ServicesTable: React.FC<ServicesTableProps> = ({ rows }) => {
         }}
       >
         <DataGrid
+          sx={{ justifyContent: "center" }}
           rows={rows}
           columns={columns}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
+            },
+            sorting: {
+              sortModel: [{ field: "id", sort: "asc" }],
             },
           }}
           pageSizeOptions={[5, 10]}
