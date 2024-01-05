@@ -2,32 +2,34 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
 
+
 class Invoice(models.Model):
     id = models.BigAutoField(primary_key=True)
-    appointment_id = models.IntegerField()
+    appointmentId = models.CharField()
+    patientId= models.IntegerField()
     class Status(models.TextChoices):
-        draft = 'DR', _('Draft')
         pending = 'PN', _('Pending Payment')
         paid = 'PD', _('Paid')
-        cancelled = 'CN', _('Cancelled')
 
-    status = models.CharField(max_length=2, choices=Status.choices, default=Status.draft)
-    datetime = models.DateTimeField()
-    services_ids = ArrayField(models.IntegerField())
+    status = models.CharField(max_length=2, choices=Status.choices, default=Status.pending)
+    dateTime = models.DateTimeField()
+    servicesIds = ArrayField(models.FloatField())
+    servicesAmounts=ArrayField(models.FloatField())
+    amountsAfterInsurance=ArrayField(models.FloatField())
+    servicesNames=ArrayField(models.CharField())
+    total=models.FloatField()
     def __str__(self):
-         return f'{self.id} {self.status} {self.services}'
+         return f'{self.id}'
 
 class Bill(models.Model):
     id = models.BigAutoField(primary_key=True)
-    invoice_id = models.ForeignKey(Invoice,on_delete=models.CASCADE) # deleting an invoice deletes all its bills
-    amount = models.IntegerField()
-
+    invoiceId = models.ForeignKey(Invoice,on_delete=models.CASCADE) # deleting an invoice deletes all its bills
     class Payment(models.TextChoices):
-        online = 'ON', _('Online')
+        online = 'ON', _('Card')
         offline = 'OF', _('Offline')
 
-    payment_method = models.CharField(max_length=2, choices= Payment.choices, default=Payment.offline)
-    datetime = models.DateTimeField()
+    paymentMethod = models.CharField(max_length=2, choices= Payment.choices, default=Payment.offline)
+    dateTime = models.DateTimeField()
     def __str__(self):
         return f'{self.id}'
     

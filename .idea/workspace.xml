@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="21b07dff-5ad8-41a1-b1f7-f84b539e1fad" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/components/AnalyticsTitle/title.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/components/AnalyticsTitle/title.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/components/dataDispaly/dispaly.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/pages/analytics.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/pages/analytics.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/admin-portal/slices/analytics-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/AppointmentModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/DashBoard.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/DashBoard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/SlotsTable.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/popUP/CreateSlotModal.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/dashBoard/popUP/CreateSlotModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/doctor-slots/CustomizedSnackbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/doctor-slots/WeekDayPicker.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/PatientExamination.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/diagnosis/DiagnosisForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/CustomMultiSelect.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/CustomTextArea.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/Item.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/ItemList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/ModalPopUp.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/PopUpDropListButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/elements/SubmitButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/examination.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/examinationForm/PrescriptionFrom.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/examinationForm/ServicesForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/examinationForm/TestForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/modal.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/PersonCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/historyBox/HistoryBox.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/historyBox/HistoryBox.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/personalData/PersonalDataBox.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/examination/patientCard/personalData/PersonalDataBox.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/AppointmentForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/elements/CustomMultiSelect.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/elements/CustomSelect.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/elements/CustomTextArea.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/elements/CustomTextFiled.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/form.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/form/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/navBar/NavBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/navBar/navBar.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/imgs/NavBarlogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/imgs/add_vector.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/pages/DentalClinicPortal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/pages/DentalExaminationPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/addExaminationSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/appointmentSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/doctorSlotsSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/examinationSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/patientSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/prescriptionSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/servicesSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/slotsSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/state/slices/snackbarSlice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/appointment-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/examination-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/prescreption-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/record-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/slots-slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/PreviousAppointments.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/UpcomingAppointments.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/upcoming-appointments-card/UpcomingApptCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/appointments/upcoming.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/migrations/0002_alter_bill_paymentmethod.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/migrations/0003_alter_invoice_appointmentid.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/paypal_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/src/uploads/files/60dd8c19-4709-41fa-b161-4c79dbc2ab551703024296125-1990999.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/src/uploads/images/ac050f0b-651d-40d0-89b8-280693ccf1151703023216117-674453197.dcm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/HealU.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HealU.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/6f2fd263-c2ec-4d0a-9db5-1a778f25492c.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.test.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/core/routes/AppRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/routes/AppRoutes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/core/routes/router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/routes/router.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/core/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/store/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/auth/slices/auth-slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/auth/slices/auth-slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/DentalRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/DentalRoutes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/DentalDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/components/DentalDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/dental/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/container.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/history.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/history.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/patientData.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/personalinfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Examination/patient/personalinfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Grid/grid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Prescreption/prescreptionForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Prescreption/prescreptionForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Services/serviceForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/Services/serviceForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/table/table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/components/table/table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/diagnosis-slice.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/pediatric-slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/clinics-portals/pediatric/slices/pediatric-slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments-slots/appointments-bill/AppointmentsBill.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments-slots/appointments-bill/AppointmentsBill.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/previous-appointments-card/PreviousAppointmentsCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/appointments/previous-appointments-card/PreviousAppointmentsCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/header/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/header/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/components/patient-profile/PatientProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/components/patient-profile/PatientProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/appointments/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/modules/patient-portal/pages/appointments/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reportWebVitals.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/setupTests.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/controllers/clinicController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/controllers/clinicController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/models/clinicModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/models/clinicModel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Admin/src/models/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Admin/src/models/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Analytics/src/controllers/analyticsController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Analytics/src/controllers/analyticsController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing_app/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Billing/billing_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Billing/billing_app/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Document-Storage/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Document-Storage/src/controllers/fileController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/src/controllers/fileController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Shared/Document-Storage/src/controllers/imageController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/Shared/Document-Storage/src/controllers/imageController.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Client/Clinics-Portal/Nutrition/doc-page" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2ZPyCJoDNRchKQfGIVEQf6m41sj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging Client/Clinics-Portal/Nutrition/Main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/My PC/Projects/Web/HealU/client/src/modules/clinics-portals/nutrition/components/LowerComponets&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\My PC\\Projects\\Web\\HealU\\services\\Shared\\Document-Storage\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\My PC\Projects\Web\HealU\client\src\modules\clinics-portals\nutrition\components\LowerComponets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\My PC\Projects\Web\HealU\client\src\modules\clinics-portals\nutrition\components" />
+      <recent name="D:\My PC\Projects\Web\HealU\services\Shared\Document-Storage\src" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="21b07dff-5ad8-41a1-b1f7-f84b539e1fad" name="Changes" comment="" />
+      <created>1702337880013</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702337880013</updated>
+      <workItem from="1702337881328" duration="7592000" />
+      <workItem from="1702399452602" duration="202000" />
+      <workItem from="1702835900805" duration="12064000" />
+      <workItem from="1702856352119" duration="3198000" />
+      <workItem from="1703009362485" duration="823000" />
+      <workItem from="1703012527808" duration="10981000" />
+      <workItem from="1703026191253" duration="1038000" />
+      <workItem from="1703094207351" duration="692000" />
+      <workItem from="1703095404801" duration="132000" />
+      <workItem from="1703374201835" duration="2838000" />
+      <workItem from="1703444368545" duration="15000" />
+      <workItem from="1703643330423" duration="368000" />
+      <workItem from="1703643802647" duration="22000" />
+      <workItem from="1703643994016" duration="24000" />
+      <workItem from="1703797145031" duration="1821000" />
+      <workItem from="1703798996925" duration="4000" />
+      <workItem from="1703872601236" duration="1653000" />
+      <workItem from="1703877800208" duration="8000" />
+      <workItem from="1703880834454" duration="78000" />
+      <workItem from="1703888529001" duration="678000" />
+      <workItem from="1703897492099" duration="3199000" />
+      <workItem from="1704173714215" duration="8928000" />
+      <workItem from="1704182797853" duration="415000" />
+      <workItem from="1704199517049" duration="2078000" />
+      <workItem from="1704226222389" duration="22896000" />
+      <workItem from="1704260570966" duration="2449000" />
+      <workItem from="1704381570165" duration="93000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

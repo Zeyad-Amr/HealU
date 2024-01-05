@@ -1,11 +1,24 @@
-import PreviousAppointmentsComponent from "../../components/appointments";
-import AppLayout from "../../../../core/components/AppLayout";
+import { Box } from "@mui/material";
+import HeaderComponent from "../../components/header";
+import PageBody from "../../../../core/components/PageBody";
+import PreviousAppointmentsComponent from "../../components/appointments/PreviousAppointments";
 
 const PerviousAppointments = () => {
   return (
-    <AppLayout>
-      <PreviousAppointmentsComponent />
-    </AppLayout>
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "#EEEFFF",
+        overflowX: "hidden",
+        overflowY: "auto",
+      }}
+    >
+      <HeaderComponent />
+      <PageBody>
+        <PreviousAppointmentsComponent />
+      </PageBody>
+    </Box>
   );
 };
 

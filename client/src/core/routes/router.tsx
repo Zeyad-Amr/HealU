@@ -3,19 +3,26 @@ import AppRoutes from "./AppRoutes";
 import { ReactElement } from "react";
 import { Route } from "react-router-dom";
 import LandingPage from "../../modules/landing-page/pages";
-import DentalClinicPortal from "../../modules/clinics-portals/dental/pages";
+
 import DermatologyClinicPortal from "../../modules/clinics-portals/dermatology/pages";
 import NutritionClinicPortal from "../../modules/clinics-portals/nutrition/pages";
 import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmology/pages";
 import PediatricClinicPortal from "../../modules/clinics-portals/pediatric/pages";
 import PatientPortal from "../../modules/patient-portal/pages/profile-page";
 import AdminPortal from "../../modules/admin-portal";
+import Analytics from "../../modules/admin-portal/pages/analytics";
 import Login from "../../modules/auth/pages";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
+import AboutUs from "../../modules/landing-page/pages/AboutUs";
+import ContactUs from "../../modules/landing-page/pages/ContactUs";
+import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout";
 import Services from "../../modules/admin-portal/pages/services";
 import Signup from "../../modules/user/pages/signup/SignUp";
-import Test from "../../modules/patient-portal/components/appointments-slots/appointments-bill/Test";
+import UpcomingAppointments from "../../modules/patient-portal/pages/appointments/upcoming";
+import AppLayout from "../components/AppLayout";
+import DentalExaminationPage from "../../modules/clinics-portals/dental/pages/DentalExaminationPage";
+import DentalClinicPortal from "../../modules/clinics-portals/dental/pages/DentalClinicPortal";
 
 
 class Router {
@@ -23,6 +30,32 @@ class Router {
     {
       path: AppRoutes.home,
       element: <LandingPage />,
+    },
+    {
+      path: AppRoutes.clinicDental,
+      element: <DentalClinicPortal />,
+    },
+    {
+      path: AppRoutes.clinicDentalExamination,
+      element: <DentalExaminationPage />,
+    },
+    {
+      path: AppRoutes.aboutUs,
+      element: (
+        <SecondaryLayout>
+          {" "}
+          <AboutUs />{" "}
+        </SecondaryLayout>
+      ),
+    },
+    {
+      path: AppRoutes.contactUs,
+      element: (
+        <SecondaryLayout>
+          {" "}
+          <ContactUs />{" "}
+        </SecondaryLayout>
+      ),
     },
     {
       path: AppRoutes.clinicDental,
@@ -57,6 +90,10 @@ class Router {
       element: <PreviousAppointments />,
     },
     {
+      path: AppRoutes.patientPortalUpcomingAppointments,
+      element: <UpcomingAppointments />,
+    },
+    {
       path: AppRoutes.adminPortal,
       element: <AdminPortal />,
     },
@@ -81,8 +118,12 @@ class Router {
       element: <Signup />,
     },
     {
-      path: AppRoutes.test,
-      element: <Test />,
+      path: AppRoutes.Analytics,
+      element: (
+        <AppLayout>
+          <Analytics />
+        </AppLayout>
+      ),
     },
   ];
 

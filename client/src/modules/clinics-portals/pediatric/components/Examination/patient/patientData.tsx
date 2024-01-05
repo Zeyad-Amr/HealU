@@ -1,26 +1,42 @@
 import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
 import { Grid } from "@mui/material";
 import PresonalInfo from "./personalinfo";
 import HistoryInfo from "./history";
-import { styled } from "@mui/material/styles";
 import Item from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import { useAppDispatch } from "../../../../../../core/store/index";
-import { useSelector } from "react-redux";
-import {
-  fetchPatientData,
-  PatientsState,
-  Patient,
-} from "../../../slices/patient-slice";
 import "./patientData.css";
-import Button from "@mui/material/Button";
+import {
+  appointmentPatient,
+  appointmentPatientRecord,
+  appointmentMedicalHistory,
+} from "../../../slices/appointment-slice";
+interface propsData {
+  patient: appointmentPatient;
+  patientRecord: appointmentPatientRecord;
+  medicalHistory: appointmentMedicalHistory;
+}
+const PatientSection = (props: propsData) => {
+  const calculateAge = (dob: string): number | null => {
+    const birthDate = new Date(dob);
+    const currentDate = new Date();
 
-const PatientSection = () => {
-  // useEffect(() => {
-  //   console.log(dispatch(fetchPatientData(6)));
-  // }, []);
+    if (isNaN(birthDate.getTime())) {
+      // Invalid date format
+      return null;
+    }
+
+    let age = currentDate.getFullYear() - birthDate.getFullYear();
+
+    // Check if birthday has occurred this year
+    if (
+      currentDate.getMonth() < birthDate.getMonth() ||
+      (currentDate.getMonth() === birthDate.getMonth() &&
+        currentDate.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
 
   return (
     <>
@@ -33,21 +49,18 @@ const PatientSection = () => {
               </div>
               <Item style={{ fontSize: "8px" }}>
                 <PresonalInfo
-                  name="Naira"
-                  weight="56 kg"
-                  height="158cm"
-                  age="21"
+                  name={
+                    props.patient?.firstName + " " + props.patient?.lastName
+                  }
+                  weight={props.patientRecord?.PatientWeight}
+                  height={props.patientRecord?.PatientHeight}
+                  age={calculateAge(props.patient?.dateOfBirth.toString())}
                 />
               </Item>
             </div>
           </Grid>
           <Grid item xs={12}>
-            <HistoryInfo
-              drugs="Pill"
-              illnesses="low blood"
-              tests="pcr"
-              operation="surgry"
-            />
+            <HistoryInfo MedicalyHistory={props.medicalHistory} />
           </Grid>
         </Grid>
       </div>

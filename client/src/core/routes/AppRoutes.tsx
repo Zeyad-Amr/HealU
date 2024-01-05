@@ -11,9 +11,15 @@ class AppRoutes {
   static readonly signup = "/signup";
   static readonly patientPortalProfile = "/patient/profile";
   static readonly patientPortalAppointments = "/patient/appointments";
-  static readonly test = "/test";
   static readonly patientPortalPreviousAppointments =
     "/patient/previous-appointments";
+  // dental routes
+  static readonly clinicDentalExamination = "/clinic/dental/examination";
+  static readonly aboutUs = "/about-us";
+  static readonly contactUs = "/contact-us";
+  static readonly Analytics = "/analytics";
+  static readonly patientPortalUpcomingAppointments =
+    "/patient/upcoming-appointments";
 }
 
 export default AppRoutes;

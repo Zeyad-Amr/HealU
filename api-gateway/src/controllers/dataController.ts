@@ -16,7 +16,7 @@ export const create_slot = async (req: Request, res: Response) => {
         let slotData = validate.validate(req.body, validate.slotSchema)
         slotData.doctorId = doctorId
 
-        let slot = await axios.post(`${process.env.Appointment_URL}/slots`, slotData)
+        let slot = (await axios.post(`${process.env.Appointment_URL}/slots`, slotData)).data
 
         return res.status(200).json({
             message: "slot created successfully"

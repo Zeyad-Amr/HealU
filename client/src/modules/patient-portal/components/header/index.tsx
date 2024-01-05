@@ -4,6 +4,9 @@ import AppRoutes from "../../../../core/routes/AppRoutes";
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
+  const isLogined = localStorage.getItem("access_token") !== undefined ? true : false;
+  console.log(isLogined);
+  
 
   return (
     <Box
@@ -42,53 +45,78 @@ const HeaderComponent = () => {
         </Typography>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Box
-          sx={{ cursor: "pointer", marginLeft: "1rem" }}
-          onClick={() => {
-            navigate(AppRoutes.home);
-          }}
-        >
-          Home
-        </Box>
-        <Box
-          sx={{ cursor: "pointer", marginLeft: "1rem" }}
-          onClick={() => {
-            navigate(AppRoutes.patientPortalAppointments);
-          }}
-        >
-          Appointments
-        </Box>
-        <Box sx={{ cursor: "pointer", marginLeft: "1rem" }}>About</Box>
-        <Box
-          sx={{
-            cursor: "pointer",
-            marginLeft: "1rem",
-            background:
-              " linear-gradient(285deg, #01B6B6 10.66%, #13D2DE 102.7%)",
-            borderRadius: " 5px",
-            color: "white",
-            padding: "0.2rem 1.5rem",
-          }}
-          onClick={() => {
-            navigate(AppRoutes.login);
-          }}
-        >
-          Login
-        </Box>
-        <Box
-          sx={{
-            cursor: "pointer",
-            marginLeft: "1rem",
+        {isLogined ? (
+          <>
+            <Box
+              sx={{ cursor: "pointer", marginLeft: "1rem" }}
+              onClick={() => {
+                navigate(AppRoutes.home);
+              }}
+            >
+              Home
+            </Box>
+            <Box
+              sx={{ cursor: "pointer", marginLeft: "1rem" }}
+              onClick={() => {
+                navigate(AppRoutes.patientPortalAppointments);
+              }}
+            >
+              Appointments
+            </Box>
+            <Box sx={{ cursor: "pointer", marginLeft: "1rem" }}>About</Box>
+            <Box
+              sx={{
+                cursor: "pointer",
+                marginLeft: "1rem",
+                background:
+                  " linear-gradient(285deg, #01B6B6 10.66%, #13D2DE 102.7%)",
+                borderRadius: " 5px",
+                color: "white",
+                padding: "0.2rem 1.5rem",
+              }}
+              onClick={() => {
+                localStorage.clear()
+                navigate(AppRoutes.login);
+                window.location.reload()
+              }}
+            >
+              Logout
+            </Box>
+          </>
+        ) : (
+          <>
+            <Box
+              sx={{
+                cursor: "pointer",
+                marginLeft: "1rem",
+                background:
+                  " linear-gradient(285deg, #01B6B6 10.66%, #13D2DE 102.7%)",
+                borderRadius: " 5px",
+                color: "white",
+                padding: "0.2rem 1.5rem",
+              }}
+              onClick={() => {
+                navigate(AppRoutes.login);
+              }}
+            >
+              Login
+            </Box>
+            <Box
+              sx={{
+                cursor: "pointer",
+                marginLeft: "1rem",
 
-            borderRadius: " 5px",
-            color: "secondary.main",
-          }}
-          onClick={() => {
-            navigate(AppRoutes.signup);
-          }}
-        >
-          Signup
-        </Box>
+                borderRadius: " 5px",
+                color: "secondary.main",
+              }}
+              onClick={() => {
+                navigate(AppRoutes.signup);
+              }}
+            >
+              Signup
+            </Box>
+          </>
+        )}
       </Box>
     </Box>
   );

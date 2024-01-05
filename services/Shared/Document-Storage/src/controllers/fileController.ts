@@ -7,7 +7,10 @@ import multer from "multer";
 import path from "path";
 import {v4 as uuidv4} from "uuid";
 import fs from "fs";
+import 'dotenv/config';
 
+
+const fileStoragePath = '/uploads/';
 
 
 const fileStorage = multer.diskStorage({
@@ -79,25 +82,29 @@ export const getAllFiles = asyncErrorCatching(async (req: Request, res: Response
 });
 
 export const getFileById = asyncErrorCatching(async (req: Request, res: Response): Promise<void> => {
+    const { fileId } = req.params;
 
-    const {fileId} = req.params;
-    const file = await File.findByPk(fileId);
+    try {
+        const file = await File.findByPk(fileId);
 
-    if (file) {
-        res
+        if (file) {
+            const filePath = path.join(path.resolve(__dirname, '..'), fileStoragePath, file.dataValues.filePath);
+            // Send the image file
+            res.sendFile(filePath);
+        } else {
+            res
             .status(200).json({
-            status: 'success',
-            data: {
-                file,
-            },
-        });
-    } else {
-        res
-            .status(404)
-            .json({
                 status: 'fail',
                 error: 'File not found'
             });
+        }
+    } catch (error) {
+        console.error(error);
+        res
+        .status(404).json({
+            status: 'fail',
+            error: 'Internal Server Error'
+        });
     }
 });
 
@@ -205,23 +212,24 @@ export const updateFileById = asyncErrorCatching(async (req: Request, res: Respo
 
 });
 
-export const deleteFileById = asyncErrorCatching(async (req: Request, res: Response): Promise<void> => {
+export const deleteFileById = async (req: Request, res: Response): Promise<void> => {
     const {fileId} = req.params;
     const file = await File.findByPk(fileId);
 
     if (file) {
         await file.destroy();
         // Delete the file from the disk
-        fs.unlink(`${process.env.FILE_STORAGE}/${file.dataValues.filePath}`, (err) => {
+        fs.unlink(path.join(fileStoragePath, file.dataValues.filePath), (err) => {
             if (err) {
-                console.error(err)
-                return
+                console.error(err);
+                res.status(500).json({
+                    status: 'fail',
+                    error: 'An error occurred while deleting the file'
+                });
+                return;
             }
+            res.status(204).send();
         });
-
-        res
-            .status(204)
-            .send();
 
     } else {
         res
@@ -231,4 +239,5 @@ export const deleteFileById = asyncErrorCatching(async (req: Request, res: Respo
                 error: 'File not found'
             });
     }
-});
+};
+

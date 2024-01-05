@@ -1,7 +1,10 @@
 # Keep environment variables out of version control
 .env
+templates
+.vscode 
+ settings.json
 node_modules
 prisma/migrations
 
 .venv
-__pycache__
+*.pyc
