@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Stack, Box } from "@mui/material";
 
 import styles from "./PersonalDataBox.module.css";

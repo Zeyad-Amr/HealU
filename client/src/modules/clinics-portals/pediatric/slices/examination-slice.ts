@@ -50,7 +50,7 @@ export const addExaminationRecord = createAsyncThunk(
   async (data: ExaminationRecord, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://healu-api-gateway.onrender.com/api/data/examination",
         data,
         {

@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface NutritionState {
     appointments: any[];
@@ -113,16 +113,16 @@ const initialState: NutritionState = {
             muscle: 6.5,
         },
         inBodyFiles: [
-            {name: "InBody 1", url: "http://example.com/file1.pdf"},
-            {name: "InBody 2", url: "http://example.com/file2.pdf"},
-            {name: "InBody 3", url: "http://example.com/file3.pdf"},
-            {name: "InBody 4", url: "http://example.com/file4.pdf"},
+            { name: "InBody 1", url: "http://example.com/file1.pdf" },
+            { name: "InBody 2", url: "http://example.com/file2.pdf" },
+            { name: "InBody 3", url: "http://example.com/file3.pdf" },
+            { name: "InBody 4", url: "http://example.com/file4.pdf" },
         ],
         dietPlanFiles: [
-            {name: "Diet Plan 1", url: "http://example.com/fileA.pdf"},
-            {name: "Diet Plan 2", url: "http://example.com/fileB.pdf"},
-            {name: "Diet Plan 3", url: "http://example.com/fileC.pdf"},
-            {name: "Diet Plan 4", url: "http://example.com/fileD.pdf"},
+            { name: "Diet Plan 1", url: "http://example.com/fileA.pdf" },
+            { name: "Diet Plan 2", url: "http://example.com/fileB.pdf" },
+            { name: "Diet Plan 3", url: "http://example.com/fileC.pdf" },
+            { name: "Diet Plan 4", url: "http://example.com/fileD.pdf" },
         ],
 
         prescriptions: [

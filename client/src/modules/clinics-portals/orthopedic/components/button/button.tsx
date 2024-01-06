@@ -2,7 +2,7 @@ import React, { MouseEvent, FormEvent } from "react";
 import Button from "@mui/material/Button";
 import classes from "./button.module.css";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { makeStyles } from "@mui/styles"; // Import makeStyles from @mui/styles
+// import { makeStyles } from "@mui/styles"; // Import makeStyles from @mui/styles
 
 interface ButtonProps {
   onClick?: (
@@ -20,12 +20,12 @@ interface ButtonProps {
   marginRight?: string;
 }
 
-const useStyles = makeStyles({
-  customButton: {
-    backgroundColor: "#C3C3C3",
-    // Add any other styles you need
-  },
-});
+// const useStyles = makeStyles({
+//   customButton: {
+//     backgroundColor: "#C3C3C3",
+//     // Add any other styles you need
+//   },
+// });
 
 const ButtonComponent: React.FC<ButtonProps> = ({
   onClick,
@@ -37,7 +37,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   backgroundColor,
   includeIcon = false,
   fontSize,
-  marginRight
+  marginRight,
 }) => {
   return (
     <Button
@@ -45,7 +45,10 @@ const ButtonComponent: React.FC<ButtonProps> = ({
         e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>
       ) => onClick && onClick(e)}
       type={type}
-      style={{ backgroundColor: backgroundColor, marginRight:`${marginRight}` }}
+      style={{
+        backgroundColor: backgroundColor,
+        marginRight: `${marginRight}`,
+      }}
       className={classes[classStyle as string]}
       startIcon={
         includeIcon && (
@@ -55,7 +58,17 @@ const ButtonComponent: React.FC<ButtonProps> = ({
         )
       }
     >
-      <span className={classes[textStyle as string]} style={{textTransform:"none", fontSize:`${fontSize}`, color:`${color}`}}> {text} </span>
+      <span
+        className={classes[textStyle as string]}
+        style={{
+          textTransform: "none",
+          fontSize: `${fontSize}`,
+          color: `${color}`,
+        }}
+      >
+        {" "}
+        {text}{" "}
+      </span>
     </Button>
   );
 };

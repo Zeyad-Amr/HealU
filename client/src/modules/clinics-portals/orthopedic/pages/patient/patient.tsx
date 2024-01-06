@@ -1,14 +1,10 @@
-import { useState } from "react";
 import ButtonComponent from "../../components/button/button";
 import AddSlotForm from "../../components/form/addSlotForm";
 import SimpleForm from "../../components/testsForm/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../slices/combineReducers";
-import { addSlotActions } from "../../slices/addSlotsSlice";
 import classes from "./pateint.module.css";
 import BlockContainer from "../../components/block/blockContainer";
 import { useParams } from "react-router-dom";
-import { patientActions } from "../../slices/patientSlice";
 import { formActions } from "../../../../admin-portal/slices/form-slice";
 
 const Patient = () => {

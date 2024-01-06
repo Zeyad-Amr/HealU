@@ -3,7 +3,6 @@ import { Grid } from "@mui/material";
 import PresonalInfo from "./personalinfo";
 import HistoryInfo from "./history";
 import Item from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import "./patientData.css";
 import {
   appointmentPatient,

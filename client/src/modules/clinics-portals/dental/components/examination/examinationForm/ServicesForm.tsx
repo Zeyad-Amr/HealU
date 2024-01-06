@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // services.tsx
 import React, { useState } from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import styles from "../examination.module.css";
 import SubmitButton from "../elements/SubmitButton";
 import CustomMultiSelect from "../elements/CustomMultiSelect";
 
-let Services: { ServicesDescription: string }[] = [
-  { ServicesDescription: "Service1" },
-];
+// let Services: { ServicesDescription: string }[] = [
+//   { ServicesDescription: "Service1" },
+// ];
 
 const dentalServices = [
   { label: "Teeth Whitening", value: "Teeth Whitening" },
@@ -22,11 +23,11 @@ const dentalServices = [
   { label: "Dentures", value: "Dentures" },
 ];
 
-interface ServicesFormProps {
-    onClose: () => void;
-    // Add any other props needed for ServicesForm
-  }
-const ServicesForm = ({onClose}:any) => {
+// interface ServicesFormProps {
+//     onClose: () => void;
+//     // Add any other props needed for ServicesForm
+//   }
+const ServicesForm = ({ onClose }: any) => {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [services, setServices] = useState<{ ServicesDescription: string }[]>([
     { ServicesDescription: "Service1" },
@@ -52,10 +53,10 @@ const ServicesForm = ({onClose}:any) => {
     onClose();
   };
 
-  const handleClose = () => {
-    // Close the popup by updating the state
-    setIsPopupOpen(false);
-  };
+  // const handleClose = () => {
+  //   // Close the popup by updating the state
+  //   setIsPopupOpen(false);
+  // };
 
   return (
     <div>

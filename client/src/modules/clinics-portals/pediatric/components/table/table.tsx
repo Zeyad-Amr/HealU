@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
-import { useState } from "react";
 import { DeviceState } from "./../../slices/pediatric-slice";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -9,15 +9,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { borderRadius } from "@mui/system";
 import { useAppDispatch } from "../../../../../core/store/index";
 import { useSelector } from "react-redux";
-import {
-  fetchDevices,
-  AddDevice,
-  DeleteDevice,
-  device,
-} from "../../slices/pediatric-slice";
+import { fetchDevices, DeleteDevice } from "../../slices/pediatric-slice";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -67,7 +61,7 @@ const DevicesTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {deviceState.AllDevices == undefined
+            {deviceState.AllDevices === undefined
               ? null
               : deviceState.AllDevices.map((item: any) => (
                   <StyledTableRow key={item.DeviceID}>

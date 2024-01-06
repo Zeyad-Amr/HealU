@@ -66,24 +66,24 @@ const AppointmentsBill = ({
     amount: "",
   };
 
-  const onClear = () => {
+  // const onClear = () => {
 
-  }
+  // }
   const handleFormSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     // .matches(/^[A-Za-z]+$/, "Name must be string"),
     number: Yup.string()
       .required("Number is required")
-      .matches(/^\+?[0-9\(\)]+$/, "Invalid Card Number")
-      .max(16,"Must be exactly 16 numbers"),
+      .matches(/^\+?[0-9\\(\\)]+$/, "Invalid Card Number")
+      .max(16, "Must be exactly 16 numbers"),
     expiry: Yup.string()
       .required("Expiry is required")
-      .matches(/^\+?[0-9\(\)]+$/, "Invalid Expiry Date")
-      .max(4,"Must be exactly 4 numbers"),
+      .matches(/^\+?[0-9\\(\\)]+$/, "Invalid Expiry Date")
+      .max(4, "Must be exactly 4 numbers"),
     cvc: Yup.string()
       .required("CVV is required")
-      .matches(/^\+?[0-9\(\)]+$/, "Invalid CVV")
-      .max(3,"Must be exactly 3 numbers"),
+      .matches(/^\+?[0-9\\(\\)]+$/, "Invalid CVV")
+      .max(3, "Must be exactly 3 numbers"),
   });
 
   const handleInputChange = (e: any) => {

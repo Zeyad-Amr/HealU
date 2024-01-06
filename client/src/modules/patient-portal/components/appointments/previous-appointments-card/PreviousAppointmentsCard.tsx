@@ -6,19 +6,15 @@ import {
   Typography,
   Grid,
   Box,
-  Stack,
-  Container,
   IconButton,
-  LinearProgress,
 } from "@mui/material";
-import { Info, InfoOutlined, InfoTwoTone, More, MoreVert, ReadMore } from "@mui/icons-material";
+import { InfoOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import CustomizedDialogs from "../appointment-detalis-dialog/AppointmentDialog";
 
 interface AppointmentsFilterResultsPropsI {
   resultData: any[];
 }
-
 
 const PreviousAppointmentsCard = ({
   resultData,
@@ -71,15 +67,12 @@ const PreviousAppointmentsCard = ({
     return [formattedDate, formattedTime];
   };
 
-
-
   return (
     <Box sx={{ overflowY: "auto", m: 2 }}>
       <Grid container spacing={2}>
         {resultData.map((appointment: any, index: number) => {
           return (
             <Grid key={index} item lg={3} md={3} sm={6} xs={12} minWidth={330}>
-
               <Card
                 sx={{
                   maxWidth: 345,
@@ -97,26 +90,25 @@ const PreviousAppointmentsCard = ({
                       {getInitials(appointment.doctor.name)}
                     </Avatar>
                   }
-                  title={
-                    appointment.doctor.name
-                  }
-                  subheader={
-                    <>
-                      {appointment.clinic.name}
-                    </>
-                  }
+                  title={appointment.doctor.name}
+                  subheader={<>{appointment.clinic.name}</>}
                   action={
-                    <IconButton onClick={() => handleClickOpen(appointment)} aria-label="settings">
+                    <IconButton
+                      onClick={() => handleClickOpen(appointment)}
+                      aria-label="settings"
+                    >
                       <InfoOutlined />
                     </IconButton>
                   }
                 />
                 <CardContent>
-                  <Typography variant="body2" >
+                  <Typography variant="body2">
                     {appointment.prescription.Diagnosis}
                   </Typography>
                   <Typography variant="subtitle1" color="text.secondary">
-                    {formatDate(appointment.prescription.CreatedAt)[0] + " " + formatDate(appointment.prescription.CreatedAt)[1]}
+                    {formatDate(appointment.prescription.CreatedAt)[0] +
+                      " " +
+                      formatDate(appointment.prescription.CreatedAt)[1]}
                   </Typography>
                 </CardContent>
               </Card>
@@ -124,9 +116,12 @@ const PreviousAppointmentsCard = ({
           );
         })}
       </Grid>
-      <CustomizedDialogs handleClose={handleClose} open={open} appointment={appt} />
+      <CustomizedDialogs
+        handleClose={handleClose}
+        open={open}
+        appointment={appt}
+      />
     </Box>
-
   );
 };
 

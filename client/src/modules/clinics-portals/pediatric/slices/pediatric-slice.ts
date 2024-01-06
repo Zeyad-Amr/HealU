@@ -47,7 +47,7 @@ export const AddDevice = createAsyncThunk(
   async (data: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://pediatric-clinic-devices.onrender.com/device",
         data
       );
@@ -61,7 +61,7 @@ export const DeleteDevice = createAsyncThunk(
   async (data: Number, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `https://pediatric-clinic-devices.onrender.com/device/${data}`
       );
     } catch (error) {

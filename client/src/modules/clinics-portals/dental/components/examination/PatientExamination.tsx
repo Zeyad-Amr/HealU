@@ -1,25 +1,14 @@
 // mainPage.tsx
 import DiagnosisForm from "./diagnosis/DiagnosisForm";
 import PopUpDropListButton from "./elements/PopUpDropListButton";
-import styles from "../examination/examination.module.css";
 import SubmitButton from "./elements/SubmitButton";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import ModalPopUp from "./elements/ModalPopUp";
-import CustomTextArea from "../examination/elements/CustomTextArea";
-import CustomMultiSelect from "../examination/elements/CustomMultiSelect";
-import ItemList from "./elements/ItemList";
 import { Stack } from "@mui/material";
 import PrescriptionFrom from "./examinationForm/PrescriptionFrom";
 import TestForm from "./examinationForm/TestForm";
 import ServicesForm from "./examinationForm/ServicesForm";
-
-
-
-let Report: { Report: string }[];
-let Recommendations: { Recommendations: string }[];
 
 const PatientExamination: React.FC = () => {
   // Modal stuff
@@ -41,7 +30,7 @@ const PatientExamination: React.FC = () => {
     openModal(<PrescriptionFrom />);
   };
   // handling prescription list state
-  const [prescriptionList, setPrescriptionList] = useState<string[]>([]);
+  // const [prescriptionList, setPrescriptionList] = useState<string[]>([]);
 
   const handleAddTest = () => {
     openModal(<TestForm />);
@@ -50,14 +39,13 @@ const PatientExamination: React.FC = () => {
   // Popup for services
   const handleAddServices = () => {
     openModal(
-      <ServicesForm 
+      <ServicesForm
         onClose={() => {
           handleCloseModal();
         }}
       />
     );
   };
-  
 
   return (
     <div>

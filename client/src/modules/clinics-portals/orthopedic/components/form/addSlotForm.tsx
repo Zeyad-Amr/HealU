@@ -1,4 +1,4 @@
-import React, { useState, useRef, SetStateAction } from "react";
+import React, { useState } from "react";
 import styles from "./addSlotForm.module.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -9,8 +9,7 @@ import { useDispatch } from "react-redux";
 import Slot, { addSlotActions } from "../../slices/addSlotsSlice";
 import { getSlots } from "../../slices/addSlotsSlice";
 import { useSelector } from "react-redux";
-import { RootState } from "../../slices/combineReducers";
-import { Dispatch } from "react";
+
 import { addSlot } from "../../slices/addSlotsSlice";
 import { makeStyles } from "@mui/styles";
 import CloseIcon from "@mui/icons-material/Close";
@@ -160,17 +159,17 @@ const AddSlotForm = ({
     }
   };
 
-  const handlePeriodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    if (value === "AM" || value === "PM") {
-      setError((prevError) => ({ ...prevError, period: "" }));
-    } else {
-      setError((prevError) => ({
-        ...prevError,
-        period: "Please select a Period",
-      }));
-    }
-  };
+  // const handlePeriodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = event.target.value;
+  //   if (value === "AM" || value === "PM") {
+  //     setError((prevError) => ({ ...prevError, period: "" }));
+  //   } else {
+  //     setError((prevError) => ({
+  //       ...prevError,
+  //       period: "Please select a Period",
+  //     }));
+  //   }
+  // };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -190,7 +189,7 @@ const AddSlotForm = ({
       setTime(null);
     }
     onAddSlot && add(data.weekDay);
-    if (error.date === "" && error.time === "" ) {
+    if (error.date === "" && error.time === "") {
       dispatch(addSlotActions.setFormVisibility(false));
     }
   };
@@ -304,7 +303,6 @@ const AddSlotForm = ({
               />
             )}
           </div>
- 
         </div>
         {isIncluded && (
           <div className={styles[div4Style as string]}>

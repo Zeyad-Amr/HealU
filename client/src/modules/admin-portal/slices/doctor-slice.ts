@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../../core/api/api";
-import { act } from "react-dom/test-utils";
 
 export interface Doctor {
   userId?: number | undefined;

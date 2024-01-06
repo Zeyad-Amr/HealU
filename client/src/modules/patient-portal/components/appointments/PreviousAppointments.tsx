@@ -1,17 +1,11 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Avatar from "@mui/material/Avatar";
 import CustomHeader from "../../../../core/components/CustomHeader";
 import PreviousAppointmentsCard from "./previous-appointments-card/PreviousAppointmentsCard";
 import { useEffect, useState } from "react";
 import axios from "../../../../core/api/api";
 
 const PreviousAppointmentsComponent = () => {
-
-  const [previousData , setPreviousData] = useState([])
+  const [previousData, setPreviousData] = useState([]);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");

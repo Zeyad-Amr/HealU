@@ -8,9 +8,7 @@ import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { getSlots } from "../../slices/addSlotsSlice";
 import { addSlotActions } from "../../slices/addSlotsSlice";
-import { RootState } from "../../slices/combineReducers";
 import { useSelector } from "react-redux";
-import { AppDispatch } from "../../../../../core/store";
 
 interface DateComponentProps {
   admin?: boolean;

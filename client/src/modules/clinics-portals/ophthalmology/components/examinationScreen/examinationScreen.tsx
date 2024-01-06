@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import {
   Box,
@@ -297,14 +298,14 @@ const OphthalmologyForm = () => {
             <TextField
               label="Left Eye Measurement"
               value="Left Eye Measurement"
-              onChange={(e) => {
+              onChange={() => {
                 // "Left Eye Measurement";
               }}
             />
             <TextField
               label="Right Eye Measurement"
               value="Right Eye Measurement"
-              onChange={(e) => {
+              onChange={() => {
                 // "Right Eye Measurement";
               }}
             />

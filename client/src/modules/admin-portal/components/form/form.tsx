@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../clinics-portals/orthopedic/slices/combineReducers";
 import styles from "./form.module.css";
 import classes from "../../../clinics-portals/orthopedic/components/form/addSlotForm.module.css";
 import { TextField, MenuItem } from "@mui/material";
 import { makeStyles } from "@mui/styles"; // Add this import
-import { editDoctor, getDoctorById } from "../../slices/doctor-slice";
+import { editDoctor } from "../../slices/doctor-slice";
 import { addDoctor } from "../../slices/doctor-slice";
 import { MouseEvent, FormEvent } from "react";
 import { formActions } from "../../slices/form-slice";

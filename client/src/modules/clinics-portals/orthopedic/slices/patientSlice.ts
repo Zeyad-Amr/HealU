@@ -1,7 +1,5 @@
-import { isFor } from "@babel/types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { is, set } from "immer/dist/internal";
 
 export default interface Patient {
   patientId?: number | string;

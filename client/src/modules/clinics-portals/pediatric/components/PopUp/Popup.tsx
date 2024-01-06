@@ -1,10 +1,7 @@
 // Modal.tsx
 import React, { FC, ReactNode } from "react";
 import "./Popup.css";
-import { on } from "events";
-import { Button } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 
 interface ModalProps {

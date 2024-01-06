@@ -44,7 +44,7 @@ export const createSlotForLoggedInDoctor = createAsyncThunk(
   "doctorSlots/createSlotForLoggedInDoctor",
   async ({ time, weekDay }: { time: string; weekDay: string }) => {
     try {
-      const response = await axios.post(`/data/slots`, {
+      await axios.post(`/data/slots`, {
         time: time,
         weekDay: weekDay,
       });

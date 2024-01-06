@@ -12,13 +12,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../../../core/store";
-import {
-  SlotsState,
-  fetchSlotsData,
-  Slot,
-  AllSlots,
-  deleteSlot,
-} from "../../slices/slots-slice";
+import { fetchSlotsData, AllSlots, deleteSlot } from "../../slices/slots-slice";
 import { useSelector } from "react-redux";
 import "./grid.css";
 import {

@@ -1,4 +1,4 @@
-// import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
 import ButtonComponent from "../../components/button/button";
 import classes from "../../components/button/button.module.css";
 import ClassNames from "./doctorSlot.module.css";
@@ -8,9 +8,7 @@ import SchedulesTable from "../../components/table/schedulesTable";
 import DateComponent from "../../components/datePicker/datePicker";
 import { addSlotActions, getSlots } from "../../slices/addSlotsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../slices/combineReducers";
 const DoctorsSlot = () => {
-
   const slots = useSelector((state: any) => state.rootReducer.slots.slots);
   const date = useSelector(
     (state: any) => state.rootReducer.slots.selectedDate
@@ -30,7 +28,7 @@ const DoctorsSlot = () => {
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, []);
   return (
     <>
       <div className={ClassNames.container}>

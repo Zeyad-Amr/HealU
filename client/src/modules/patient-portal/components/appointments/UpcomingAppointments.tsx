@@ -1,14 +1,12 @@
-import api from '../../../../core/api/api';
-import CustomHeader from '../../../../core/components/CustomHeader';
-import UpcomingAppointmentsCard from './upcoming-appointments-card/UpcomingApptCard';
+import CustomHeader from "../../../../core/components/CustomHeader";
+import UpcomingAppointmentsCard from "./upcoming-appointments-card/UpcomingApptCard";
 import { useEffect, useState } from "react";
 import axios from "../../../../core/api/api";
 
-
 const UpcomingAppointmentsComponent = () => {
-    // const appt = await api.get("/upcoming-appoint")
+  // const appt = await api.get("/upcoming-appoint")
 
-    const [upcomingData , setUpcomingData] = useState([])
+  const [upcomingData, setUpcomingData] = useState([]);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -25,15 +23,18 @@ const UpcomingAppointmentsComponent = () => {
       });
   }, []);
 
-    return (
-        <>
-            <CustomHeader separatorColor="primary.main" title="Upcoming Appointments" separatorWidth="50px" />
-            <UpcomingAppointmentsCard resultData={upcomingData} />
+  return (
+    <>
+      <CustomHeader
+        separatorColor="primary.main"
+        title="Upcoming Appointments"
+        separatorWidth="50px"
+      />
+      <UpcomingAppointmentsCard resultData={upcomingData} />
 
-            {/* <DataTable /> */}
+      {/* <DataTable /> */}
+    </>
+  );
+};
 
-        </>
-    )
-}
-
-export default UpcomingAppointmentsComponent
+export default UpcomingAppointmentsComponent;

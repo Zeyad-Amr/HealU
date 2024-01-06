@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Stack, Box } from "@mui/material";
 
 import styles from "./HistoryBox.module.css";

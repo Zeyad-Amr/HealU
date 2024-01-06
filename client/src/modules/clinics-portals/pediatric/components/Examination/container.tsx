@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -12,12 +14,10 @@ import "./container.css";
 import Button from "@mui/material/Button";
 import PopUp from "../PopUp/Popup";
 import { diagnosisData } from "./diagnosis";
-import Icon from "@mui/material/Icon";
 import { useAppDispatch } from "../../../../../core/store";
 import { AddPrescreptions } from "../../slices/prescreption-slice";
 import { AddRecord, Record } from "../../slices/record-slice";
 import {
-  appointmentData,
   appointmentPatientRecord,
   appointmentMedicalHistory,
 } from "./../../slices/appointment-slice";

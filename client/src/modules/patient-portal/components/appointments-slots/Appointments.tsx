@@ -1,28 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Box,
-  Button,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
-  Typography,
 } from "@mui/material";
 import * as React from "react";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "../../../../core/api/api";
 import Swal from "sweetalert2";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import CustomHeader from "../../../../core/components/CustomHeader";
 import AppointmentsFilterResults from "./appointments-results/AppointmentsFilterResults";
-import AppointmentsBill from "./appointments-bill/AppointmentsBill";
 
 const api_URL = "https://healu-api-gateway.onrender.com";
 
@@ -52,7 +46,12 @@ const Appointments = () => {
         setAllClinicsData(res.data.data.clinics);
         setClinicIdData(res.data.data.clinics[0].id);
         loadAllDoctorsByClinicId(res.data.data.clinics[0].id);
-        onSearch(doctorIdData, res.data.data.clinics[0].id, selectedFromDate, selectedToDate);
+        onSearch(
+          doctorIdData,
+          res.data.data.clinics[0].id,
+          selectedFromDate,
+          selectedToDate
+        );
       })
       .catch((err: any) => {
         console.log(err);
@@ -118,12 +117,7 @@ const Appointments = () => {
       });
     } else {
       setSelectedFromDate(fromDate);
-      onSearch(
-        doctorIdData,
-        clinicIdData,
-        fromDate,
-        selectedToDate
-      );
+      onSearch(doctorIdData, clinicIdData, fromDate, selectedToDate);
     }
   };
 
@@ -135,18 +129,13 @@ const Appointments = () => {
       });
     } else {
       setSelectedToDate(toDate);
-      onSearch(
-        doctorIdData,
-        clinicIdData,
-        selectedFromDate,
-        toDate
-      );
+      onSearch(doctorIdData, clinicIdData, selectedFromDate, toDate);
     }
   };
 
   const onChangeDoctors = (event: any) => {
     console.log(event.target.value);
-    
+
     setDoctorIdData(event.target.value);
     onSearch(
       event.target.value,
@@ -174,7 +163,7 @@ const Appointments = () => {
     loadAllDoctorsByClinicId(allClinicsData[0].id);
     setSelectedFromDate(today);
     setSelectedToDate(dateAfterWeek);
-    onSearch(doctorIdData,clinicIdData,selectedFromDate,selectedToDate)
+    onSearch(doctorIdData, clinicIdData, selectedFromDate, selectedToDate);
   };
 
   console.log(allClinicsData);

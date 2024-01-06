@@ -1,23 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // DashBoard.tsx
 import React, { useEffect, useState } from "react";
 import {
-    TableContainer,
-    Paper,
-    Stack,
-    Button,
-    MenuItem,
-    Menu,
-    Box,
+  TableContainer,
+  Paper,
+  Stack,
+  Button,
+  MenuItem,
+  Menu,
+  Box,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CreateSlotModal from "./popUP/CreateSlotModal";
 import styles from "./DashBoard.module.css"; // Import the CSS module
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../../../core/store";
-import {
-  Appointment,
-  fetchAppointments,
-} from "../../state/slices/appointmentSlice";
+import { Appointment } from "../../state/slices/appointmentSlice";
 import AppointmentModal from "./AppointmentModal";
 import dayjs from "dayjs";
 import SlotsTable from "./SlotsTable";
@@ -25,7 +23,6 @@ import { useNavigate } from "react-router-dom";
 import { fetchExaminationByAppointmentID } from "../../state/slices/examinationSlice";
 import { fetchPatients } from "../../state/slices/patientSlice";
 import { fetchLoggedInDoctorSlots } from "../../state/slices/doctorSlotsSlice";
-import { Slot } from "../../state/slices/slotsSlice";
 
 interface DashBoardProps {
   // Other props if needed
@@ -52,7 +49,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
     dispatch(fetchPatients());
     dispatch(fetchLoggedInDoctorSlots(selectedDate));
     setSlots(DoctorSlotsState.slots);
-  }, [dispatch, selectedDate]);
+  }, [selectedDate]);
 
   ///////////////////////////////////////////////////
 

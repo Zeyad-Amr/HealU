@@ -23,21 +23,21 @@ const AddDeviceForm = (props: any) => {
   const [DeviceManufacturer, setDeviceManufacturer] = useState<string>("");
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
+    const { value } = event.target;
     setDeviceName(value);
   };
   const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
+    const { value } = event.target;
     setDeviceType(value);
   };
   const handleManufacturerChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const { id, value } = event.target;
+    const { value } = event.target;
     setDeviceManufacturer(value);
   };
   const handleStateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
+    const { value } = event.target;
     setDeviceState(value);
   };
 

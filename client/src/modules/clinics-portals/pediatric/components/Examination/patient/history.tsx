@@ -1,6 +1,4 @@
 import React from "react";
-
-import { useState } from "react";
 import { Grid } from "@mui/material";
 import "./patientData.css";
 import Item from "@mui/material/Box";

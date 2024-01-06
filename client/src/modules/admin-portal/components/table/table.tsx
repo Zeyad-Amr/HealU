@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,7 +13,6 @@ import {
   deleteDoctor,
   getDoctors,
   getDoctorById,
-  editDoctor,
 } from "../../slices/doctor-slice";
 import { makeStyles } from "@mui/styles";
 import styles from "./table.module.css";

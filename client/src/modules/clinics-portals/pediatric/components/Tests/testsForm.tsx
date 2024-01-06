@@ -1,8 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { Grid } from "@mui/material";
-import Item from "@mui/material/Grid";
-import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -10,7 +7,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 
 export interface testsData {
   TestName: string[];
@@ -42,7 +38,6 @@ const AddTestsForm = (props: ChildProps) => {
     props.OnClose();
   };
 
-
   const [selectedTests, setSelectedTests] = useState<string[]>([]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -64,7 +59,6 @@ const AddTestsForm = (props: ChildProps) => {
     event.preventDefault();
     event.stopPropagation();
   };
-  
 
   return (
     <FormControl sx={{ m: 1, minWidth: 240 }} size="small">

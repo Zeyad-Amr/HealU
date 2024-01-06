@@ -1,9 +1,7 @@
-import React, { useState, useRef, SetStateAction } from "react";
+import React, { useState } from "react";
 
 import styles from "./Form.module.css";
-import { blue } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { patientActions } from "../../slices/patientSlice";
 import { formActions } from "../../../../admin-portal/slices/form-slice";
 
 interface FormProps {

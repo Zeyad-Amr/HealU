@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,18 +6,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styles from "./schedulesTable.module.css";
-import Slot, {
+import {
   deleteSlotDoctor,
   getSlots,
   updateSlot,
 } from "../../slices/addSlotsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../slices/combineReducers";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PreviewIcon from "@mui/icons-material/Preview";
 import { makeStyles } from "@mui/styles";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   box: {
@@ -33,7 +32,6 @@ const useStyles = makeStyles({
 });
 
 const TableComponent = ({ schedules }: { schedules: any }) => {
-  const params = useParams();
   const navigate = useNavigate();
   const classesX = useStyles();
 
@@ -106,7 +104,6 @@ const TableComponent = ({ schedules }: { schedules: any }) => {
                       <div
                         onClick={() => {
                           handleDelete(row.slotId);
-                          
                         }}
                         className={styles.addIcon}
                         style={{ justifyContent: "center", display: "flex" }}
