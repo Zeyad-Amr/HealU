@@ -26,15 +26,15 @@
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  gap: 30px;
+  gap: 20px;
   margin-bottom: 20px;
 }
 .css-14wibxr-MuiDataGrid-root .MuiDataGrid-withBorderColor {
   border: none !important;
 }
-.MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor.css-1iyq7zh-MuiDataGrid-columnHeaders {
+/* .MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor.css-1iyq7zh-MuiDataGrid-columnHeaders {
   display: none !important;
-}
+} */
 .MuiDataGrid-virtualScrollerRenderZone.css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone {
   gap: 20px !important;
 }
@@ -50,4 +50,11 @@
 .css-14wibxr-MuiDataGrid-root .MuiDataGrid-columnHeader,
 .css-14wibxr-MuiDataGrid-root .MuiDataGrid-cell {
   padding: 0 !important;
+}
+.showBtn {
+  margin-bottom: 20px !important;
+}
+
+.appointmentId {
+  display: none !important;
 }

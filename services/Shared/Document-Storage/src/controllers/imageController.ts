@@ -9,6 +9,10 @@ import sizeOf from 'image-size';
 import fs from 'fs';
 import dicomParser from 'dicom-parser';
 
+
+const imageStoragePath =  '/uploads/';
+
+
 const imageStorage = multer.diskStorage({
 
     destination: function (req, file, cb) {
@@ -67,25 +71,28 @@ export const getAllImages = asyncErrorCatching(async (req: Request, res: Respons
 
 
 export const getImageById = asyncErrorCatching(async (req: Request, res: Response): Promise<void> => {
+    const { imageId } = req.params;
 
-    const {imageId} = req.params;
+    try {
+        const image = await Image.findByPk(imageId);
 
-    const image = await Image.findByPk(imageId);
-
-    if (image) {
-        res.status(200).json({
-            status: 'success',
-            data: {
-                image,
-            },
-        });
-    } else {
-        res
-            .status(404)
-            .json({
+        if (image) {
+            const imagePath = path.join(path.resolve(__dirname, '..'), imageStoragePath, image.dataValues.imagePath);
+            
+            // Send the image file
+            res.sendFile(imagePath);
+        } else {
+            res.status(404).json({
                 status: 'fail',
                 error: 'Image not found'
             });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: 'fail',
+            error: 'Internal Server Error'
+        });
     }
 });
 
@@ -213,7 +220,7 @@ export const deleteImageById = asyncErrorCatching(async (req: Request, res: Resp
         await image.destroy();
 
         // Delete the image from the disk
-        fs.unlink(`${process.env.IMAGE_STORAGE}/${image.dataValues.imagePath}`, (err) => {
+        fs.unlink(path.join(imageStoragePath , image.dataValues.imagePath), (err) => {
             if (err) {
                 console.error(err)
                 return
