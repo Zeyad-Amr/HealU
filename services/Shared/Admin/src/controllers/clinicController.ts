@@ -1,11 +1,11 @@
 import Clinic from '../models/clinicModel';
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 import asyncErrorCatching from '../utils/asyncErrorCatching';
-import {Op} from 'sequelize';
+import { Op } from 'sequelize';
 
 
 const createClinics = (req: Request, res: Response) => {
-    const {data} = req.body
+    const { data } = req.body
 
     data.forEach(async (clinic: any) => {
         await Clinic.create({
@@ -47,18 +47,27 @@ const createQueryWhereClauseForClinicService = (req: Request) => {
 };
 
 const createQueryOptions = (req: Request) => {
-    const options: any = {};
+    const options: any = {
+        where: {},
+        include: [],
+    };
+
+    options.include.push({
+        association: "defaultService",
+    })
 
     if (req.query.doctorId) {
         options.where = createQueryWhereClause(req);
     }
 
     if (req.query.serviceId) {
-        options.include = {
+        options.include.push({
             association: "services",
             where: createQueryWhereClauseForClinicService(req),
-        }
+        })
     }
+
+
 
     return options;
 };
@@ -89,10 +98,10 @@ const getAllClinics = asyncErrorCatching(async (req: Request, res: Response) => 
 
 const getClinicByClinicId = asyncErrorCatching(async (req: Request, res: Response) => {
 
-    const {clinicId} = req.params;
+    const { clinicId } = req.params;
 
     const clinic = await Clinic.findByPk(clinicId, {
-        include: ["services"],
+        include: ["services","defaultService"],
     });
 
     if (!clinic) {
@@ -115,7 +124,7 @@ const getClinicByClinicId = asyncErrorCatching(async (req: Request, res: Respons
 
 const createClinic = asyncErrorCatching(async (req: Request, res: Response) => {
 
-    let {name, description, operatingHours, doctorsIds} = req.body;
+    let { name, description, operatingHours, doctorsIds } = req.body;
 
     const clinic = await Clinic.create(
         {
@@ -163,7 +172,7 @@ const updateClinic = asyncErrorCatching(async (req: Request, res: Response) => {
 
 const deleteClinic = asyncErrorCatching(async (req: Request, res: Response) => {
 
-    const {clinicId} = req.params;
+    const { clinicId } = req.params;
 
     const clinic = await Clinic.destroy({
         where: {

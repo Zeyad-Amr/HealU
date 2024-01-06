@@ -16,9 +16,12 @@ import Login from "../../modules/auth/pages";
 import Patient from "../../modules/clinics-portals/orthopedic/pages/patient/patient";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
+import Appointments from "../../modules/clinics-portals/ophthalmology/pages/appointments";
+import ExaminationPortal from "../../modules/clinics-portals/ophthalmology/pages/examinationPortal";
 import AboutUs from "../../modules/landing-page/pages/AboutUs";
 import ContactUs from "../../modules/landing-page/pages/ContactUs";
 import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout";
+import Services from "../../modules/admin-portal/pages/services";
 import Signup from "../../modules/user/pages/signup/SignUp";
 import UpcomingAppointments from "../../modules/patient-portal/pages/appointments/upcoming";
 import AppLayout from "../components/AppLayout";
@@ -29,6 +32,14 @@ import DoctorsSlot from "../../modules/clinics-portals/orthopedic/pages/doctorSl
 
 class Router {
   static readonly routes: RouteModel[] = [
+    {
+      path: AppRoutes.clinicOphthalmolgy,
+      element: <Appointments />,
+    },
+    {
+      path: AppRoutes.clinicOphthalmolgy + "/exam",
+      element: <ExaminationPortal />,
+    },
     {
       path: AppRoutes.home,
       element: <LandingPage />,
@@ -100,6 +111,11 @@ class Router {
       element: <AdminPortal />,
     },
     {
+      path: AppRoutes.adminPortal + "/services",
+      element: <Services />,
+    },
+
+    {
       path: AppRoutes.login,
       element: <Login />,
     },
@@ -117,11 +133,11 @@ class Router {
     },
     {
       path: AppRoutes.clinicOrthopedic,
-      element: <DoctorsSlot/>,
+      element: <DoctorsSlot />,
     },
     {
       path: AppRoutes.orthoExamination,
-      element: <Patient/>,
+      element: <Patient />,
     },
   ];
 
