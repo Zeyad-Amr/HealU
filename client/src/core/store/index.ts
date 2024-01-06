@@ -19,6 +19,7 @@ import appointment from "../../modules/clinics-portals/pediatric/slices/appointm
 import slots from "../../modules/clinics-portals/pediatric/slices/slots-slice";
 import examination from "../../modules/clinics-portals/pediatric/slices/examination-slice";
 import user from "../../modules/user/slices/user-slice";
+import { rootReducer } from "../../modules/clinics-portals/orthopedic/slices/combineReducers";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     patients,
     user,
     analytics,
+    rootReducer,
 
     // Dental Clinic And Appointments
     slotReducer,
@@ -45,7 +47,6 @@ export const store = configureStore({
     examination,
     nutrition
   },
-
 });
 
 export type RootState = ReturnType<typeof store.getState>;

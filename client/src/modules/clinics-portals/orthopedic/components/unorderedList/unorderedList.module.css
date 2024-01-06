@@ -1,0 +1,21 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  align-items: flex-start;
+  margin-top: 0px;
+  color: white;
+  list-style-type: none; 
+}
+
+.bullet {
+  font-size: 40px; 
+  margin-right: 8px;
+  color: white;
+}
+
+.listItem {
+  color: #ffffff;
+  font-size: 50px;
+  margin-bottom: 8px;
+}

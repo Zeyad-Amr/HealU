@@ -1,0 +1,25 @@
+ .mainContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    size:auto;
+    height: auto;
+  } 
+  .container {
+    width: 90%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 82px;
+    left: 10%;
+    /* margin: 20px; */
+  }
+  /* Add a media query for smaller screens */
+@media screen and (max-width: 700px) {
+  .container {
+    height: auto; /* Adjust height for smaller screens */
+     position: static
+  }
+  } 
+  

@@ -1,0 +1,51 @@
+/* BlockComponent.css */
+.mainContainer{
+  margin-left: 100px;
+
+}
+.block {
+  width: 393px;
+  height: 370px;
+  top: 170px;
+  left: 79px;
+  border-radius: 15px;
+  background: linear-gradient(131.75deg, #01b6b6 2.18%, #13d2de 100%);
+  display: "flex";
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 0em;
+  -webkit-text-fill-color: #ffffff;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  margin-right: 10px;
+}
+
+.block3 {
+  margin-top: 10px;
+  height: 300px;
+  width: 1792px;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  margin-bottom: 1px;
+  padding-bottom: 20px;
+  background: #FFFFFF;
+  border: 1px solid #13d2de;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: center;
+  -webkit-text-fill-color: #ffffff;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+

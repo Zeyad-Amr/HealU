@@ -5,6 +5,7 @@ class AppRoutes {
   static readonly clinicNutrition = "/clinic/nutrition";
   static readonly clinicOphthalmolgy = "/clinic/ophthalmology";
   static readonly clinicOrthopedic = "/clinic/orthopedic";
+  static readonly orthoExamination = this.clinicOrthopedic + "/examination/:id";
   static readonly clinicPediatric = "/clinic/pediatric";
   static readonly adminPortal = "/admin";
   static readonly login = "/login";
