@@ -3,7 +3,6 @@ import AppRoutes from "./AppRoutes";
 import { ReactElement } from "react";
 import { Route } from "react-router-dom";
 import LandingPage from "../../modules/landing-page/pages";
-
 import DermatologyClinicPortal from "../../modules/clinics-portals/dermatology/pages";
 import NutritionClinicPortal from "../../modules/clinics-portals/nutrition/pages";
 import OphthalmologyClinicPortal from "../../modules/clinics-portals/ophthalmology/pages";
@@ -14,6 +13,8 @@ import Analytics from "../../modules/admin-portal/pages/analytics";
 import Login from "../../modules/auth/pages";
 import AppointmentsPage from "../../modules/patient-portal/pages/appointments-page";
 import PreviousAppointments from "../../modules/patient-portal/pages/appointments";
+import Appointments from "../../modules/clinics-portals/ophthalmology/pages/appointments";
+import ExaminationPortal from "../../modules/clinics-portals/ophthalmology/pages/examinationPortal";
 import AboutUs from "../../modules/landing-page/pages/AboutUs";
 import ContactUs from "../../modules/landing-page/pages/ContactUs";
 import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout";
@@ -24,9 +25,16 @@ import AppLayout from "../components/AppLayout";
 import DentalExaminationPage from "../../modules/clinics-portals/dental/pages/DentalExaminationPage";
 import DentalClinicPortal from "../../modules/clinics-portals/dental/pages/DentalClinicPortal";
 
-
 class Router {
   static readonly routes: RouteModel[] = [
+    {
+      path: AppRoutes.clinicOphthalmolgy,
+      element: <Appointments />,
+    },
+    {
+      path: AppRoutes.clinicOphthalmolgy + "/exam",
+      element: <ExaminationPortal />,
+    },
     {
       path: AppRoutes.home,
       element: <LandingPage />,

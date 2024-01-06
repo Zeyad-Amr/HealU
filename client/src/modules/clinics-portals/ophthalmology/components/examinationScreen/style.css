@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap");
+
+/* Icon styles */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+.gradient-button {
+  background: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 16px;
+}
+
+.gradient-button:hover {
+  background-color: #05a08b;
+}
+.add-section {
+  background-color: linear-gradient(285deg, #01b6b6 10.66%, #13d2de 102.7%);
+  color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f4f4f4;
+  padding: 16px;
+  border-radius: 8px;
+}
