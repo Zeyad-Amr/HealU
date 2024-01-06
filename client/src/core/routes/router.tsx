@@ -17,6 +17,7 @@ import PreviousAppointments from "../../modules/patient-portal/pages/appointment
 import AboutUs from "../../modules/landing-page/pages/AboutUs";
 import ContactUs from "../../modules/landing-page/pages/ContactUs";
 import SecondaryLayout from "../../modules/landing-page/layouts/SecondaryLayout";
+import Services from "../../modules/admin-portal/pages/services";
 import Signup from "../../modules/user/pages/signup/SignUp";
 import UpcomingAppointments from "../../modules/patient-portal/pages/appointments/upcoming";
 import AppLayout from "../components/AppLayout";
@@ -95,6 +96,18 @@ class Router {
     {
       path: AppRoutes.adminPortal,
       element: <AdminPortal />,
+    },
+    {
+      path: AppRoutes.adminPortal + "/services",
+      element: <Services />,
+    },
+    {
+      path: AppRoutes.login,
+      element: <Login />,
+    },
+    {
+      path: AppRoutes.signup,
+      element: <Signup />,
     },
     {
       path: AppRoutes.login,

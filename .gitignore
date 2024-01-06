@@ -6,5 +6,5 @@ templates
 node_modules
 prisma/migrations
 
-
+.venv
 *.pyc
